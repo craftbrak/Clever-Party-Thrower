@@ -1,2 +1,2 @@
 # CleverPartyThrower
-a PWA designed to help orginase event with your friends 
+A PWA designed to help organise events with your friends 
