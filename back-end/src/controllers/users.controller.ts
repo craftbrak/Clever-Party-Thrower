@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { User } from '@prisma/client';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto } from '@dto/User.dto';
 import UserService from '@services/users.service';
 
 class UsersController {

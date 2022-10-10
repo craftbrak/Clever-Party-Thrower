@@ -1,8 +1,8 @@
-import bcrypt from 'bcrypt';
+import argon2 from 'argon2';
 import request from 'supertest';
 import { User } from '@prisma/client';
 import App from '../app';
-import { CreateUserDto } from '@dto/users.dto';
+import { CreateUserDto } from '@dto/User.dto';
 import AuthRoute from '../routes/auth.route';
 
 afterAll(async () => {
@@ -15,6 +15,7 @@ describe('Testing Auth', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        name: 'test',
       };
 
       const authRoute = new AuthRoute();
@@ -24,7 +25,7 @@ describe('Testing Auth', () => {
       users.create = jest.fn().mockReturnValue({
         id: 1,
         email: userData.email,
-        password: await bcrypt.hash(userData.password, 10),
+        password: await argon2.hash(userData.password),
       });
 
       const app = new App([authRoute]);
@@ -37,6 +38,7 @@ describe('Testing Auth', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        name: 'test',
       };
 
       const authRoute = new AuthRoute();
@@ -45,7 +47,7 @@ describe('Testing Auth', () => {
       users.findUnique = jest.fn().mockReturnValue({
         id: 1,
         email: userData.email,
-        password: await bcrypt.hash(userData.password, 10),
+        password: await argon2.hash(userData.password),
       });
 
       const app = new App([authRoute]);

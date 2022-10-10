@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" filepath="$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backendNest/.idea/backendNest.iml" filepath="$PROJECT_DIR$/backendNest/.idea/backendNest.iml" />
+    </modules>
+  </component>
+</project>

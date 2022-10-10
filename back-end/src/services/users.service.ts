@@ -1,15 +1,15 @@
 import { hash } from 'bcrypt';
-import { PrismaClient, User } from '@prisma/client';
-import { CreateUserDto } from '@dtos/users.dto';
+import { User } from '@prisma/client';
+import { CreateUserDto } from '@dto/User.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
+import { prismaClient } from '@/prisma/prisma.client';
 
 class UserService {
-  public users = new PrismaClient().user;
+  public users = prismaClient.user;
 
   public async findAllUser(): Promise<User[]> {
-    const allUser: User[] = await this.users.findMany();
-    return allUser;
+    return await this.users.findMany();
   }
 
   public async findUserById(userId: number): Promise<User> {
@@ -28,8 +28,7 @@ class UserService {
     if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ data: { ...userData, password: hashedPassword } });
-    return createUserData;
+    return await this.users.create({ data: { ...userData, password: hashedPassword } });
   }
 
   public async updateUser(userId: number, userData: CreateUserDto): Promise<User> {
@@ -39,8 +38,7 @@ class UserService {
     if (!findUser) throw new HttpException(409, "User doesn't exist");
 
     const hashedPassword = await hash(userData.password, 10);
-    const updateUserData = await this.users.update({ where: { id: userId }, data: { ...userData, password: hashedPassword } });
-    return updateUserData;
+    return await this.users.update({ where: { id: userId }, data: { ...userData, password: hashedPassword } });
   }
 
   public async deleteUser(userId: number): Promise<User> {
@@ -48,9 +46,7 @@ class UserService {
 
     const findUser: User = await this.users.findUnique({ where: { id: userId } });
     if (!findUser) throw new HttpException(409, "User doesn't exist");
-
-    const deleteUserData = await this.users.delete({ where: { id: userId } });
-    return deleteUserData;
+    return await this.users.delete({ where: { id: userId } });
   }
 }
 

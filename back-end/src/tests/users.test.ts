@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import request from 'supertest';
 import { PrismaClient, User } from '@prisma/client';
 import App from '@/app';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto } from '@dto/User.dto';
 import UserRoute from '@routes/users.route';
 
 afterAll(async () => {
@@ -61,6 +61,7 @@ describe('Testing Users', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        name: 'test',
       };
 
       const usersRoute = new UserRoute();
@@ -84,6 +85,7 @@ describe('Testing Users', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        name: 'test',
       };
 
       const usersRoute = new UserRoute();
@@ -111,6 +113,7 @@ describe('Testing Users', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        name: 'test',
       };
 
       const usersRoute = new UserRoute();

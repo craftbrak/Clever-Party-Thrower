@@ -2,7 +2,7 @@ import { hash, verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
 import { PrismaClient, User } from '@prisma/client';
 import { SECRET_KEY } from '@/config';
-import { CreateUserDto } from '@dto/users.dto';
+import { CreateUserDto } from '@dto/User.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import { isEmpty } from '@utils/util';
