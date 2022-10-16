@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                @id @default(autoincrement())
+  email             String             @unique
+  name              String
+  password          String
+  drivingLicence    Boolean            @default(false)
+  manual            Boolean            @default(false)
+  events            Event[]
+  spendings         Spending[]
+  shoppingListItems ShoppingListItem[]
+  cars              Car[]
+}
+
+model Event {
+  id           Int                @id @default(autoincrement())
+  name         String
+  participants User[]
+  playlist     Music[]
+  shopingList  ShoppingListItem[]
+  total        Float
+  spendings    Spending[]
+}
+
+model Spending {
+  id                Int               @id @default(autoincrement())
+  user              User              @relation(fields: [userId], references: [id])
+  shoppinglistItem  ShoppingListItem? @relation(fields: [shopingListItemId], references: [id])
+  name              String?
+  value             Float
+  Event             Event             @relation(fields: [eventId], references: [id])
+  eventId           Int
+  userId            Int
+  shopingListItemId Int?
+}
+
+model ShoppingListItem {
+  id       Int        @id @default(autoincrement())
+  quantity String
+  name     String
+  price    Float
+  user     User       @relation(fields: [userId], references: [id])
+  bought   Boolean
+  Event    Event?     @relation(fields: [eventId], references: [id])
+  eventId  Int?
+  Spending Spending[]
+  userId   Int
+}
+
+model Music {
+  id      Int     @id @default(autoincrement())
+  url     String
+  title   String?
+  artist  String?
+  album   String?
+  Event   Event   @relation(fields: [eventId], references: [id])
+  eventId Int
+}
+
+model Car {
+  id            Int     @id @default(autoincrement())
+  brand         String
+  maxPassengers Int
+  consumption   Float
+  bootSize      Int
+  manual        Boolean
+  owner         User    @relation(fields: [userId], references: [id])
+  userId        Int
+}
+
+model Address {
+  id     Int    @id @default(autoincrement())
+  city   City   @relation(fields: [cityId], references: [id])
+  street String
+  Number Int
+  cityId Int
+}
+
+model PostalCode {
+  id    Int    @id @default(autoincrement())
+  value String @unique
+  City  City[]
+}
+
+model City {
+  id           Int        @id @default(autoincrement())
+  value        String     @unique
+  postalCode   PostalCode @relation(fields: [postalCodeId], references: [id])
+  country      Country    @relation(fields: [countryId], references: [id])
+  Address      Address[]
+  postalCodeId Int
+  countryId    Int
+}
+
+model Country {
+  id    Int    @id @default(autoincrement())
+  value String @unique
+  City  City[]
+}

@@ -1,0 +1,34 @@
+type Event {
+  # Example field (placeholder)
+  id: Int
+  name:String
+  total:Float
+  participants:[User!]!
+}
+
+input CreateEventInput {
+  name:String
+  total:Float
+  participants:[CreateUserInput!]!
+}
+
+input UpdateEventInput {
+  id: Int!
+  name:String
+  total:Float
+  participants:[UpdateUserInput]
+}
+
+type Query {
+  events: [Event]!
+  eventsByUser(id:Int): [Event]!
+  event(id: Int!): Event
+}
+
+type Mutation {
+  createEvent(createEventInput: CreateEventInput!): Event!
+  updateEvent(updateEventInput: UpdateEventInput!): Event!
+  removeEvent(id: Int!): Event
+  addParticipant(id:Int!,userId: Int!): Event
+  removeParticipant(id:Int!,userId: Int!): Event
+}

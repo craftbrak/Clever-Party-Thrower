@@ -1,0 +1,38 @@
+type User {
+  id:Int
+  email:String
+  name: String
+  drivingLicence: Boolean
+  manual: Boolean
+  events: [Event]
+}
+
+input CreateUserInput {
+  email:String!
+  name: String!
+  password: String!
+  drivingLicence: Boolean
+  manual: Boolean
+  events: [CreateEventInput]
+}
+
+input UpdateUserInput {
+  id: Int!
+  email:String
+  name: String
+  password: String
+  drivingLicence: Boolean
+  manual: Boolean
+  events: [UpdateEventInput]
+}
+
+type Query {
+  users: [User]!
+  user(email: String!): User
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User
+}

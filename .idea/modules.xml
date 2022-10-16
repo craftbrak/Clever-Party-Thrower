@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" filepath="$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backendNest/.idea/backendNest.iml" filepath="$PROJECT_DIR$/backendNest/.idea/backendNest.iml" />
     </modules>
   </component>
 </project>

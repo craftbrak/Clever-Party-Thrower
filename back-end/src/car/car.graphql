@@ -1,0 +1,39 @@
+type Car {
+  id: Int
+  brand: String
+  maxPassenger:Int
+  consumption:Float
+  bootSize:Int,
+  manual:Boolean
+  owner: User
+}
+
+input CreateCarInput {
+  brand: String
+  maxPassenger:Int
+  consumption:Float
+  bootSize:Int,
+  manual:Boolean
+  owner: CreateUserInput
+}
+
+input UpdateCarInput {
+  id: Int!
+  brand: String
+  maxPassenger:Int
+  consumption:Float
+  bootSize:Int,
+  manual:Boolean
+  owner: UpdateUserInput
+}
+
+type Query {
+  cars: [Car]!
+  car(id: Int!): Car
+}
+
+type Mutation {
+  createCar(createCarInput: CreateCarInput!): Car!
+  updateCar(updateCarInput: UpdateCarInput!): Car!
+  removeCar(id: Int!): Car
+}
