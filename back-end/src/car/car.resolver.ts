@@ -13,8 +13,8 @@ export class CarResolver {
   }
 
   @Query('car')
-  findAll() {
-    return this.carService.findAll();
+  findAll(userId:number) {
+    return this.carService.findAll(userId);
   }
 
   @Query('car')

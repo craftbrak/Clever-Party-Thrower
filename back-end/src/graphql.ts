@@ -14,7 +14,7 @@ export class CreateCarInput {
     consumption?: Nullable<number>;
     bootSize?: Nullable<number>;
     manual?: Nullable<boolean>;
-    owner?: Nullable<CreateUserInput>;
+    owner?: Nullable<UpdateUserInput>;
 }
 
 export class UpdateCarInput {
@@ -70,7 +70,7 @@ export class Car {
 }
 
 export abstract class IQuery {
-    abstract cars(): Nullable<Car>[] | Promise<Nullable<Car>[]>;
+    abstract cars(userId: number): Nullable<Car>[] | Promise<Nullable<Car>[]>;
 
     abstract car(id: number): Nullable<Car> | Promise<Nullable<Car>>;
 

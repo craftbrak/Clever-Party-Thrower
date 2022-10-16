@@ -14,7 +14,7 @@ input CreateCarInput {
   consumption:Float
   bootSize:Int,
   manual:Boolean
-  owner: CreateUserInput
+  owner: UpdateUserInput
 }
 
 input UpdateCarInput {
@@ -28,7 +28,7 @@ input UpdateCarInput {
 }
 
 type Query {
-  cars: [Car]!
+  cars(userId:Int!): [Car]!
   car(id: Int!): Car
 }
 
