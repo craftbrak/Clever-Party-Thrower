@@ -8,15 +8,13 @@ export class EventService {
   }
 
   create(createEventInput: CreateEventInput) {
-    return this.prismaClient.event.create({
-      data: {
-        name: createEventInput.name,
-        total: createEventInput.total,
-        participants: {
-          connect: createEventInput.participants
-        }
-      }
-    });
+    // return this.prismaClient.event.create({
+    //   data: {
+    //     name: createEventInput.name,
+    //     total: createEventInput.total,
+    //
+    //   }
+    // });
   }
 
   findAll() {
@@ -41,7 +39,7 @@ export class EventService {
       }
     }).events({
       include: {
-        participants: true
+        // participants: true
       }
     });
   }
@@ -77,9 +75,9 @@ export class EventService {
       },
       data: {
         participants: {
-          connect: {
-            id: userId
-          }
+          // create: {
+          //   userId: userId
+          // }
         }
       }
     });
@@ -92,9 +90,9 @@ export class EventService {
       },
       data: {
         participants: {
-          disconnect: {
-            id: userId
-          }
+          // disconnect: {
+          //   id: userId
+          // }
         }
       }
     });

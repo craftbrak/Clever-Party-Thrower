@@ -1,0 +1,42 @@
+type Address {
+  id: Int
+  country: String
+  city: String
+  postalCode: String
+  street: String
+  number: Int
+  long:String
+  lat: String
+}
+
+input CreateAddressInput {
+  country: String
+  city: String
+  postalCode: String
+  street: String
+  number: Int
+  long:String
+  lat: String
+}
+
+input UpdateAddressInput {
+  id: Int!
+  country: String
+  city: String
+  postalCode: String
+  street: String
+  number: Int
+  long:String
+  lat: String
+}
+
+
+type Query {
+  address(id:Int): Address
+}
+
+type Mutation {
+  createAddress(createAddressInput: CreateAddressInput!): Address!
+  updateAddress(updateAddressInput: UpdateAddressInput!): Address!
+  removeAddress(id: Int!): Address
+}

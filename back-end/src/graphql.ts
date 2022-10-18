@@ -8,6 +8,27 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class CreateAddressInput {
+    country?: Nullable<string>;
+    city?: Nullable<string>;
+    postalCode?: Nullable<string>;
+    street?: Nullable<string>;
+    number?: Nullable<number>;
+    long?: Nullable<string>;
+    lat?: Nullable<string>;
+}
+
+export class UpdateAddressInput {
+    id: number;
+    country?: Nullable<string>;
+    city?: Nullable<string>;
+    postalCode?: Nullable<string>;
+    street?: Nullable<string>;
+    number?: Nullable<number>;
+    long?: Nullable<string>;
+    lat?: Nullable<string>;
+}
+
 export class CreateCarInput {
     brand?: Nullable<string>;
     maxPassenger?: Nullable<number>;
@@ -46,30 +67,39 @@ export class CreateUserInput {
     password: string;
     drivingLicence?: Nullable<boolean>;
     manual?: Nullable<boolean>;
+    verified?: Nullable<boolean>;
+    spotify?: Nullable<boolean>;
+    address?: Nullable<CreateAddressInput>;
     events?: Nullable<Nullable<CreateEventInput>[]>;
 }
 
 export class UpdateUserInput {
     id: number;
-    email?: Nullable<string>;
-    name?: Nullable<string>;
-    password?: Nullable<string>;
+    email: string;
+    name: string;
+    password: string;
     drivingLicence?: Nullable<boolean>;
     manual?: Nullable<boolean>;
+    verified?: Nullable<boolean>;
+    spotify?: Nullable<boolean>;
+    address?: Nullable<UpdateAddressInput>;
     events?: Nullable<Nullable<UpdateEventInput>[]>;
 }
 
-export class Car {
+export class Address {
     id?: Nullable<number>;
-    brand?: Nullable<string>;
-    maxPassenger?: Nullable<number>;
-    consumption?: Nullable<number>;
-    bootSize?: Nullable<number>;
-    manual?: Nullable<boolean>;
-    owner?: Nullable<User>;
+    country?: Nullable<string>;
+    city?: Nullable<string>;
+    postalCode?: Nullable<string>;
+    street?: Nullable<string>;
+    number?: Nullable<number>;
+    long?: Nullable<string>;
+    lat?: Nullable<string>;
 }
 
 export abstract class IQuery {
+    abstract address(id?: Nullable<number>): Nullable<Address> | Promise<Nullable<Address>>;
+
     abstract cars(userId: number): Nullable<Car>[] | Promise<Nullable<Car>[]>;
 
     abstract car(id: number): Nullable<Car> | Promise<Nullable<Car>>;
@@ -86,6 +116,12 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
+    abstract createAddress(createAddressInput: CreateAddressInput): Address | Promise<Address>;
+
+    abstract updateAddress(updateAddressInput: UpdateAddressInput): Address | Promise<Address>;
+
+    abstract removeAddress(id: number): Nullable<Address> | Promise<Nullable<Address>>;
+
     abstract createCar(createCarInput: CreateCarInput): Car | Promise<Car>;
 
     abstract updateCar(updateCarInput: UpdateCarInput): Car | Promise<Car>;
@@ -109,6 +145,16 @@ export abstract class IMutation {
     abstract removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
 }
 
+export class Car {
+    id?: Nullable<number>;
+    brand?: Nullable<string>;
+    maxPassenger?: Nullable<number>;
+    consumption?: Nullable<number>;
+    bootSize?: Nullable<number>;
+    manual?: Nullable<boolean>;
+    owner?: Nullable<User>;
+}
+
 export class Event {
     id?: Nullable<number>;
     name?: Nullable<string>;
@@ -122,6 +168,9 @@ export class User {
     name?: Nullable<string>;
     drivingLicence?: Nullable<boolean>;
     manual?: Nullable<boolean>;
+    verified?: Nullable<boolean>;
+    spotify?: Nullable<boolean>;
+    address?: Nullable<Address>;
     events?: Nullable<Nullable<Event>[]>;
 }
 

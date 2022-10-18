@@ -24,33 +24,34 @@ model User {
   verified          Boolean
   spotify           Boolean            @default(false)
   address           Address            @relation(fields: [addressId], references: [id])
-  events            Event[]
+  events            UsersOnEvents[]
   spendings         Spending[]
   shoppingListItems ShoppingListItem[]
   cars              Car[]
   addressId         Int
-  UsersOnEvents     UsersOnEvents[]
 }
 
 model Event {
-  id            Int                @id @default(autoincrement())
-  name          String
-  total         Float
-  address       Address            @relation(fields: [addressId], references: [id])
-  participants  User[]
-  playlist      Music[]
-  shopingList   ShoppingListItem[]
-  spendings     Spending[]
-  addressId     Int
-  UsersOnEvents UsersOnEvents[]
+  id           Int                @id @default(autoincrement())
+  name         String
+  total        Float
+  address      Address            @relation(fields: [addressId], references: [id])
+  participants UsersOnEvents[]
+  playlist     Music[]
+  shopingList  ShoppingListItem[]
+  spendings    Spending[]
+  addressId    Int
+  createdAt    DateTime           @default(now())
 }
 
 model UsersOnEvents {
-  user    User        @relation(fields: [userId], references: [id])
-  userId  Int
-  event   Event       @relation(fields: [eventId], references: [id])
-  eventId Int
-  role    EventRole[]
+  user            User        @relation(fields: [userId], references: [id])
+  userId          Int
+  event           Event       @relation(fields: [eventId], references: [id])
+  eventId         Int
+  role            EventRole[]
+  startingAddress Address     @relation(fields: [addressId], references: [id])
+  addressId       Int
 
   @@id([userId, eventId])
 }
@@ -104,35 +105,18 @@ model Car {
 }
 
 model Address {
-  id     Int     @id @default(autoincrement())
-  city   City    @relation(fields: [cityId], references: [id])
-  street String
-  Number Int
-  cityId Int
-  User   User[]
-  Event  Event[]
-}
-
-model PostalCode {
-  id    Int    @id @default(autoincrement())
-  value String @unique
-  City  City[]
-}
-
-model City {
-  id           Int        @id @default(autoincrement())
-  value        String     @unique
-  postalCode   PostalCode @relation(fields: [postalCodeId], references: [id])
-  country      Country    @relation(fields: [countryId], references: [id])
-  Address      Address[]
-  postalCodeId Int
-  countryId    Int
-}
-
-model Country {
-  id    Int    @id @default(autoincrement())
-  value String @unique
-  City  City[]
+  id            Int             @id @default(autoincrement())
+  country       String
+  city          String
+  postalCode    String
+  street        String
+  number        Int
+  long          String
+  lat           String
+  User          User[]
+  Event         Event[]
+  UsersOnEvents UsersOnEvents[]
+  @@unique([long,lat])
 }
 
 enum Role {

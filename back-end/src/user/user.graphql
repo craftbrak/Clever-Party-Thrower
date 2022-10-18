@@ -4,25 +4,34 @@ type User {
   name: String
   drivingLicence: Boolean
   manual: Boolean
+  verified: Boolean
+  spotify: Boolean,
+  address: Address
   events: [Event]
 }
 
 input CreateUserInput {
   email:String!
   name: String!
-  password: String!
+  password:String!
   drivingLicence: Boolean
   manual: Boolean
+  verified: Boolean
+  spotify: Boolean,
+  address: CreateAddressInput
   events: [CreateEventInput]
 }
 
 input UpdateUserInput {
   id: Int!
-  email:String
-  name: String
-  password: String
+  email:String!
+  name: String!
+  password:String!
   drivingLicence: Boolean
   manual: Boolean
+  verified: Boolean
+  spotify: Boolean,
+  address: UpdateAddressInput
   events: [UpdateEventInput]
 }
 

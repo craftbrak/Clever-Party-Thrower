@@ -1,0 +1,151 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  email String [unique, not null]
+  name String [not null]
+  password String [not null]
+  drivingLicence Boolean [not null, default: false]
+  manual Boolean [not null, default: false]
+  verified Boolean [not null]
+  spotify Boolean [not null, default: false]
+  address Address [not null]
+  events UsersOnEvents [not null]
+  spendings Spending [not null]
+  shoppingListItems ShoppingListItem [not null]
+  cars Car [not null]
+  addressId Int [not null]
+}
+
+Table Event {
+  id Int [pk, increment]
+  name String [not null]
+  total Float [not null]
+  address Address [not null]
+  participants UsersOnEvents [not null]
+  playlist Music [not null]
+  shopingList ShoppingListItem [not null]
+  spendings Spending [not null]
+  addressId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+}
+
+Table UsersOnEvents {
+  user User [not null]
+  userId Int [not null]
+  event Event [not null]
+  eventId Int [not null]
+  role EventRole[] [not null]
+  startingAddress Address [not null]
+  addressId Int [not null]
+
+  indexes {
+    (userId, eventId) [pk]
+  }
+}
+
+Table Spending {
+  id Int [pk, increment]
+  user User [not null]
+  shoppinglistItem ShoppingListItem
+  name String
+  value Float [not null]
+  Event Event [not null]
+  eventId Int [not null]
+  userId Int [not null]
+  shopingListItemId Int
+}
+
+Table ShoppingListItem {
+  id Int [pk, increment]
+  quantity String [not null]
+  name String [not null]
+  price Float [not null]
+  user User [not null]
+  bought Boolean [not null]
+  Event Event
+  eventId Int
+  Spending Spending [not null]
+  userId Int [not null]
+}
+
+Table Music {
+  id Int [pk, increment]
+  url String [not null]
+  title String
+  artist String
+  album String
+  Event Event [not null]
+  eventId Int [not null]
+}
+
+Table Car {
+  id Int [pk, increment]
+  brand String [not null]
+  maxPassengers Int [not null]
+  consumption Float [not null]
+  bootSize Int [not null]
+  electric Boolean [not null, default: false]
+  manual Boolean [not null, default: false]
+  range Int [not null, default: -1]
+  owner User [not null]
+  userId Int [not null]
+}
+
+Table Address {
+  id Int [pk, increment]
+  country String [not null]
+  city String [not null]
+  postalCode String [not null]
+  street String [not null]
+  number Int [not null]
+  long String [not null]
+  lat String [not null]
+  User User [not null]
+  Event Event [not null]
+  UsersOnEvents UsersOnEvents [not null]
+
+  indexes {
+    (long, lat) [unique]
+  }
+}
+
+Enum Role {
+  USER
+  ADMIN
+}
+
+Enum EventRole {
+  PARTICIPANT
+  INVITE
+  BOB
+  HOST
+  OWNER
+  DJ
+}
+
+Ref: User.addressId > Address.id
+
+Ref: Event.addressId > Address.id
+
+Ref: UsersOnEvents.userId > User.id
+
+Ref: UsersOnEvents.eventId > Event.id
+
+Ref: UsersOnEvents.addressId > Address.id
+
+Ref: Spending.userId > User.id
+
+Ref: Spending.shopingListItemId > ShoppingListItem.id
+
+Ref: Spending.eventId > Event.id
+
+Ref: ShoppingListItem.userId > User.id
+
+Ref: ShoppingListItem.eventId > Event.id
+
+Ref: Music.eventId > Event.id
+
+Ref: Car.userId > User.id

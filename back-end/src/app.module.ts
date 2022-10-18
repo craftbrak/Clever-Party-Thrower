@@ -7,6 +7,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { UserModule } from './user/user.module';
 import { EventModule } from './event/event.module';
 import { CarModule } from './car/car.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
     imports: [DbModule, GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -17,7 +18,7 @@ import { CarModule } from './car/car.module';
         definitions: {
             path: join(process.cwd(), 'src/graphql.ts'), outputAs: 'class',
         },
-    }), UserModule, EventModule, CarModule,], controllers: [], providers: [],
+    }), UserModule, EventModule, CarModule, AddressModule,], controllers: [], providers: [],
 })
 export class AppModule {
 }

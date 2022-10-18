@@ -40,6 +40,6 @@ export class CarService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} car`;
+    return this.prismaClient.car.delete({where:{id:id}});
   }
 }

@@ -7,7 +7,22 @@ export class UserService {
   constructor(private prismaClient: DbService) {}
   create(createUserInput: CreateUserInput) {
     return this.prismaClient.user.create({
-      data: createUserInput,
+      data: {
+        name:createUserInput.name,
+        email: createUserInput.email,
+        password:createUserInput.password,
+        drivingLicence:createUserInput.drivingLicence,
+        manual:createUserInput.manual,
+        verified:createUserInput.verified,
+        spotify: createUserInput.spotify,
+        address: {
+          connectOrCreate:{
+            where:{
+
+            }
+          }
+        }
+      },
       include:{
         events: true
       }
@@ -34,16 +49,16 @@ export class UserService {
   }
 
   update(id: number, updateUserInput: UpdateUserInput){
-    return this.prismaClient.user.update({
-      where:{
-        id:updateUserInput.id
-      },
-      data:updateUserInput,
-        include:{
-          events: true
-        }
-    }
-    );
+    // return this.prismaClient.user.update({
+    //   where:{
+    //     id:updateUserInput.id
+    //   },
+    //   data:updateUserInput,
+    //     include:{
+    //       events: true
+    //     }
+    // }
+    // );
   }
 
   remove(id: number){
