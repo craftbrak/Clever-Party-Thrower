@@ -1,0 +1,178 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+interface Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+
+  """Name of the user"""
+  name: String!
+
+  """Email of the user"""
+  email: String!
+  avatar: String
+  eventToUsers: [EventToUser!]!
+}
+
+type Event {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+
+  """Name of the event"""
+  name: String!
+
+  """Description of the event"""
+  description: String!
+
+  """Total spent for the event"""
+  total: Float!
+  members(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): [EventToUser!]
+}
+
+input EventsPaginationSortBy {
+  createdAt: SortDirection
+  name: SortDirection
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+type EventToUser {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  event: Event!
+  user: User!
+}
+
+type EventsPagination {
+  totalCount: Float!
+  nodes: [Event!]!
+}
+
+type AuthLoginOutput {
+  accessToken: String!
+}
+
+type Address {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  unitNumber: String!
+  streetNumber: String!
+  line1: String!
+  line2: String!
+  city: String!
+  postalCode: String!
+}
+
+type Query {
+  sayHello: String!
+  events(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
+  event(id: ID!): Event!
+  user(email: String!): User!
+  address(id: Int!): Address!
+}
+
+type Mutation {
+  createEvent(createEventInput: CreateEventInput!): Event!
+  updateEvent(updateEventInput: UpdateEventInput!): Event!
+  removeEvent(id: ID!): ID!
+  authLogin(username: String!, password: String!): AuthLoginOutput!
+  createUser(singUp: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createAddress(createAddressInput: CreateAddressInput!): Address!
+  updateAddress(updateAddressInput: UpdateAddressInput!): Address!
+  removeAddress(id: Int!): Address!
+}
+
+input CreateEventInput {
+  """Name of the event"""
+  name: String!
+
+  """Description of the event"""
+  description: String!
+
+  """Total spent for the event"""
+  total: Float!
+}
+
+input UpdateEventInput {
+  """Name of the event"""
+  name: String!
+
+  """Description of the event"""
+  description: String!
+
+  """Total spent for the event"""
+  total: Float!
+
+  """Id of the event"""
+  id: ID!
+}
+
+input CreateUserInput {
+  """Name of the user"""
+  name: String!
+
+  """Email of the user"""
+  email: String!
+
+  """Password of the user"""
+  password: String!
+  avatar: String
+}
+
+input UpdateUserInput {
+  """Name of the user"""
+  name: String
+
+  """Email of the user"""
+  email: String
+
+  """Password of the user"""
+  password: String
+  avatar: String
+  id: Int!
+}
+
+input CreateAddressInput {
+  unitNumber: String!
+  streetNumber: String!
+  line1: String!
+  line2: String!
+  city: String!
+  postalCode: String!
+}
+
+input UpdateAddressInput {
+  unitNumber: String!
+  streetNumber: String!
+  line1: String!
+  line2: String!
+  city: String!
+  postalCode: String!
+  id: Int!
+}

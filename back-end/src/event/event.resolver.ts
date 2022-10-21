@@ -1,44 +1,44 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from "@nestjs/graphql";
-import { EventService } from './event.service';
-import { CreateEventInput,UpdateEventInput } from '../graphql';
-@Resolver('Event')
+import { Args,  ID, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { EventService } from "./event.service";
+import { Event, EventToUser } from "./entities/event.entity";
+import { CreateEventInput } from "./dto/create-event.input";
+import { UpdateEventInput } from "./dto/update-event.input";
+import { EventsPagination, EventsPaginationArgs } from "./dto/events.pagination.dto";
+import { CurrentUser } from "../auth/guards/jwtAuth.gruard";
+import { JWTPayload } from "../auth/auth.service";
+
+@Resolver(() => Event)
 export class EventResolver {
-  constructor(private readonly eventService: EventService) {}
-
-  @Mutation('createEvent')
-  create(@Args('createEventInput') createEventInput: CreateEventInput) {
-    return this.eventService.create(createEventInput);
+  constructor(private readonly eventService: EventService) {
   }
 
-  @Query('event')
-  findAll() {
-    return this.eventService.findAll();
+  @Query(() => EventsPagination, { name: "events" })
+  async findAll(@Args() args: EventsPaginationArgs,@CurrentUser() user: JWTPayload) {
+    return await this.eventService.findAll(args,user);
   }
 
-  @Query('event')
-  findOne(@Args('id') id: number) {
+  @Query(() => Event, { name: "event" })
+  async findOne(@Args("id", { type: () => ID }) id: Event["id"]) {
     return this.eventService.findOne(id);
   }
 
-  @Mutation('updateEvent')
-  update(@Args('updateEventInput') updateEventInput: UpdateEventInput) {
+
+  @Mutation(() => Event)
+  async createEvent(@Args("createEventInput") createEventInput: CreateEventInput,@CurrentUser() user: JWTPayload) {
+    return this.eventService.create(createEventInput,user);
+  }
+
+  @Mutation(() => Event)
+  async updateEvent(@Args("updateEventInput") updateEventInput: UpdateEventInput) {
     return this.eventService.update(updateEventInput.id, updateEventInput);
   }
 
-  @Mutation('removeEvent')
-  remove(@Args('id') id: number) {
+  @Mutation(() => ID)
+  async removeEvent(@Args("id", { type: () => ID }) id: Event["id"]) {
     return this.eventService.remove(id);
   }
-  @Mutation('addParticipant')
-  addParticipant(@Args('id') id: number, @Args('userId') userId:number) {
-    return this.eventService.addParticipant(id,userId);
-  }
-  @Mutation('removeParticipant')
-  removeParticipant(@Args('id') id: number, @Args('userId') userId:number) {
-    return this.eventService.removeParticipant(id,userId);
-  }
-  @ResolveField('participants')
-  getParticipants(@Parent() event){
-    return this.eventService.findParticipants(event.id)
+  @ResolveField('members',()=>[EventToUser])
+  async members(@Parent() event: Event,@Args() args: EventsPaginationArgs,@CurrentUser() user: JWTPayload){
+    return await this.eventService.getMembers(args, event, user)
   }
 }

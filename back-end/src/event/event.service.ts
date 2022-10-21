@@ -1,100 +1,66 @@
 import { Injectable } from "@nestjs/common";
-import { CreateEventInput, UpdateEventInput } from "../graphql";
-import { DbService } from "../db/db.service";
+import { CreateEventInput } from "./dto/create-event.input";
+import { UpdateEventInput } from "./dto/update-event.input";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Event, EventToUser } from "./entities/event.entity";
+import { EventsPagination, EventsPaginationArgs } from "./dto/events.pagination.dto";
+import { SortDirection } from "../pagination/dto/pagination.dto";
+import { JWTPayload } from "../auth/auth.service";
+import { EventToUserService } from "./EventToUser.service";
+import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
 
 @Injectable()
 export class EventService {
-  constructor(private prismaClient: DbService) {
+  constructor(@InjectRepository(Event) private readonly eventRepo: Repository<Event>, private eventToUserService: EventToUserService) {
   }
 
-  create(createEventInput: CreateEventInput) {
-    // return this.prismaClient.event.create({
-    //   data: {
-    //     name: createEventInput.name,
-    //     total: createEventInput.total,
-    //
-    //   }
-    // });
+  async create(input: CreateEventInput, user: JWTPayload): Promise<Event> {
+    const event = await this.eventRepo.save(await this.eventRepo.create(input));
+    const evToUsr = new EventToUser();
+    evToUsr.userId = user.id;
+    evToUsr.eventId = event.id;
+    await this.eventToUserService.create(evToUsr);
+    return await this.eventRepo.save(event);
   }
 
-  findAll() {
-    return this.prismaClient.event.findMany();
-  }
-
-  findOne(id: number) {
-    return this.prismaClient.event.findUnique({
-      where: {
-        id: id
+  async findAll(args: EventsPaginationArgs, user: JWTPayload): Promise<EventsPagination> {
+    const [nodes, totalCount] = await this.eventRepo.findAndCount({
+      skip: args.skip,
+      take: args.take,
+      order: {
+        createdAt: args.sortBy.createdAt === SortDirection.ASC ? "ASC" : "DESC",
+        name: args.sortBy.name === SortDirection.ASC ? "ASC" : "DESC"
       },
-      include: {
-        participants: true
+      relations: {
+        members: true
       }
     });
+    return { nodes, totalCount };
   }
 
-  findAllOfUser(useIid: number) {
-    return this.prismaClient.user.findUnique({
-      where: {
-        id: useIid
-      }
-    }).events({
-      include: {
-        // participants: true
-      }
-    });
+  async findOne(id: Event["id"]): Promise<Event> {
+    return await this.eventRepo.findOneOrFail({ where: { id: id } });
   }
 
-  findParticipants(eventId: number) {
-    return this.prismaClient.event.findUnique({
+  async update(eventId: Event["id"], updateEventInput: UpdateEventInput): Promise<Event> {
+    const event = await this.eventRepo.findOneOrFail({
       where: {
         id: eventId
       }
-    }).participants();
-  }
-
-  update(id: number, updateEventInput: UpdateEventInput) {
-    return this.prismaClient.event.update({
-      where: {
-        id: id
-      },
-      data: {
-        name: updateEventInput.name,
-        total: updateEventInput.total
-      }
     });
+    event.name = updateEventInput.name;
+    event.total = updateEventInput.total;
+    event.description = updateEventInput.description;
+    return await this.eventRepo.save(event);
   }
 
-  remove(id: number) {
-    return this.prismaClient.event.delete({where:{id:id}});
+  async remove(eventId: Event["id"]): Promise<String> {
+    await this.eventRepo.remove(await this.eventRepo.findOneOrFail({ where: { id: eventId } }));
+    return eventId;
   }
 
-  addParticipant(id: number, userId: number) {
-    return this.prismaClient.event.update({
-      where: {
-        id: id
-      },
-      data: {
-        participants: {
-          // create: {
-          //   userId: userId
-          // }
-        }
-      }
-    });
-  }
-
-  removeParticipant(id: number, userId: number) {
-    return this.prismaClient.event.update({
-      where: {
-        id: id
-      },
-      data: {
-        participants: {
-          // disconnect: {
-          //   id: userId
-          // }
-        }
-      }
-    });
+  async getMembers(args: MemberPaginationArgs, event: Event, user: JWTPayload) {
+    return (await this.eventToUserService.findAllOfEvent(args,event)).nodes;
   }
 }

@@ -1,41 +1,33 @@
-import { Injectable } from "@nestjs/common";
-import { CreateAddressInput, UpdateAddressInput } from "../graphql";
-import { DbService } from "../db/db.service";
+import { Injectable } from '@nestjs/common';
+import { CreateAddressInput } from './dto/create-address.input';
+import { UpdateAddressInput } from './dto/update-address.input';
+import { InjectRepository } from "@nestjs/typeorm";
+import { Address, } from "./entities/address.entity";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class AddressService {
-  constructor(private readonly prismaClient: DbService) {
+  constructor(@InjectRepository(Address) private readonly  addressRepo: Repository<Address>,
+              // @InjectRepository(Country) private readonly  countryRepo: Repository<Country>
+              ) {
+  }
+  create(createAddressInput: CreateAddressInput) {
+    return 'This action adds a new address';
   }
 
-  async create(createAddressInput: CreateAddressInput) {
-    return this.prismaClient.address.create({
-      data: {
-        street: createAddressInput.street,
-        long: createAddressInput.long,
-        number: createAddressInput.number,
-        lat: createAddressInput.lat,
-        city: createAddressInput.city,
-        postalCode: createAddressInput.postalCode,
-        country: createAddressInput.country,
-      },
-    });
-
+  findAll() {
+    return `This action returns all address`;
   }
 
   findOne(id: number) {
-    return this.prismaClient.address.findUnique({ where: { id: id } });
+    return `This action returns a #${id} address`;
   }
 
-  update(id: number, updateAddressInput: UpdateAddressInput) {
-    return this.prismaClient.address.update({
-        where: {
-          id: id,
-        }, data: updateAddressInput,
-      },
-    );
+  update(id: Address['id'], updateAddressInput: UpdateAddressInput) {
+    return `This action updates a #${id} address`;
   }
 
   remove(id: number) {
-    return this.prismaClient.address.delete({where:{id:id}});
+    return `This action removes a #${id} address`;
   }
 }
