@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { EventResolver } from './event.resolver';
-import { EventService } from './event.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { EventResolver } from "./event.resolver";
+import { EventService } from "./event.service";
 
-describe('EventResolver', () => {
+describe("EventResolver", () => {
   let resolver: EventResolver;
 
   beforeEach(async () => {
@@ -13,7 +13,7 @@ describe('EventResolver', () => {
     resolver = module.get<EventResolver>(EventResolver);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(resolver).toBeDefined();
   });
 });

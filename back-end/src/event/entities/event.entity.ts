@@ -1,7 +1,15 @@
 import { Field, Float, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  RelationId,
+} from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
-import { User } from "../../user/entities/user.entity";
+import { Address } from "../../address/entities/address.entity";
+import { EventToUser } from "./eventToUser.entity";
 
 @ObjectType()
 @Entity()
@@ -15,25 +23,14 @@ export class Event extends Node {
   @Column({ type: "float" })
   @Field(() => Float, { description: "Total spent for the event" })
   total: number;
-  @Field(()=>[EventToUser],{ nullable: true })
-  @OneToMany(() => EventToUser, eventToUser => eventToUser.user)
+  @Field(() => [EventToUser], { nullable: true })
+  @OneToMany(() => EventToUser, (eventToUser) => eventToUser.user)
   members: EventToUser[];
-}
-
-@ObjectType()
-@Entity()
-export class EventToUser extends Node {
-
-  @Column()
-   userId!: User["id"];
-
-  @Column()
-   eventId!: Event["id"];
-  @Field(()=>Event)
-  @ManyToOne(() => Event, (event) => event.members)
-  readonly event!: Event;
-  @Field(()=>User)
-    @ManyToOne(() => User, (user) => user.eventToUsers)
-  readonly user!: User;
-
+  @Field(() => Address, { nullable: true })
+  @ManyToOne(() => Address)
+  @JoinColumn([{ name: "addressId", referencedColumnName: "id" }])
+  address: Address;
+  @Field(() => String, { nullable: true })
+  @RelationId((self: Event) => self.address)
+  readonly addressId: Address["id"];
 }

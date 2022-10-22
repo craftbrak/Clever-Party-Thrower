@@ -1,6 +1,10 @@
 import { ArgsType, Field, InputType, ObjectType } from "@nestjs/graphql";
-import { Pagination, PaginationArgs, PaginationSortBy } from "../../pagination/dto/pagination.dto";
-import { EventToUser } from "../entities/event.entity";
+import {
+  Pagination,
+  PaginationArgs,
+  PaginationSortBy,
+} from "../../pagination/dto/pagination.dto";
+import { EventToUser } from "../entities/eventToUser.entity";
 
 @InputType()
 export class MemberPaginationSortBy extends PaginationSortBy {

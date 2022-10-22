@@ -14,6 +14,29 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Country {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  name: String!
+  code: String!
+}
+
+type Address {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  unitNumber: String
+  streetNumber: String!
+  line1: String!
+  line2: String
+  city: String!
+  postalCode: String!
+  country: Country!
+}
+
 type User {
   id: ID!
   createdAt: DateTime!
@@ -27,6 +50,18 @@ type User {
   email: String!
   avatar: String
   eventToUsers: [EventToUser!]!
+  addressId: String
+  address: Address!
+}
+
+type EventToUser {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  event: Event!
+  user: User!
+  addressId: String
 }
 
 type Event {
@@ -44,6 +79,8 @@ type Event {
   """Total spent for the event"""
   total: Float!
   members(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): [EventToUser!]
+  address: Address
+  addressId: String
 }
 
 input EventsPaginationSortBy {
@@ -56,15 +93,6 @@ enum SortDirection {
   DESC
 }
 
-type EventToUser {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  event: Event!
-  user: User!
-}
-
 type EventsPagination {
   totalCount: Float!
   nodes: [Event!]!
@@ -74,38 +102,27 @@ type AuthLoginOutput {
   accessToken: String!
 }
 
-type Address {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  unitNumber: String!
-  streetNumber: String!
-  line1: String!
-  line2: String!
-  city: String!
-  postalCode: String!
-}
-
 type Query {
   sayHello: String!
-  events(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
+  getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
   event(id: ID!): Event!
-  user(email: String!): User!
   address(id: Int!): Address!
+  countries: [Country!]!
+  user(email: String!): User!
 }
 
 type Mutation {
   createEvent(createEventInput: CreateEventInput!): Event!
   updateEvent(updateEventInput: UpdateEventInput!): Event!
   removeEvent(id: ID!): ID!
+  createAddress(createAddressInput: CreateAddressInput!): Address!
+  updateAddress(updateAddressInput: UpdateAddressDto!): Address!
+  removeAddress(id: Int!): Address!
+  createCountry(CreateCountryInput: CreateCountryInput!): Country!
   authLogin(username: String!, password: String!): AuthLoginOutput!
   createUser(singUp: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createAddress(createAddressInput: CreateAddressInput!): Address!
-  updateAddress(updateAddressInput: UpdateAddressInput!): Address!
-  removeAddress(id: Int!): Address!
 }
 
 input CreateEventInput {
@@ -117,6 +134,7 @@ input CreateEventInput {
 
   """Total spent for the event"""
   total: Float!
+  addressId: String!
 }
 
 input UpdateEventInput {
@@ -128,9 +146,36 @@ input UpdateEventInput {
 
   """Total spent for the event"""
   total: Float!
+  addressId: String
 
   """Id of the event"""
   id: ID!
+}
+
+input CreateAddressInput {
+  unitNumber: String
+  streetNumber: String!
+  line1: String!
+  line2: String
+  city: String!
+  postalCode: String!
+  countryId: String!
+}
+
+input UpdateAddressDto {
+  unitNumber: String
+  streetNumber: String!
+  line1: String!
+  line2: String
+  city: String!
+  postalCode: String!
+  countryId: String!
+  id: Int!
+}
+
+input CreateCountryInput {
+  name: String!
+  code: String!
 }
 
 input CreateUserInput {
@@ -143,6 +188,7 @@ input CreateUserInput {
   """Password of the user"""
   password: String!
   avatar: String
+  addressId: String!
 }
 
 input UpdateUserInput {
@@ -155,24 +201,6 @@ input UpdateUserInput {
   """Password of the user"""
   password: String
   avatar: String
-  id: Int!
-}
-
-input CreateAddressInput {
-  unitNumber: String!
-  streetNumber: String!
-  line1: String!
-  line2: String!
-  city: String!
-  postalCode: String!
-}
-
-input UpdateAddressInput {
-  unitNumber: String!
-  streetNumber: String!
-  line1: String!
-  line2: String!
-  city: String!
-  postalCode: String!
-  id: Int!
+  addressId: String
+  id: String!
 }

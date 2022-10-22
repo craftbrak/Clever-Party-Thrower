@@ -1,52 +1,37 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field } from "@nestjs/graphql";
 import { Node } from "../../pagination/entities/node.entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { Country } from "./country.entity";
+import { IsPostalCode } from "class-validator";
 @Entity()
 @ObjectType()
-export class Address extends Node{
+export class Address extends Node {
+
+  @Column({nullable:true})
+  @Field(() => String,{nullable:true})
+  unitNumber: string;
 
   @Column()
   @Field(() => String)
-  unitNumber: string
+  streetNumber: string;
 
   @Column()
   @Field(() => String)
-  streetNumber:string
+  line1: string;
+
+  @Column({nullable:true})
+  @Field(() => String,{nullable:true})
+  line2: string;
 
   @Column()
   @Field(() => String)
-  line1:string
-
+  city: string;
+  @IsPostalCode()
   @Column()
   @Field(() => String)
-  line2: string
+  postalCode: string;
 
-  @Column()
-  @Field(() => String)
-  city: string
-
-  @Column()
-  @Field(() => String)
-  postalCode:string
-
-  // @ManyToOne(()=>Country,(country)=>country.addresses)
-  // @Field(() => Country)
-  // country:Country
-
+  @ManyToOne(() => Country, (country) => country.addresses)
+  @Field(() => Country)
+  country: Country;
 }
-
-// @Entity()
-// @ObjectType()
-// export class Country extends Node{
-//
-//   @Column()
-//   @Field()
-//   name:string
-//
-//   @Column()
-//   @Field()
-//   code:string
-//
-//   @OneToMany(()=>Address,(address)=>address.country)
-//   addresses: Address[]
-// }

@@ -1,20 +1,26 @@
 import { Field, ID, Int, InterfaceType } from "@nestjs/graphql";
-import { BaseEntity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import {
+  BaseEntity,
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn,
+} from "typeorm";
 
 @InterfaceType()
-export abstract class Node extends BaseEntity{
-  @Field(()=>ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string
+export abstract class Node extends BaseEntity {
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-  @Field(()=>Date)
+  @Field(() => Date)
   @CreateDateColumn()
-  createdAt:Date;
+  createdAt: Date;
 
-  @Field(()=>Date)
+  @Field(() => Date)
   @UpdateDateColumn()
-  updatedAt:Date;
-  @Field(()=>Int)
+  updatedAt: Date;
+  @Field(() => Int)
   @VersionColumn()
-  version:number;
+  version: number;
 }

@@ -6,17 +6,16 @@ import { AuthLoginOutput } from "./dto/auth-login.dto";
 import { Public } from "./public.decorator";
 
 @Resolver()
-export class AuthResolver{
-  constructor(private readonly authService:AuthService) {
-  }
+export class AuthResolver {
+  constructor(private readonly authService: AuthService) {}
   @UseGuards(LocalAuthGuard)
   @Public()
-  @Mutation(()=>AuthLoginOutput)
+  @Mutation(() => AuthLoginOutput)
   async authLogin(
-    @Context('req') req,
-    @Args('username') _username:String,
-    @Args('password') _password:String
-  ){
-    return this.authService.login(req.user)
+    @Context("req") req,
+    @Args("username") _username: string,
+    @Args("password") _password: string,
+  ) {
+    return this.authService.login(req.user);
   }
 }
