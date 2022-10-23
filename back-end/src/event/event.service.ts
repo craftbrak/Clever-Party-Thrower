@@ -9,7 +9,7 @@ import {
   EventsPaginationArgs,
 } from "./dto/events.pagination.dto";
 import { SortDirection } from "../pagination/dto/pagination.dto";
-import { JWTPayload } from "../auth/auth.service";
+// import { JWTPayload } from "../auth/auth.service";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
 import { AddressService } from "../address/address.service";
@@ -31,14 +31,10 @@ export class EventService {
 
   async findAll(
     args: EventsPaginationArgs,
-    user: JWTPayload,
+    //user: JWTPayload,
   ): Promise<EventsPagination> {
+    //TODO: Switch to querry builder and add filter to only see event of user
     const [nodes, totalCount] = await this.eventRepo.findAndCount({
-      where: {
-        members: {
-          userId: user.id,
-        },
-      },
       skip: args.skip,
       take: args.take,
       order: {
@@ -86,7 +82,10 @@ export class EventService {
     return eventId;
   }
 
-  async getMembers(args: MemberPaginationArgs, event: Event, user: JWTPayload) {
+  async getMembers(
+    args: MemberPaginationArgs,
+    event: Event /*user: JWTPayload*/,
+  ) {
     return (await this.eventToUserService.findAllOfEvent(args, event)).nodes;
   }
 }
