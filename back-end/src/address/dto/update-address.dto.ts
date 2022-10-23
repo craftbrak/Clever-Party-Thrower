@@ -1,5 +1,5 @@
 import { CreateAddressInput } from "./create-address.input";
-import { InputType, Field, Int, PartialType } from "@nestjs/graphql";
+import { InputType, Field, Int } from "@nestjs/graphql";
 import { Address } from "../entities/address.entity";
 
 @InputType()

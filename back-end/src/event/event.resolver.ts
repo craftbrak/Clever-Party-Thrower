@@ -17,7 +17,7 @@ import {
 } from "./dto/events.pagination.dto";
 import { CurrentUser } from "../auth/guards/jwtAuth.gruard";
 import { JWTPayload } from "../auth/auth.service";
-import { EventToUser } from "./entities/eventToUser.entity";
+import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
 

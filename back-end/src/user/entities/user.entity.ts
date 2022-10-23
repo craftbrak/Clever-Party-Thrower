@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
-import { EventToUser } from "../../event/entities/eventToUser.entity";
+import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 import { IsEmail } from "class-validator";
 @Entity()
 @ObjectType()
@@ -33,11 +33,12 @@ export class User extends Node {
   @OneToMany(() => EventToUser, (eventToUser) => eventToUser.event)
   public eventToUsers!: EventToUser[];
 
-  @ManyToOne(() => Address)
+  @Field(() => Address, { nullable: true })
+  @ManyToOne(() => Address, { nullable: true })
   @JoinColumn([{ name: "addressId", referencedColumnName: "id" }])
   address: Address;
 
   @Field(() => String, { nullable: true })
   @RelationId((self: User) => self.address)
-  readonly addressId: Address["id"];
+  addressId: Address["id"];
 }

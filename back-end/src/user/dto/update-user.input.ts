@@ -5,5 +5,5 @@ import { User } from "../entities/user.entity";
 @InputType()
 export class UpdateUserInput extends PartialType(CreateUserInput) {
   @Field(() => String)
-  id: User['id'];
+  id: User["id"];
 }

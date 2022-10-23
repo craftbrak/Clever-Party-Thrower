@@ -12,6 +12,7 @@ import { PaginationModule } from "./pagination/pagination.module";
 import { AuthModule } from "./auth/auth.module";
 import { UserModule } from "./user/user.module";
 import { AddressModule } from "./address/address.module";
+import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import * as Joi from "joi";
 
 @Module({
@@ -55,6 +56,7 @@ import * as Joi from "joi";
     AuthModule,
     UserModule,
     AddressModule,
+    EventToUserModule,
   ],
   providers: [AppService, AppResolver],
 })

@@ -1,18 +1,18 @@
 import {
-  Resolver,
-  Query,
-  Mutation,
   Args,
   Int,
-  ResolveField,
+  Mutation,
   Parent,
+  Query,
+  ResolveField,
+  Resolver,
 } from "@nestjs/graphql";
 import { UserService } from "./user.service";
 import { User } from "./entities/user.entity";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { Public } from "../auth/public.decorator";
-import { EventToUser } from "../event/entities/eventToUser.entity";
+import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
 
@@ -39,15 +39,13 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  removeUser(@Args("id", { type: () => Int }) id: User['id']) {
+  removeUser(@Args("id", { type: () => Int }) id: User["id"]) {
     return this.userService.remove(id);
   }
 
   @ResolveField("eventToUsers", () => [EventToUser]) //TODO: FIX NAME OF FIELD
   async events(@Parent() user: User) {
-    const e = await this.userService.getEvents(user);
-    console.log(e[0].event.id);
-    return e;
+    return await this.userService.getEvents(user);
   }
 
   @ResolveField("address", () => Address)

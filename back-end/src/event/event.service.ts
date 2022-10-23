@@ -10,9 +10,8 @@ import {
 } from "./dto/events.pagination.dto";
 import { SortDirection } from "../pagination/dto/pagination.dto";
 import { JWTPayload } from "../auth/auth.service";
-import { EventToUserService } from "./EventToUser.service";
+import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
-import { EventToUser } from "./entities/eventToUser.entity";
 
 @Injectable()
 export class EventService {
@@ -23,10 +22,7 @@ export class EventService {
 
   async create(input: CreateEventInput, user: JWTPayload): Promise<Event> {
     const event = await this.eventRepo.save(await this.eventRepo.create(input));
-    const evToUsr = new EventToUser();
-    evToUsr.userId = user.id;
-    evToUsr.eventId = event.id;
-    await this.eventToUserService.create(evToUsr);
+    event.addressId = input.addressId;
     return await this.eventRepo.save(event);
   }
 

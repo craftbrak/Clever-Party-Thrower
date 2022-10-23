@@ -14,6 +14,6 @@ export class CreateUserInput {
   password: string;
   @Field(() => String, { nullable: true })
   avatar?: string;
-  @Field(()=>String)
-  addressId: string
+  @Field(() => String)
+  addressId: string;
 }

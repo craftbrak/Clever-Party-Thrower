@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
-import { EventToUser } from "./eventToUser.entity";
+import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 
 @ObjectType()
 @Entity()
@@ -32,5 +32,5 @@ export class Event extends Node {
   address: Address;
   @Field(() => String, { nullable: true })
   @RelationId((self: Event) => self.address)
-  readonly addressId: Address["id"];
+  addressId: Address["id"];
 }

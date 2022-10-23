@@ -4,7 +4,7 @@ import {
   PaginationArgs,
   PaginationSortBy,
 } from "../../pagination/dto/pagination.dto";
-import { EventToUser } from "../entities/eventToUser.entity";
+import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 
 @InputType()
 export class MemberPaginationSortBy extends PaginationSortBy {

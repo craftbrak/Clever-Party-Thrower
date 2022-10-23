@@ -16,11 +16,21 @@ export class AddressService {
     private readonly countryRepo: Repository<Country>,
   ) {}
   async create(createAddressInput: CreateAddressInput): Promise<Address> {
-    return this.addressRepo.create(createAddressInput);
+    const a = await this.addressRepo.create(createAddressInput).save();
+    const count = await this.findOneCountry(createAddressInput.countryId);
+    a.country = count;
+    return await a.save({ reload: true });
   }
 
   async findOne(id: Address["id"]): Promise<Address> {
-    return this.addressRepo.findOneByOrFail({ id: id });
+    return this.addressRepo.findOneOrFail({
+      where: {
+        id: id,
+      },
+      relations: {
+        country: true,
+      },
+    });
   }
 
   async update(id: Address["id"], updateAddressInput: UpdateAddressDto) {
@@ -33,7 +43,10 @@ export class AddressService {
   async findAllCountry(): Promise<Country[]> {
     return this.countryRepo.find();
   }
-  async createCountry(input: CreateCountryInput):Promise<Country>{
-    return await this.countryRepo.create(input)
+  async findOneCountry(id: Country["id"]): Promise<Country> {
+    return this.countryRepo.findOneByOrFail({ id });
+  }
+  async createCountry(input: CreateCountryInput): Promise<Country> {
+    return this.countryRepo.create(input);
   }
 }

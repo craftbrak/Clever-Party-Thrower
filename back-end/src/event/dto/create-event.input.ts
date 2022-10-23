@@ -11,6 +11,6 @@ export class CreateEventInput {
   @Field(() => Float, { description: "Total spent for the event" })
   total: number;
 
-  @Field(()=>String)
-  addressId: string
+  @Field(() => String)
+  addressId: string;
 }

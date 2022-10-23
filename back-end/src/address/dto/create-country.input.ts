@@ -4,11 +4,9 @@ import { Address } from "../entities/address.entity";
 
 @InputType()
 export class CreateCountryInput {
-
   @Field()
   name: string;
 
   @Field()
   code: string;
-
 }

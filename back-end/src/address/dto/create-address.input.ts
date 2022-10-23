@@ -2,7 +2,7 @@ import { InputType, Field } from "@nestjs/graphql";
 
 @InputType()
 export class CreateAddressInput {
-  @Field(() => String, {nullable:true})
+  @Field(() => String, { nullable: true })
   unitNumber: string;
 
   @Field(() => String)
@@ -11,7 +11,7 @@ export class CreateAddressInput {
   @Field(() => String)
   line1: string;
 
-  @Field(() => String, {nullable:true})
+  @Field(() => String, { nullable: true })
   line2: string;
 
   @Field(() => String)

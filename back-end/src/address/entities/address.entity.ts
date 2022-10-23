@@ -1,14 +1,13 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { Node } from "../../pagination/entities/node.entity";
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, RelationId } from "typeorm";
 import { Country } from "./country.entity";
 import { IsPostalCode } from "class-validator";
 @Entity()
 @ObjectType()
 export class Address extends Node {
-
-  @Column({nullable:true})
-  @Field(() => String,{nullable:true})
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
   unitNumber: string;
 
   @Column()
@@ -19,8 +18,8 @@ export class Address extends Node {
   @Field(() => String)
   line1: string;
 
-  @Column({nullable:true})
-  @Field(() => String,{nullable:true})
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
   line2: string;
 
   @Column()
@@ -34,4 +33,8 @@ export class Address extends Node {
   @ManyToOne(() => Country, (country) => country.addresses)
   @Field(() => Country)
   country: Country;
+
+  @Field(() => String)
+  @RelationId((self: Address) => self.country)
+  countryId: Country["id"];
 }

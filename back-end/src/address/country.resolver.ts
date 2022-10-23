@@ -3,13 +3,13 @@ import { Country } from "./entities/country.entity";
 import { AddressService } from "./address.service";
 import { CreateCountryInput } from "./dto/create-country.input";
 
-@Resolver(()=>Country)
-export class CountryResolver{
+@Resolver(() => Country)
+export class CountryResolver {
   constructor(private readonly addressService: AddressService) {}
 
-  @Mutation(()=>Country)
-  async createCountry(@Args('CreateCountryInput') input: CreateCountryInput){
-    return await this.addressService.createCountry(input)
+  @Mutation(() => Country)
+  async createCountry(@Args("CreateCountryInput") input: CreateCountryInput) {
+    return await this.addressService.createCountry(input);
   }
   @Query(() => [Country], { name: "countries" })
   async countries() {

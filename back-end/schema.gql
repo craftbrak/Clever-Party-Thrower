@@ -35,6 +35,7 @@ type Address {
   city: String!
   postalCode: String!
   country: Country!
+  countryId: String!
 }
 
 type User {
@@ -50,8 +51,8 @@ type User {
   email: String!
   avatar: String
   eventToUsers: [EventToUser!]!
+  address: Address
   addressId: String
-  address: Address!
 }
 
 type EventToUser {
@@ -59,8 +60,11 @@ type EventToUser {
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
+  userId: String!
+  eventId: String!
   event: Event!
   user: User!
+  address: Address
   addressId: String
 }
 
@@ -106,9 +110,10 @@ type Query {
   sayHello: String!
   getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
   event(id: ID!): Event!
-  address(id: Int!): Address!
+  address(id: String!): Address!
   countries: [Country!]!
   user(email: String!): User!
+  eventToUser(id: String!): EventToUser!
 }
 
 type Mutation {
@@ -123,6 +128,9 @@ type Mutation {
   createUser(singUp: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createEventToUser(createEventToUserInput: CreateEventToUserInput!): EventToUser!
+  updateEventToUser(updateEventToUserInput: UpdateEventToUserInput!): EventToUser!
+  removeEventToUser(id: String!): EventToUser!
 }
 
 input CreateEventInput {
@@ -201,6 +209,19 @@ input UpdateUserInput {
   """Password of the user"""
   password: String
   avatar: String
+  addressId: String
+  id: String!
+}
+
+input CreateEventToUserInput {
+  userId: String!
+  eventId: String!
+  addressId: String
+}
+
+input UpdateEventToUserInput {
+  userId: String
+  eventId: String
   addressId: String
   id: String!
 }
