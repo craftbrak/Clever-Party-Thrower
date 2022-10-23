@@ -9,26 +9,23 @@ import {
 import { JWTPayload } from "../auth/auth.service";
 import { SortDirection } from "../pagination/dto/pagination.dto";
 import { EventToUser } from "./entities/event-to-user.entity";
-import { Address } from "../address/entities/address.entity";
 import { CreateEventToUserInput } from "./dto/create-event-to-user.input";
-import { User } from "../user/entities/user.entity";
 import { UpdateEventToUserInput } from "./dto/update-event-to-user.input";
+import { AddressService } from "../address/address.service";
 
 @Injectable()
 export class EventToUserService {
   constructor(
     @InjectRepository(EventToUser)
     private readonly eventToUserRepository: Repository<EventToUser>,
+    private addressService: AddressService,
   ) {}
 
   async create(input: CreateEventToUserInput): Promise<EventToUser> {
     const etoU = new EventToUser();
-    etoU.user = new User();
     etoU.userId = input.userId;
-    etoU.event = new Event();
     etoU.eventId = input.eventId;
-    etoU.address = new Address();
-    etoU.addressId = input.addressId;
+    etoU.address = await this.addressService.findOne(input.addressId);
     return await this.eventToUserRepository.save(
       await this.eventToUserRepository.create(etoU),
     );
