@@ -46,7 +46,7 @@ export class EventResolver {
     @Args("createEventInput") createEventInput: CreateEventInput,
     @CurrentUser() user: JWTPayload,
   ) {
-    return this.eventService.create(createEventInput, user);
+    return this.eventService.create(createEventInput);
   }
 
   @Mutation(() => Event)

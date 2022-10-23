@@ -7,6 +7,8 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/front-end/dist" />
       <excludeFolder url="file://$MODULE_DIR$/front-end/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end-prisma" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

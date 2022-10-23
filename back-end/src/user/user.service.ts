@@ -7,17 +7,20 @@ import { User } from "./entities/user.entity";
 import * as argon2 from "argon2";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { JWTPayload } from "../auth/auth.service";
-import { Address } from "../address/entities/address.entity";
+import { AddressService } from "../address/address.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     private eventToUserService: EventToUserService,
+    private addressService: AddressService,
   ) {}
   async create(createUserInput: CreateUserInput): Promise<User> {
     createUserInput.password = await argon2.hash(createUserInput.password);
-    return await this.userRepo.create(createUserInput).save();
+    const usr = await this.userRepo.create(createUserInput);
+    usr.address = await this.addressService.findOne(createUserInput.addressId);
+    return usr.save();
   }
   async findOne(email: User["email"]) {
     return await this.userRepo.findOneOrFail({
@@ -41,8 +44,9 @@ export class UserService {
   async update(id: string, updateUserInput: UpdateUserInput) {
     const usr = await this.findOneById(updateUserInput.id);
     if (updateUserInput.addressId) {
-      usr.address = new Address();
-      usr.addressId = updateUserInput.addressId;
+      usr.address = await this.addressService.findOne(
+        updateUserInput.addressId,
+      );
     }
     if (updateUserInput.email) usr.email = updateUserInput.email;
     if (updateUserInput.name) usr.name = updateUserInput.name;

@@ -12,18 +12,21 @@ import { SortDirection } from "../pagination/dto/pagination.dto";
 import { JWTPayload } from "../auth/auth.service";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
+import { AddressService } from "../address/address.service";
 
 @Injectable()
 export class EventService {
   constructor(
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
     private eventToUserService: EventToUserService,
+    private addressService: AddressService,
   ) {}
 
-  async create(input: CreateEventInput, user: JWTPayload): Promise<Event> {
-    const event = await this.eventRepo.save(await this.eventRepo.create(input));
+  async create(input: CreateEventInput): Promise<Event> {
+    const event = await this.eventRepo.save(this.eventRepo.create(input));
+    event.address = await this.addressService.findOne(input.addressId);
     event.addressId = input.addressId;
-    return await this.eventRepo.save(event);
+    return await event.save();
   }
 
   async findAll(
@@ -31,11 +34,24 @@ export class EventService {
     user: JWTPayload,
   ): Promise<EventsPagination> {
     const [nodes, totalCount] = await this.eventRepo.findAndCount({
+      where: {
+        members: {
+          userId: user.id,
+        },
+      },
       skip: args.skip,
       take: args.take,
       order: {
-        createdAt: args.sortBy.createdAt === SortDirection.ASC ? "ASC" : "DESC",
-        name: args.sortBy.name === SortDirection.ASC ? "ASC" : "DESC",
+        createdAt: args.sortBy
+          ? args.sortBy.createdAt === SortDirection.ASC
+            ? "ASC"
+            : "DESC"
+          : "ASC",
+        name: args.sortBy
+          ? args.sortBy.name === SortDirection.ASC
+            ? "ASC"
+            : "DESC"
+          : "ASC",
       },
       relations: {
         members: true,
