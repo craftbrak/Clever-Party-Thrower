@@ -33,7 +33,7 @@ export class EventResolver {
     @Args() args: EventsPaginationArgs,
     @CurrentUser() user: JWTPayload,
   ) {
-    return await this.eventService.findAll(args, user);
+    return await this.eventService.findAll(args);
   }
 
   @Query(() => Event, { name: "event" })
@@ -66,7 +66,7 @@ export class EventResolver {
     @Args() args: EventsPaginationArgs,
     @CurrentUser() user: JWTPayload,
   ) {
-    return await this.eventService.getMembers(args, event, user);
+    return await this.eventService.getMembers(args, event);
   }
   @ResolveField("address", () => Address)
   async address(@Parent() event: Event) {

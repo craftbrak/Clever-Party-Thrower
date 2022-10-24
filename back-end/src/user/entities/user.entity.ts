@@ -17,6 +17,7 @@ export class User extends Node {
   @Field(() => String, { description: "Name of the user" })
   @Column()
   name: string;
+
   @IsEmail()
   @Field(() => String, { description: "Email of the user" })
   @Column({ unique: true })
@@ -28,6 +29,14 @@ export class User extends Node {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   avatar?: string;
+
+  @Field(() => Boolean)
+  @Column({ default: false })
+  drivingLicence: boolean;
+
+  @Field(() => Boolean)
+  @Column({ default: false })
+  manual: boolean;
 
   @Field(() => EventToUser, { nullable: true })
   @OneToMany(() => EventToUser, (eventToUser) => eventToUser.event)

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -14,6 +14,7 @@ import { UserModule } from "./user/user.module";
 import { AddressModule } from "./address/address.module";
 import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import * as Joi from "joi";
+import { LoggerMiddleware } from "./logs/logger.middleware";
 
 @Module({
   imports: [
@@ -60,4 +61,8 @@ import * as Joi from "joi";
   ],
   providers: [AppService, AppResolver],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggerMiddleware).forRoutes("*");
+  }
+}

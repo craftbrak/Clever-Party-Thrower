@@ -50,6 +50,8 @@ type User {
   """Email of the user"""
   email: String!
   avatar: String
+  drivingLicence: Boolean!
+  manual: Boolean!
   eventToUsers: [EventToUser!]!
   address: Address
   addressId: String
@@ -66,6 +68,14 @@ type EventToUser {
   user: User!
   address: Address
   addressId: String
+  role: UserRole!
+}
+
+enum UserRole {
+  OWNER
+  MEMBER
+  DJ
+  INVITED
 }
 
 type Event {

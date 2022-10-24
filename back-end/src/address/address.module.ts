@@ -5,9 +5,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Address } from "./entities/address.entity";
 import { Country } from "./entities/country.entity";
 import { CountryResolver } from "./country.resolver";
+import { HttpModule } from "@nestjs/axios";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Address, Country])],
+  imports: [TypeOrmModule.forFeature([Address, Country]), HttpModule],
   providers: [AddressResolver, AddressService, CountryResolver],
   exports: [AddressService],
 })
