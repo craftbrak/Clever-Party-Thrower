@@ -15,12 +15,14 @@ import { Public } from "../auth/public.decorator";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
+import { EventToUserService } from "../event-to-user/event-to-user.service";
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
-    private readonly userService: UserService,
-    private readonly addressService: AddressService,
+      private readonly userService: UserService,
+      private readonly addressService: AddressService,
+      private readonly eventToUserService: EventToUserService,
   ) {}
   @Public()
   @Mutation(() => User)
@@ -45,7 +47,7 @@ export class UserResolver {
 
   @ResolveField("eventToUsers", () => [EventToUser]) //TODO: FIX NAME OF FIELD
   async events(@Parent() user: User) {
-    return await this.userService.getEvents(user);
+    return await this.eventToUserService.findAllOfUser(user);
   }
 
   @ResolveField("address", () => Address)

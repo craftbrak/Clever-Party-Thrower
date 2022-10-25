@@ -5,16 +5,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import * as argon2 from "argon2";
-import { EventToUserService } from "../event-to-user/event-to-user.service";
-import { JWTPayload } from "../auth/auth.service";
 import { AddressService } from "../address/address.service";
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
-    private eventToUserService: EventToUserService,
-    private addressService: AddressService,
+      @InjectRepository(User) private readonly userRepo: Repository<User>,
+      private addressService: AddressService,
   ) {}
   async create(createUserInput: CreateUserInput): Promise<User> {
     createUserInput.password = await argon2.hash(createUserInput.password);
@@ -38,14 +35,11 @@ export class UserService {
       },
     });
   }
-  async getEvents(user: JWTPayload) {
-    return await this.eventToUserService.findAllOfUser(user);
-  }
   async update(id: string, updateUserInput: UpdateUserInput) {
     const usr = await this.findOneById(updateUserInput.id);
     if (updateUserInput.addressId) {
       usr.address = await this.addressService.findOne(
-        updateUserInput.addressId,
+          updateUserInput.addressId,
       );
     }
     if (updateUserInput.email) usr.email = updateUserInput.email;
