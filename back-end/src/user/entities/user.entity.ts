@@ -11,6 +11,7 @@ import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
 import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 import { IsEmail } from "class-validator";
+import { Car } from "../../car/entities/car.entity";
 @Entity()
 @ObjectType()
 export class User extends Node {
@@ -50,4 +51,8 @@ export class User extends Node {
   @Field(() => String, { nullable: true })
   @RelationId((self: User) => self.address)
   addressId: Address["id"];
+
+  @Field(() => [Car])
+  @OneToMany(() => Car, (car) => car.owner)
+  cars: Car[];
 }

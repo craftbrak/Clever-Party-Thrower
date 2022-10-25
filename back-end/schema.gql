@@ -38,6 +38,43 @@ type Address {
   countryId: String!
 }
 
+type Car {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  brand: String!
+  model: String!
+  maxPassengers: Int!
+
+  """consumption of the car in L/100km"""
+  consumption: Float!
+  bootSize: BootSizes!
+  fuel: Fuels!
+  manualTransmission: Boolean!
+
+  """Range of the car in km"""
+  range: Int!
+  owner: User!
+  ownerId: String!
+}
+
+enum BootSizes {
+  None
+  Small
+  Medium
+  Big
+  CampingCar
+}
+
+enum Fuels {
+  Electric
+  Petrol
+  Diesel
+  LPG
+  HYDROGEN
+}
+
 type User {
   id: ID!
   createdAt: DateTime!
@@ -55,6 +92,7 @@ type User {
   eventToUsers: [EventToUser!]!
   address: Address
   addressId: String
+  cars: [Car!]!
 }
 
 type EventToUser {
@@ -124,6 +162,7 @@ type Query {
   countries: [Country!]!
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
+  car(id: ID!): Car!
 }
 
 type Mutation {
@@ -141,6 +180,9 @@ type Mutation {
   createEventToUser(createEventToUserInput: CreateEventToUserInput!): EventToUser!
   updateEventToUser(updateEventToUserInput: UpdateEventToUserInput!): EventToUser!
   removeEventToUser(id: String!): EventToUser!
+  createCar(createCarInput: CreateCarInput!): Car!
+  updateCar(updateCarInput: UpdateCarInput!): Car!
+  removeCar(id: ID!): Car!
 }
 
 input CreateEventInput {
@@ -234,4 +276,37 @@ input UpdateEventToUserInput {
   eventId: String
   addressId: String
   id: String!
+}
+
+input CreateCarInput {
+  brand: String!
+  model: String!
+  maxPassengers: Int!
+
+  """consumption of the car in L/100km"""
+  consumption: Float!
+  bootSize: BootSizes!
+  fuel: Fuels!
+  manualTransmission: Boolean!
+
+  """Range of the car in km"""
+  range: Int!
+  ownerId: String!
+}
+
+input UpdateCarInput {
+  brand: String
+  model: String
+  maxPassengers: Int
+
+  """consumption of the car in L/100km"""
+  consumption: Float
+  bootSize: BootSizes
+  fuel: Fuels
+  manualTransmission: Boolean
+
+  """Range of the car in km"""
+  range: Int
+  ownerId: String
+  id: ID!
 }

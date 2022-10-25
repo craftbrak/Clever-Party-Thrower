@@ -40,7 +40,7 @@ export class EventToUser extends Node {
   address: Address;
 
   @Field(() => String, { nullable: true })
-  @RelationId((self: User) => self.address)
+  @RelationId((self: EventToUser) => self.address)
   addressId: Address["id"];
   @Field(() => UserRole)
   @Column({
