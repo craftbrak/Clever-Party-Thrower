@@ -15,7 +15,7 @@ import { AddressModule } from "./address/address.module";
 import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import { CarModule } from "./car/car.module";
 import * as Joi from "joi";
-import { LoggerMiddleware } from "./logs/logger.middleware";
+// import { LoggerMiddleware } from "./logs/logger.middleware";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -64,6 +64,6 @@ import { LoggerMiddleware } from "./logs/logger.middleware";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(LoggerMiddleware).forRoutes("*");
+    consumer.apply().forRoutes("*");
   }
 }

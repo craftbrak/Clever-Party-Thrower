@@ -160,6 +160,7 @@ type Query {
   event(id: ID!): Event!
   address(id: String!): Address!
   countries: [Country!]!
+  country(Code: String!): Country!
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
   car(id: ID!): Car!
@@ -248,6 +249,8 @@ input CreateUserInput {
   """Password of the user"""
   password: String!
   avatar: String
+  drivingLicence: Boolean!
+  manual: Boolean!
   addressId: String!
 }
 
@@ -261,6 +264,8 @@ input UpdateUserInput {
   """Password of the user"""
   password: String
   avatar: String
+  drivingLicence: Boolean
+  manual: Boolean
   addressId: String
   id: String!
 }
@@ -291,7 +296,6 @@ input CreateCarInput {
 
   """Range of the car in km"""
   range: Int!
-  ownerId: String!
 }
 
 input UpdateCarInput {
@@ -307,6 +311,5 @@ input UpdateCarInput {
 
   """Range of the car in km"""
   range: Int
-  ownerId: String
   id: ID!
 }

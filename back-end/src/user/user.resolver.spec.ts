@@ -13,13 +13,13 @@ describe("UserResolver", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [UserResolver, UserService],
     })
-        .overrideProvider(UserService)
-        .useValue(mockUserService)
-        .overrideProvider(EventToUserService)
-        .useValue(mockEventToUserService)
-        .overrideProvider(AddressService)
-        .useValue(mockAddressService)
-        .compile();
+      .overrideProvider(UserService)
+      .useValue(mockUserService)
+      .overrideProvider(EventToUserService)
+      .useValue(mockEventToUserService)
+      .overrideProvider(AddressService)
+      .useValue(mockAddressService)
+      .compile();
 
     resolver = module.get<UserResolver>(UserResolver);
   });

@@ -4,11 +4,11 @@ import { Event } from "../event/entities/event.entity";
 import { Address } from "../address/entities/address.entity";
 import { Country } from "../address/entities/country.entity";
 import { string } from "joi";
-import {UserService} from "./user.service";
-import {Repository} from "typeorm";
-import {User} from "./entities/user.entity";
-import {getRepositoryToken, TypeOrmModule} from "@nestjs/typeorm";
-import {Test, TestingModule} from "@nestjs/testing";
+import { UserService } from "./user.service";
+import { Repository } from "typeorm";
+import { User } from "./entities/user.entity";
+import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
+import { Test, TestingModule } from "@nestjs/testing";
 const moduleMocker = new ModuleMocker(global);
 describe("UserService", () => {
   let service: UserService;
@@ -16,14 +16,14 @@ describe("UserService", () => {
 
   const USER_REPO_TOKEN = getRepositoryToken(User);
 
-  const mockAddressService = {
-    create: jest.fn((dto) => {
-      return {
-        id: string(),
-        ...dto,
-      };
-    }),
-  };
+  // const mockAddressService = {
+  //   create: jest.fn((dto) => {
+  //     return {
+  //       id: string(),
+  //       ...dto,
+  //     };
+  //   }),
+  // };
   const mockUserRepository = {
     create: jest.fn((dto) => {
       return {
@@ -51,20 +51,20 @@ describe("UserService", () => {
         { provide: USER_REPO_TOKEN, useValue: mockUserRepository },
       ],
     })
-        .useMocker((token) => {
-          const results = ["test1", "test2"];
-          if (token === UserService) {
-            return { findAll: jest.fn().mockResolvedValue(results) };
-          }
-          if (typeof token === "function") {
-            const mockMetadata = moduleMocker.getMetadata(
-                token,
-            ) as MockFunctionMetadata<any, any>;
-            const Mock = moduleMocker.generateFromMetadata(mockMetadata);
-            return new Mock();
-          }
-        })
-        .compile();
+      .useMocker((token) => {
+        const results = ["test1", "test2"];
+        if (token === UserService) {
+          return { findAll: jest.fn().mockResolvedValue(results) };
+        }
+        if (typeof token === "function") {
+          const mockMetadata = moduleMocker.getMetadata(
+            token,
+          ) as MockFunctionMetadata<any, any>;
+          const Mock = moduleMocker.generateFromMetadata(mockMetadata);
+          return new Mock();
+        }
+      })
+      .compile();
 
     service = module.get<UserService>(UserService);
     userRepo = module.get<Repository<User>>(USER_REPO_TOKEN);

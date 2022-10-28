@@ -37,7 +37,7 @@ export class Car extends Node {
   @Column()
   maxPassengers: number;
   @Field(() => Float, { description: "consumption of the car in L/100km" })
-  @Column()
+  @Column({type:"float"})
   consumption: number;
 
   @Field(() => BootSizes)

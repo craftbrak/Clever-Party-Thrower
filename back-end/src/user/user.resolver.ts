@@ -20,9 +20,9 @@ import { EventToUserService } from "../event-to-user/event-to-user.service";
 @Resolver(() => User)
 export class UserResolver {
   constructor(
-      private readonly userService: UserService,
-      private readonly addressService: AddressService,
-      private readonly eventToUserService: EventToUserService,
+    private readonly userService: UserService,
+    private readonly addressService: AddressService,
+    private readonly eventToUserService: EventToUserService,
   ) {}
   @Public()
   @Mutation(() => User)

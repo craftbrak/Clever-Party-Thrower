@@ -1,6 +1,4 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { CreateAddressInput } from "../../address/dto/create-address.input";
-import { Address } from "../../address/entities/address.entity";
 import { IsEmail } from "class-validator";
 
 @InputType()
@@ -14,6 +12,13 @@ export class CreateUserInput {
   password: string;
   @Field(() => String, { nullable: true })
   avatar?: string;
+
+  @Field(() => Boolean)
+  drivingLicence: boolean;
+
+  @Field(() => Boolean)
+  manual: boolean;
+
   @Field(() => String)
   addressId: string;
 }

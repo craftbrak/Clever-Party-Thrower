@@ -10,8 +10,8 @@ import { AddressService } from "../address/address.service";
 @Injectable()
 export class UserService {
   constructor(
-      @InjectRepository(User) private readonly userRepo: Repository<User>,
-      private addressService: AddressService,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private addressService: AddressService,
   ) {}
   async create(createUserInput: CreateUserInput): Promise<User> {
     createUserInput.password = await argon2.hash(createUserInput.password);
@@ -39,7 +39,7 @@ export class UserService {
     const usr = await this.findOneById(updateUserInput.id);
     if (updateUserInput.addressId) {
       usr.address = await this.addressService.findOne(
-          updateUserInput.addressId,
+        updateUserInput.addressId,
       );
     }
     if (updateUserInput.email) usr.email = updateUserInput.email;

@@ -1,26 +1,41 @@
 import { Injectable } from "@nestjs/common";
 import { CreateCarInput } from "./dto/create-car.input";
 import { UpdateCarInput } from "./dto/update-car.input";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Car } from "./entities/car.entity";
+import {JWTPayload} from "../auth/auth.service";
+import {User} from "../user/entities/user.entity";
 
 @Injectable()
 export class CarService {
-  create(createCarInput: CreateCarInput) {
-    return "This action adds a new car";
+  constructor(
+    @InjectRepository(Car) private readonly carRepo: Repository<Car>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+  ) {}
+  async create(createCarInput: CreateCarInput, user: JWTPayload) {
+    createCarInput.ownerId = user.id
+    createCarInput.owner = await this.userRepo.findOneByOrFail({id: user.id})
+    return this.carRepo.create(createCarInput).save();
   }
 
-  findAll() {
-    return `This action returns all car`;
+  async findAll() {
+    return this.carRepo.find(); //todo: find only cars of auth user
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} car`;
+  async findOne(id: string) {
+    return this.carRepo.findOneByOrFail({ id });
   }
 
-  update(id: string, updateCarInput: UpdateCarInput) {
-    return `This action updates a #${id} car`;
+  async update(id: string, updateCarInput: UpdateCarInput) {
+    return this.carRepo.update(id, updateCarInput);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} car`;
+  async remove(id: string) {
+    return this.carRepo.delete(id);
+  }
+
+  async getOwner(car:Car){
+    return this.userRepo.findOneByOrFail({id:car.ownerId})
   }
 }

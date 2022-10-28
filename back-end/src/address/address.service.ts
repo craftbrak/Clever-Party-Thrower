@@ -20,6 +20,7 @@ export class AddressService implements OnApplicationBootstrap {
   ) {}
   async onApplicationBootstrap() {
     this.logger.log("Inserting Countries in DB");
+    let tot = 0;
     const countries = await this.httpService
       .get("https://restcountries.com/v3.1/all")
       .toPromise();
@@ -30,11 +31,12 @@ export class AddressService implements OnApplicationBootstrap {
       this.countryRepo.findOneBy({ name: country.name }).then((cont) => {
         if (!cont) {
           this.logger.log(`country ${country.name} added`);
+          tot++;
           this.countryRepo.create(country).save();
         }
       });
-      this.logger.log("Countries Inserted");
     });
+    this.logger.log("Countries Inserted " + tot);
   }
   async create(createAddressInput: CreateAddressInput): Promise<Address> {
     const a = await this.addressRepo.create(createAddressInput).save();
@@ -65,6 +67,9 @@ export class AddressService implements OnApplicationBootstrap {
   }
   async findOneCountry(id: Country["id"]): Promise<Country> {
     return this.countryRepo.findOneByOrFail({ id });
+  }
+  async findOneCountryByCode(code: Country["code"]): Promise<Country> {
+    return this.countryRepo.findOneByOrFail({ code });
   }
   async createCountry(input: CreateCountryInput): Promise<Country> {
     return this.countryRepo.create(input);
