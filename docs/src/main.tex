@@ -1,0 +1,62 @@
+%! Author = louis
+%! Date = 28-10-22
+
+% Preamble
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{lstdoc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Clever Party Thrower},
+    pdfpagemode=FullScreen,
+}
+
+
+% Document
+\begin{document}
+    \begin{titlepage}
+        \begin{center}
+            \vspace*{1cm}
+
+            \Huge
+            \textbf{Clever Party Thrower}
+
+            \vspace{0.5cm}
+
+            \vspace{1.5cm}
+
+            \textbf{Louis De Wilde}
+
+            \vfill
+
+            \includegraphics[width=0.65\textwidth]{images/EPHEC_logo.svg}
+            \vfill
+            \vspace{0.8cm}
+            \Large
+            Technologie de l'informatique 3TL2 \\
+            Ephec : Av. du Ciseau 15, 1348 Ottignies-Louvain-la-Neuve\\
+            Novembre 2022
+
+        \end{center}
+    \end{titlepage}
+    \thispagestyle{empty}
+    \newpage
+    \setcounter{page}{0}
+   % \bibliography{main}
+    %\bibliographystyle{plain}
+
+    \section{Cahier des charges}\label{sec:cahier-des-charges}
+    \input{CDC/cdc}
+    \newpage
+
+    \section{Analyse}\label{sec:analyse}
+    \input{Analyse/analyse.tex}
+    \newpage
+\end{document}

@@ -1,0 +1,63 @@
+%! Author = louis
+%! Date = 28-10-22
+
+Le projet ayant comme contrainte pricipale d'etre disponible sur toute les platformes majeur une base web me parait évident.
+pourtant le web viens aussi avec la limitation pricipale qu'est le besoin de connection permanente au serveur,
+pour remedier a ce probleme un PWA (Application Web Progressive) nous permetrais de beneficiez des avantages du web,
+tout en permetant aux utilisateurs de concerver une version locale de l'application.
+De plus une PWA permet d'etre instalée comme une application native Android ou IOS pour les platformes mobiles ce qui facilite l'accès.\\\\
+
+Une PWA comme toute application web necesite plusieurs composant:
+\begin{itemize}
+    \item Un back-end
+    \item une Base de Donnée
+    \item une Interface definie pour le back-end (API)
+    \item un front-end
+\end{itemize}
+\subsection{Back-end}\label{subsec:back-end}
+Le serveur back-end doit etre capable de mettre a disposition les donnée nescesaire au fonctionnement de l'application.
+Cependant le back-end sera aussi responcable des calcul d'equilibrage des depence , des matching de covoiturage et des trajets.
+Connaissant deja Express.js et Spring (Kotlin) je me suis naturellement tourner vers ce derniers néanmoins je desirais utiliser du TypeScript pour ce projet.
+Express.js est compatible avec TypeScript mais Spring ne l'est pas, Express.js est leger, minimaliste et propose une bonne documentation,
+Spring est generaliste propose des outils de generation de code et utilise une systeme d'injection de dependance.
+Ce qu'il me falais etait une hybride entre Spring et Express.js.
+Apres quelque recherche j'ai trouver un framework appler Nest.js, ce dernier supporte nativement TypeScript, propose une documentation ecxelante,
+propose un CLI permetant de generer du code boiler plate, reste simple et leger, Utilise de l'injection de dependance et est tres utiliser et apprecier par d'autre developeurs.
+J'ai donc decider d'utiliser Nest.Js pour ce projet.
+
+\subsubsection{ORM}
+Nest.Js (que je vais appeller Nest a partir de maintenant) n'est pas un framework batteries included comme le son Spring ou Larravel,
+Il m'a donc fallu choisir aussi un ORM pour interfacer avec ma base de donnée.
+Dans la Documentation de Nest, il y a des exemple de configuration avec les ORM les plus Utiliser avec Nest et TypeScrip.
+Ces derniers sont Sequelize, TypeOrm et Prisma ,
+ayant eu une experience avec Sequelize plus tot mauvaise lors de mon projet de dev3, j'ai decider de regarder du coté de prisma.
+Prisma est une ORM un peu particulier dans le sens ou il propose d'utiliser une schema prisma pour definir ces entité plutot que le code TypeScript.
+Cella me parraissait une tres bonne chose vu que prisma generais alors lui meme les differents DTO nescesaire.
+Il c'est cependant averer que a l'utilisation prisma n'est pas l'ideale surtout lorsque l'on desire le coupler a une API graphQl
+A cause de son schema particulier je devais definir le forma de mes entitée a 2 endroit et tout de meme crée manuelement mes DTO
+J'ai donc decider de jeter une oeuil a TypeOrm, celui ci propose de definir les entité via des anotation TypeScript.
+Ce qui me permet d'utiliser une seule classe pour definir mon entitée d'orm et de graphQl de plus TypeOrm est mieux
+documenter grace au support d'une comunauter plus large.
+
+
+\subsection{La base de donnée}\label{subsec:la-base-de-donnee}
+Ma base de donnée devais me permetre 2 chose, stocker des donnée geographique et faire des operation sur ces donnée.
+Le seul choix qui s'offrais a moi compatible avec TypeOrm etait postgress avec une extention nomer POSTGIS.
+Postgres est une base de donnée tres utiliser en production et est tres performante et stable.
+
+\subsection{L'API back end}\label{subsec:l'api-back-end}
+Il existe plusieurs type d'API tres utiliser pour le Back-end mais les plus populaire sont le REST et le SOAP.
+SOAP est de moin en moin utiliser du a la complexité intrinsec du xml et a ca lourdeur.
+Il nous reste donc REST qui est une bonne solution mais nescecite pour presque chaque requete de recuperer des donnée qui ne seront pas toujour consomée par le client
+Avec Rest l'on recupere une entitée complete tout les champs sont renvoyer.
+C'est pour cela que graphQl a ete crée , non seulement graphQL utilise un typage fort via un schema defini et exposer par le serveur,
+mais en plus graphql permet de ne recuperer que les champs nescesaire au client grace au GQL.
+
+
+
+
+\subsection{Front-end}\label{subsec:front-end}
+Pour ce qui est de l'interface utilisateur ( le front end ) j'ai decidé d'utiliser angular car ce framework utilise TypeScript nativement et supporte aussi les PWA
+TypeScript est important car il permet de eliminer les bugs lier au typage d'objet avant meme l'execution du programe.
+Angular etant un framework orienter m'oblige aussi à suivre une architecture propre qui permet de rendre independant les differents composants du projet.
+
