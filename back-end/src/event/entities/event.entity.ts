@@ -10,6 +10,7 @@ import {
 import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
 import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
+import {Carpool} from "../../carpool/entities/carpool.entity";
 
 @ObjectType()
 @Entity()
@@ -33,4 +34,7 @@ export class Event extends Node {
   @Field(() => String, { nullable: true })
   @RelationId((self: Event) => self.address)
   addressId: Address["id"];
+  @Field(() => Carpool, { nullable: true })
+  @OneToMany(()=>Carpool, carpool=> carpool.event )
+  carpools: Carpool[] //TODO: DTO
 }

@@ -6,6 +6,7 @@ import {boolean} from "joi";
 import {Car} from "../../car/entities/car.entity";
 import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
 import {Route} from "./Route.entity";
+import {Event} from "../../event/entities/event.entity";
 
 export enum Directions{
   go="go",
@@ -28,6 +29,8 @@ export class Carpool extends Node{
   startDestination: Address
   @ManyToOne(()=>Car)
   car: Car
+  @ManyToOne(()=>Event)
+  event: Event
   @Column()
   totalLength: number
 }
