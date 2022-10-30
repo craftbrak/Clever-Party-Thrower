@@ -124,6 +124,20 @@ type Carpool {
   version: Int!
 }
 
+type ShoppingListItem {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+}
+
+type Spending {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+}
+
 type Event {
   id: ID!
   createdAt: DateTime!
@@ -142,6 +156,8 @@ type Event {
   address: Address
   addressId: String
   carpools: Carpool
+  shoppingList: ShoppingListItem
+  spendings: Spending
 }
 
 input EventsPaginationSortBy {
@@ -163,13 +179,6 @@ type AuthLoginOutput {
   accessToken: String!
 }
 
-type Spending {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-}
-
 type Query {
   sayHello: String!
   getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
@@ -182,6 +191,8 @@ type Query {
   car(id: ID!): Car!
   carpool(id: String!): Carpool!
   spending(id: Int!): Spending!
+  shopingListItems: [ShoppingListItem!]!
+  shopingListItem(id: Int!): ShoppingListItem!
 }
 
 type Mutation {
@@ -208,6 +219,9 @@ type Mutation {
   createSpending(createSpendingInput: CreateSpendingInput!): Spending!
   updateSpending(updateSpendingInput: UpdateSpendingInput!): Spending!
   removeSpending(id: Int!): Spending!
+  createShopingListItem(createShopingListItemInput: CreateShopingListItemInput!): ShoppingListItem!
+  updateShopingListItem(updateShopingListItemInput: UpdateShopingListItemInput!): ShoppingListItem!
+  removeShopingListItem(id: Int!): ShoppingListItem!
 }
 
 input CreateEventInput {
@@ -355,6 +369,17 @@ input CreateSpendingInput {
 }
 
 input UpdateSpendingInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateShopingListItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateShopingListItemInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
