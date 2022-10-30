@@ -16,6 +16,8 @@ import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import { CarModule } from "./car/car.module";
 import * as Joi from "joi";
 // import { LoggerMiddleware } from "./logs/logger.middleware";
+import { CarpoolModule } from './carpool/carpool.module';
+import { SpendingModule } from './spending/spending.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -59,6 +61,8 @@ import * as Joi from "joi";
     AddressModule,
     EventToUserModule,
     CarModule,
+    CarpoolModule,
+    SpendingModule,
   ],
   providers: [AppService, AppResolver],
 })

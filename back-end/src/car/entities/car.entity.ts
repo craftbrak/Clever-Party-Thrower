@@ -64,6 +64,10 @@ export class Car extends Node {
   @Column()
   range: number;
 
+  @Field(()=>Boolean)
+  @Column({default: false})
+  shared: boolean
+
   @ManyToOne(() => User, (user) => user.cars)
   @JoinColumn([{ name: "ownerId", referencedColumnName: "id" }])
   @Field(() => User)

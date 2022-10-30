@@ -55,6 +55,7 @@ type Car {
 
   """Range of the car in km"""
   range: Int!
+  shared: Boolean!
   owner: User!
   ownerId: String!
 }
@@ -154,6 +155,18 @@ type AuthLoginOutput {
   accessToken: String!
 }
 
+type Carpool {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+}
+
+type Spending {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   sayHello: String!
   getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
@@ -164,6 +177,8 @@ type Query {
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
   car(id: ID!): Car!
+  carpool(id: String!): Carpool!
+  spending(id: Int!): Spending!
 }
 
 type Mutation {
@@ -184,6 +199,12 @@ type Mutation {
   createCar(createCarInput: CreateCarInput!): Car!
   updateCar(updateCarInput: UpdateCarInput!): Car!
   removeCar(id: ID!): Car!
+  createCarpool(createCarpoolInput: CreateCarpoolInput!): Carpool!
+  updateCarpool(updateCarpoolInput: UpdateCarpoolInput!): Carpool!
+  removeCarpool(id: String!): Carpool!
+  createSpending(createSpendingInput: CreateSpendingInput!): Spending!
+  updateSpending(updateSpendingInput: UpdateSpendingInput!): Spending!
+  removeSpending(id: Int!): Spending!
 }
 
 input CreateEventInput {
@@ -312,4 +333,26 @@ input UpdateCarInput {
   """Range of the car in km"""
   range: Int
   id: ID!
+}
+
+input CreateCarpoolInput {
+  """Example field (placeholder)"""
+  totalLength: Int!
+}
+
+input UpdateCarpoolInput {
+  """Example field (placeholder)"""
+  totalLength: Int
+  id: ID!
+}
+
+input CreateSpendingInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateSpendingInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
