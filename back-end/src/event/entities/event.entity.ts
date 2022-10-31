@@ -11,7 +11,7 @@ import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
 import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 import {Carpool} from "../../carpool/entities/carpool.entity";
-import {ShoppingListItem} from "../../shoping-list-items/entities/shopping-list-item.entity";
+import {ShoppingListItem} from "../../shopping-list-items/entities/shopping-list-item.entity";
 import {Spending} from "../../spending/entities/spending.entity";
 
 @ObjectType()

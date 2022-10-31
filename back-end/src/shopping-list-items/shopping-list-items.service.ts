@@ -3,7 +3,7 @@ import { CreateShopingListItemInput } from './dto/create-shoping-list-item.input
 import { UpdateShopingListItemInput } from './dto/update-shoping-list-item.input';
 
 @Injectable()
-export class ShopingListItemsService {
+export class ShoppingListItemsService {
   //TODO: CRUD
   create(createShopingListItemInput: CreateShopingListItemInput) {
     return 'This action adds a new shopingListItem';

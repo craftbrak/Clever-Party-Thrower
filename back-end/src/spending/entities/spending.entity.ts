@@ -3,7 +3,7 @@ import {Node} from "../../pagination/entities/node.entity";
 import {Column, Entity, ManyToOne} from "typeorm";
 import {User} from "../../user/entities/user.entity";
 import {Event} from "../../event/entities/event.entity";
-import {ShoppingListItem} from "../../shoping-list-items/entities/shopping-list-item.entity";
+import {ShoppingListItem} from "../../shopping-list-items/entities/shopping-list-item.entity";
 
 @ObjectType()
 @Entity()

@@ -1,12 +1,12 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { ShopingListItemsService } from './shoping-list-items.service';
+import { ShoppingListItemsService } from './shopping-list-items.service';
 import { ShoppingListItem } from './entities/shopping-list-item.entity';
 import { CreateShopingListItemInput } from './dto/create-shoping-list-item.input';
 import { UpdateShopingListItemInput } from './dto/update-shoping-list-item.input';
 
 @Resolver(() => ShoppingListItem)
 export class ShopingListItemsResolver {
-  constructor(private readonly shopingListItemsService: ShopingListItemsService) {}
+  constructor(private readonly shopingListItemsService: ShoppingListItemsService) {}
 
   @Mutation(() => ShoppingListItem)
   createShopingListItem(@Args('createShopingListItemInput') createShopingListItemInput: CreateShopingListItemInput) {

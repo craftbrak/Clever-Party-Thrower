@@ -18,7 +18,7 @@ import * as Joi from "joi";
 // import { LoggerMiddleware } from "./logs/logger.middleware";
 import { CarpoolModule } from './carpool/carpool.module';
 import { SpendingModule } from './spending/spending.module';
-import { ShopingListItemsModule } from './shoping-list-items/shoping-list-items.module';
+import { ShopingListItemsModule } from './shopping-list-items/shoping-list-items.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
