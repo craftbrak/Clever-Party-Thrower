@@ -8,10 +8,11 @@
 \usepackage{amsmath}
 \usepackage{lstdoc}
 \usepackage{hyperref}
+\usepackage{pdfpages}
 \usepackage{graphicx}
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
+    linkcolor=black,
     filecolor=magenta,
     urlcolor=cyan,
     pdftitle={Clever Party Thrower},
@@ -49,6 +50,10 @@
     \thispagestyle{empty}
     \newpage
     \setcounter{page}{0}
+    \begin{KeepFromToc}
+        \tableofcontents
+    \end{KeepFromToc}
+    \newpage
    % \bibliography{main}
     %\bibliographystyle{plain}
 
