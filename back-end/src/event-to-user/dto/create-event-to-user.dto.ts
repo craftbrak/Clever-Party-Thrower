@@ -4,7 +4,7 @@ import { Event } from "../../event/entities/event.entity";
 import { Address } from "../../address/entities/address.entity";
 
 @InputType()
-export class CreateEventToUserInput {
+export class CreateEventToUserDto {
   @Field(() => String)
   userId!: User["id"];
 

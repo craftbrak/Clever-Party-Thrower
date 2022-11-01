@@ -9,7 +9,7 @@ import {
 } from "@nestjs/graphql";
 import { AddressService } from "./address.service";
 import { Address } from "./entities/address.entity";
-import { CreateAddressInput } from "./dto/create-address.input";
+import { CreateAddressDto } from "./dto/create-address.dto";
 import { UpdateAddressDto } from "./dto/update-address.dto";
 import { Country } from "./entities/country.entity";
 import { Public } from "src/auth/public.decorator";
@@ -21,7 +21,7 @@ export class AddressResolver {
   @Mutation(() => Address)
   @Public()
   async createAddress(
-    @Args("createAddressInput") createAddressInput: CreateAddressInput,
+    @Args("createAddressInput") createAddressInput: CreateAddressDto,
   ) {
     return await this.addressService.create(createAddressInput);
   }

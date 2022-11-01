@@ -9,8 +9,8 @@ import {
 } from "@nestjs/graphql";
 import { UserService } from "./user.service";
 import { User } from "./entities/user.entity";
-import { CreateUserInput } from "./dto/create-user.input";
-import { UpdateUserInput } from "./dto/update-user.input";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 import { Public } from "../auth/public.decorator";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
@@ -26,7 +26,7 @@ export class UserResolver {
   ) {}
   @Public()
   @Mutation(() => User)
-  createUser(@Args("singUp") createUserInput: CreateUserInput) {
+  createUser(@Args("singUp") createUserInput: CreateUserDto) {
     return this.userService.create(createUserInput);
   }
 
@@ -36,7 +36,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  updateUser(@Args("updateUserInput") updateUserInput: UpdateUserInput) {
+  updateUser(@Args("updateUserInput") updateUserInput: UpdateUserDto) {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 

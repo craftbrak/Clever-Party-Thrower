@@ -1,22 +1,25 @@
-import {ObjectType, Field, Int, Float} from '@nestjs/graphql';
-import {Node} from "../../pagination/entities/node.entity";
-import {User} from "../../user/entities/user.entity";
-import {Column, Entity, ManyToOne} from "typeorm";
-import {Event} from "../../event/entities/event.entity";
+import { ObjectType, Field, Int, Float } from "@nestjs/graphql";
+import { Node } from "../../pagination/entities/node.entity";
+import { User } from "../../user/entities/user.entity";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { Event } from "../../event/entities/event.entity";
 
 @ObjectType()
 @Entity()
-export class ShoppingListItem extends Node{
+export class ShoppingListItem extends Node {
+  @Field(() => String)
   @Column()
-  name:string
-  @Column({type:"float"})
-  price: number
-  @ManyToOne(()=>User,{nullable:true})
-  assigned: User
+  name: string;
+  @Field(() => Float)
+  @Column({ type: "float" })
+  price: number;
+  @Field(() => User)
+  @ManyToOne(() => User, { nullable: true })
+  assigned: User;
+  @Field(() => Boolean)
   @Column()
-  bought: boolean
-  @ManyToOne(()=>Event, event=> event.shoppingList)
-  event:Event
-  //Todo:DTO
-  //Todo:GRAPHQL
+  bought: boolean;
+  @Field(() => Event)
+  @ManyToOne(() => Event, (event) => event.shoppingList)
+  event: Event;
 }

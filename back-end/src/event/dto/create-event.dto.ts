@@ -1,7 +1,7 @@
 import { Field, Float, InputType } from "@nestjs/graphql";
 
 @InputType()
-export class CreateEventInput {
+export class CreateEventDto {
   @Field(() => String, { description: "Name of the event" })
   name: string;
 

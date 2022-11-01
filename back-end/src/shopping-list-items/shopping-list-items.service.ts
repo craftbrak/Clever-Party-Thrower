@@ -1,27 +1,52 @@
-import { Injectable } from '@nestjs/common';
-import { CreateShopingListItemInput } from './dto/create-shoping-list-item.input';
-import { UpdateShopingListItemInput } from './dto/update-shoping-list-item.input';
+import { Injectable } from "@nestjs/common";
+import { CreateShoppingListItemDto } from "./dto/create-shopping-list-item.dto";
+import { UpdateShoppingListItemDto } from "./dto/update-shopping-list-item.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { ShoppingListItem } from "./entities/shopping-list-item.entity";
+import { Repository } from "typeorm";
+import { User } from "../user/entities/user.entity";
+import { Event } from "../event/entities/event.entity";
 
 @Injectable()
 export class ShoppingListItemsService {
-  //TODO: CRUD
-  create(createShopingListItemInput: CreateShopingListItemInput) {
-    return 'This action adds a new shopingListItem';
+  constructor(
+    @InjectRepository(ShoppingListItem)
+    private readonly itemRepo: Repository<ShoppingListItem>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
+  ) {}
+  //TODO: TESTING
+
+  async create(createShoppingListItemInput: CreateShoppingListItemDto) {
+    const item = new ShoppingListItem();
+    item.name = createShoppingListItemInput.name;
+    item.price = createShoppingListItemInput.price;
+    item.bought = createShoppingListItemInput.bought;
+    item.assigned = await this.userRepo.findOneByOrFail({
+      id: createShoppingListItemInput.assignedId,
+    });
+    item.event = await this.eventRepo.findOneByOrFail({
+      id: createShoppingListItemInput.eventId,
+    });
+    return this.itemRepo.create(item).save();
+  }
+  // Todo: find by event
+  async findAll() {
+    return this.itemRepo.find();
   }
 
-  findAll() {
-    return `This action returns all shopingListItems`;
+  async findOne(id: string) {
+    return this.itemRepo.findOneByOrFail({ id });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} shopingListItem`;
+  async update(
+    id: string,
+    updateShoppingListItemInput: UpdateShoppingListItemDto,
+  ) {
+    return this.itemRepo.update({ id }, updateShoppingListItemInput);
   }
 
-  update(id: number, updateShopingListItemInput: UpdateShopingListItemInput) {
-    return `This action updates a #${id} shopingListItem`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} shopingListItem`;
+  async remove(id: string) {
+    return this.itemRepo.delete({ id });
   }
 }

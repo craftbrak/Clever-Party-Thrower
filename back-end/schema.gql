@@ -117,11 +117,39 @@ enum UserRole {
   INVITED
 }
 
+type Route {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  starting: Address!
+  pickup: User!
+  destination: Address!
+  index: Int!
+
+  """lenght of the route in KM"""
+  length: Float!
+  carpool: Carpool!
+}
+
 type Carpool {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
+  driver: User!
+  routes: [Route!]!
+  direction: Directions!
+  finalDestination: Address!
+  startDestination: Address!
+  car: Car!
+  event: Event!
+  totalLength: Float!
+}
+
+enum Directions {
+  go
+  back
 }
 
 type ShoppingListItem {
@@ -129,6 +157,11 @@ type ShoppingListItem {
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
+  name: String!
+  price: Float!
+  assigned: User!
+  bought: Boolean!
+  event: Event!
 }
 
 type Spending {
@@ -192,39 +225,39 @@ type Query {
   carpool(id: String!): Carpool!
   spending(id: Int!): Spending!
   shopingListItems: [ShoppingListItem!]!
-  shopingListItem(id: Int!): ShoppingListItem!
+  shopingListItem(id: ID!): ShoppingListItem!
 }
 
 type Mutation {
-  createEvent(createEventInput: CreateEventInput!): Event!
-  updateEvent(updateEventInput: UpdateEventInput!): Event!
+  createEvent(createEventInput: CreateEventDto!): Event!
+  updateEvent(updateEventInput: UpdateEventDto!): Event!
   removeEvent(id: ID!): ID!
-  createAddress(createAddressInput: CreateAddressInput!): Address!
+  createAddress(createAddressInput: CreateAddressDto!): Address!
   updateAddress(updateAddressInput: UpdateAddressDto!): Address!
   removeAddress(id: Int!): Address!
-  createCountry(CreateCountryInput: CreateCountryInput!): Country!
+  createCountry(CreateCountryInput: CreateCountryDto!): Country!
   authLogin(username: String!, password: String!): AuthLoginOutput!
-  createUser(singUp: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  createUser(singUp: CreateUserDto!): User!
+  updateUser(updateUserInput: UpdateUserDto!): User!
   removeUser(id: Int!): User!
-  createEventToUser(createEventToUserInput: CreateEventToUserInput!): EventToUser!
-  updateEventToUser(updateEventToUserInput: UpdateEventToUserInput!): EventToUser!
+  createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
+  updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
   removeEventToUser(id: String!): EventToUser!
-  createCar(createCarInput: CreateCarInput!): Car!
-  updateCar(updateCarInput: UpdateCarInput!): Car!
+  createCar(createCarInput: CreateCarDto!): Car!
+  updateCar(updateCarInput: UpdateCarDto!): Car!
   removeCar(id: ID!): Car!
-  createCarpool(createCarpoolInput: CreateCarpoolInput!): Carpool!
-  updateCarpool(updateCarpoolInput: UpdateCarpoolInput!): Carpool!
+  createCarpool(createCarpoolInput: CreateCarpoolDto!): Carpool!
+  updateCarpool(updateCarpoolInput: UpdateCarpoolDto!): Carpool!
   removeCarpool(id: String!): Carpool!
-  createSpending(createSpendingInput: CreateSpendingInput!): Spending!
-  updateSpending(updateSpendingInput: UpdateSpendingInput!): Spending!
+  createSpending(createSpendingInput: CreateSpendingDto!): Spending!
+  updateSpending(updateSpendingInput: UpdateSpendingDto!): Spending!
   removeSpending(id: Int!): Spending!
-  createShopingListItem(createShopingListItemInput: CreateShopingListItemInput!): ShoppingListItem!
-  updateShopingListItem(updateShopingListItemInput: UpdateShopingListItemInput!): ShoppingListItem!
-  removeShopingListItem(id: Int!): ShoppingListItem!
+  createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
+  updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
+  removeShoppingListItem(id: ID!): ShoppingListItem!
 }
 
-input CreateEventInput {
+input CreateEventDto {
   """Name of the event"""
   name: String!
 
@@ -236,7 +269,7 @@ input CreateEventInput {
   addressId: String!
 }
 
-input UpdateEventInput {
+input UpdateEventDto {
   """Name of the event"""
   name: String!
 
@@ -251,7 +284,7 @@ input UpdateEventInput {
   id: ID!
 }
 
-input CreateAddressInput {
+input CreateAddressDto {
   unitNumber: String
   streetNumber: String!
   line1: String!
@@ -272,12 +305,12 @@ input UpdateAddressDto {
   id: Int!
 }
 
-input CreateCountryInput {
+input CreateCountryDto {
   name: String!
   code: String!
 }
 
-input CreateUserInput {
+input CreateUserDto {
   """Name of the user"""
   name: String!
 
@@ -292,7 +325,7 @@ input CreateUserInput {
   addressId: String!
 }
 
-input UpdateUserInput {
+input UpdateUserDto {
   """Name of the user"""
   name: String
 
@@ -308,20 +341,20 @@ input UpdateUserInput {
   id: String!
 }
 
-input CreateEventToUserInput {
+input CreateEventToUserDto {
   userId: String!
   eventId: String!
   addressId: String
 }
 
-input UpdateEventToUserInput {
+input UpdateEventToUserDto {
   userId: String
   eventId: String
   addressId: String
   id: String!
 }
 
-input CreateCarInput {
+input CreateCarDto {
   brand: String!
   model: String!
   maxPassengers: Int!
@@ -336,7 +369,7 @@ input CreateCarInput {
   range: Int!
 }
 
-input UpdateCarInput {
+input UpdateCarDto {
   brand: String
   model: String
   maxPassengers: Int
@@ -352,35 +385,41 @@ input UpdateCarInput {
   id: ID!
 }
 
-input CreateCarpoolInput {
+input CreateCarpoolDto {
   """Example field (placeholder)"""
   totalLength: Int!
 }
 
-input UpdateCarpoolInput {
+input UpdateCarpoolDto {
   """Example field (placeholder)"""
   totalLength: Int
   id: ID!
 }
 
-input CreateSpendingInput {
+input CreateSpendingDto {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateSpendingInput {
+input UpdateSpendingDto {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
 }
 
-input CreateShopingListItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input CreateShoppingListItemDto {
+  name: String!
+  price: Float!
+  assignedId: ID!
+  bought: Boolean!
+  eventId: ID!
 }
 
-input UpdateShopingListItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input UpdateShoppingListItemDto {
+  name: String!
+  price: Float!
+  assignedId: ID!
+  bought: Boolean!
+  eventId: ID!
+  id: ID!
 }

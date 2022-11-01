@@ -1,7 +1,7 @@
 import { InputType, Field } from "@nestjs/graphql";
 
 @InputType()
-export class CreateAddressInput {
+export class CreateAddressDto {
   @Field(() => String, { nullable: true })
   unitNumber: string;
 

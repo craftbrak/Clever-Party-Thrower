@@ -1,11 +1,11 @@
 import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
-import { CreateAddressInput } from "./dto/create-address.input";
+import { CreateAddressDto } from "./dto/create-address.dto";
 import { UpdateAddressDto } from "./dto/update-address.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Address } from "./entities/address.entity";
 import { DeleteResult, Repository } from "typeorm";
 import { Country } from "./entities/country.entity";
-import { CreateCountryInput } from "./dto/create-country.input";
+import { CreateCountryDto } from "./dto/create-country.dto";
 import { HttpService } from "@nestjs/axios";
 
 @Injectable()
@@ -38,7 +38,7 @@ export class AddressService implements OnApplicationBootstrap {
     });
     this.logger.log("Countries Inserted " + tot);
   }
-  async create(createAddressInput: CreateAddressInput): Promise<Address> {
+  async create(createAddressInput: CreateAddressDto): Promise<Address> {
     const a = await this.addressRepo.create(createAddressInput).save();
     a.country = await this.findOneCountry(createAddressInput.countryId);
     return await a.save({ reload: true });
@@ -71,7 +71,7 @@ export class AddressService implements OnApplicationBootstrap {
   async findOneCountryByCode(code: Country["code"]): Promise<Country> {
     return this.countryRepo.findOneByOrFail({ code });
   }
-  async createCountry(input: CreateCountryInput): Promise<Country> {
+  async createCountry(input: CreateCountryDto): Promise<Country> {
     return this.countryRepo.create(input);
   }
 }

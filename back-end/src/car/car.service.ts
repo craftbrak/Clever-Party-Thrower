@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { CreateCarInput } from "./dto/create-car.input";
-import { UpdateCarInput } from "./dto/update-car.input";
+import { CreateCarDto } from "./dto/create-car.dto";
+import { UpdateCarDto } from "./dto/update-car.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Car } from "./entities/car.entity";
-import {JWTPayload} from "../auth/auth.service";
-import {User} from "../user/entities/user.entity";
+import { JWTPayload } from "../auth/auth.service";
+import { User } from "../user/entities/user.entity";
 
 @Injectable()
 export class CarService {
@@ -13,9 +13,9 @@ export class CarService {
     @InjectRepository(Car) private readonly carRepo: Repository<Car>,
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
-  async create(createCarInput: CreateCarInput, user: JWTPayload) {
-    createCarInput.ownerId = user.id
-    createCarInput.owner = await this.userRepo.findOneByOrFail({id: user.id})
+  async create(createCarInput: CreateCarDto, user: JWTPayload) {
+    createCarInput.ownerId = user.id;
+    createCarInput.owner = await this.userRepo.findOneByOrFail({ id: user.id });
     return this.carRepo.create(createCarInput).save();
   }
 
@@ -27,7 +27,7 @@ export class CarService {
     return this.carRepo.findOneByOrFail({ id });
   }
 
-  async update(id: string, updateCarInput: UpdateCarInput) {
+  async update(id: string, updateCarInput: UpdateCarDto) {
     return this.carRepo.update(id, updateCarInput);
   }
 
@@ -35,7 +35,7 @@ export class CarService {
     return this.carRepo.delete(id);
   }
 
-  async getOwner(car:Car){
-    return this.userRepo.findOneByOrFail({id:car.ownerId})
+  async getOwner(car: Car) {
+    return this.userRepo.findOneByOrFail({ id: car.ownerId });
   }
 }

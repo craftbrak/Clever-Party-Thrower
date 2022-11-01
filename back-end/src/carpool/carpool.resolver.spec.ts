@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CarpoolResolver } from './carpool.resolver';
-import { CarpoolService } from './carpool.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { CarpoolResolver } from "./carpool.resolver";
+import { CarpoolService } from "./carpool.service";
 
-describe('CarpoolResolver', () => {
+describe("CarpoolResolver", () => {
   let resolver: CarpoolResolver;
 
   beforeEach(async () => {
@@ -13,7 +13,7 @@ describe('CarpoolResolver', () => {
     resolver = module.get<CarpoolResolver>(CarpoolResolver);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(resolver).toBeDefined();
   });
 });

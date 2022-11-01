@@ -37,7 +37,7 @@ export class Car extends Node {
   @Column()
   maxPassengers: number;
   @Field(() => Float, { description: "consumption of the car in L/100km" })
-  @Column({type:"float"})
+  @Column({ type: "float" })
   consumption: number;
 
   @Field(() => BootSizes)
@@ -64,9 +64,9 @@ export class Car extends Node {
   @Column()
   range: number;
 
-  @Field(()=>Boolean)
-  @Column({default: false})
-  shared: boolean
+  @Field(() => Boolean)
+  @Column({ default: false })
+  shared: boolean;
 
   @ManyToOne(() => User, (user) => user.cars)
   @JoinColumn([{ name: "ownerId", referencedColumnName: "id" }])

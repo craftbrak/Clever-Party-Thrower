@@ -1,9 +1,9 @@
-import { CreateEventInput } from "./create-event.input";
+import { CreateEventDto } from "./create-event.dto";
 import { InputType, Field, PartialType, ID, Float } from "@nestjs/graphql";
 import { Event } from "../entities/event.entity";
 
 @InputType()
-export class UpdateEventInput extends PartialType(CreateEventInput) {
+export class UpdateEventDto extends PartialType(CreateEventDto) {
   @Field(() => ID, { description: "Id of the event" })
   id: Event["id"];
 

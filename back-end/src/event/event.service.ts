@@ -1,6 +1,6 @@
 ﻿import { Injectable } from "@nestjs/common";
-import { CreateEventInput } from "./dto/create-event.input";
-import { UpdateEventInput } from "./dto/update-event.input";
+import { CreateEventDto } from "./dto/create-event.dto";
+import { UpdateEventDto } from "./dto/update-event.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Event } from "./entities/event.entity";
@@ -22,7 +22,7 @@ export class EventService {
     private addressService: AddressService,
   ) {}
 
-  async create(input: CreateEventInput): Promise<Event> {
+  async create(input: CreateEventDto): Promise<Event> {
     const event = await this.eventRepo.save(this.eventRepo.create(input));
     event.address = await this.addressService.findOne(input.addressId);
     event.addressId = input.addressId;
@@ -62,7 +62,7 @@ export class EventService {
 
   async update(
     eventId: Event["id"],
-    updateEventInput: UpdateEventInput,
+    updateEventInput: UpdateEventDto,
   ): Promise<Event> {
     const event = await this.eventRepo.findOneOrFail({
       where: {

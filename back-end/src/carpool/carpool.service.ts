@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCarpoolInput } from './dto/create-carpool.input';
-import { UpdateCarpoolInput } from './dto/update-carpool.input';
+import { Injectable } from "@nestjs/common";
+import { CreateCarpoolDto } from "./dto/create-carpool.dto";
+import { UpdateCarpoolDto } from "./dto/update-carpool.dto";
 
 @Injectable()
 export class CarpoolService {
   //TODO: CRUD
   //TODO: Matching
-  create(createCarpoolInput: CreateCarpoolInput) {
-    return 'This action adds a new carpool';
+  create(createCarpoolInput: CreateCarpoolDto) {
+    return "This action adds a new carpool";
   }
 
   findAll() {
@@ -18,7 +18,7 @@ export class CarpoolService {
     return `This action returns a #${id} carpool`;
   }
 
-  update(id: string, updateCarpoolInput: UpdateCarpoolInput) {
+  update(id: string, updateCarpoolInput: UpdateCarpoolDto) {
     return `This action updates a #${id} carpool`;
   }
 

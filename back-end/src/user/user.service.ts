@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { CreateUserInput } from "./dto/create-user.input";
-import { UpdateUserInput } from "./dto/update-user.input";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
@@ -13,7 +13,7 @@ export class UserService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     private addressService: AddressService,
   ) {}
-  async create(createUserInput: CreateUserInput): Promise<User> {
+  async create(createUserInput: CreateUserDto): Promise<User> {
     createUserInput.password = await argon2.hash(createUserInput.password);
     const usr = await this.userRepo.create(createUserInput);
     usr.address = await this.addressService.findOne(createUserInput.addressId);
@@ -35,7 +35,7 @@ export class UserService {
       },
     });
   }
-  async update(id: string, updateUserInput: UpdateUserInput) {
+  async update(id: string, updateUserInput: UpdateUserDto) {
     const usr = await this.findOneById(updateUserInput.id);
     if (updateUserInput.addressId) {
       usr.address = await this.addressService.findOne(

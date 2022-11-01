@@ -9,8 +9,8 @@ import {
 import { JWTPayload } from "../auth/auth.service";
 import { SortDirection } from "../pagination/dto/pagination.dto";
 import { EventToUser } from "./entities/event-to-user.entity";
-import { CreateEventToUserInput } from "./dto/create-event-to-user.input";
-import { UpdateEventToUserInput } from "./dto/update-event-to-user.input";
+import { CreateEventToUserDto } from "./dto/create-event-to-user.dto";
+import { UpdateEventToUserDto } from "./dto/update-event-to-user.dto";
 import { AddressService } from "../address/address.service";
 
 @Injectable()
@@ -21,7 +21,7 @@ export class EventToUserService {
     private addressService: AddressService,
   ) {}
 
-  async create(input: CreateEventToUserInput): Promise<EventToUser> {
+  async create(input: CreateEventToUserDto): Promise<EventToUser> {
     const etoU = new EventToUser();
     etoU.userId = input.userId;
     etoU.eventId = input.eventId;
@@ -74,7 +74,7 @@ export class EventToUserService {
 
   async update(
     eventId: EventToUser["id"],
-    input: UpdateEventToUserInput,
+    input: UpdateEventToUserDto,
   ): Promise<EventToUser> {
     const eventToUser = await this.eventToUserRepository.findOneOrFail({
       where: {

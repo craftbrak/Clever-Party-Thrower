@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
 import { EventToUserService } from "./event-to-user.service";
 import { EventToUser } from "./entities/event-to-user.entity";
-import { CreateEventToUserInput } from "./dto/create-event-to-user.input";
-import { UpdateEventToUserInput } from "./dto/update-event-to-user.input";
+import { CreateEventToUserDto } from "./dto/create-event-to-user.dto";
+import { UpdateEventToUserDto } from "./dto/update-event-to-user.dto";
 
 @Resolver(() => EventToUser)
 export class EventToUserResolver {
@@ -11,7 +11,7 @@ export class EventToUserResolver {
   @Mutation(() => EventToUser)
   createEventToUser(
     @Args("createEventToUserInput")
-    createEventToUserInput: CreateEventToUserInput,
+    createEventToUserInput: CreateEventToUserDto,
   ) {
     return this.eventToUserService.create(createEventToUserInput);
   }
@@ -24,7 +24,7 @@ export class EventToUserResolver {
   @Mutation(() => EventToUser)
   updateEventToUser(
     @Args("updateEventToUserInput")
-    updateEventToUserInput: UpdateEventToUserInput,
+    updateEventToUserInput: UpdateEventToUserDto,
   ) {
     return this.eventToUserService.update(
       updateEventToUserInput.id,

@@ -1,9 +1,9 @@
-import { CreateAddressInput } from "./create-address.input";
+import { CreateAddressDto } from "./create-address.dto";
 import { InputType, Field, Int } from "@nestjs/graphql";
 import { Address } from "../entities/address.entity";
 
 @InputType()
-export class UpdateAddressDto extends CreateAddressInput {
+export class UpdateAddressDto extends CreateAddressDto {
   @Field(() => Int!)
   id: Address["id"];
 }

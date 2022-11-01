@@ -2,10 +2,10 @@
 %! Date = 28-10-22
 
 Le projet ayant comme contrainte principale d'etre disponible sur toutes les plateformes majeures une base web me parait évident.
-Pourtant, le web vient aussi avec la limitation principale qu'est le besoin de connection permanente au serveur,
-pour remédier à ce problème un PWA ( Application Web Progressive ) nous permettrais de bénéficier des avantages du web,
+Pourtant, le web vient aussi avec la limitation principale qu'est le besoin de connection permanente au serveur.\\\\
+Pour remédier à ce problème une PWA ( Application Web Progressive ) nous permettrais de bénéficier des avantages du web,
 tout en permettant aux utilisateurs de conserver une version locale de l'application.
-De plus une PWA permet d'etre installée comme une application native Android ou IOS pour les plateformes mobiles ce qui facilite l'accès.\\\\
+De plus une PWA permet d'etre installée comme une application native Android ou IOS pour les plateformes mobiles ce qui facilite l'accès.\\
 
 Une PWA comme toute application web nécessite plusieurs composant:
 \begin{itemize}
@@ -41,14 +41,14 @@ Angular étant un framework orienté m'oblige aussi à suivre une architecture p
 Pour conserver les données hors ligne et facilité l'accès a des données à jour lors d'une connexion j'ai decider d'utiliser NgRx.
 Ce dernier est un framework de gestion de donnée qui simplifie l'accès et le caching de données
 \subsubsection{Gestionnaire des requêtes}
-Lorsque l'on veut interagir avec une API graphql il est preferable d'utiliser un client.
+Lorsque l'on veut interagir avec une API graphql il est preferable d'utiliser un client.\\\\
 Il existe une multitude de clients GraphQl mais le plus populaire et le mieux documenter reste Apollo.
-De plus il existe un wrapper pour le client Apollo qui l'intègre dans angular nommer Apollo Angular
-je vais donc utiliser cette librairie pour récupérer mes données au pres de mon serveur .
+De plus il existe un wrapper pour le client Apollo qui l'intègre dans angular nommer Apollo Angular.
+Je vais donc utiliser cette librairie pour récupérer mes données au pres de mon serveur .
 \subsubsection{librairie CSS}
 Utiliser une librairie de composant permet de simplifier la creation de l'interface grâce à des blocks de construction appeler composants\@.
 Angular permet d'utiliser des librairies de composant avec leur propre logique, structure, et CSS\@.
-Ces librairies fournissent aussi un ensemble de classe CSS pour rendre nos propres composants joli.
+Ces librairies fournissent aussi un ensemble de classe CSS pour rendre nos propres composants joli.\\
 De plus elles permettent de rendre notre application responsive sans devoir y penser pour chaque composant.
 Il existe plusieurs librairies majeures, les principales sont:
 \begin{itemize}
@@ -57,9 +57,9 @@ Il existe plusieurs librairies majeures, les principales sont:
     \item NgBootstrap
 \end{itemize}
 Angular Material est la librairie officielle, elle est d'origine Google,
-offre beaucoup de composant different en plus de plusieurs composants de layout qui permette de d'organiser d'autre composant sur la page.
+offre beaucoup de composant different en plus de plusieurs composants de layout qui permette de d'organiser d'autre composant sur la page.\\\\
 PrimeNg offre aussi un grand nombre de composants, mais n'offre pas de layout par contre,
-PrimeNg permet par contre d'utiliser un autre theme que Material.
+PrimeNg permet par contre d'utiliser un autre theme que Material.\\\\
 NgBootstrap est un simple wrapper pour Bootstrap css et propose tous les composants de bootstrap.
 Vu que mon objectif est de créer une PWA qui sera installable sur Android,
 utiliser un theme similaire à ceux des applications Google intégrera mieux l'application.

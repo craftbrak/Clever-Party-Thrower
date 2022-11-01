@@ -9,8 +9,8 @@ import {
 } from "@nestjs/graphql";
 import { EventService } from "./event.service";
 import { Event } from "./entities/event.entity";
-import { CreateEventInput } from "./dto/create-event.input";
-import { UpdateEventInput } from "./dto/update-event.input";
+import { CreateEventDto } from "./dto/create-event.dto";
+import { UpdateEventDto } from "./dto/update-event.dto";
 import {
   EventsPagination,
   EventsPaginationArgs,
@@ -43,7 +43,7 @@ export class EventResolver {
 
   @Mutation(() => Event)
   async createEvent(
-    @Args("createEventInput") createEventInput: CreateEventInput,
+    @Args("createEventInput") createEventInput: CreateEventDto,
     @CurrentUser() user: JWTPayload,
   ) {
     return this.eventService.create(createEventInput);
@@ -51,7 +51,7 @@ export class EventResolver {
 
   @Mutation(() => Event)
   async updateEvent(
-    @Args("updateEventInput") updateEventInput: UpdateEventInput,
+    @Args("updateEventInput") updateEventInput: UpdateEventDto,
   ) {
     return this.eventService.update(updateEventInput.id, updateEventInput);
   }

@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSpendingInput } from './dto/create-spending.input';
-import { UpdateSpendingInput } from './dto/update-spending.input';
+import { Injectable } from "@nestjs/common";
+import { CreateSpendingDto } from "./dto/create-spending.dto";
+import { UpdateSpendingDto } from "./dto/update-spending.dto";
 
 @Injectable()
 export class SpendingService {
   //TODO: CRUD
   //TODO: matching
-  create(createSpendingInput: CreateSpendingInput) {
-    return 'This action adds a new spending';
+  create(createSpendingInput: CreateSpendingDto) {
+    return "This action adds a new spending";
   }
 
   findAll() {
@@ -18,7 +18,7 @@ export class SpendingService {
     return `This action returns a #${id} spending`;
   }
 
-  update(id: number, updateSpendingInput: UpdateSpendingInput) {
+  update(id: number, updateSpendingInput: UpdateSpendingDto) {
     return `This action updates a #${id} spending`;
   }
 
