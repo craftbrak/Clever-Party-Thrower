@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, Float } from "@nestjs/graphql";
+import { Field, Float, ObjectType } from "@nestjs/graphql";
 import { Node } from "../../pagination/entities/node.entity";
 import { User } from "../../user/entities/user.entity";
 import { Column, Entity, ManyToOne } from "typeorm";

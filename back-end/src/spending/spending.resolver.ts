@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { SpendingService } from "./spending.service";
 import { Spending } from "./entities/spending.entity";
 import { CreateSpendingDto } from "./dto/create-spending.dto";
@@ -21,7 +21,7 @@ export class SpendingResolver {
   }
 
   @Query(() => Spending, { name: "spending" })
-  findOne(@Args("id", { type: () => Int }) id: number) {
+  findOne(@Args("id", { type: () => String }) id: string) {
     return this.spendingService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class SpendingResolver {
   }
 
   @Mutation(() => Spending)
-  removeSpending(@Args("id", { type: () => Int }) id: number) {
+  removeSpending(@Args("id", { type: () => String }) id: string) {
     return this.spendingService.remove(id);
   }
 }

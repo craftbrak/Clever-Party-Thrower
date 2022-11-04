@@ -1,10 +1,4 @@
-import {
-  ObjectType,
-  Field,
-  Int,
-  registerEnumType,
-  Float,
-} from "@nestjs/graphql";
+import { Field, Float, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Address } from "../../address/entities/address.entity";
 import { User } from "../../user/entities/user.entity";
 import { Node } from "../../pagination/entities/node.entity";
@@ -17,9 +11,11 @@ export enum Directions {
   go = "go",
   back = "back",
 }
+
 registerEnumType(Directions, {
   name: "Directions",
 });
+
 @ObjectType()
 @Entity()
 export class Carpool extends Node {

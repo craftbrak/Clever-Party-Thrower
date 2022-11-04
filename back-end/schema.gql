@@ -169,6 +169,10 @@ type Spending {
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
+  buyer: User!
+  event: Event!
+  value: Float!
+  shoppingListItem: ShoppingListItem!
 }
 
 type Event {

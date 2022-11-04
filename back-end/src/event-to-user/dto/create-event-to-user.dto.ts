@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import { User } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Address } from "../../address/entities/address.entity";

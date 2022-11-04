@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Event } from "../event/entities/event.entity";
-import { Repository } from "typeorm";
+import { DeleteResult, Repository } from "typeorm";
 import {
   MemberPaginationArgs,
   MenmberPagination,
@@ -53,6 +53,7 @@ export class EventToUserService {
     });
     return { nodes, totalCount };
   }
+
   async findAllOfUser(user?: JWTPayload): Promise<EventToUser[]> {
     return await this.eventToUserRepository.find({
       order: {
@@ -87,12 +88,7 @@ export class EventToUserService {
     return await this.eventToUserRepository.save(eventToUser);
   }
 
-  async remove(eventId: EventToUser["id"]): Promise<string> {
-    const event = await this.eventToUserRepository.remove(
-      await this.eventToUserRepository.findOneOrFail({
-        where: { id: eventId },
-      }),
-    );
-    return eventId;
+  async remove(eventId: EventToUser["id"]): Promise<DeleteResult> {
+    return await this.eventToUserRepository.delete({ id: eventId });
   }
 }
