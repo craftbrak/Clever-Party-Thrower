@@ -11,9 +11,11 @@ export enum UserRole {
   DJ = "dj",
   INVITED = "invited",
 }
+
 registerEnumType(UserRole, {
   name: "UserRole",
 });
+
 @ObjectType()
 @Entity()
 export class EventToUser extends Node {
@@ -36,7 +38,7 @@ export class EventToUser extends Node {
 
   @Field(() => Address, { nullable: true })
   @ManyToOne(() => Address)
-  @JoinColumn([{ name: "addressId", referencedColumnName: "id" }])
+  @JoinColumn([{ name: "addressString", referencedColumnName: "id" }])
   address: Address;
 
   @Field(() => String, { nullable: true })

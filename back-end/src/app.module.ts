@@ -15,10 +15,11 @@ import { AddressModule } from "./address/address.module";
 import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import { CarModule } from "./car/car.module";
 import * as Joi from "joi";
-// import { LoggerMiddleware } from "./logs/logger.middleware";
+// import { LoggerMStringdleware } from "./logs/logger.mStringdleware";
 import { CarpoolModule } from "./carpool/carpool.module";
 import { SpendingModule } from "./spending/spending.module";
 import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-items.module";
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -49,9 +50,12 @@ import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-ite
         port: parseInt(configService.get("DATABASE_PORT")),
         username: configService.get("DATABASE_USER"),
         password: configService.get("DATABASE_PSW"),
-        database: configService.get("DATABASE_NAME"),
+        database:
+          configService.get("NODE_ENV") === "test"
+            ? configService.get("TEST_DATABASE_NAME")
+            : configService.get("DATABASE_NAME"),
         entities: [join(__dirname, "**", "*.entity.{ts,js}")],
-        synchronize: true,
+        synchronize: configService.get("NODE_ENV") !== "production",
         logging: false,
       }),
     }),

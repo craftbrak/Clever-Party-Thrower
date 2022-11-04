@@ -1,6 +1,5 @@
 import {
   Args,
-  ID,
   Mutation,
   Parent,
   Query,
@@ -37,7 +36,7 @@ export class EventResolver {
   }
 
   @Query(() => Event, { name: "event" })
-  async findOne(@Args("id", { type: () => ID }) id: Event["id"]) {
+  async findOne(@Args("id", { type: () => String }) id: Event["id"]) {
     return this.eventService.findOne(id);
   }
 
@@ -56,10 +55,11 @@ export class EventResolver {
     return this.eventService.update(updateEventInput.id, updateEventInput);
   }
 
-  @Mutation(() => ID)
-  async removeEvent(@Args("id", { type: () => ID }) id: Event["id"]) {
+  @Mutation(() => String)
+  async removeEvent(@Args("id", { type: () => String }) id: Event["id"]) {
     return this.eventService.remove(id);
   }
+
   @ResolveField("members", () => [EventToUser])
   async members(
     @Parent() event: Event,
@@ -68,6 +68,7 @@ export class EventResolver {
   ) {
     return await this.eventService.getMembers(args, event);
   }
+
   @ResolveField("address", () => Address)
   async address(@Parent() event: Event) {
     return this.addressService.findOne(event.addressId);

@@ -1,4 +1,4 @@
-import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ShoppingListItemsService } from "./shopping-list-items.service";
 import { ShoppingListItem } from "./entities/shopping-list-item.entity";
 import { CreateShoppingListItemDto } from "./dto/create-shopping-list-item.dto";
@@ -24,7 +24,7 @@ export class ShoppingListItemsResolver {
   }
 
   @Query(() => ShoppingListItem, { name: "shopingListItem" })
-  findOne(@Args("id", { type: () => ID }) id: string) {
+  findOne(@Args("id", { type: () => String }) id: string) {
     return this.shopingListItemsService.findOne(id);
   }
 
@@ -40,7 +40,7 @@ export class ShoppingListItemsResolver {
   }
 
   @Mutation(() => ShoppingListItem)
-  removeShoppingListItem(@Args("id", { type: () => ID }) id: string) {
+  removeShoppingListItem(@Args("id", { type: () => String }) id: string) {
     return this.shopingListItemsService.remove(id);
   }
 }

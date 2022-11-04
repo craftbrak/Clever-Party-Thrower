@@ -1,5 +1,5 @@
 import { CreateShoppingListItemDto } from "./create-shopping-list-item.dto";
-import { InputType, Field, Int, PartialType, Float, ID } from "@nestjs/graphql";
+import { Field, Float, InputType, PartialType } from "@nestjs/graphql";
 import { ManyToOne } from "typeorm";
 import { User } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
@@ -8,17 +8,17 @@ import { Event } from "../../event/entities/event.entity";
 export class UpdateShoppingListItemDto extends PartialType(
   CreateShoppingListItemDto,
 ) {
-  @Field(() => ID)
+  @Field(() => String)
   id: string;
   @Field(() => String)
   name: string;
   @Field(() => Float)
   price: number;
-  @Field(() => ID)
+  @Field(() => String)
   @ManyToOne(() => User, { nullable: true })
   assignedId: User["id"];
   @Field(() => Boolean)
   bought: boolean;
-  @Field(() => ID)
+  @Field(() => String)
   eventId: Event["id"];
 }

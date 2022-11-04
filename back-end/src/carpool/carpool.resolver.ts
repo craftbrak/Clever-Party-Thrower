@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CarpoolService } from "./carpool.service";
 import { Carpool } from "./entities/carpool.entity";
 import { CreateCarpoolDto } from "./dto/create-carpool.dto";
@@ -15,7 +15,7 @@ export class CarpoolResolver {
     return this.carpoolService.create(createCarpoolInput);
   }
 
-  @Query(() => [Carpool], { name: "carpool" })
+  @Query(() => [Carpool], { name: "carpools" })
   findAll() {
     return this.carpoolService.findAll();
   }

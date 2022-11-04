@@ -1,11 +1,10 @@
 import {
-  Resolver,
-  Query,
-  Mutation,
   Args,
-  ID,
-  ResolveField,
+  Mutation,
   Parent,
+  Query,
+  ResolveField,
+  Resolver,
 } from "@nestjs/graphql";
 import { CarService } from "./car.service";
 import { Car } from "./entities/car.entity";
@@ -33,7 +32,7 @@ export class CarResolver {
   }
 
   @Query(() => Car, { name: "car" })
-  async findOne(@Args("id", { type: () => ID }) id: string) {
+  async findOne(@Args("id", { type: () => String }) id: string) {
     return await this.carService.findOne(id);
   }
 
@@ -43,9 +42,10 @@ export class CarResolver {
   }
 
   @Mutation(() => Car)
-  async removeCar(@Args("id", { type: () => ID }) id: string) {
+  async removeCar(@Args("id", { type: () => String }) id: string) {
     return await this.carService.remove(id);
   }
+
   @ResolveField("owner", () => User)
   async findOwner(@Parent() car: Car) {
     return await this.carService.getOwner(car);

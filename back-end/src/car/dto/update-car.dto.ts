@@ -1,8 +1,8 @@
 import { CreateCarDto } from "./create-car.dto";
-import { InputType, Field, PartialType, ID } from "@nestjs/graphql";
+import { Field, InputType, PartialType } from "@nestjs/graphql";
 
 @InputType()
 export class UpdateCarDto extends PartialType(CreateCarDto) {
-  @Field(() => ID)
+  @Field(() => String)
   id: string;
 }

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 interface Node {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -15,7 +15,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Country {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -24,7 +24,7 @@ type Country {
 }
 
 type Address {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -39,7 +39,7 @@ type Address {
 }
 
 type Car {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -77,7 +77,7 @@ enum Fuels {
 }
 
 type User {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -97,7 +97,7 @@ type User {
 }
 
 type EventToUser {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -118,7 +118,7 @@ enum UserRole {
 }
 
 type Route {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -133,7 +133,7 @@ type Route {
 }
 
 type Carpool {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -153,7 +153,7 @@ enum Directions {
 }
 
 type ShoppingListItem {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -165,14 +165,14 @@ type ShoppingListItem {
 }
 
 type Spending {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
 }
 
 type Event {
-  id: ID!
+  id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
@@ -215,23 +215,24 @@ type AuthLoginOutput {
 type Query {
   sayHello: String!
   getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
-  event(id: ID!): Event!
+  event(id: String!): Event!
   address(id: String!): Address!
   countries: [Country!]!
   country(Code: String!): Country!
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
-  car(id: ID!): Car!
+  car(id: String!): Car!
+  carpools: [Carpool!]!
   carpool(id: String!): Carpool!
   spending(id: Int!): Spending!
   shopingListItems: [ShoppingListItem!]!
-  shopingListItem(id: ID!): ShoppingListItem!
+  shopingListItem(id: String!): ShoppingListItem!
 }
 
 type Mutation {
   createEvent(createEventInput: CreateEventDto!): Event!
   updateEvent(updateEventInput: UpdateEventDto!): Event!
-  removeEvent(id: ID!): ID!
+  removeEvent(id: String!): String!
   createAddress(createAddressInput: CreateAddressDto!): Address!
   updateAddress(updateAddressInput: UpdateAddressDto!): Address!
   removeAddress(id: Int!): Address!
@@ -245,7 +246,7 @@ type Mutation {
   removeEventToUser(id: String!): EventToUser!
   createCar(createCarInput: CreateCarDto!): Car!
   updateCar(updateCarInput: UpdateCarDto!): Car!
-  removeCar(id: ID!): Car!
+  removeCar(id: String!): Car!
   createCarpool(createCarpoolInput: CreateCarpoolDto!): Carpool!
   updateCarpool(updateCarpoolInput: UpdateCarpoolDto!): Carpool!
   removeCarpool(id: String!): Carpool!
@@ -254,7 +255,7 @@ type Mutation {
   removeSpending(id: Int!): Spending!
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
-  removeShoppingListItem(id: ID!): ShoppingListItem!
+  removeShoppingListItem(id: String!): ShoppingListItem!
 }
 
 input CreateEventDto {
@@ -281,7 +282,7 @@ input UpdateEventDto {
   addressId: String
 
   """Id of the event"""
-  id: ID!
+  id: String!
 }
 
 input CreateAddressDto {
@@ -382,18 +383,28 @@ input UpdateCarDto {
 
   """Range of the car in km"""
   range: Int
-  id: ID!
+  id: String!
 }
 
 input CreateCarpoolDto {
-  """Example field (placeholder)"""
-  totalLength: Int!
+  driverId: String!
+  direction: Directions!
+  finalDestinationId: String!
+  startDestinationId: String!
+  carId: String!
+  eventId: String!
+  totalLength: Float!
 }
 
 input UpdateCarpoolDto {
-  """Example field (placeholder)"""
-  totalLength: Int
-  id: ID!
+  driverId: String
+  direction: Directions
+  finalDestinationId: String
+  startDestinationId: String
+  carId: String
+  eventId: String
+  totalLength: Float
+  id: String!
 }
 
 input CreateSpendingDto {
@@ -410,16 +421,16 @@ input UpdateSpendingDto {
 input CreateShoppingListItemDto {
   name: String!
   price: Float!
-  assignedId: ID!
+  assignedId: String!
   bought: Boolean!
-  eventId: ID!
+  eventId: String!
 }
 
 input UpdateShoppingListItemDto {
   name: String!
   price: Float!
-  assignedId: ID!
+  assignedId: String!
   bought: Boolean!
-  eventId: ID!
-  id: ID!
+  eventId: String!
+  id: String!
 }
