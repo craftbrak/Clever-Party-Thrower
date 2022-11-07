@@ -25,7 +25,7 @@ export class CreateCarDto {
   @Field(() => Int, { description: "Range of the car in km" })
   range: number;
 
-  ownerId: User["id"];
+  ownerId?: User["id"];
 
-  owner: User;
+  owner?: User;
 }

@@ -16,6 +16,12 @@ export class IntegrationTestManager {
   private app: INestApplication;
   private _moduleRef: TestingModule;
 
+  private _testUser: User;
+
+  get testUser(): User {
+    return this._testUser;
+  }
+
   private _testCountry: Country;
 
   get testCountry(): Country {
@@ -58,8 +64,8 @@ export class IntegrationTestManager {
     const authService = this.app.get<AuthService>(AuthService);
     this._dataSource = this._moduleRef.get(DataSource);
     const userRepo = this._dataSource.getRepository<User>(User);
-    const user = await userRepo.findOneByOrFail({ email: testUser.email });
-    this._accessToken = await authService.login(user);
+    this._testUser = await userRepo.findOneByOrFail({ email: testUser.email });
+    this._accessToken = await authService.login(this._testUser);
   }
 
   async afterAll() {

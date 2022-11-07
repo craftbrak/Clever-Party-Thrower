@@ -64,7 +64,7 @@ describe("createEvent", () => {
           integrationTestManager.testAddress.id,
         );
       });
-      test("Then the user should be in the database", async () => {
+      test("Then the event should be in the database", async () => {
         const event = await integrationTestManager.dataSource
           .getRepository(Event)
           .findOneByOrFail({ id: createdEvent.id });

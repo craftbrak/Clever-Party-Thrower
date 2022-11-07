@@ -71,7 +71,7 @@ describe("createAddress", () => {
           code: integrationTestManager.testCountry.code,
         });
       });
-      test("Then the user should be in the database", async () => {
+      test("Then the address should be in the database", async () => {
         const address = await integrationTestManager.dataSource
           .getRepository(Address)
           .findOneByOrFail({ id: createdAddress.id });
