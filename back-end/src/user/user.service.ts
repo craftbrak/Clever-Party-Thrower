@@ -13,12 +13,17 @@ export class UserService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     private addressService: AddressService,
   ) {}
+
   async create(createUserInput: CreateUserDto): Promise<User> {
     createUserInput.password = await argon2.hash(createUserInput.password);
     const usr = await this.userRepo.create(createUserInput);
-    usr.address = await this.addressService.findOne(createUserInput.addressId);
+    if (createUserInput.addressId)
+      usr.address = await this.addressService.findOne(
+        createUserInput.addressId,
+      );
     return usr.save();
   }
+
   async findOne(email: User["email"]) {
     return await this.userRepo.findOneOrFail({
       where: {
@@ -26,6 +31,7 @@ export class UserService {
       },
     });
   }
+
   async findOneById(id: User["id"]): Promise<User> {
     return await this.userRepo.findOneOrFail({
       where: { id },
@@ -35,6 +41,7 @@ export class UserService {
       },
     });
   }
+
   async update(id: string, updateUserInput: UpdateUserDto) {
     const usr = await this.findOneById(updateUserInput.id);
     if (updateUserInput.addressId) {

@@ -33,6 +33,7 @@ import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-ite
         DATABASE_USER: Joi.string().required(),
         DATABASE_PSW: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
+        TEST_DATABASE_NAME: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -56,6 +57,7 @@ import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-ite
             : configService.get("DATABASE_NAME"),
         entities: [join(__dirname, "**", "*.entity.{ts,js}")],
         synchronize: configService.get("NODE_ENV") !== "production",
+        dropSchema: configService.get("NODE_ENV") === "test",
         logging: false,
       }),
     }),

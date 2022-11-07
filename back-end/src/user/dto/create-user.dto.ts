@@ -19,6 +19,6 @@ export class CreateUserDto {
   @Field(() => Boolean)
   manual: boolean;
 
-  @Field(() => String)
-  addressId: string;
+  @Field(() => String, { nullable: true })
+  addressId?: string;
 }

@@ -228,7 +228,7 @@ type Query {
   car(id: String!): Car!
   carpools: [Carpool!]!
   carpool(id: String!): Carpool!
-  spending(id: Int!): Spending!
+  spending(id: String!): Spending!
   shopingListItems: [ShoppingListItem!]!
   shopingListItem(id: String!): ShoppingListItem!
 }
@@ -256,7 +256,7 @@ type Mutation {
   removeCarpool(id: String!): Carpool!
   createSpending(createSpendingInput: CreateSpendingDto!): Spending!
   updateSpending(updateSpendingInput: UpdateSpendingDto!): Spending!
-  removeSpending(id: Int!): Spending!
+  removeSpending(id: String!): Spending!
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
   removeShoppingListItem(id: String!): ShoppingListItem!
@@ -327,7 +327,7 @@ input CreateUserDto {
   avatar: String
   drivingLicence: Boolean!
   manual: Boolean!
-  addressId: String!
+  addressId: String
 }
 
 input UpdateUserDto {
@@ -412,14 +412,18 @@ input UpdateCarpoolDto {
 }
 
 input CreateSpendingDto {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  buyerId: String!
+  eventId: String!
+  value: Float!
+  shoppingListItemId: String!
 }
 
 input UpdateSpendingDto {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  buyerId: String
+  eventId: String
+  value: Float
+  shoppingListItemId: String
+  id: String!
 }
 
 input CreateShoppingListItemDto {

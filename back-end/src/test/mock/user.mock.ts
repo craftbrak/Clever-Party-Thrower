@@ -16,10 +16,19 @@ export const testUser: CreateUserDto = {
   manual: false,
   drivingLicence: false,
 };
-export const userStub: CreateUserDto = {
+export const userMock1: CreateUserDto = {
   email: randEmail(),
   name: randFullName(),
-  addressId: "",
+  addressId: null,
+  drivingLicence: randBoolean(),
+  avatar: randUrl(),
+  manual: randBoolean(),
+  password: randPassword(),
+};
+export const userMock2: CreateUserDto = {
+  email: randEmail(),
+  name: randFullName(),
+  addressId: null,
   drivingLicence: randBoolean(),
   avatar: randUrl(),
   manual: randBoolean(),
