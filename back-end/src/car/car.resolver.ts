@@ -10,7 +10,7 @@ import { CarService } from "./car.service";
 import { Car } from "./entities/car.entity";
 import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
-import { CurrentUser } from "../auth/guards/jwtAuth.gruard";
+import { CurrentUser } from "../auth/guards/jwtAuth.guard";
 import { JWTPayload } from "../auth/auth.service";
 import { User } from "../user/entities/user.entity";
 
