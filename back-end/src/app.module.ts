@@ -19,6 +19,7 @@ import * as Joi from "joi";
 import { CarpoolModule } from "./carpool/carpool.module";
 import { SpendingModule } from "./spending/spending.module";
 import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-items.module";
+import { randomUUID } from "crypto";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-ite
         DATABASE_PSW: Joi.string().required(),
         DATABASE_NAME: Joi.string().required(),
         TEST_DATABASE_NAME: Joi.string().required(),
+        JWT_SECRET: Joi.string().default(randomUUID()),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
