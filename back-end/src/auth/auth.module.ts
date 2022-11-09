@@ -9,7 +9,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtStrategy } from "./strategy/jwt.strategy";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtAuthGuard } from "./guards/jwtAuth.guard";
-import { randomUUID } from "crypto";
 
 @Module({
   imports: [
