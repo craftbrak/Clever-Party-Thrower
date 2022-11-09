@@ -61,7 +61,7 @@ describe("createCar", () => {
       test("Then the car should have an id", async () => {
         expect(createdCar.id).toBeTruthy();
       });
-      test("Then the car should not have an owner", async () => {
+      test("Then the car should have an owner", async () => {
         expect(createdCar.owner.id).toEqual(integrationTestManager.testUser.id);
       });
       test("Then the car should be in the database", async () => {
