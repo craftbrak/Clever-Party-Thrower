@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import request from "supertest-graphql";
 import { ShoppingListItem } from "../../../shopping-list-items/entities/shopping-list-item.entity";
 import { CreateShoppingListItemDto } from "../../../shopping-list-items/dto/create-shopping-list-item.dto";
-import { ShoppingListItemMock } from "../../mock/ShoppingListItem.mock";
+import { ShoppingListItemMock } from "../../mock/shoppingListItem.mock";
 
 describe("createShoppingListItem", () => {
   jest.setTimeout(20000);

@@ -17,7 +17,7 @@ export class Spending extends Node {
   event: Event;
 
   @Field(() => Float)
-  @Column()
+  @Column({ type: "float" })
   value: number;
 
   @Field(() => ShoppingListItem)

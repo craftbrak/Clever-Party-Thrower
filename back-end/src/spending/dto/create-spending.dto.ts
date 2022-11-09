@@ -11,6 +11,6 @@ export class CreateSpendingDto {
   @Field(() => Float)
   value: number;
 
-  @Field(() => String)
-  shoppingListItemId: string;
+  @Field(() => String, { nullable: true })
+  shoppingListItemId?: string;
 }
