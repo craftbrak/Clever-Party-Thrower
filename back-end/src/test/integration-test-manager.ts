@@ -11,6 +11,23 @@ import { addressMock } from "./mock/address.mock";
 import { UserService } from "../user/user.service";
 import { Address } from "../address/entities/address.entity";
 import { Country } from "../address/entities/country.entity";
+import {
+  randAddress,
+  randBoolean,
+  randBrand,
+  randDrinks,
+  randEmail,
+  randFloat,
+  randNumber,
+  randSentence,
+  randText,
+} from "@ngneat/falso";
+import { Event } from "../event/entities/event.entity";
+import { EventService } from "../event/event.service";
+import { CarService } from "../car/car.service";
+import { BootSizes, Car, Fuels } from "../car/entities/car.entity";
+import { Carpool, Directions } from "../carpool/entities/carpool.entity";
+import { CarpoolService } from "../carpool/carpool.service";
 
 export class IntegrationTestManager {
   private app: INestApplication;
@@ -89,5 +106,78 @@ export class IntegrationTestManager {
   async teardown(): Promise<void> {
     await this.dataSource.dropDatabase();
     console.log("teared down");
+  }
+
+  async getNewUser(): Promise<User> {
+    const userService = this._moduleRef.get<UserService>(UserService);
+    return await userService.create({
+      ...testUser,
+      addressId: this._testAddress.id,
+      email: randEmail(),
+    });
+  }
+
+  async getNewAddress(): Promise<Address> {
+    const add = randAddress();
+    const addressService = this._moduleRef.get<AddressService>(AddressService);
+    return await addressService.create({
+      countryId: this._testCountry.id,
+      streetNumber: "30",
+      line1: add.street,
+      line2: add.county,
+      unitNumber: "",
+      postalCode: add.zipCode,
+      city: add.city,
+    });
+  }
+
+  async getNewEvent(): Promise<Event> {
+    const address = await this.getNewAddress();
+    const eventService = this._moduleRef.get<EventService>(EventService);
+    return await eventService.create({
+      addressId: address.id,
+      name: randSentence(),
+      description: randText(),
+      total: randNumber(),
+    });
+  }
+
+  async getNewCar(): Promise<Car> {
+    const carService = this._moduleRef.get<CarService>(CarService);
+    return await carService.create(
+      {
+        bootSize: BootSizes.CampingCar,
+        brand: randBrand(),
+        fuel: Fuels.HYDROGEN,
+        consumption: randFloat(),
+        manualTransmission: randBoolean(),
+        model: randDrinks(),
+        maxPassengers: randNumber(),
+        range: randNumber(),
+      },
+      {
+        id: this.testUser.id,
+        name: this.testUser.name,
+        email: this.testUser.email,
+      },
+    );
+  }
+
+  async getNewCarpool(): Promise<Carpool> {
+    const event = await this.getNewEvent();
+    const start = await this.getNewAddress();
+    const end = await this.getNewAddress();
+    const driver = await this.getNewUser();
+    const car = await this.getNewCar();
+    const carpoolService = this._moduleRef.get<CarpoolService>(CarpoolService);
+    return await carpoolService.create({
+      eventId: event.id,
+      carId: car.id,
+      direction: Directions.back,
+      finalDestinationId: end.id,
+      startDestinationId: start.id,
+      driverId: driver.id,
+      totalLength: randNumber(),
+    });
   }
 }
