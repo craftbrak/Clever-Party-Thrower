@@ -4,7 +4,7 @@ import { INestApplication } from "@nestjs/common";
 import { AuthService } from "../auth/auth.service";
 import { DataSource } from "typeorm";
 import { User } from "../user/entities/user.entity";
-import { AuthLoginOutput } from "../auth/dto/auth-login.dto";
+import { AuthOutputDto } from "../auth/dto/auth-output.dto";
 import { testUser } from "./mock/user.mock";
 import { AddressService } from "../address/address.service";
 import { addressMock } from "./mock/address.mock";
@@ -18,6 +18,7 @@ import {
   randDrinks,
   randEmail,
   randFloat,
+  randMusicGenre,
   randNumber,
   randSentence,
   randText,
@@ -28,6 +29,10 @@ import { CarService } from "../car/car.service";
 import { BootSizes, Car, Fuels } from "../car/entities/car.entity";
 import { Carpool, Directions } from "../carpool/entities/carpool.entity";
 import { CarpoolService } from "../carpool/carpool.service";
+import { Spending } from "../spending/entities/spending.entity";
+import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
+import { SpendingService } from "../spending/spending.service";
+import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-items.service";
 
 export class IntegrationTestManager {
   private app: INestApplication;
@@ -63,9 +68,9 @@ export class IntegrationTestManager {
     return this._httpServer;
   }
 
-  private _accessToken: AuthLoginOutput;
+  private _accessToken: AuthOutputDto;
 
-  get accessToken(): AuthLoginOutput {
+  get accessToken(): AuthOutputDto {
     return this._accessToken;
   }
 
@@ -104,6 +109,7 @@ export class IntegrationTestManager {
   }
 
   async teardown(): Promise<void> {
+    console.log("tearingdown");
     await this.dataSource.dropDatabase();
     console.log("teared down");
   }
@@ -178,6 +184,36 @@ export class IntegrationTestManager {
       startDestinationId: start.id,
       driverId: driver.id,
       totalLength: randNumber(),
+    });
+  }
+
+  async getNewSoppingListItem(): Promise<ShoppingListItem> {
+    const carpoolService = this._moduleRef.get<ShoppingListItemsService>(
+      ShoppingListItemsService,
+    );
+
+    const event = await this.getNewEvent();
+    const user = await this.getNewUser();
+    return await carpoolService.create({
+      eventId: event.id,
+      name: randMusicGenre(),
+      price: randFloat(),
+      bought: randBoolean(),
+      assignedId: user.id,
+    });
+  }
+
+  async getNewSpending(): Promise<Spending> {
+    const event = await this.getNewEvent();
+    const shopIt = await this.getNewSoppingListItem();
+    const user = await this.getNewUser();
+    const carpoolService =
+      this._moduleRef.get<SpendingService>(SpendingService);
+    return await carpoolService.create({
+      eventId: event.id,
+      shoppingListItemId: shopIt.id,
+      buyerId: user.id,
+      value: randFloat(),
     });
   }
 }

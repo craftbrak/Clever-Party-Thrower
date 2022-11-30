@@ -60,4 +60,10 @@ export class UserService {
   async remove(id: string) {
     return await this.userRepo.delete({ id });
   }
+
+  async updateRefreshToken(id: string, token: string): Promise<void> {
+    const usr = await this.userRepo.findOneByOrFail({ id: id });
+    usr.hashedRefreshToken = await argon2.hash(token);
+    await usr.save();
+  }
 }

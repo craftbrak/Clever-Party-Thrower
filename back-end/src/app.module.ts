@@ -15,7 +15,7 @@ import { AddressModule } from "./address/address.module";
 import { EventToUserModule } from "./event-to-user/event-to-user.module";
 import { CarModule } from "./car/car.module";
 import * as Joi from "joi";
-// import { LoggerMStringdleware } from "./logs/logger.mStringdleware";
+// import { LoggerMiddleware } from "./logs/logger.middleware";
 import { CarpoolModule } from "./carpool/carpool.module";
 import { SpendingModule } from "./spending/spending.module";
 import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-items.module";
@@ -36,6 +36,9 @@ import { randomUUID } from "crypto";
         DATABASE_NAME: Joi.string().required(),
         TEST_DATABASE_NAME: Joi.string().required(),
         JWT_SECRET: Joi.string().default(randomUUID()),
+        JWT_AUTH_TTL: Joi.string().required().default("5m"),
+        JWT_REFRESH_SECRET: Joi.string().default(randomUUID()),
+        JWT_REFRESH_TTL: Joi.string().required().default("5h"),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -59,7 +62,7 @@ import { randomUUID } from "crypto";
             : configService.get("DATABASE_NAME"),
         entities: [join(__dirname, "**", "*.entity.{ts,js}")],
         synchronize: configService.get("NODE_ENV") !== "production",
-        dropSchema: configService.get("NODE_ENV") === "test",
+        dropSchema: false,
         logging: false,
       }),
     }),

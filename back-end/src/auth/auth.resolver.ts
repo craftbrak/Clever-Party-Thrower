@@ -2,22 +2,34 @@ import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
 import { Logger, UseGuards } from "@nestjs/common";
 import { LocalAuthGuard } from "./guards/localAuth.guard";
-import { AuthLoginOutput } from "./dto/auth-login.dto";
+import { AuthOutputDto } from "./dto/auth-output.dto";
 import { Public } from "./public.decorator";
+import { AuthInputDto } from "./dto/auth-input.dto";
 
 @Resolver()
 export class AuthResolver {
   private readonly logger = new Logger(AuthResolver.name);
+
   constructor(private readonly authService: AuthService) {}
-  @UseGuards(LocalAuthGuard)
+
   @Public()
-  @Mutation(() => AuthLoginOutput)
+  @UseGuards(LocalAuthGuard)
+  @Mutation(() => AuthOutputDto)
   async authLogin(
     @Context("req") req,
-    @Args("username") _username: string,
-    @Args("password") _password: string,
+    @Args("authInputDto") authInput: AuthInputDto,
   ) {
-    this.logger.debug(_password, _username);
+    this.logger.debug(authInput.password, authInput.email);
     return this.authService.login(req.user);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Public()
+  @Mutation(() => AuthOutputDto)
+  async authRefresh(
+    @Context("req") req,
+    @Args("AuthInputDto") authInput: AuthInputDto,
+  ) {
+    this.logger.debug(authInput.password, authInput.email);
   }
 }

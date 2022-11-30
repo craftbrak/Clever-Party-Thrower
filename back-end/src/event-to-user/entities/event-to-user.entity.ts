@@ -6,10 +6,10 @@ import { Event } from "../../event/entities/event.entity";
 import { Node } from "../../pagination/entities/node.entity";
 
 export enum UserRole {
-  OWNER = "owner",
-  MEMBER = "member",
-  DJ = "dj",
-  INVITED = "invited",
+  OWNER = "OWNER",
+  MEMBER = "MEMBER",
+  DJ = "DJ",
+  INVITED = "INVITED",
 }
 
 registerEnumType(UserRole, {

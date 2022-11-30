@@ -2,7 +2,7 @@ import { IntegrationTestManager } from "../../integration-test-manager";
 import gql from "graphql-tag";
 import request from "supertest-graphql";
 import { testUser } from "../../mock/user.mock";
-import { AuthLoginOutput } from "../../../auth/dto/auth-login.dto";
+import { AuthOutputDto } from "../../../auth/dto/auth-output.dto";
 
 describe("login", () => {
   jest.setTimeout(20000);
@@ -16,25 +16,28 @@ describe("login", () => {
 
   describe("Given that the user is not logged in ", () => {
     describe("When a user logs in ", () => {
-      let login: AuthLoginOutput;
+      let login: AuthOutputDto;
       console.log(integrationTestManager.accessToken);
       beforeAll(async () => {
-        const querry = gql`
-          mutation login($psw: String!, $email: String!) {
-            authLogin(password: $psw, username: $email) {
+        const query = gql`
+          mutation login($input: AuthInputDto!) {
+            authLogin(authInputDto: $input) {
               accessToken
+              refreshToken
             }
           }
         `;
-        const response = await request<{ authLogin: AuthLoginOutput }>(
+        const response = await request<{ authLogin: AuthOutputDto }>(
           integrationTestManager.httpServer,
         )
-          .mutate(querry)
+          .mutate(query)
           .variables({
-            psw: testUser.password,
-            email: testUser.email,
-          })
-          .expectNoErrors();
+            input: {
+              password: testUser.password,
+              email: testUser.email,
+            },
+          });
+        console.dir(response);
         login = response.data.authLogin;
       });
       test("Then the response should be the created the token", () => {

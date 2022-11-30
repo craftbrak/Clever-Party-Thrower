@@ -105,7 +105,7 @@ type EventToUser {
   eventId: String!
   event: Event!
   user: User!
-  address: Address
+  address: Address!
   addressId: String
   role: UserRole!
 }
@@ -212,8 +212,9 @@ type EventsPagination {
   nodes: [Event!]!
 }
 
-type AuthLoginOutput {
+type AuthOutputDto {
   accessToken: String!
+  refreshToken: String!
 }
 
 type Query {
@@ -241,7 +242,8 @@ type Mutation {
   updateAddress(updateAddressInput: UpdateAddressDto!): Address!
   removeAddress(id: Int!): Address!
   createCountry(CreateCountryInput: CreateCountryDto!): Country!
-  authLogin(username: String!, password: String!): AuthLoginOutput!
+  authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
+  authRefresh(AuthInputDto: AuthInputDto!): AuthOutputDto!
   createUser(singUp: CreateUserDto!): User!
   updateUser(updateUserInput: UpdateUserDto!): User!
   removeUser(id: Int!): User!
@@ -313,6 +315,11 @@ input UpdateAddressDto {
 input CreateCountryDto {
   name: String!
   code: String!
+}
+
+input AuthInputDto {
+  email: String!
+  password: String!
 }
 
 input CreateUserDto {

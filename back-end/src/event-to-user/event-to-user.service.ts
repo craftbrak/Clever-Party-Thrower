@@ -63,6 +63,7 @@ export class EventToUserService {
       relations: {
         user: true,
         event: true,
+        address: true,
       },
     });
   }
@@ -70,6 +71,11 @@ export class EventToUserService {
   async findOne(id: EventToUser["id"]): Promise<EventToUser> {
     return await this.eventToUserRepository.findOneOrFail({
       where: { id: id },
+      relations: {
+        user: true,
+        event: true,
+        address: true,
+      },
     });
   }
 

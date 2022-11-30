@@ -2,7 +2,7 @@
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
  *
- * This file is divStringed into 2 sections:
+ * This file is divided into 2 sections:
  *   1. Browser polyfills. These are applied before loading ZoneJS and are sorted by browsers.
  *   2. Application imports. Files imported after ZoneJS that should be loaded before your main
  *      file.
@@ -11,7 +11,7 @@
  * automatically update themselves. This includes recent versions of Safari, Chrome (including
  * Opera), Edge on the desktop, and iOS and Chrome on mobile.
  *
- * Learn more in https://angular.io/guStringe/browser-support
+ * Learn more in https://angular.io/guide/browser-support
  */
 
 /***************************************************************************************************
