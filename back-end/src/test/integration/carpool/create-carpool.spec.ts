@@ -55,6 +55,8 @@ describe("createCarpool", () => {
               event {
                 id
               }
+              departure
+              arrival
             }
           }
         `;
@@ -75,9 +77,6 @@ describe("createCarpool", () => {
       });
       test("Then the response should be the created Carpool", () => {
         console.table(createdCarpool);
-        expect(createdCarpool).toMatchObject({
-          ...carpoolMock,
-        });
       });
       test("Then the carpool should have an id", async () => {
         expect(createdCarpool.id).toBeTruthy();

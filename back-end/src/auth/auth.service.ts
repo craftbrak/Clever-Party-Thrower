@@ -5,12 +5,7 @@ import { AuthOutputDto } from "./dto/auth-output.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 import { ConfigService } from "@nestjs/config";
-
-export interface JWTPayload {
-  id: User["id"];
-  email: User["email"];
-  name: User["name"];
-}
+import { JWTPayload } from "./jwtPayload.interface";
 
 @Injectable()
 export class AuthService {
@@ -20,7 +15,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(email: string, pass: string): Promise<Partial<User>> {
     const user = await this.userService.findOne(email);
     if (user && (await argon2.verify(user.password, pass))) {
       const { password, ...result } = user;
@@ -35,7 +30,7 @@ export class AuthService {
       email: user.email,
       name: user.name,
     };
-    return this.getTokens(payload);
+    return await this.getTokens(payload);
   }
 
   async refresh(user: User): Promise<AuthOutputDto> {
@@ -52,14 +47,14 @@ export class AuthService {
   }
 
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
-    const refeshToken = this.jwtService.sign(payload, {
+    const refreshToken = this.jwtService.sign(payload, {
       expiresIn: this.configService.get("JWT_REFRESH_TTL"),
       secret: this.configService.get("JWT_REFRESH_SECRET"),
     });
-    await this.userService.updateRefreshToken(payload.id, refeshToken);
+    await this.userService.updateRefreshToken(payload.id, refreshToken);
     return {
       accessToken: this.jwtService.sign(payload),
-      refreshToken: refeshToken,
+      refreshToken: refreshToken,
     };
   }
 }

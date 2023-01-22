@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./event-overview.component.scss']
 })
 export class EventOverviewComponent implements OnInit {
-
+  
   constructor() {
   }
 

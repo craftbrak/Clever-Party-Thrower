@@ -14,6 +14,8 @@ export class CreateRouteDto {
   length: number;
   @Field(() => String)
   carpoolId: string;
+  @Field(() => Date)
+  departure: Date;
 }
 
 // TODO: DTOs

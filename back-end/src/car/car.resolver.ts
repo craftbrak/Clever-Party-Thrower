@@ -10,8 +10,8 @@ import { CarService } from "./car.service";
 import { Car } from "./entities/car.entity";
 import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
-import { CurrentUser } from "../auth/guards/jwtAuth.guard";
-import { JWTPayload } from "../auth/auth.service";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 import { User } from "../user/entities/user.entity";
 
 @Resolver(() => Car)
@@ -21,7 +21,7 @@ export class CarResolver {
   @Mutation(() => Car)
   async createCar(
     @Args("createCarInput") createCarInput: CreateCarDto,
-    @CurrentUser() user: JWTPayload,
+    @CurrentUser() user: User,
   ) {
     return await this.carService.create(createCarInput, user);
   }

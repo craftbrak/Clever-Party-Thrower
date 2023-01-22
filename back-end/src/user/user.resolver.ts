@@ -26,8 +26,8 @@ export class UserResolver {
   ) {}
   @Public()
   @Mutation(() => User)
-  createUser(@Args("singUp") createUserInput: CreateUserDto) {
-    return this.userService.create(createUserInput);
+  async createUser(@Args("singUp") createUserInput: CreateUserDto) {
+    return await this.userService.create(createUserInput);
   }
 
   @Query(() => User, { name: "user" })

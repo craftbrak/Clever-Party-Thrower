@@ -15,7 +15,7 @@ export class Dept extends Node {
   amount: number;
   @Field(() => Boolean)
   @Column({ default: false })
-  repayed = false;
+  repayed: boolean;
   @Field(() => User)
   @ManyToOne(() => User)
   debtee: User;

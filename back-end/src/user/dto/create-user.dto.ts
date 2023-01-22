@@ -10,8 +10,6 @@ export class CreateUserDto {
   email: string;
   @Field(() => String, { description: "Password of the user" })
   password: string;
-  @Field(() => String, { nullable: true })
-  avatar?: string;
 
   @Field(() => Boolean)
   drivingLicence: boolean;

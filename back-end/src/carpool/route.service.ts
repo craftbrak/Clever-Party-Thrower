@@ -44,6 +44,7 @@ export class RouteService {
         id: createRouteDto.startingId,
       });
     if (createRouteDto.length) route.length = createRouteDto.length;
+    if (createRouteDto.departure) route.departure = createRouteDto.departure;
     return this.carpoolRepository.create(route).save();
   }
 
@@ -75,6 +76,7 @@ export class RouteService {
         id: updateRouteDto.startingId,
       });
     if (updateRouteDto.length) route.length = updateRouteDto.length;
+    if (updateRouteDto.departure) route.departure = updateRouteDto.departure;
     return route.save();
   }
 

@@ -37,7 +37,7 @@ describe("login", () => {
               email: testUser.email,
             },
           });
-        console.dir(response);
+        console.dir(response.data);
         login = response.data.authLogin;
       });
       test("Then the response should be the created the token", () => {

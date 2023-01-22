@@ -6,12 +6,16 @@ import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
 import * as argon2 from "argon2";
 import { AddressService } from "../address/address.service";
+import { createAvatar } from "@dicebear/core";
+import { adventurerNeutral } from "@dicebear/collection";
+import { HttpService } from "@nestjs/axios";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     private addressService: AddressService,
+    private readonly httpService: HttpService,
   ) {}
 
   async create(createUserInput: CreateUserDto): Promise<User> {
@@ -21,6 +25,12 @@ export class UserService {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,
       );
+    const resp = await this.httpService
+      .get(
+        `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
+      )
+      .toPromise();
+    usr.avatar = resp.data.toString();
     return usr.save();
   }
 
@@ -52,7 +62,12 @@ export class UserService {
     if (updateUserInput.email) usr.email = updateUserInput.email;
     if (updateUserInput.name) usr.name = updateUserInput.name;
     if (updateUserInput.password) usr.password = updateUserInput.password;
-    if (updateUserInput.avatar) usr.avatar = updateUserInput.avatar;
+    const resp = await this.httpService
+      .get(
+        `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
+      )
+      .toPromise();
+    usr.avatar = resp.data.toString();
     await usr.save();
     return usr;
   }

@@ -47,8 +47,16 @@ export class CarpoolService {
       carpool.finalDestination = await this.addressRepository.findOneByOrFail({
         id: createCarpoolInput.finalDestinationId,
       });
+    if (createCarpoolInput.eventId)
+      carpool.event = await this.eventRepository.findOneByOrFail({
+        id: createCarpoolInput.eventId,
+      });
     if (createCarpoolInput.direction)
       carpool.direction = createCarpoolInput.direction;
+    if (createCarpoolInput.arrival)
+      carpool.arrival = createCarpoolInput.arrival;
+    if (createCarpoolInput.departure)
+      carpool.departure = createCarpoolInput.departure;
     return this.carpoolRepository.create(carpool).save();
   }
 
@@ -84,6 +92,10 @@ export class CarpoolService {
       });
     if (updateCarpoolInput.direction)
       carpool.direction = updateCarpoolInput.direction;
+    if (updateCarpoolInput.arrival)
+      carpool.arrival = updateCarpoolInput.arrival;
+    if (updateCarpoolInput.departure)
+      carpool.departure = updateCarpoolInput.departure;
     return carpool.save();
   }
 

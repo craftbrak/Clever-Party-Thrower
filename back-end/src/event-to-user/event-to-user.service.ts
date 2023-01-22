@@ -6,7 +6,7 @@ import {
   MemberPaginationArgs,
   MenmberPagination,
 } from "../event/dto/eventToUser.pagination.dto";
-import { JWTPayload } from "../auth/auth.service";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 import { SortDirection } from "../pagination/dto/pagination.dto";
 import { EventToUser } from "./entities/event-to-user.entity";
 import { CreateEventToUserDto } from "./dto/create-event-to-user.dto";

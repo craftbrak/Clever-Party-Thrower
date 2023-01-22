@@ -4,7 +4,7 @@ import { UpdateCarDto } from "./dto/update-car.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Car } from "./entities/car.entity";
-import { JWTPayload } from "../auth/auth.service";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 import { User } from "../user/entities/user.entity";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class CarService {
     @InjectRepository(Car) private readonly carRepo: Repository<Car>,
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
-  async create(createCarInput: CreateCarDto, user: JWTPayload) {
+  async create(createCarInput: CreateCarDto, user: User) {
     createCarInput.ownerId = user.id;
     createCarInput.owner = await this.userRepo.findOneByOrFail({ id: user.id });
     return this.carRepo.create(createCarInput).save();

@@ -78,6 +78,7 @@ export class IntegrationTestManager {
     this._moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
+    this._dataSource = this._moduleRef.get(DataSource);
     this.app = this._moduleRef.createNestApplication();
     await this.app.init();
     await this.setup();
@@ -161,11 +162,7 @@ export class IntegrationTestManager {
         maxPassengers: randNumber(),
         range: randNumber(),
       },
-      {
-        id: this.testUser.id,
-        name: this.testUser.name,
-        email: this.testUser.email,
-      },
+      this.testUser,
     );
   }
 
@@ -184,6 +181,8 @@ export class IntegrationTestManager {
       startDestinationId: start.id,
       driverId: driver.id,
       totalLength: randNumber(),
+      departure: new Date(Date.now()),
+      arrival: new Date(Date.now()),
     });
   }
 

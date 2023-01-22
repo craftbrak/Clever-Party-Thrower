@@ -7,6 +7,7 @@ import {EventCardComponent} from "./components/event-card/event-card.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatChipsModule} from "@angular/material/chips";
     MatCardModule,
     MatButtonModule,
     MatChipsModule,
+    MatIconModule,
   ]
 })
 export class EventModule {

@@ -17,5 +17,7 @@ export const CarpoolMock = (
     driverId: driverId,
     carId: carId,
     eventId: eventId,
+    departure: new Date(Date.now()),
+    arrival: new Date(Date.now()),
   };
 };

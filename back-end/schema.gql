@@ -130,6 +130,7 @@ type Route {
   """lenght of the route in KM"""
   length: Float!
   carpool: Carpool!
+  departure: DateTime!
 }
 
 type Carpool {
@@ -145,6 +146,8 @@ type Carpool {
   car: Car!
   event: Event!
   totalLength: Float!
+  departure: DateTime!
+  arrival: DateTime!
 }
 
 enum Directions {
@@ -195,6 +198,8 @@ type Event {
   carpools: Carpool
   shoppingList: ShoppingListItem
   spendings: Spending
+  selectedDate: DateTime
+  availableDates: DateTime
 }
 
 input EventsPaginationSortBy {
@@ -217,6 +222,18 @@ type AuthOutputDto {
   refreshToken: String!
 }
 
+type Dept {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  event: Event!
+  amount: Float!
+  repayed: Boolean!
+  debtee: User!
+  lender: User!
+}
+
 type Query {
   sayHello: String!
   getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
@@ -232,6 +249,7 @@ type Query {
   spending(id: String!): Spending!
   shopingListItems: [ShoppingListItem!]!
   shopingListItem(id: String!): ShoppingListItem!
+  dept(id: ID!): Dept!
 }
 
 type Mutation {
@@ -262,6 +280,9 @@ type Mutation {
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
   removeShoppingListItem(id: String!): ShoppingListItem!
+  createDept(createDeptInput: CreateDeptInput!): Dept!
+  updateDept(updateDeptInput: UpdateDeptInput!): Dept!
+  removeDept(id: ID!): Dept!
 }
 
 input CreateEventDto {
@@ -331,7 +352,6 @@ input CreateUserDto {
 
   """Password of the user"""
   password: String!
-  avatar: String
   drivingLicence: Boolean!
   manual: Boolean!
   addressId: String
@@ -346,7 +366,6 @@ input UpdateUserDto {
 
   """Password of the user"""
   password: String
-  avatar: String
   drivingLicence: Boolean
   manual: Boolean
   addressId: String
@@ -405,6 +424,8 @@ input CreateCarpoolDto {
   carId: String!
   eventId: String!
   totalLength: Float!
+  departure: DateTime!
+  arrival: DateTime!
 }
 
 input UpdateCarpoolDto {
@@ -415,6 +436,8 @@ input UpdateCarpoolDto {
   carId: String
   eventId: String
   totalLength: Float
+  departure: DateTime
+  arrival: DateTime
   id: String!
 }
 
@@ -448,4 +471,20 @@ input UpdateShoppingListItemDto {
   bought: Boolean!
   eventId: String!
   id: String!
+}
+
+input CreateDeptInput {
+  eventId: ID!
+  amount: Float!
+  debteeId: ID!
+  lenderId: ID!
+}
+
+input UpdateDeptInput {
+  eventId: ID
+  amount: Float
+  debteeId: ID
+  lenderId: ID
+  id: Int!
+  repayed: Boolean = false
 }

@@ -20,6 +20,7 @@ import { CarpoolModule } from "./carpool/carpool.module";
 import { SpendingModule } from "./spending/spending.module";
 import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-items.module";
 import { randomUUID } from "crypto";
+import { DeptModule } from "./dept/dept.module";
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { randomUUID } from "crypto";
     CarpoolModule,
     SpendingModule,
     ShoppingListItemsModule,
+    DeptModule,
   ],
   providers: [AppService, AppResolver],
 })

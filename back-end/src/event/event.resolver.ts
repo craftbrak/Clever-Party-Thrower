@@ -14,11 +14,11 @@ import {
   EventsPagination,
   EventsPaginationArgs,
 } from "./dto/events.pagination.dto";
-import { CurrentUser } from "../auth/guards/jwtAuth.guard";
-import { JWTPayload } from "../auth/auth.service";
+import { CurrentUser } from "../auth/current-user.decorator";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Resolver(() => Event)
 export class EventResolver {

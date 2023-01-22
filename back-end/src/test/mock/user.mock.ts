@@ -12,7 +12,6 @@ export const testUser: CreateUserDto = {
   name: "test",
   email: "test@test.com",
   password: "test",
-  avatar: null,
   manual: false,
   drivingLicence: false,
 };
@@ -21,7 +20,6 @@ export const userMock1: CreateUserDto = {
   name: randFullName(),
   addressId: null,
   drivingLicence: randBoolean(),
-  avatar: randUrl(),
   manual: randBoolean(),
   password: randPassword(),
 };
@@ -30,7 +28,6 @@ export const userMock2: CreateUserDto = {
   name: randFullName(),
   addressId: null,
   drivingLicence: randBoolean(),
-  avatar: randUrl(),
   manual: randBoolean(),
   password: randPassword(),
 };

@@ -46,5 +46,13 @@ export class Event extends Node {
 
   @Field(() => Spending, { nullable: true })
   @OneToMany(() => Spending, (spending) => spending.event)
-  spendings: Spending[]; //TODO: DTO
+  spendings: Spending[];
+
+  @Field(() => Date, { nullable: true })
+  @OneToMany(() => Spending, (spending) => spending.event)
+  selectedDate: Date;
+
+  @Field(() => Date, { nullable: true })
+  @OneToMany(() => Spending, (spending) => spending.event)
+  availableDates: Date[];
 }

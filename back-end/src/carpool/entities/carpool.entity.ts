@@ -43,4 +43,10 @@ export class Carpool extends Node {
   @Field(() => Float)
   @Column({ type: "float" })
   totalLength: number;
+  @Field(() => Date)
+  @Column({ default: new Date(Date.now()) })
+  departure: Date;
+  @Field(() => Date)
+  @Column({ default: new Date(Date.now()) })
+  arrival: Date;
 }

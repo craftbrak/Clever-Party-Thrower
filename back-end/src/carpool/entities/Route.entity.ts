@@ -26,4 +26,7 @@ export class Route extends Node {
   @Field(() => Carpool)
   @ManyToOne(() => Carpool)
   carpool: Carpool;
+  @Field(() => Date)
+  @Column()
+  departure: Date;
 }

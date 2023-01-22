@@ -17,6 +17,8 @@ export class CreateCarpoolDto {
   eventId: string;
   @Field(() => Float)
   totalLength: number;
+  @Field(() => Date)
+  departure: Date;
+  @Field(() => Date)
+  arrival: Date;
 }
-
-// TODO: DTOs

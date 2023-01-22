@@ -51,7 +51,6 @@ describe("createUser", () => {
           name: userMock2.name,
           drivingLicence: userMock2.drivingLicence,
           manual: userMock2.manual,
-          avatar: userMock2.avatar,
           addressId: null,
         });
       });
@@ -109,7 +108,6 @@ describe("createUser", () => {
           name: userMock1.name,
           drivingLicence: userMock1.drivingLicence,
           manual: userMock1.manual,
-          avatar: userMock1.avatar,
           addressId: integrationTestManager.testAddress.id,
         });
       });
