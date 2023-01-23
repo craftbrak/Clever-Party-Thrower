@@ -6,6 +6,7 @@ import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
+import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 
 @Injectable()
 export class AuthService {
@@ -33,17 +34,18 @@ export class AuthService {
     return await this.getTokens(payload);
   }
 
-  async refresh(user: User): Promise<AuthOutputDto> {
+  async refresh(token: AuthRefreshDto): Promise<AuthOutputDto> {
+    const pl = this.jwtService.verify(token.refreshToken);
     const payload: JWTPayload = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
+      id: pl.id,
+      email: pl.email,
+      name: pl.name,
     };
     return await this.getTokens(payload);
   }
 
   async logout(user: User): Promise<void> {
-    await this.userService.updateRefreshToken(user.id, null);
+    await this.userService.updateRefreshToken(user.id, "");
   }
 
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {

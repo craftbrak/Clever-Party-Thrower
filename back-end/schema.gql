@@ -96,6 +96,29 @@ type User {
   cars: [Car!]!
 }
 
+type ShoppingListItem {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  name: String!
+  price: Float!
+  assigned: User!
+  bought: Boolean!
+  event: Event!
+}
+
+type Spending {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  buyer: User!
+  event: Event!
+  value: Float!
+  shoppingListItem: ShoppingListItem!
+}
+
 type EventToUser {
   id: String!
   createdAt: DateTime!
@@ -108,6 +131,7 @@ type EventToUser {
   address: Address!
   addressId: String
   role: UserRole!
+  availableDates: DateTime
 }
 
 enum UserRole {
@@ -153,29 +177,6 @@ type Carpool {
 enum Directions {
   go
   back
-}
-
-type ShoppingListItem {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  name: String!
-  price: Float!
-  assigned: User!
-  bought: Boolean!
-  event: Event!
-}
-
-type Spending {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  buyer: User!
-  event: Event!
-  value: Float!
-  shoppingListItem: ShoppingListItem!
 }
 
 type Event {
@@ -241,6 +242,7 @@ type Query {
   address(id: String!): Address!
   countries: [Country!]!
   country(Code: String!): Country!
+  logout: Boolean!
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
   car(id: String!): Car!
@@ -261,7 +263,7 @@ type Mutation {
   removeAddress(id: Int!): Address!
   createCountry(CreateCountryInput: CreateCountryDto!): Country!
   authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
-  authRefresh(AuthInputDto: AuthInputDto!): AuthOutputDto!
+  authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
   createUser(singUp: CreateUserDto!): User!
   updateUser(updateUserInput: UpdateUserDto!): User!
   removeUser(id: Int!): User!
@@ -343,6 +345,10 @@ input AuthInputDto {
   password: String!
 }
 
+input AuthRefreshDto {
+  refreshToken: String!
+}
+
 input CreateUserDto {
   """Name of the user"""
   name: String!
@@ -376,12 +382,14 @@ input CreateEventToUserDto {
   userId: String!
   eventId: String!
   addressId: String
+  availableDates: [DateTime!]
 }
 
 input UpdateEventToUserDto {
   userId: String
   eventId: String
   addressId: String
+  availableDates: [DateTime!]
   id: String!
 }
 

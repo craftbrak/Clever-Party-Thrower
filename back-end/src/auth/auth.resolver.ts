@@ -1,4 +1,4 @@
-import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
 import { Logger, UseGuards } from "@nestjs/common";
 import { LocalAuthGuard } from "./guards/localAuth.guard";
@@ -6,6 +6,9 @@ import { AuthOutputDto } from "./dto/auth-output.dto";
 import { Public } from "./public.decorator";
 import { AuthInputDto } from "./dto/auth-input.dto";
 import { User } from "../user/entities/user.entity";
+import { CurrentUser } from "./current-user.decorator";
+import { AuthRefreshDto } from "./dto/auth-refresh.dto";
+import { boolean } from "joi";
 
 @Resolver()
 export class AuthResolver {
@@ -30,9 +33,15 @@ export class AuthResolver {
   @Public()
   @Mutation(() => AuthOutputDto)
   async authRefresh(
-    @Context("req") req,
-    @Args("AuthInputDto") authInput: AuthInputDto,
+    @CurrentUser() usr: User,
+    @Args("AuthRefreshDto") authRefreshDto: AuthRefreshDto,
   ) {
-    this.logger.debug(authInput.password, authInput.email);
+    return await this.authService.refresh(authRefreshDto);
+  }
+
+  @Query(() => Boolean)
+  async logout(@CurrentUser() usr: User) {
+    await this.authService.logout(usr);
+    return true;
   }
 }

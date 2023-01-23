@@ -17,7 +17,6 @@ describe("createCar", () => {
   describe("Given that the car doesn't already exist", () => {
     describe("When a new car is registered ", () => {
       let createdCar: Car;
-      console.log(integrationTestManager.accessToken);
       beforeAll(async () => {
         const querry = gql`
           mutation CreateEvent($createCarDto: CreateCarDto!) {
@@ -53,7 +52,6 @@ describe("createCar", () => {
         createdCar = response.data.createCar;
       });
       test("Then the response should be the created Car", () => {
-        console.table(createdCar);
         expect(createdCar).toMatchObject({
           ...CarMock,
         });

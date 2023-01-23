@@ -31,7 +31,7 @@ export class UserService {
       )
       .toPromise();
     usr.avatar = resp.data.toString();
-    return usr.save();
+    return await usr.save();
   }
 
   async findOne(email: User["email"]) {

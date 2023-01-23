@@ -20,7 +20,6 @@ describe("createCarpool", () => {
       let createdCarpool: Carpool;
       let carpoolMock: CreateCarpoolDto;
 
-      console.log(integrationTestManager.accessToken);
       beforeAll(async () => {
         const startAdd = await integrationTestManager.getNewAddress();
         const endAdd = await integrationTestManager.getNewAddress();
@@ -75,9 +74,7 @@ describe("createCarpool", () => {
           .expectNoErrors();
         createdCarpool = response.data.createCarpool;
       });
-      test("Then the response should be the created Carpool", () => {
-        console.table(createdCarpool);
-      });
+      test("Then the response should be the created Carpool", () => {});
       test("Then the carpool should have an id", async () => {
         expect(createdCarpool.id).toBeTruthy();
       });

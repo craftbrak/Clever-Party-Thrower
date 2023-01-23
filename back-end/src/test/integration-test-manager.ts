@@ -106,13 +106,10 @@ export class IntegrationTestManager {
     });
     const userService = this._moduleRef.get<UserService>(UserService);
     await userService.create({ ...testUser, addressId: this._testAddress.id });
-    console.log("setup finished");
   }
 
   async teardown(): Promise<void> {
-    console.log("tearingdown");
     await this.dataSource.dropDatabase();
-    console.log("teared down");
   }
 
   async getNewUser(): Promise<User> {

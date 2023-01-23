@@ -60,7 +60,6 @@ describe("createShoppingListItem", () => {
         createdShoppingListItem = response.data.createShoppingListItem;
       });
       test("Then the response should be the created item", () => {
-        // console.table(createdShoppingListItem);
         expect(createdShoppingListItem).toMatchObject({
           name: shoppingListItemMock.name,
           bought: shoppingListItemMock.bought,

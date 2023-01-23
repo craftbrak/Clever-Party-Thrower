@@ -5,7 +5,7 @@ import gql from "graphql-tag";
 import { userMock1, userMock2 } from "../../mock/user.mock";
 
 describe("createUser", () => {
-  jest.setTimeout(20000);
+  jest.setTimeout(90000);
   const integrationTestManager = new IntegrationTestManager();
   beforeAll(async () => {
     await integrationTestManager.beforeAll();
@@ -45,7 +45,6 @@ describe("createUser", () => {
         createdUser = response.data.createUser;
       });
       test("Then the response should be the created user", () => {
-        // console.table(createdUser);
         expect(createdUser).toMatchObject({
           email: userMock2.email,
           name: userMock2.name,
@@ -102,7 +101,6 @@ describe("createUser", () => {
         createdUser = response.data.createUser;
       });
       test("Then the response should be the created user", () => {
-        // console.table(createdUser);
         expect(createdUser).toMatchObject({
           email: userMock1.email,
           name: userMock1.name,

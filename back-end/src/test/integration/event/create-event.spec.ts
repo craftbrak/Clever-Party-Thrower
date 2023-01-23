@@ -17,7 +17,6 @@ describe("createEvent", () => {
   describe("Given that the event doesn't already exist", () => {
     describe("When a new event is registered ", () => {
       let createdEvent: Event;
-      console.log(integrationTestManager.accessToken);
       beforeAll(async () => {
         const querry = gql`
           mutation CreateEvent($createEventDto: CreateEventDto!) {
@@ -50,7 +49,6 @@ describe("createEvent", () => {
         createdEvent = response.data.createEvent;
       });
       test("Then the response should be the created Event", () => {
-        // console.table(createdEvent);
         expect(createdEvent).toMatchObject({
           ...EventMock,
           addressId: integrationTestManager.testAddress.id,

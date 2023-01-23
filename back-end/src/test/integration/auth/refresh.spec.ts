@@ -1,10 +1,10 @@
 import { IntegrationTestManager } from "../../integration-test-manager";
+import { AuthOutputDto } from "../../../auth/dto/auth-output.dto";
 import gql from "graphql-tag";
 import request from "supertest-graphql";
 import { testUser } from "../../mock/user.mock";
-import { AuthOutputDto } from "../../../auth/dto/auth-output.dto";
 
-describe("login", () => {
+describe("refresh", () => {
   jest.setTimeout(20000);
   const integrationTestManager = new IntegrationTestManager();
   beforeAll(async () => {
@@ -14,31 +14,31 @@ describe("login", () => {
     await integrationTestManager.afterAll();
   });
 
-  describe("Given that the user is not logged in and the 2fa is disable", () => {
-    describe("When a user logs in ", () => {
+  describe("Given that the user is loged in and the 2fa is disable but the access Token is no longer valid", () => {
+    describe("When a user request a new access Token ", () => {
       let login: AuthOutputDto;
+
       beforeAll(async () => {
         const query = gql`
-          mutation login($input: AuthInputDto!) {
-            authLogin(authInputDto: $input) {
+          mutation authRefresh($input: AuthRefreshDto!) {
+            authRefresh(AuthRefreshDto: $input) {
               accessToken
               refreshToken
             }
           }
         `;
-        const response = await request<{ authLogin: AuthOutputDto }>(
+        const response = await request<{ authRefresh: AuthOutputDto }>(
           integrationTestManager.httpServer,
         )
           .mutate(query)
           .variables({
             input: {
-              password: testUser.password,
-              email: testUser.email,
+              refreshToken: integrationTestManager.accessToken.refreshToken,
             },
           });
-        login = response.data.authLogin;
+        login = response.data.authRefresh;
       });
-      test("Then the response should be the created the token", () => {
+      test("Then the response should be the new access and refresh token", () => {
         expect(login.accessToken).toBeTruthy();
         expect(login.accessToken.length).toEqual(
           integrationTestManager.accessToken.accessToken.length,

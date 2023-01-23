@@ -54,7 +54,6 @@ describe("createSpending", () => {
         createSpending = response.data.createSpending;
       });
       test("Then the response should be the created spending", () => {
-        // console.table(createSpending);
         expect(createSpending).toMatchObject({
           value: spendingMock.value,
         });

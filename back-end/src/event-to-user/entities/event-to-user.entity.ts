@@ -1,9 +1,17 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
-import { Column, Entity, JoinColumn, ManyToOne, RelationId } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  RelationId,
+} from "typeorm";
 import { User } from "../../user/entities/user.entity";
 import { Address } from "../../address/entities/address.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Node } from "../../pagination/entities/node.entity";
+import { Spending } from "../../spending/entities/spending.entity";
 
 export enum UserRole {
   OWNER = "OWNER",
@@ -51,4 +59,7 @@ export class EventToUser extends Node {
     default: UserRole.INVITED,
   })
   role: UserRole;
+  @Field(() => Date, { nullable: true })
+  @OneToMany(() => Spending, (spending) => spending.event)
+  availableDates: Date[];
 }

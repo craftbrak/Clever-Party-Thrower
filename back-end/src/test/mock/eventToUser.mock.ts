@@ -12,5 +12,6 @@ export const EventToUserMock = (
     eventId: event.id,
     userId: user.id,
     addressId: address.id,
+    availableDates: [new Date()],
   };
 };

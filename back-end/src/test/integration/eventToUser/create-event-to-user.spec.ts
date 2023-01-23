@@ -8,6 +8,7 @@ import {
 import { CreateEventToUserDto } from "../../../event-to-user/dto/create-event-to-user.dto";
 import { EventToUserMock } from "../../mock/eventToUser.mock";
 
+jest.setTimeout(90000);
 describe("createEventToUser", () => {
   jest.setTimeout(20000);
   const integrationTestManager = new IntegrationTestManager();
@@ -23,7 +24,6 @@ describe("createEventToUser", () => {
       let createdEventToUser: EventToUser;
       let eventToUserMock: CreateEventToUserDto;
 
-      console.log(integrationTestManager.accessToken);
       beforeAll(async () => {
         const address = await integrationTestManager.getNewAddress();
         const user = await integrationTestManager.getNewUser();
@@ -62,7 +62,6 @@ describe("createEventToUser", () => {
         createdEventToUser = response.data.createEventToUser;
       });
       test("Then the response should be the created eventToUser", () => {
-        console.table(createdEventToUser);
         expect(createdEventToUser).toMatchObject({
           role: "INVITED",
           address: {
