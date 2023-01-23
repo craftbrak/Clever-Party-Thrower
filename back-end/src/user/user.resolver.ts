@@ -31,18 +31,18 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: "user" })
-  findOne(@Args("email", { type: () => String }) email: User["email"]) {
-    return this.userService.findOne(email);
+  async findOne(@Args("email", { type: () => String }) email: User["email"]) {
+    return await this.userService.findOne(email);
   }
 
   @Mutation(() => User)
-  updateUser(@Args("updateUserInput") updateUserInput: UpdateUserDto) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+  async updateUser(@Args("updateUserInput") updateUserInput: UpdateUserDto) {
+    return await this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
-  removeUser(@Args("id", { type: () => Int }) id: User["id"]) {
-    return this.userService.remove(id);
+  async removeUser(@Args("id", { type: () => Int }) id: User["id"]) {
+    return await this.userService.remove(id);
   }
 
   @ResolveField("eventToUsers", () => [EventToUser]) //TODO: FIX NAME OF FIELD
@@ -52,6 +52,6 @@ export class UserResolver {
 
   @ResolveField("address", () => Address)
   async address(@Parent() user: User) {
-    return this.addressService.findOne(user.addressId);
+    return await this.addressService.findOne(user.addressId);
   }
 }

@@ -100,7 +100,7 @@ describe("createUser", () => {
           .expectNoErrors();
         createdUser = response.data.createUser;
       });
-      test("Then the response should be the created user", () => {
+      test("Then the response should be the created user", async () => {
         expect(createdUser).toMatchObject({
           email: userMock1.email,
           name: userMock1.name,

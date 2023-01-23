@@ -12,6 +12,7 @@ import { Address } from "../../address/entities/address.entity";
 import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 import { IsEmail } from "class-validator";
 import { Car } from "../../car/entities/car.entity";
+import { Exclude } from "class-transformer";
 
 @Entity()
 @ObjectType()
@@ -24,7 +25,7 @@ export class User extends Node {
   @Field(() => String, { description: "Email of the user" })
   @Column({ unique: true })
   email: string;
-
+  @Exclude()
   @Column()
   password: string;
 
@@ -59,4 +60,16 @@ export class User extends Node {
 
   @Column({ nullable: true, default: null })
   hashedRefreshToken?: string;
+
+  @Column({ nullable: true, default: null })
+  hashedEmailValidationToken?: string;
+
+  @Column({ default: false })
+  is2fa?: boolean;
+
+  @Column({ default: false })
+  isVerified?: boolean;
+
+  @Column({ nullable: true, default: null })
+  hashed2faKey?: string;
 }

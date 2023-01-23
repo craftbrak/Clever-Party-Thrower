@@ -30,7 +30,7 @@ export class UserService {
         `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
       )
       .toPromise();
-    usr.avatar = resp.data.toString();
+    usr.avatar = resp.data;
     return await usr.save();
   }
 

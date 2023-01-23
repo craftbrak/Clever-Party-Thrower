@@ -45,7 +45,7 @@ export class AddressService implements OnApplicationBootstrap {
   }
 
   async findOne(id: Address["id"]): Promise<Address> {
-    return this.addressRepo.findOneOrFail({
+    return await this.addressRepo.findOneOrFail({
       where: {
         id: id,
       },
@@ -56,22 +56,22 @@ export class AddressService implements OnApplicationBootstrap {
   }
 
   async update(id: Address["id"], updateAddressInput: UpdateAddressDto) {
-    return this.addressRepo.update({ id: id }, updateAddressInput);
+    return await this.addressRepo.update({ id: id }, updateAddressInput);
   }
 
   async remove(id: Address["id"]): Promise<DeleteResult> {
-    return this.addressRepo.delete({ id: id });
+    return await this.addressRepo.delete({ id: id });
   }
   async findAllCountry(): Promise<Country[]> {
-    return this.countryRepo.find();
+    return await this.countryRepo.find();
   }
   async findOneCountry(id: Country["id"]): Promise<Country> {
-    return this.countryRepo.findOneByOrFail({ id });
+    return await this.countryRepo.findOneByOrFail({ id });
   }
   async findOneCountryByCode(code: Country["code"]): Promise<Country> {
-    return this.countryRepo.findOneByOrFail({ code });
+    return await this.countryRepo.findOneByOrFail({ code });
   }
   async createCountry(input: CreateCountryDto): Promise<Country> {
-    return this.countryRepo.create(input);
+    return await this.countryRepo.create(input);
   }
 }
