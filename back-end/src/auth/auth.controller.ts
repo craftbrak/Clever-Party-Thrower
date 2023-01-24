@@ -16,9 +16,11 @@ export class AuthController {
     @Req() req: Request,
     @Body("email") email: string,
     @Body("password") psw: string,
+    @Body("code") code: string,
   ) {
     return await this.authService.login(
       (await this.authService.validateUser(email, psw)) as User,
+      code,
     );
   }
   @Public()

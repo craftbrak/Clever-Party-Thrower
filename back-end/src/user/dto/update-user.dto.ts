@@ -6,4 +6,12 @@ import { User } from "../entities/user.entity";
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @Field(() => String)
   id: User["id"];
+
+  is2faEnabled?: boolean;
+
+  isVerified?: boolean;
+
+  TwoFAKey?: string;
+
+  hashedEmailValidationToken?: string;
 }

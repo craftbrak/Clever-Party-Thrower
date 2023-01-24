@@ -65,11 +65,11 @@ export class User extends Node {
   hashedEmailValidationToken?: string;
 
   @Column({ default: false })
-  is2fa?: boolean;
+  is2faEnabled?: boolean;
 
   @Column({ default: false })
   isVerified?: boolean;
 
   @Column({ nullable: true, default: null })
-  hashed2faKey?: string;
+  TwoFaKey?: string;
 }

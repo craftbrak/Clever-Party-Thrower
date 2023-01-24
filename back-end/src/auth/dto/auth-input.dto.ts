@@ -12,4 +12,8 @@ export class AuthInputDto {
   @IsString()
   @Field(() => String)
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  code: string;
 }

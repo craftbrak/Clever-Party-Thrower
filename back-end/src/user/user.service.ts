@@ -30,7 +30,7 @@ export class UserService {
         `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
       )
       .toPromise();
-    usr.avatar = resp.data;
+    usr.avatar = resp.data.toString();
     return await usr.save();
   }
 
@@ -79,6 +79,24 @@ export class UserService {
   async updateRefreshToken(id: string, token: string): Promise<void> {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
     usr.hashedRefreshToken = await argon2.hash(token);
+    await usr.save();
+  }
+  async enable2fa(id: string, status: boolean) {
+    const usr = await this.userRepo.findOneByOrFail({ id: id });
+    usr.is2faEnabled = status;
+    if (status == false) usr.TwoFaKey = null;
+    await usr.save();
+  }
+  async verifyUser(id: string, token: string) {
+    const usr = await this.userRepo.findOneByOrFail({ id: id });
+    if (await argon2.verify(usr.hashedEmailValidationToken, token)) {
+      usr.isVerified = true;
+    }
+    await usr.save();
+  }
+  async set2FAKey(id: string, token: string) {
+    const usr = await this.userRepo.findOneByOrFail({ id: id });
+    usr.TwoFaKey = token;
     await usr.save();
   }
 }

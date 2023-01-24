@@ -4,4 +4,6 @@ export interface JWTPayload {
   id: User["id"];
   email: User["email"];
   name: User["name"];
+  isTwoFactorEnable?: boolean;
+  isTwoFaAuthenticated?: boolean;
 }

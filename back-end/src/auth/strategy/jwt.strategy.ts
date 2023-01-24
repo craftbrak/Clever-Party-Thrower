@@ -1,9 +1,10 @@
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { PassportStrategy } from "@nestjs/passport";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { UserService } from "../../user/user.service";
 import { User } from "../../user/entities/user.entity";
+import { JWTPayload } from "../jwtPayload.interface";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,7 +19,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any): Promise<User> {
-    return await this.userService.findOne(payload.email);
+  async validate(payload: JWTPayload): Promise<User> {
+    if (payload.isTwoFactorEnable) {
+      if (payload.isTwoFaAuthenticated) {
+        return await this.userService.findOne(payload.email);
+      } else {
+        throw new UnauthorizedException();
+      }
+    } else return await this.userService.findOne(payload.email);
   }
 }
