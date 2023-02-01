@@ -243,6 +243,7 @@ type Query {
   countries: [Country!]!
   country(Code: String!): Country!
   logout: Boolean!
+  disable2fa: Boolean!
   user(email: String!): User!
   eventToUser(id: String!): EventToUser!
   car(id: String!): Car!
@@ -264,6 +265,8 @@ type Mutation {
   createCountry(CreateCountryInput: CreateCountryDto!): Country!
   authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
+  enable2fa: String!
+  enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
   createUser(singUp: CreateUserDto!): User!
   updateUser(updateUserInput: UpdateUserDto!): User!
   removeUser(id: Int!): User!
@@ -343,6 +346,7 @@ input CreateCountryDto {
 input AuthInputDto {
   email: String!
   password: String!
+  code: String
 }
 
 input AuthRefreshDto {

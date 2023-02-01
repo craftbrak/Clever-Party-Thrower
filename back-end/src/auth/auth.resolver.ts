@@ -55,7 +55,7 @@ export class AuthResolver {
   @Mutation(() => AuthOutputDto)
   async enable2faValidate(
     @CurrentUser() user: User,
-    @Args() payload: Auth2faDto,
+    @Args("AuthInputDto") payload: AuthInputDto,
   ): Promise<AuthOutputDto> {
     await this.authService.enable2FA(user, true, payload.code);
     return await this.authService.login(user, payload.code);

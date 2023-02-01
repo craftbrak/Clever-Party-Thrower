@@ -15,5 +15,6 @@ export class AuthInputDto {
 
   @IsNotEmpty()
   @IsString()
+  @Field(() => String, { nullable: true })
   code: string;
 }

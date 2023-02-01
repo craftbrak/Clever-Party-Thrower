@@ -88,7 +88,7 @@ export class IntegrationTestManager {
     this._dataSource = this._moduleRef.get(DataSource);
     const userRepo = this._dataSource.getRepository<User>(User);
     this._testUser = await userRepo.findOneByOrFail({ email: testUser.email });
-    this._accessToken = await authService.login(this._testUser);
+    this._accessToken = await authService.login(this._testUser, "");
   }
 
   async afterAll() {
