@@ -71,4 +71,11 @@ export class SpendingService {
   async remove(id: string) {
     return this.spendingRepository.delete({ id: id });
   }
+  async findAllOfEvent(event: Event): Promise<Spending[]> {
+    return this.findAllOfEventById(event.id);
+  }
+  async findAllOfEventById(eventId: string): Promise<Spending[]> {
+    const all = await this.findAll();
+    return all.filter((spending) => (spending.event.id = eventId));
+  }
 }

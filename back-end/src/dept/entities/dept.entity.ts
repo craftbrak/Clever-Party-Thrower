@@ -18,8 +18,8 @@ export class Dept extends Node {
   repayed: boolean;
   @Field(() => User)
   @ManyToOne(() => User)
-  debtee: User;
+  debtor: User;
   @Field(() => User)
   @ManyToOne(() => User)
-  lender: User;
+  creditor: User;
 }

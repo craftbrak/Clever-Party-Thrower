@@ -23,5 +23,4 @@ export class Spending extends Node {
   @Field(() => ShoppingListItem)
   @ManyToOne(() => ShoppingListItem, { nullable: true })
   shoppingListItem: ShoppingListItem;
-  //TODO: DTO
 }

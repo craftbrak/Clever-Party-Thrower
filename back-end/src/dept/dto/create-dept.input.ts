@@ -10,10 +10,10 @@ export class CreateDeptInput {
   amount: number;
 
   @Field(() => ID)
-  debteeId: string;
+  debtorId: string;
   @Field(() => ID)
-  lenderId: string;
-  lender: User;
+  creditorId: string;
+  creditor: User;
   event: Event;
-  deptee: User;
+  debtor: User;
 }
