@@ -37,8 +37,8 @@ export class DeptService {
       eventId,
     );
     const depts: Dept[] = [];
-    const participantMap = this.mapExpenses(expenses, expenses[0].event); //contains every participant's balance
-    const debts = await this.calculateDebtsFromBalances(
+    const participantMap = DeptService.mapExpenses(expenses, expenses[0].event); //contains every participant's balance
+    const debts = await DeptService.calculateDebtsFromBalances(
       participantMap,
       eventId,
     );
@@ -57,7 +57,7 @@ export class DeptService {
     }
     return depts;
   }
-  private mapExpenses(
+  static mapExpenses(
     expenses: Spending[],
     event: Event,
   ): Map<User["id"], number> {
@@ -77,7 +77,7 @@ export class DeptService {
     });
     return pMap;
   }
-  async calculateDebtsFromBalances(
+  static async calculateDebtsFromBalances(
     balances: Map<string, number>,
     eventId: string,
   ): Promise<Debt[]> {
@@ -98,7 +98,7 @@ export class DeptService {
               eventId: eventId,
             };
 
-            debts.push();
+            debts.push(debt);
             if (balance === debtAmount) {
               found = true;
             }
