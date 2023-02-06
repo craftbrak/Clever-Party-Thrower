@@ -1,6 +1,7 @@
 interface Debt {
   amount: number;
-  creditor: string;
-  debtor: string;
+  creditorId: string;
+  debtorId: string;
   eventId: string;
+
 }

@@ -6,7 +6,7 @@ import { Node } from "../../pagination/entities/node.entity";
 
 @ObjectType()
 @Entity()
-export class Dept extends Node {
+export class Dept extends Node implements Debt{
   @Field(() => Event)
   @ManyToOne(() => Event)
   event: Event;
@@ -22,4 +22,7 @@ export class Dept extends Node {
   @Field(() => User)
   @ManyToOne(() => User)
   creditor: User;
+  creditorId: string;
+  debtorId: string;
+  eventId: string;
 }

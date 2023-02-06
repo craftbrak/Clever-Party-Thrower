@@ -38,16 +38,18 @@ export class DeptService {
     );
     const depts: Dept[] = [];
     const participantMap = DeptService.mapExpenses(expenses, expenses[0].event); //contains every participant's balance
-    const debts = await DeptService.calculateDebtsFromBalances(
+    const unOptdebts = await DeptService.calculateDebtsFromBalances(
       participantMap,
       eventId,
     );
+    const debts = await DeptService.optimiseDepts(unOptdebts);
+
     for (const debt of debts) {
       depts.push(
         await this.create({
           amount: debt.amount,
-          debtorId: debt.debtor,
-          creditorId: debt.creditor,
+          debtorId: debt.debtorId,
+          creditorId: debt.creditorId,
           eventId: eventId,
           event: null,
           creditor: null,
@@ -93,8 +95,8 @@ export class DeptService {
             balances.set(otherUserId, otherBalance + debtAmount);
             const debt: Debt = {
               amount: debtAmount,
-              creditor: userId,
-              debtor: otherUserId,
+              creditorId: userId,
+              debtorId: otherUserId,
               eventId: eventId,
             };
 
@@ -107,6 +109,39 @@ export class DeptService {
       }
     });
     return debts;
+  }
+  static async optimiseDepts(debts: Debt[]):Promise<Debt[]>{
+    const optimisedDebts :Debt[]= []
+    const exploredUser= new Map<User["id"],User['id']>()
+    for (const debt of debts) {
+      const currentCreditor = debt.creditorId
+      const currentDebtor = debt.debtorId
+      if((exploredUser.has(currentCreditor)&& exploredUser.get(currentCreditor)=== currentDebtor)||
+          (exploredUser.has(currentDebtor)&& exploredUser.get(currentDebtor)=== currentCreditor)){
+        break;
+      }
+      exploredUser.set(currentCreditor,currentDebtor)
+      const optimisedDept :Debt= {creditorId: currentCreditor,debtorId: currentDebtor,eventId:debt.eventId, amount:0}
+      const filteredDebts = debts.filter(det=> (det.debtorId === currentDebtor && det.creditorId===currentCreditor))
+      for (const fdebt of filteredDebts) {
+        optimisedDept.amount += fdebt.amount
+      }
+      const fDebts = debts.filter(det=> (det.debtorId===currentCreditor,det.creditorId===currentDebtor))
+      for (const fDebt of fDebts) {
+        optimisedDept.amount -=fDebt.amount
+      }
+
+      if (optimisedDept.amount > 0){
+        optimisedDebts.push(optimisedDept)
+      }
+      if (optimisedDept.amount <0 ){
+        optimisedDept.debtorId=currentCreditor;
+        optimisedDept.creditorId = currentDebtor;
+        optimisedDept.amount = Math.abs(optimisedDept.amount)
+        optimisedDebts.push(optimisedDept)
+      }
+    }
+    return optimisedDebts
   }
   findAll() {
     return `This action returns all dept`;
