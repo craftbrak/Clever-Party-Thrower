@@ -1,5 +1,5 @@
 import { InputType, Int, Field, Float, ID } from "@nestjs/graphql";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
 
 @InputType()
@@ -13,7 +13,7 @@ export class CreateDeptInput {
   debtorId: string;
   @Field(() => ID)
   creditorId: string;
-  creditor: User;
+  creditor: UserEntity;
   event: Event;
-  debtor: User;
+  debtor: UserEntity;
 }

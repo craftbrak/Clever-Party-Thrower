@@ -3,7 +3,7 @@ import { AppModule } from "../app.module";
 import { INestApplication } from "@nestjs/common";
 import { AuthService } from "../auth/auth.service";
 import { DataSource } from "typeorm";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { AuthOutputDto } from "../auth/dto/auth-output.dto";
 import { testUser } from "./mock/user.mock";
 import { AddressService } from "../address/address.service";
@@ -33,14 +33,16 @@ import { Spending } from "../spending/entities/spending.entity";
 import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
 import { SpendingService } from "../spending/spending.service";
 import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-items.service";
+import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
+import { EventToUserService } from "../event-to-user/event-to-user.service";
 
 export class IntegrationTestManager {
   private app: INestApplication;
   private _moduleRef: TestingModule;
 
-  private _testUser: User;
+  private _testUser: UserEntity;
 
-  get testUser(): User {
+  get testUser(): UserEntity {
     return this._testUser;
   }
 
@@ -86,7 +88,7 @@ export class IntegrationTestManager {
 
     const authService = this.app.get<AuthService>(AuthService);
     this._dataSource = this._moduleRef.get(DataSource);
-    const userRepo = this._dataSource.getRepository<User>(User);
+    const userRepo = this._dataSource.getRepository<UserEntity>(UserEntity);
     this._testUser = await userRepo.findOneByOrFail({ email: testUser.email });
     this._accessToken = await authService.login(this._testUser, "");
   }
@@ -112,7 +114,7 @@ export class IntegrationTestManager {
     await this.dataSource.dropDatabase();
   }
 
-  async getNewUser(): Promise<User> {
+  async getNewUser(): Promise<UserEntity> {
     const userService = this._moduleRef.get<UserService>(UserService);
     return await userService.create({
       ...testUser,
@@ -199,17 +201,40 @@ export class IntegrationTestManager {
     });
   }
 
-  async getNewSpending(): Promise<Spending> {
-    const event = await this.getNewEvent();
+  async getNewSpending(
+    event: Event = null,
+    user: UserEntity = null,
+    amount: number = null,
+  ): Promise<Spending> {
+    if (!event) event = await this.getNewEvent();
     const shopIt = await this.getNewSoppingListItem();
-    const user = await this.getNewUser();
+    if (!user) user = await this.getNewUser();
+    if (!amount && amount !== 0) amount = randFloat();
     const carpoolService =
       this._moduleRef.get<SpendingService>(SpendingService);
     return await carpoolService.create({
       eventId: event.id,
       shoppingListItemId: shopIt.id,
       buyerId: user.id,
-      value: randFloat(),
+      value: amount,
+    });
+  }
+  async getNewEventToUser(
+    event: Event = null,
+    user: UserEntity = null,
+    address: Address = null,
+    dates: Date[] = [],
+  ): Promise<EventToUser> {
+    const eventToUserService =
+      this._moduleRef.get<EventToUserService>(EventToUserService);
+    if (!event) event = await this.getNewEvent();
+    if (!user) user = await this.getNewUser();
+    if (!address) address = await this.getNewAddress();
+    return eventToUserService.create({
+      userId: user.id,
+      eventId: event.id,
+      addressId: address.id,
+      availableDates: dates,
     });
   }
 }

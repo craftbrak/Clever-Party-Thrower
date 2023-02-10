@@ -1,6 +1,6 @@
 import { Field, Float, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Address } from "../../address/entities/address.entity";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { Node } from "../../pagination/entities/node.entity";
 import { Car } from "../../car/entities/car.entity";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
@@ -19,9 +19,9 @@ registerEnumType(Directions, {
 @ObjectType()
 @Entity()
 export class Carpool extends Node {
-  @Field(() => User)
-  @ManyToOne(() => User)
-  driver: User;
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  driver: UserEntity;
   @Field(() => [Route])
   @OneToMany(() => Route, (route) => route.carpool)
   routes: Route[];

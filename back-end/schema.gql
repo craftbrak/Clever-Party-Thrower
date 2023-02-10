@@ -56,7 +56,7 @@ type Car {
   """Range of the car in km"""
   range: Int!
   shared: Boolean!
-  owner: User!
+  owner: UserEntity!
   ownerId: String!
 }
 
@@ -76,7 +76,7 @@ enum Fuels {
   HYDROGEN
 }
 
-type User {
+type UserEntity {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -103,7 +103,7 @@ type ShoppingListItem {
   version: Int!
   name: String!
   price: Float!
-  assigned: User!
+  assigned: UserEntity!
   bought: Boolean!
   event: Event!
 }
@@ -113,7 +113,7 @@ type Spending {
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-  buyer: User!
+  buyer: UserEntity!
   event: Event!
   value: Float!
   shoppingListItem: ShoppingListItem!
@@ -127,7 +127,7 @@ type EventToUser {
   userId: String!
   eventId: String!
   event: Event!
-  user: User!
+  user: UserEntity!
   address: Address!
   addressId: String
   role: UserRole!
@@ -147,7 +147,7 @@ type Route {
   updatedAt: DateTime!
   version: Int!
   starting: Address!
-  pickup: User!
+  pickup: UserEntity!
   destination: Address!
   index: Int!
 
@@ -162,7 +162,7 @@ type Carpool {
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-  driver: User!
+  driver: UserEntity!
   routes: [Route!]!
   direction: Directions!
   finalDestination: Address!
@@ -231,8 +231,8 @@ type Dept {
   event: Event!
   amount: Float!
   repayed: Boolean!
-  debtee: User!
-  lender: User!
+  debtor: UserEntity!
+  creditor: UserEntity!
 }
 
 type Query {
@@ -244,7 +244,7 @@ type Query {
   country(Code: String!): Country!
   logout: Boolean!
   disable2fa: Boolean!
-  user(email: String!): User!
+  user(email: String!): UserEntity!
   eventToUser(id: String!): EventToUser!
   car(id: String!): Car!
   carpools: [Carpool!]!
@@ -267,9 +267,9 @@ type Mutation {
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
   enable2fa: String!
   enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
-  createUser(singUp: CreateUserDto!): User!
-  updateUser(updateUserInput: UpdateUserDto!): User!
-  removeUser(id: Int!): User!
+  createUser(singUp: CreateUserDto!): UserEntity!
+  updateUser(updateUserInput: UpdateUserDto!): UserEntity!
+  removeUser(id: Int!): UserEntity!
   createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
   updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
   removeEventToUser(id: String!): EventToUser!
@@ -488,15 +488,15 @@ input UpdateShoppingListItemDto {
 input CreateDeptInput {
   eventId: ID!
   amount: Float!
-  debteeId: ID!
-  lenderId: ID!
+  debtorId: ID!
+  creditorId: ID!
 }
 
 input UpdateDeptInput {
   eventId: ID
   amount: Float
-  debteeId: ID
-  lenderId: ID
+  debtorId: ID
+  creditorId: ID
   id: Int!
   repayed: Boolean = false
 }

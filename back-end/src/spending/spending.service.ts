@@ -4,7 +4,7 @@ import { UpdateSpendingDto } from "./dto/update-spending.dto";
 import { Spending } from "./entities/spending.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
 
@@ -13,7 +13,8 @@ export class SpendingService {
   //TODO: CRUD
   //TODO: matching
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
     @InjectRepository(Spending)

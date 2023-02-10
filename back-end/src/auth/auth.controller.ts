@@ -1,7 +1,7 @@
 import { Body, Controller, Param, Post, Req, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LocalAuthGuard } from "./guards/localAuth.guard";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Request } from "express";
 import { Public } from "./public.decorator";
 import { Args } from "@nestjs/graphql";
@@ -19,7 +19,7 @@ export class AuthController {
     @Body("code") code: string,
   ) {
     return await this.authService.login(
-      (await this.authService.validateUser(email, psw)) as User,
+      (await this.authService.validateUser(email, psw)) as UserEntity,
       code,
     );
   }

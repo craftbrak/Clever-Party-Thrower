@@ -5,7 +5,7 @@ import { LocalAuthGuard } from "./guards/localAuth.guard";
 import { AuthOutputDto } from "./dto/auth-output.dto";
 import { Public } from "./public.decorator";
 import { AuthInputDto } from "./dto/auth-input.dto";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { CurrentUser } from "./current-user.decorator";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { boolean, string } from "joi";
@@ -28,40 +28,40 @@ export class AuthResolver {
       (await this.authService.validateUser(
         authInput.email,
         authInput.password,
-      )) as User,
+      )) as UserEntity,
       authInput.code,
     );
   }
   @Public()
   @Mutation(() => AuthOutputDto)
   async authRefresh(
-    @CurrentUser() usr: User,
+    @CurrentUser() usr: UserEntity,
     @Args("AuthRefreshDto") authRefreshDto: AuthRefreshDto,
   ) {
     return await this.authService.refresh(authRefreshDto);
   }
 
   @Query(() => Boolean)
-  async logout(@CurrentUser() usr: User) {
+  async logout(@CurrentUser() usr: UserEntity) {
     await this.authService.logout(usr);
     return true;
   }
   //todo guard
   @Mutation(() => String || Boolean)
-  async enable2fa(@CurrentUser() user: User) {
+  async enable2fa(@CurrentUser() user: UserEntity) {
     return this.authService.setup2FA(user);
   }
   //todo: guard
   @Mutation(() => AuthOutputDto)
   async enable2faValidate(
-    @CurrentUser() user: User,
+    @CurrentUser() user: UserEntity,
     @Args("AuthInputDto") payload: AuthInputDto,
   ): Promise<AuthOutputDto> {
     await this.authService.enable2FA(user, true, payload.code);
     return await this.authService.login(user, payload.code);
   }
   @Query(() => Boolean)
-  async disable2fa(@CurrentUser() user: User): Promise<boolean> {
+  async disable2fa(@CurrentUser() user: UserEntity): Promise<boolean> {
     await this.authService.disable2fa(user);
     return true;
   }

@@ -3,7 +3,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
+import { UserEntity } from "./entities/user.entity";
 import * as argon2 from "argon2";
 import { AddressService } from "../address/address.service";
 import { createAvatar } from "@dicebear/core";
@@ -13,12 +13,13 @@ import { HttpService } from "@nestjs/axios";
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
     private addressService: AddressService,
     private readonly httpService: HttpService,
   ) {}
 
-  async create(createUserInput: CreateUserDto): Promise<User> {
+  async create(createUserInput: CreateUserDto): Promise<UserEntity> {
     createUserInput.password = await argon2.hash(createUserInput.password);
     const usr = await this.userRepo.create(createUserInput);
     if (createUserInput.addressId)
@@ -34,7 +35,7 @@ export class UserService {
     return await usr.save();
   }
 
-  async findOne(email: User["email"]) {
+  async findOne(email: UserEntity["email"]) {
     return await this.userRepo.findOneOrFail({
       where: {
         email: email,
@@ -42,7 +43,7 @@ export class UserService {
     });
   }
 
-  async findOneById(id: User["id"]): Promise<User> {
+  async findOneById(id: UserEntity["id"]): Promise<UserEntity> {
     return await this.userRepo.findOneOrFail({
       where: { id },
       relations: {
@@ -84,7 +85,7 @@ export class UserService {
   async enable2fa(id: string, status: boolean) {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
     usr.is2faEnabled = status;
-    if (status == false) usr.TwoFaKey = null;
+    if (status == false) usr.twoFaKey = null;
     await usr.save();
   }
   async verifyUser(id: string, token: string) {
@@ -96,7 +97,7 @@ export class UserService {
   }
   async set2FAKey(id: string, token: string) {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
-    usr.TwoFaKey = token;
+    usr.twoFaKey = token;
     await usr.save();
   }
 }

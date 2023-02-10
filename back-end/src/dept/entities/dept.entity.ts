@@ -1,12 +1,12 @@
 import { Field, Float, ObjectType } from "@nestjs/graphql";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Column, Entity, ManyToOne } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 
 @ObjectType()
 @Entity()
-export class Dept extends Node implements Debt{
+export class Dept extends Node implements Debt {
   @Field(() => Event)
   @ManyToOne(() => Event)
   event: Event;
@@ -16,12 +16,12 @@ export class Dept extends Node implements Debt{
   @Field(() => Boolean)
   @Column({ default: false })
   repayed: boolean;
-  @Field(() => User)
-  @ManyToOne(() => User)
-  debtor: User;
-  @Field(() => User)
-  @ManyToOne(() => User)
-  creditor: User;
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  debtor: UserEntity;
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  creditor: UserEntity;
   creditorId: string;
   debtorId: string;
   eventId: string;

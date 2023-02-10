@@ -4,7 +4,7 @@ import { UpdateShoppingListItemDto } from "./dto/update-shopping-list-item.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ShoppingListItem } from "./entities/shopping-list-item.entity";
 import { Repository } from "typeorm";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 
 @Injectable()
@@ -12,7 +12,8 @@ export class ShoppingListItemsService {
   constructor(
     @InjectRepository(ShoppingListItem)
     private readonly itemRepo: Repository<ShoppingListItem>,
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
   ) {}
   //TODO: TESTING

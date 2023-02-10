@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { UserService } from "../user/user.service";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { AuthOutputDto } from "./dto/auth-output.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
@@ -18,7 +18,10 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<Partial<User>> {
+  async validateUser(
+    email: string,
+    pass: string,
+  ): Promise<Partial<UserEntity>> {
     const user = await this.userService.findOne(email);
     if (user && (await argon2.verify(user.password, pass))) {
       const { password, ...result } = user;
@@ -30,7 +33,7 @@ export class AuthService {
     return null;
   }
 
-  async loginOld(user: User): Promise<AuthOutputDto> {
+  async loginOld(user: UserEntity): Promise<AuthOutputDto> {
     const payload: JWTPayload = {
       id: user.id,
       email: user.email,
@@ -53,7 +56,7 @@ export class AuthService {
     return await this.getTokens(payload);
   }
 
-  async logout(user: User): Promise<void> {
+  async logout(user: UserEntity): Promise<void> {
     await this.userService.updateRefreshToken(user.id, "");
   }
 
@@ -68,15 +71,15 @@ export class AuthService {
       refreshToken: refreshToken,
     };
   }
-  async enable2FA(user: User, status: boolean, code: string) {
+  async enable2FA(user: UserEntity, status: boolean, code: string) {
     if (status === true) {
-      if (authenticator.verify({ secret: code, token: user!.TwoFaKey })) {
+      if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
         await this.userService.enable2fa(user.id, status);
       }
     }
   }
 
-  async setup2FA(usr: User) {
+  async setup2FA(usr: UserEntity) {
     if (usr.is2faEnabled) {
       return false;
     }
@@ -89,10 +92,10 @@ export class AuthService {
     return otpUrl;
   }
 
-  async login(user: User, code: string): Promise<AuthOutputDto> {
+  async login(user: UserEntity, code: string): Promise<AuthOutputDto> {
     let verified = false;
     if (user.is2faEnabled) {
-      if (authenticator.verify({ secret: code, token: user!.TwoFaKey })) {
+      if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
         verified = true;
       }
     }
@@ -105,7 +108,7 @@ export class AuthService {
     };
     return this.getTokens(payload);
   }
-  async disable2fa(user: User) {
+  async disable2fa(user: UserEntity) {
     await this.userService.enable2fa(user.id, false);
     await this.userService.set2FAKey(user.id, "");
     return true;

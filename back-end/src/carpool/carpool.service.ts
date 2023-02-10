@@ -4,7 +4,7 @@ import { UpdateCarpoolDto } from "./dto/update-carpool.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Carpool } from "./entities/carpool.entity";
 import { Repository } from "typeorm";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Route } from "./entities/Route.entity";
 import { Address } from "../address/entities/address.entity";
@@ -16,7 +16,8 @@ export class CarpoolService {
   constructor(
     @InjectRepository(Carpool)
     private readonly carpoolRepository: Repository<Carpool>,
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
     @InjectRepository(Route)

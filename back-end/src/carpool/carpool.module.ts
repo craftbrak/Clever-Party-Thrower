@@ -5,13 +5,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Carpool } from "./entities/carpool.entity";
 import { Route } from "./entities/Route.entity";
 import { Car } from "../car/entities/car.entity";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Address } from "../address/entities/address.entity";
 import { Event } from "../event/entities/event.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Carpool, Route, Car, Event, User, Address]),
+    TypeOrmModule.forFeature([Carpool, Route, Car, Event, UserEntity, Address]),
   ],
   providers: [CarpoolResolver, CarpoolService],
 })

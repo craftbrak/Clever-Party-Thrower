@@ -5,9 +5,9 @@ import {
   Float,
   registerEnumType,
 } from "@nestjs/graphql";
-import { User } from "../../user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, RelationId } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 export enum BootSizes {
   None = "None",
   Small = "Small",
@@ -68,12 +68,12 @@ export class Car extends Node {
   @Column({ default: false })
   shared: boolean;
 
-  @ManyToOne(() => User, (user) => user.cars)
+  @ManyToOne(() => UserEntity, (user) => user.cars)
   @JoinColumn([{ name: "ownerId", referencedColumnName: "id" }])
-  @Field(() => User)
-  owner: User;
+  @Field(() => UserEntity)
+  owner: UserEntity;
 
   @Field(() => String)
   @RelationId((self: Car) => self.owner)
-  ownerId: User["id"];
+  ownerId: UserEntity["id"];
 }

@@ -10,7 +10,7 @@ import { EventToUserService } from "./event-to-user.service";
 import { EventToUser } from "./entities/event-to-user.entity";
 import { CreateEventToUserDto } from "./dto/create-event-to-user.dto";
 import { UpdateEventToUserDto } from "./dto/update-event-to-user.dto";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Address } from "../address/entities/address.entity";
 
@@ -47,7 +47,7 @@ export class EventToUserResolver {
     return await this.eventToUserService.remove(id);
   }
 
-  @ResolveField("user", () => User)
+  @ResolveField("user", () => UserEntity)
   async getUser(@Parent() eventToUser: EventToUser) {
     const e = await this.eventToUserService.findOne(eventToUser.id);
     return e.user;

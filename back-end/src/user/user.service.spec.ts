@@ -6,15 +6,15 @@ import { Country } from "../address/entities/country.entity";
 import { string } from "joi";
 import { UserService } from "./user.service";
 import { Repository } from "typeorm";
-import { User } from "./entities/user.entity";
+import { UserEntity } from "./entities/user.entity";
 import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 import { Test, TestingModule } from "@nestjs/testing";
 const moduleMocker = new ModuleMocker(global);
 describe("UserService", () => {
   let service: UserService;
-  let userRepo: Repository<User>;
+  let userRepo: Repository<UserEntity>;
 
-  const USER_REPO_TOKEN = getRepositoryToken(User);
+  const USER_REPO_TOKEN = getRepositoryToken(UserEntity);
 
   // const mockAddressService = {
   //   create: jest.fn((dto) => {
@@ -42,9 +42,9 @@ describe("UserService", () => {
           autoLoadEntities: true,
           synchronize: true,
           dropSchema: true,
-          entities: [User, EventToUser, Event, Address, Country],
+          entities: [UserEntity, EventToUser, Event, Address, Country],
         }),
-        TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forFeature([UserEntity]),
       ],
       providers: [
         UserService,
@@ -67,7 +67,7 @@ describe("UserService", () => {
       .compile();
 
     service = module.get<UserService>(UserService);
-    userRepo = module.get<Repository<User>>(USER_REPO_TOKEN);
+    userRepo = module.get<Repository<UserEntity>>(USER_REPO_TOKEN);
   });
 
   it("UserService should be defined", () => {

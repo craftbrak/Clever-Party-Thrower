@@ -1,6 +1,6 @@
 import { Field, Float, InputType, Int } from "@nestjs/graphql";
 import { BootSizes, Fuels } from "../entities/car.entity";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 
 @InputType()
 export class CreateCarDto {
@@ -25,7 +25,7 @@ export class CreateCarDto {
   @Field(() => Int, { description: "Range of the car in km" })
   range: number;
 
-  ownerId?: User["id"];
+  ownerId?: UserEntity["id"];
 
-  owner?: User;
+  owner?: UserEntity;
 }

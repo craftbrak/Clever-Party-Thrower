@@ -5,15 +5,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Car } from "./entities/car.entity";
 import { JWTPayload } from "../auth/jwtPayload.interface";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 
 @Injectable()
 export class CarService {
   constructor(
     @InjectRepository(Car) private readonly carRepo: Repository<Car>,
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
   ) {}
-  async create(createCarInput: CreateCarDto, user: User) {
+  async create(createCarInput: CreateCarDto, user: UserEntity) {
     createCarInput.ownerId = user.id;
     createCarInput.owner = await this.userRepo.findOneByOrFail({ id: user.id });
     return this.carRepo.create(createCarInput).save();

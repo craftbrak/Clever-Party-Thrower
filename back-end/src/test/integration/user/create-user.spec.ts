@@ -1,5 +1,5 @@
 import { IntegrationTestManager } from "../../integration-test-manager";
-import { User } from "../../../user/entities/user.entity";
+import { UserEntity } from "../../../user/entities/user.entity";
 import request from "supertest-graphql";
 import gql from "graphql-tag";
 import { userMock1, userMock2 } from "../../mock/user.mock";
@@ -16,7 +16,7 @@ describe("createUser", () => {
 
   describe("Given that the user doesn't already exist", () => {
     describe("When a new user is registered without an address ", () => {
-      let createdUser: User;
+      let createdUser: UserEntity;
 
       beforeAll(async () => {
         const querry = gql`
@@ -32,7 +32,7 @@ describe("createUser", () => {
             }
           }
         `;
-        const response = await request<{ createUser: User }>(
+        const response = await request<{ createUser: UserEntity }>(
           integrationTestManager.httpServer,
         )
           .mutate(querry)
@@ -61,13 +61,13 @@ describe("createUser", () => {
       });
       test("Then the user should be in the database", async () => {
         const user = await integrationTestManager.dataSource
-          .getRepository(User)
+          .getRepository(UserEntity)
           .findOneByOrFail({ id: createdUser.id });
         expect(user).toBeDefined();
       });
     });
     describe("When a new user is registered with an existing address ", () => {
-      let createdUser: User;
+      let createdUser: UserEntity;
 
       beforeAll(async () => {
         const querry = gql`
@@ -87,7 +87,7 @@ describe("createUser", () => {
             }
           }
         `;
-        const response = await request<{ createUser: User }>(
+        const response = await request<{ createUser: UserEntity }>(
           integrationTestManager.httpServer,
         )
           .mutate(querry)
@@ -122,7 +122,7 @@ describe("createUser", () => {
       });
       test("Then the user should be in the database", async () => {
         const user = await integrationTestManager.dataSource
-          .getRepository(User)
+          .getRepository(UserEntity)
           .findOneByOrFail({ id: createdUser.id });
         expect(user).toBeDefined();
       });

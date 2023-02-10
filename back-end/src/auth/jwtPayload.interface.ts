@@ -1,9 +1,9 @@
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 
 export interface JWTPayload {
-  id: User["id"];
-  email: User["email"];
-  name: User["name"];
+  id: UserEntity["id"];
+  email: UserEntity["email"];
+  name: UserEntity["name"];
   isTwoFactorEnable?: boolean;
   isTwoFaAuthenticated?: boolean;
 }

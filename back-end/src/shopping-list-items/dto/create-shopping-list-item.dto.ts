@@ -1,6 +1,6 @@
 import { Field, Float, InputType } from "@nestjs/graphql";
 import { ManyToOne } from "typeorm";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
 
 @InputType()
@@ -10,8 +10,8 @@ export class CreateShoppingListItemDto {
   @Field(() => Float)
   price: number;
   @Field(() => String)
-  @ManyToOne(() => User, { nullable: true })
-  assignedId: User["id"];
+  @ManyToOne(() => UserEntity, { nullable: true })
+  assignedId: UserEntity["id"];
   @Field(() => Boolean)
   bought: boolean;
   @Field(() => String)

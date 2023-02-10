@@ -16,7 +16,7 @@ import { Exclude } from "class-transformer";
 
 @Entity()
 @ObjectType()
-export class User extends Node {
+export class UserEntity extends Node {
   @Field(() => String, { description: "Name of the user" })
   @Column()
   name: string;
@@ -51,7 +51,7 @@ export class User extends Node {
   address: Address;
 
   @Field(() => String, { nullable: true })
-  @RelationId((self: User) => self.address)
+  @RelationId((self: UserEntity) => self.address)
   addressId: Address["id"];
 
   @Field(() => [Car])
@@ -71,5 +71,5 @@ export class User extends Node {
   isVerified?: boolean;
 
   @Column({ nullable: true, default: null })
-  TwoFaKey?: string;
+  twoFaKey?: string;
 }

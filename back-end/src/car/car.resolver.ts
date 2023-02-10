@@ -12,7 +12,7 @@ import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
 import { CurrentUser } from "../auth/current-user.decorator";
 import { JWTPayload } from "../auth/jwtPayload.interface";
-import { User } from "../user/entities/user.entity";
+import { UserEntity } from "../user/entities/user.entity";
 
 @Resolver(() => Car)
 export class CarResolver {
@@ -21,7 +21,7 @@ export class CarResolver {
   @Mutation(() => Car)
   async createCar(
     @Args("createCarInput") createCarInput: CreateCarDto,
-    @CurrentUser() user: User,
+    @CurrentUser() user: UserEntity,
   ) {
     return await this.carService.create(createCarInput, user);
   }
@@ -46,7 +46,7 @@ export class CarResolver {
     return await this.carService.remove(id);
   }
 
-  @ResolveField("owner", () => User)
+  @ResolveField("owner", () => UserEntity)
   async findOwner(@Parent() car: Car) {
     return await this.carService.getOwner(car);
   }

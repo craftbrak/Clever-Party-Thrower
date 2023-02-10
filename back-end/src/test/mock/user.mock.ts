@@ -31,3 +31,13 @@ export const userMock2: CreateUserDto = {
   manual: randBoolean(),
   password: randPassword(),
 };
+export function userMock(): CreateUserDto {
+  return {
+    email: randEmail(),
+    name: randFullName(),
+    addressId: null,
+    drivingLicence: randBoolean(),
+    manual: randBoolean(),
+    password: randPassword(),
+  };
+}

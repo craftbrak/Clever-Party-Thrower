@@ -7,7 +7,7 @@ import {
   OneToMany,
   RelationId,
 } from "typeorm";
-import { User } from "../../user/entities/user.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 import { Address } from "../../address/entities/address.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Node } from "../../pagination/entities/node.entity";
@@ -30,7 +30,7 @@ export class EventToUser extends Node {
   @Field(() => String)
   @Column()
   @RelationId((self: EventToUser) => self.user)
-  userId!: User["id"];
+  userId!: UserEntity["id"];
   @Field(() => String)
   @Column()
   @RelationId((self: EventToUser) => self.event)
@@ -40,9 +40,9 @@ export class EventToUser extends Node {
   @ManyToOne(() => Event, (event) => event.members)
   event!: Event;
 
-  @Field(() => User)
-  @ManyToOne(() => User, (user) => user.eventToUsers)
-  user!: User;
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity, (user) => user.eventToUsers)
+  user!: UserEntity;
 
   @Field(() => Address, { nullable: true })
   @ManyToOne(() => Address)
