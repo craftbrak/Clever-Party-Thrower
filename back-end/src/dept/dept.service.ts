@@ -11,7 +11,7 @@ import { Spending } from "../spending/entities/spending.entity";
 import {
   calculateDebtsFromBalances,
   mapExpenses,
-  optimiseDepts,
+  optimiseDebts,
 } from "./utils/debts.utils";
 
 @Injectable()
@@ -50,7 +50,7 @@ export class DeptService {
       participantMap,
       eventId,
     );
-    const debts = await optimiseDepts(unOptdebts);
+    const debts = await optimiseDebts(unOptdebts);
 
     for (const debt of debts) {
       depts.push(

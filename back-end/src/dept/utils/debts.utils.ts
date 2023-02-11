@@ -23,9 +23,9 @@ export async function mapExpenses(
       pMap.set(expense.buyer.id, pMap.get(expense.buyer.id) - share);
     });
   });
-  pMap.forEach((value, key, map) =>
-    pMap.set(key, Number((Math.round(pMap.get(key) * 100) / 100).toFixed(2))),
-  );
+  // pMap.forEach((value, key, map) =>
+  //   pMap.set(key, Number((Math.round(pMap.get(key) * 100) / 100).toFixed(2))),
+  // );
   return pMap;
 }
 export async function calculateDebtsFromBalances(
@@ -41,6 +41,7 @@ export async function calculateDebtsFromBalances(
         if (!found && otherBalance < 0 && userId !== otherUserId) {
           const debtAmount = Math.min(balance, -otherBalance);
           balances.set(userId, balance - debtAmount);
+          balance -= debtAmount;
           balances.set(otherUserId, otherBalance + debtAmount);
           const debt: Debt = {
             amount: debtAmount,
@@ -59,7 +60,7 @@ export async function calculateDebtsFromBalances(
   });
   return debts;
 }
-export async function optimiseDepts(debts: Debt[]): Promise<Debt[]> {
+export async function optimiseDebts(debts: Debt[]): Promise<Debt[]> {
   const optimisedDebts: Debt[] = [];
   const exploredUser = new Map<UserEntity["id"], UserEntity["id"]>();
   for (const debt of debts) {
@@ -71,7 +72,7 @@ export async function optimiseDepts(debts: Debt[]): Promise<Debt[]> {
       (exploredUser.has(currentDebtor) &&
         exploredUser.get(currentDebtor) === currentCreditor)
     ) {
-      break;
+      continue;
     }
     exploredUser.set(currentCreditor, currentDebtor);
     const optimisedDept: Debt = {
@@ -88,9 +89,8 @@ export async function optimiseDepts(debts: Debt[]): Promise<Debt[]> {
       optimisedDept.amount += fdebt.amount;
     }
     const fDebts = debts.filter(
-      (det) => (
-        det.debtorId === currentCreditor, det.creditorId === currentDebtor
-      ),
+      (det) =>
+        det.debtorId === currentCreditor && det.creditorId === currentDebtor,
     );
     for (const fDebt of fDebts) {
       optimisedDept.amount -= fDebt.amount;
