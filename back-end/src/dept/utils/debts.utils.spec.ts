@@ -24,9 +24,6 @@ describe("mapExpenses", () => {
       await integrationTestManager.getNewUser(),
       await integrationTestManager.getNewUser(),
     ];
-    for (let i = 0; i < users.length; i++) {
-      users[i].id = i.toString();
-    }
     expenses = [
       await integrationTestManager.getNewSpending(event, users[0], 1),
       await integrationTestManager.getNewSpending(event, users[1], 5),

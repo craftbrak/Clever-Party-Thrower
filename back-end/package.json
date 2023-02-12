@@ -18,7 +18,8 @@
     "test:watch": "jest --watch --runInBand",
     "test:cov": "jest --coverage --runInBand",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest -i --config ./src/test/jest-e2e.json --watch --coverage --runInBand"
+    "test:e2e": "jest -i --config ./src/test/jest-e2e.json --coverage --runInBand",
+    "test:e2e:watch" : "jest -i --config ./src/test/jest-e2e.json --watch --coverage --runInBand"
   },
   "dependencies": {
     "@dicebear/collection": "^5.0.2",
