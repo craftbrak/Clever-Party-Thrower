@@ -8,7 +8,9 @@ on: [ push ]
 jobs:
   Test:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./back-end
     services:
       postgres:
         image: postgres
@@ -35,8 +37,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - name: cd to back-end dir
-        run: cd ./back-end
 
       - name: Install dependencies
         run: npm install
