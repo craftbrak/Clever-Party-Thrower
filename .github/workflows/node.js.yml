@@ -39,7 +39,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: migrate database
+      - name: cd to back-end dir
+        run: cd ./back-end
+
+      - name: build project
         run: npm run build
         env:
           TEST_DATABASE_NAME: $TEST_DATABASE_NAME
