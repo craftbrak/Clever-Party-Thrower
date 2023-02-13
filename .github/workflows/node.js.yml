@@ -35,12 +35,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+      - name: cd to back-end dir
+        run: cd ./back-end
 
       - name: Install dependencies
         run: npm install
-
-      - name: cd to back-end dir
-        run: cd ./back-end
 
       - name: build project
         run: npm run build
