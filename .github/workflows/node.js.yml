@@ -3,31 +3,69 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-      # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+on: [ push ]
 
 jobs:
-  build:
-
+  Test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: ${ { secrets.DATABASE_PSW } }
+          POSTGRES_USER: $DATABASE_USER
+          POSTGRES_DB: $secrets.TEST_DATABASE_NAME
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm run test
+      # run steps required in the workflow
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: migrate database
+        run: npm run build
+        env:
+          TEST_DATABASE_NAME: $TEST_DATABASE_NAME
+          DATABASE_HOST: $DATABASE_HOST
+          DATABASE_PORT: $DATABASE_PORT
+          DATABASE_USER: $DATABASE_USER
+          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
+          DATABASE_NAME: $DATABASE_NAME
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
+          JWT_AUTH_TTL: $JWT_AUTH_TTL
+          JWT_REFRESH_TTL: $JWT_REFRESH_TTL
+          TWO_FACTOR_AUTHENTICATION_APP_NAME: $TWO_FACTOR_AUTHENTICATION_APP_NAME
+
+      - name: Run the mock tests function
+        run: npm run test
+        env:
+          TEST_DATABASE_NAME: $TEST_DATABASE_NAME
+          DATABASE_HOST: $DATABASE_HOST
+          DATABASE_PORT: $DATABASE_PORT
+          DATABASE_USER: $DATABASE_USER
+          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
+          DATABASE_NAME: $DATABASE_NAME
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
+          JWT_AUTH_TTL: $JWT_AUTH_TTL
+          JWT_REFRESH_TTL: $JWT_REFRESH_TTL
+          TWO_FACTOR_AUTHENTICATION_APP_NAME: $TWO_FACTOR_AUTHENTICATION_APP_NAME
+
