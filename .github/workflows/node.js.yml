@@ -13,7 +13,7 @@ jobs:
         working-directory: ./back-end
     services:
       postgres:
-        image: postgres
+        image: postgis/postgis
 
         env:
           POSTGRES_PASSWORD: ${{secrets.DATABASE_PSW}}
