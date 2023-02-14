@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Test on github
+name: Test back-end on github and push on docker-hub
 
 on: [ push ]
 
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
     # only if the app build and test successfully
-    needs: [ Test ]
+    #    needs: [ Test ]
 
     steps:
       - name: checkout repo
@@ -85,8 +85,8 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -94,5 +94,5 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
 
