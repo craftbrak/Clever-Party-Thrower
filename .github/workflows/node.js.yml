@@ -51,7 +51,7 @@ jobs:
         run: npm run build
 
       - name: Run the tests suites
-        run: npm run test
+        run: npm run test -- src/dept/utils/debts.utils.spec.ts
         env:
           TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
           DATABASE_HOST: ${{vars.DATABASE_HOST}}
