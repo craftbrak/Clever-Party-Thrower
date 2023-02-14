@@ -86,7 +86,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
-    needs: [ Test ]
+    needs: [ Test_Back-end ]
     defaults:
       run:
         working-directory: ./back-end
