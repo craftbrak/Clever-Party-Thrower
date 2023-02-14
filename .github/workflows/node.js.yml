@@ -6,7 +6,7 @@ name: Test back-end on github and push on docker-hub
 on: [ push ]
 
 jobs:
-  Test_Back-end:
+  Test_Back-end_unit:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
           echo "DATABASE_USER variable : ${{ vars.DATABASE_USER }}"
           echo "TEST_DATABASE_NAME variable : ${{ vars.TEST_DATABASE_NAME }}"
 
-      - name: Set up Node.js 14.x
+      - name: Set up Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
@@ -66,6 +66,81 @@ jobs:
           JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
 
+  #      - name: Run the e2e tests suites
+  #        #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
+  #        run: npm run test:e2e
+  #        env:
+  #          TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
+  #          DATABASE_HOST: ${{vars.DATABASE_HOST}}
+  #          DATABASE_PORT: ${{vars.DATABASE_PORT}}
+  #          DATABASE_USER: ${{vars.DATABASE_USER}}
+  #          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
+  #          DATABASE_NAME: ${{vars.DATABASE_NAME}}
+  #          JWT_SECRET: ${{secrets.JWT_SECRET}}
+  #          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
+  #          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
+  #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
+  #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+  Test_Back-end_e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
+    services:
+      postgres:
+        image: postgis/postgis
+
+        env:
+          POSTGRES_PASSWORD: ${{secrets.DATABASE_PSW}}
+          POSTGRES_USER: ${{vars.DATABASE_USER}}
+          POSTGRES_DB: ${{vars.TEST_DATABASE_NAME}}
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      # run steps required in the workflow
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use variables
+        run: |
+          echo "DATABASE_HOST variable : ${{ vars.DATABASE_HOST }}"
+          echo "DATABASE_USER variable : ${{ vars.DATABASE_USER }}"
+          echo "TEST_DATABASE_NAME variable : ${{ vars.TEST_DATABASE_NAME }}"
+
+      - name: Set up Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: build project
+        run: npm run build
+
+      #      - name: Run the unit tests suites
+      #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
+      #        #        run: npm run test
+      #        env:
+      #          TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
+      #          DATABASE_HOST: ${{vars.DATABASE_HOST}}
+      #          DATABASE_PORT: ${{vars.DATABASE_PORT}}
+      #          DATABASE_USER: ${{vars.DATABASE_USER}}
+      #          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
+      #          DATABASE_NAME: ${{vars.DATABASE_NAME}}
+      #          JWT_SECRET: ${{secrets.JWT_SECRET}}
+      #          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
+      #          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
+      #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
+      #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+
       - name: Run the e2e tests suites
         #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
         run: npm run test:e2e
@@ -86,7 +161,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
-    needs: [ Test_Back-end ]
+    needs: [ Test_Back-end_unit ]
     defaults:
       run:
         working-directory: ./back-end
