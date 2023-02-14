@@ -72,8 +72,8 @@ jobs:
     defaults:
       run:
         working-directory: ./back-end
-    # only if the app build and test successfully
-    #    needs: [ Test ]
+        # only if the app build and test successfully
+        needs: [ Test ]
 
     steps:
       - name: checkout repo
