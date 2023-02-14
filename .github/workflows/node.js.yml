@@ -16,7 +16,7 @@ jobs:
         image: postgres
 
         env:
-          POSTGRES_PASSWORD: ${ { secrets.DATABASE_PSW } }
+          POSTGRES_PASSWORD: ${{secrets.DATABASE_PSW}}
           POSTGRES_USER: ${{vars.DATABASE_USER}}
           POSTGRES_DB: ${{secrets.TEST_DATABASE_NAME}}
 
@@ -32,6 +32,13 @@ jobs:
       # run steps required in the workflow
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Use variables
+        run: |
+          echo "repository variable : ${{ vars.DATABASE_HOST }}"
+          echo "organization variable : ${{ vars.DATABASE_USER }}"
+          echo "overridden variable : ${{ vars.TEST_DATABASE_NAME }}"
+          echo "variable from shell environment : ${{secrets.DATABASE_PSW}}"
 
       - name: Set up Node.js 14.x
         uses: actions/setup-node@v1
@@ -58,4 +65,7 @@ jobs:
           JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
           JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+
+#  Deploy:
+#    runs-on: ubuntu-latest
 
