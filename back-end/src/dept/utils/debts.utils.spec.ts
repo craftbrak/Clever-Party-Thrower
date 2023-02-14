@@ -171,7 +171,7 @@ describe("optimiseDebts", () => {
         await integrationTestManager.afterAll();
     });
     it("should return a list of debts that is not longer than the input", async () => {
-        console.table(result);
+        // console.table(result);
         expect(result.length).toBeLessThanOrEqual(debts.length);
     });
     it("should return a list of debts were the differents debs of a same user are fused", async () => {
