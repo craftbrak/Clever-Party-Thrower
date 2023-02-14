@@ -35,10 +35,9 @@ jobs:
 
       - name: Use variables
         run: |
-          echo "repository variable : ${{ vars.DATABASE_HOST }}"
-          echo "organization variable : ${{ vars.DATABASE_USER }}"
-          echo "overridden variable : ${{ vars.TEST_DATABASE_NAME }}"
-          echo "variable from shell environment : ${{secrets.DATABASE_PSW}}"
+          echo "DATABASE_HOST variable : ${{ vars.DATABASE_HOST }}"
+          echo "DATABASE_USER variable : ${{ vars.DATABASE_USER }}"
+          echo "TEST_DATABASE_NAME variable : ${{ vars.TEST_DATABASE_NAME }}"
 
       - name: Set up Node.js 14.x
         uses: actions/setup-node@v1
@@ -54,7 +53,7 @@ jobs:
       - name: Run the tests suites
         run: npm run test -- src/dept/utils/debts.utils.spec.ts
         env:
-          TEST_DATABASE_NAME: $TEST_DATABASE_NAME
+          TEST_DATABASE_NAME: ${{TEST_DATABASE_NAME}}
           DATABASE_HOST: ${{vars.DATABASE_HOST}}
           DATABASE_PORT: ${{vars.DATABASE_PORT}}
           DATABASE_USER: ${{vars.DATABASE_USER}}
