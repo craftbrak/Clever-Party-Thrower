@@ -6,7 +6,7 @@ name: Test back-end on github and push on docker-hub
 on: [ push ]
 
 jobs:
-  Test Back-end:
+  Test_Back-end:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -82,7 +82,7 @@ jobs:
           JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
 
-  Build and push docker image of back-end:
+  Build_and_push_docker_image_of_back-end:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
@@ -116,4 +116,4 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
 
-#  Update and restart docker container versions on remote:
+#  Update_and_restart_docker_container_versions_on_remote:
