@@ -96,7 +96,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./back-end
-          file: ./Dockerfile
+          file: ./back-end/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
 
