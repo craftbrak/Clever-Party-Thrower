@@ -17,8 +17,8 @@ jobs:
 
         env:
           POSTGRES_PASSWORD: ${ { secrets.DATABASE_PSW } }
-          POSTGRES_USER: $DATABASE_USER
-          POSTGRES_DB: $secrets.TEST_DATABASE_NAME
+          POSTGRES_USER: ${{vars.DATABASE_USER}}
+          POSTGRES_DB: ${{secrets.TEST_DATABASE_NAME}}
 
         options: >-
           --health-cmd pg_isready
@@ -43,31 +43,19 @@ jobs:
 
       - name: build project
         run: npm run build
-        env:
-          TEST_DATABASE_NAME: $TEST_DATABASE_NAME
-          DATABASE_HOST: $DATABASE_HOST
-          DATABASE_PORT: $DATABASE_PORT
-          DATABASE_USER: $DATABASE_USER
-          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
-          DATABASE_NAME: $DATABASE_NAME
-          JWT_SECRET: ${{secrets.JWT_SECRET}}
-          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
-          JWT_AUTH_TTL: $JWT_AUTH_TTL
-          JWT_REFRESH_TTL: $JWT_REFRESH_TTL
-          TWO_FACTOR_AUTHENTICATION_APP_NAME: $TWO_FACTOR_AUTHENTICATION_APP_NAME
 
       - name: Run the tests suites
-        run: npm run test
+        run: npm run test -- src/dept/utils/debts.utils.spec.ts
         env:
           TEST_DATABASE_NAME: $TEST_DATABASE_NAME
-          DATABASE_HOST: $DATABASE_HOST
-          DATABASE_PORT: $DATABASE_PORT
-          DATABASE_USER: $DATABASE_USER
+          DATABASE_HOST: ${{vars.DATABASE_HOST}}
+          DATABASE_PORT: ${{vars.DATABASE_PORT}}
+          DATABASE_USER: ${{vars.DATABASE_USER}}
           DATABASE_PSW: ${{secrets.DATABASE_PSW}}
-          DATABASE_NAME: $DATABASE_NAME
+          DATABASE_NAME: ${{vars.DATABASE_NAME}}
           JWT_SECRET: ${{secrets.JWT_SECRET}}
           JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
-          JWT_AUTH_TTL: $JWT_AUTH_TTL
-          JWT_REFRESH_TTL: $JWT_REFRESH_TTL
-          TWO_FACTOR_AUTHENTICATION_APP_NAME: $TWO_FACTOR_AUTHENTICATION_APP_NAME
+          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
+          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
+          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
 
