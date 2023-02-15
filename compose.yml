@@ -1,0 +1,46 @@
+version: '3.5'
+
+services:
+  postgres: #TODO: Trafeak rules
+    container_name: postgres_container
+    image: postgis/postgis
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-psw}
+      PGDATA: /data/postgres
+    env_file:
+      - back-end/database.env
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  CPT-API: #TODO: env + secrets + Trafeak rules + network
+    container_name: CPT-API
+    image: louisdewilde/clever-party-thrower-back-end
+    networks:
+      - postgres
+    restart: unless-stopped
+    ports:
+      - "8689:8689"
+
+  CPT-Web: #TODO: build container + env + Trafeak rules + network
+    container_name: CPT-Web
+
+
+  Trafeak: #TODO: setup trafeak + network
+    container_name: Trafeak
+
+networks:
+  postgres:
+    driver: bridge
+secrets: #TODO: show how to create docker external secrets in doc
+  db_pasword:
+    file: db_password.txt
+  db_root_pasword:
+    file: db_password.txt
+volumes:
+  postgres:
