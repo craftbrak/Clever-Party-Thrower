@@ -4,7 +4,7 @@ import { UserEntity } from "../../user/entities/user.entity";
 import { Node } from "../../pagination/entities/node.entity";
 import { Car } from "../../car/entities/car.entity";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
-import { Route } from "./Route.entity";
+import { RouteEntity } from "./Route.entity";
 import { Event } from "../../event/entities/event.entity";
 
 export enum Directions {
@@ -22,18 +22,18 @@ export class Carpool extends Node {
   @Field(() => UserEntity)
   @ManyToOne(() => UserEntity)
   driver: UserEntity;
-  @Field(() => [Route])
-  @OneToMany(() => Route, (route) => route.carpool)
-  routes: Route[];
+  @Field(() => [RouteEntity])
+  @OneToMany(() => RouteEntity, (route) => route.carpool)
+  routes: RouteEntity[];
   @Field(() => Directions)
   @Column({ type: "enum", enum: Directions })
   direction: Directions;
   @Field(() => Address)
   @ManyToOne(() => Address)
-  finalDestination: Address;
+  endPoint: Address;
   @Field(() => Address)
   @ManyToOne(() => Address)
-  startDestination: Address;
+  startPoint: Address;
   @Field(() => Car)
   @ManyToOne(() => Car)
   car: Car;

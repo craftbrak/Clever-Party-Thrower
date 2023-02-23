@@ -4,10 +4,11 @@ import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
 import { UserEntity } from "../../user/entities/user.entity";
 import { Carpool } from "./carpool.entity";
+import { Route } from "../dto/Route.interface";
 
 @ObjectType()
 @Entity()
-export class Route extends Node {
+export class RouteEntity extends Node implements Route {
   @Field(() => Address)
   @ManyToOne(() => Address)
   starting: Address;

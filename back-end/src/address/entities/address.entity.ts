@@ -1,9 +1,10 @@
-import { ObjectType, Field } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { Node } from "../../pagination/entities/node.entity";
 import { Column, Entity, Index, ManyToOne, RelationId } from "typeorm";
 import { Country } from "./country.entity";
 import { IsPostalCode } from "class-validator";
 import { Point } from "geojson";
+
 @Entity()
 @ObjectType()
 export class Address extends Node {

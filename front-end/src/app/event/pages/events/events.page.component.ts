@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {EventService} from "../../event.service";
+import {Event} from "@angular/router";
 
 @Component({
   selector: 'events-page',
@@ -6,11 +8,13 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./events.page.component.scss']
 })
 export class EventsPageComponent implements OnInit {
+  public events: Event[] = []
 
-  constructor() {
+  constructor(private eventService: EventService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.events = await this.eventService.getAll()
   }
 
 }

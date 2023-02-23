@@ -6,7 +6,7 @@ import { Carpool } from "./entities/carpool.entity";
 import { Repository } from "typeorm";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
-import { Route } from "./entities/Route.entity";
+import { RouteEntity } from "./entities/Route.entity";
 import { Address } from "../address/entities/address.entity";
 import { Car } from "../car/entities/car.entity";
 
@@ -20,8 +20,8 @@ export class CarpoolService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
-    @InjectRepository(Route)
-    private readonly routeRepository: Repository<Route>,
+    @InjectRepository(RouteEntity)
+    private readonly routeRepository: Repository<RouteEntity>,
     @InjectRepository(Car)
     private readonly carRepository: Repository<Car>,
     @InjectRepository(Address)
@@ -41,11 +41,11 @@ export class CarpoolService {
         id: createCarpoolInput.driverId,
       });
     if (createCarpoolInput.startDestinationId)
-      carpool.startDestination = await this.addressRepository.findOneByOrFail({
+      carpool.startPoint = await this.addressRepository.findOneByOrFail({
         id: createCarpoolInput.startDestinationId,
       });
     if (createCarpoolInput.finalDestinationId)
-      carpool.finalDestination = await this.addressRepository.findOneByOrFail({
+      carpool.endPoint = await this.addressRepository.findOneByOrFail({
         id: createCarpoolInput.finalDestinationId,
       });
     if (createCarpoolInput.eventId)
@@ -84,11 +84,11 @@ export class CarpoolService {
         id: updateCarpoolInput.driverId,
       });
     if (updateCarpoolInput.startDestinationId)
-      carpool.startDestination = await this.addressRepository.findOneByOrFail({
+      carpool.startPoint = await this.addressRepository.findOneByOrFail({
         id: updateCarpoolInput.startDestinationId,
       });
     if (updateCarpoolInput.finalDestinationId)
-      carpool.finalDestination = await this.addressRepository.findOneByOrFail({
+      carpool.endPoint = await this.addressRepository.findOneByOrFail({
         id: updateCarpoolInput.finalDestinationId,
       });
     if (updateCarpoolInput.direction)

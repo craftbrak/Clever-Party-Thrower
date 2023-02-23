@@ -54,7 +54,7 @@ export class Car extends Node {
     enum: Fuels,
     default: Fuels.Petrol,
   })
-  fuel: Fuels;
+  fuel:   ;
 
   @Field(() => Boolean)
   @Column()

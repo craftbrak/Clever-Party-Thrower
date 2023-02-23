@@ -6,7 +6,7 @@ import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Address } from "../address/entities/address.entity";
 import { CreateRouteDto } from "./dto/create-route.dto";
-import { Route } from "./entities/Route.entity";
+import { RouteEntity } from "./entities/Route.entity";
 import { UpdateRouteDto } from "./dto/update-route.dto";
 
 @Injectable()
@@ -19,14 +19,14 @@ export class RouteService {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
-    @InjectRepository(Route)
-    private readonly routeRepository: Repository<Route>,
+    @InjectRepository(RouteEntity)
+    private readonly routeRepository: Repository<RouteEntity>,
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
   ) {}
 
   async create(createRouteDto: CreateRouteDto) {
-    const route = new Route();
+    const route = new RouteEntity();
     if (createRouteDto.carpoolId)
       route.carpool = await this.carpoolRepository.findOneByOrFail({
         id: createRouteDto.carpoolId,
@@ -58,7 +58,7 @@ export class RouteService {
   }
 
   async update(String: string, updateRouteDto: UpdateRouteDto) {
-    const route = new Route();
+    const route = new RouteEntity();
     if (updateRouteDto.carpoolId)
       route.carpool = await this.carpoolRepository.findOneByOrFail({
         id: updateRouteDto.carpoolId,

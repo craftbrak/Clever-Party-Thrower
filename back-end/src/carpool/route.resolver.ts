@@ -1,34 +1,34 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Route } from "./entities/Route.entity";
+import { RouteEntity } from "./entities/Route.entity";
 import { CreateRouteDto } from "./dto/create-route.dto";
 import { RouteService } from "./route.service";
 import { UpdateRouteDto } from "./dto/update-route.dto";
 
-@Resolver(() => Route)
+@Resolver(() => RouteEntity)
 export class RouteResolver {
   constructor(private readonly routeService: RouteService) {}
 
-  @Mutation(() => Route)
+  @Mutation(() => RouteEntity)
   createCarpool(@Args("createRouteDto") createRouteDto: CreateRouteDto) {
     return this.routeService.create(createRouteDto);
   }
 
-  @Query(() => [Route], { name: "routes" })
+  @Query(() => [RouteEntity], { name: "routes" })
   findAll() {
     return this.routeService.findAll();
   }
 
-  @Query(() => Route, { name: "route" })
+  @Query(() => RouteEntity, { name: "route" })
   findOne(@Args("String", { type: () => String }) id: string) {
     return this.routeService.findOne(id);
   }
 
-  @Mutation(() => Route)
+  @Mutation(() => RouteEntity)
   updateRoute(@Args("updateRouteDto") updateRouteDto: UpdateRouteDto) {
     return this.routeService.update(updateRouteDto.id, updateRouteDto);
   }
 
-  @Mutation(() => Route)
+  @Mutation(() => RouteEntity)
   removeRoute(@Args("String", { type: () => String }) id: string) {
     return this.routeService.remove(id);
   }

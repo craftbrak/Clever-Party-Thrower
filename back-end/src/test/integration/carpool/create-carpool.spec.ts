@@ -79,12 +79,12 @@ describe("createCarpool", () => {
         expect(createdCarpool.id).toBeTruthy();
       });
       test("Then the carpool should have an start address", async () => {
-        expect(createdCarpool.startDestination.id).toEqual(
+        expect(createdCarpool.startPoint.id).toEqual(
           carpoolMock.startDestinationId,
         );
       });
       test("Then the carpool should have an ending address", async () => {
-        expect(createdCarpool.finalDestination.id).toEqual(
+        expect(createdCarpool.endPoint.id).toEqual(
           carpoolMock.finalDestinationId,
         );
       });
