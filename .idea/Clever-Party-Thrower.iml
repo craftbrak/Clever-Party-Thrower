@@ -18,5 +18,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="back-end" />
+    <orderEntry type="module" module-name="front-end" />
+    <orderEntry type="module" module-name="docs" />
   </component>
 </module>

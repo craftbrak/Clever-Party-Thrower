@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" filepath="$PROJECT_DIR$/.idea/Clever-Party-Thrower.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/.idea/back-end.iml" filepath="$PROJECT_DIR$/back-end/.idea/back-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/docs/docs.iml" filepath="$PROJECT_DIR$/docs/docs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/front-end/.idea/front-end.iml" filepath="$PROJECT_DIR$/front-end/.idea/front-end.iml" />
     </modules>
   </component>
 </project>
