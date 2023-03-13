@@ -13,6 +13,7 @@ import { SortDirection } from "../pagination/dto/pagination.dto";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
 import { AddressService } from "../address/address.service";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Injectable()
 export class EventService {
@@ -54,6 +55,13 @@ export class EventService {
       },
     });
     return { nodes, totalCount };
+  }
+
+  async count(user: JWTPayload) {
+    return await this.eventRepo.count({
+      where: { members: { id: user.id } },
+      relations: { members: true },
+    });
   }
 
   async findOne(id: Event["id"]): Promise<Event> {

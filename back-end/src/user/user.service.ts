@@ -6,8 +6,6 @@ import { Repository } from "typeorm";
 import { UserEntity } from "./entities/user.entity";
 import * as argon2 from "argon2";
 import { AddressService } from "../address/address.service";
-import { createAvatar } from "@dicebear/core";
-import { adventurerNeutral } from "@dicebear/collection";
 import { HttpService } from "@nestjs/axios";
 
 @Injectable()
@@ -26,12 +24,11 @@ export class UserService {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,
       );
-    const resp = await this.httpService
-      .get(
-        `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
-      )
-      .toPromise();
-    usr.avatar = resp.data.toString();
+    // await this.httpService
+    //   .get(
+    //     `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
+    //   )
+    //   .subscribe((value) => (usr.avatar = value.data));
     return await usr.save();
   }
 
@@ -82,12 +79,14 @@ export class UserService {
     usr.hashedRefreshToken = await argon2.hash(token);
     await usr.save();
   }
+
   async enable2fa(id: string, status: boolean) {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
     usr.is2faEnabled = status;
     if (status == false) usr.twoFaKey = null;
     await usr.save();
   }
+
   async verifyUser(id: string, token: string) {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
     if (await argon2.verify(usr.hashedEmailValidationToken, token)) {
@@ -95,6 +94,7 @@ export class UserService {
     }
     await usr.save();
   }
+
   async set2FAKey(id: string, token: string) {
     const usr = await this.userRepo.findOneByOrFail({ id: id });
     usr.twoFaKey = token;

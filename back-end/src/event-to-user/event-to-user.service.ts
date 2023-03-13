@@ -31,6 +31,18 @@ export class EventToUserService {
     );
   }
 
+  async countMembers(event: Event) {
+    return await this.eventToUserRepository.count({
+      where: { eventId: event.id },
+    });
+  }
+
+  async countEvents(user: JWTPayload) {
+    return await this.eventToUserRepository.count({
+      where: { userId: user.id },
+    });
+  }
+
   async findAllOfEvent(
     args: MemberPaginationArgs,
     event?: Event,

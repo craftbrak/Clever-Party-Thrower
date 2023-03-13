@@ -21,6 +21,17 @@ import { SpendingModule } from "./spending/spending.module";
 import { ShoppingListItemsModule } from "./shopping-list-items/shopping-list-items.module";
 import { randomUUID } from "crypto";
 import { DeptModule } from "./dept/dept.module";
+import { Country } from "./address/entities/country.entity";
+import { Address } from "./address/entities/address.entity";
+import { UserEntity } from "./user/entities/user.entity";
+import { Event } from "./event/entities/event.entity";
+import { EventToUser } from "./event-to-user/entities/event-to-user.entity";
+import { Car } from "./car/entities/car.entity";
+import { Carpool } from "./carpool/entities/carpool.entity";
+import { RouteEntity } from "./carpool/entities/Route.entity";
+import { Spending } from "./spending/entities/spending.entity";
+import { Dept } from "./dept/entities/dept.entity";
+import { ShoppingListItem } from "./shopping-list-items/entities/shopping-list-item.entity";
 
 @Module({
   imports: [
@@ -61,7 +72,20 @@ import { DeptModule } from "./dept/dept.module";
           configService.get("NODE_ENV") === "test"
             ? configService.get("TEST_DATABASE_NAME")
             : configService.get("DATABASE_NAME"),
-        entities: [join(__dirname, "**", "*.entity.{ts,js}")],
+        entities: [
+          join(__dirname, "**", "*.entity.{ts,js}"),
+          Country,
+          Address,
+          UserEntity,
+          Event,
+          EventToUser,
+          Car,
+          Carpool,
+          RouteEntity,
+          Spending,
+          Dept,
+          ShoppingListItem,
+        ],
         synchronize: configService.get("NODE_ENV") !== "production",
         dropSchema: false,
         logging: false,

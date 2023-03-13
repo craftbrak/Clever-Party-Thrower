@@ -1,5 +1,6 @@
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -13,6 +14,8 @@ import { UpdateEventToUserDto } from "./dto/update-event-to-user.dto";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Address } from "../address/entities/address.entity";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Resolver(() => EventToUser)
 export class EventToUserResolver {
@@ -24,6 +27,11 @@ export class EventToUserResolver {
     createEventToUserInput: CreateEventToUserDto,
   ) {
     return await this.eventToUserService.create(createEventToUserInput);
+  }
+
+  @Query(() => Int, { name: "countEvents" })
+  async count(@CurrentUser() user: JWTPayload) {
+    return this.eventToUserService.countEvents(user);
   }
 
   @Query(() => EventToUser, { name: "eventToUser" })

@@ -13,8 +13,6 @@ export class AuthInputDto {
   @Field(() => String)
   password: string;
 
-  @IsNotEmpty()
-  @IsString()
   @Field(() => String, { nullable: true })
   code: string;
 }

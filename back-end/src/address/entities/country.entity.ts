@@ -3,8 +3,8 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "./address.entity";
 
-@Entity()
 @ObjectType()
+@Entity()
 export class Country extends Node {
   @Column({ unique: true })
   @Field()

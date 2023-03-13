@@ -141,7 +141,7 @@ enum UserRole {
   INVITED
 }
 
-type Route {
+type RouteEntity {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -163,10 +163,10 @@ type Carpool {
   updatedAt: DateTime!
   version: Int!
   driver: UserEntity!
-  routes: [Route!]!
+  routes: [RouteEntity!]!
   direction: Directions!
-  finalDestination: Address!
-  startDestination: Address!
+  endPoint: Address!
+  startPoint: Address!
   car: Car!
   event: Event!
   totalLength: Float!
@@ -245,6 +245,7 @@ type Query {
   logout: Boolean!
   disable2fa: Boolean!
   user(email: String!): UserEntity!
+  countEvents: Int!
   eventToUser(id: String!): EventToUser!
   car(id: String!): Car!
   carpools: [Carpool!]!
@@ -498,5 +499,5 @@ input UpdateDeptInput {
   debtorId: ID
   creditorId: ID
   id: Int!
-  repayed: Boolean = false
+  repayed: Boolean! = false
 }
