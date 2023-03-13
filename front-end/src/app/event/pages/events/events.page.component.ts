@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EventService} from "../../event.service";
-import {Event} from "@angular/router";
+import {map} from "rxjs";
 
 @Component({
   selector: 'events-page',
@@ -8,13 +8,19 @@ import {Event} from "@angular/router";
   styleUrls: ['./events.page.component.scss']
 })
 export class EventsPageComponent implements OnInit {
-  public events: Event[] = []
+  public eventsId: string[] = []
 
   constructor(private eventService: EventService) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.events = await this.eventService.getAll()
+    await this.eventService.getAllEventId()
+    console.log(this.eventService.EventNumber)
+    this.eventService.EventsId?.pipe(
+      map(data => {
+        this.eventsId = data
+      })
+    )
   }
 
 }

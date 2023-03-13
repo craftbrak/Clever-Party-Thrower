@@ -1,19 +1,13 @@
-import {NgModule} from '@angular/core';
+import {EventEmitter, NgModule} from '@angular/core';
 import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {ApolloClientOptions, ApolloLink, InMemoryCache} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 import {environment} from "../environments/environment";
 import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
+import {AuthService} from "./auth/auth.service";
 
-const uri = 'localhost:4242'; // <-- add the URL of the GraphQL server here
-export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-  return {
-    link: httpLink.create({uri}),
-    cache: new InMemoryCache(),
-  };
-}
-
+const uri = 'http://localhost:4242/graphql'; // <-- add the URL of the GraphQL server here
 const errorLink = onError(({graphQLErrors, networkError, response}) => {
   // React only on graphql errors
   if (graphQLErrors && graphQLErrors.length > 0) {
@@ -33,37 +27,54 @@ const errorLink = onError(({graphQLErrors, networkError, response}) => {
     console.error(`[Network error]: ${networkError.message}`);
   }
 });
-
-const basicContext = setContext((_, {headers}) => {
-  return {
-    headers: {
-      ...headers,
-      Accept: 'charset=utf-8',
-      authorization: `Bearer random token`,
-      'Content-Type': 'application/json',
-    },
-  };
-});
+let token
 
 export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const cache = new InMemoryCache({});
+  const basic = setContext((operation, context) => ({
+    headers: {
+      Accept: 'charset=utf-8',
+    },
+  }));
+  const auth = setContext((operation, context) => {
+    const token = askForTokens();
+    // const token = localStorage.getItem('authtoken');
 
-  // create http
-  const http = httpLink.create({
-    uri: 'http://localhost:3001/graphql',
+    if (token === null) {
+      return {};
+    } else {
+      return {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      };
+    }
   });
+  const link = ApolloLink.from([basic, auth, httpLink.create({uri})]);
+  // create http
 
   return {
     connectToDevTools: !environment.production,
     assumeImmutableResults: true,
-    cache,
-    link: ApolloLink.from([basicContext, errorLink, http]),
+    cache: cache,
+    link: ApolloLink.from([errorLink, link]),
     defaultOptions: {
       watchQuery: {
         errorPolicy: 'all',
       },
     },
   };
+}
+
+async function askForTokens() {
+  const emiter = new EventEmitter()
+  emiter.emit('verifyTokens')
+  window.addEventListener('tokensSet', retrieveTokens)
+  return
+}
+
+function retrieveTokens() {
+
 }
 
 @NgModule({
@@ -77,4 +88,7 @@ export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any
   ],
 })
 export class GraphQLModule {
+  constructor(private authService: AuthService) {
+  }
+
 }
