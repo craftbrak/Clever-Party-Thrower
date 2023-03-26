@@ -6,15 +6,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: clever-party-thrower
   replicas: 3
   template:
     metadata:
       labels:
-        app: nginx
+        app: clever-party-thrower
     spec:
       containers:
-        - name: nginx
+        - name: clever-party-thrower
           image: nginx:alpine
           ports:
             - containerPort: 80

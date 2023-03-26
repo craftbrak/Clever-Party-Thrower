@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: clever-party-thrower
 spec:
   ipFamilyPolicy: PreferDualStack
   selector:
-    app: nginx
+    app: clever-party-thrower
   ports:
     - port: 80
       targetPort: 80
