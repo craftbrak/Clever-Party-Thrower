@@ -38,6 +38,8 @@ jobs:
           echo "DATABASE_HOST variable : ${{ vars.DATABASE_HOST }}"
           echo "DATABASE_USER variable : ${{ vars.DATABASE_USER }}"
           echo "TEST_DATABASE_NAME variable : ${{ vars.TEST_DATABASE_NAME }}"
+          echo "JWT_AUTH_TTL variable : ${{ vars.JWT_AUTH_TTL }}"
+          echo "JWT_REFRESH_TTL variable : ${{ vars.JWT_REFRESH_TTL }}"
 
       - name: Set up Node.js 18.x
         uses: actions/setup-node@v1
@@ -113,6 +115,8 @@ jobs:
           echo "DATABASE_HOST variable : ${{ vars.DATABASE_HOST }}"
           echo "DATABASE_USER variable : ${{ vars.DATABASE_USER }}"
           echo "TEST_DATABASE_NAME variable : ${{ vars.TEST_DATABASE_NAME }}"
+          echo "JWT_AUTH_TTL variable : ${{ vars.JWT_AUTH_TTL }}"
+          echo "JWT_REFRESH_TTL variable : ${{ vars.JWT_REFRESH_TTL }}"
 
       - name: Set up Node.js 18.x
         uses: actions/setup-node@v1
