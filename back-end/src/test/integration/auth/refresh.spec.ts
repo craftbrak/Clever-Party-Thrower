@@ -39,6 +39,7 @@ describe("refresh", () => {
       });
       test("Then the response should be the new access and refresh token", () => {
         expect(login.accessToken).toBeTruthy();
+        expect(login.refreshToken).toBeTruthy();
       });
     });
   });
