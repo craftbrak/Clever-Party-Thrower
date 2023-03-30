@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: clever-party-thrower
 spec:
   selector:
     matchLabels:

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: clever-party-thrower-bc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: louisdewilde/clever-party-thrower-back-end
+          ports:
+            - containerPort:
+                valueFrom:
+                  configMapKeyRef:
+                    name: back-end-config
+                    key: PORT
+          env:
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db-user
+            - name: DATABASE_PSW
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db-password
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: db-url
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: db-user
+            - name: JWT_SECRET
+              secretKeyRef:
+                name: back-end-secret
+                key: JWT_SECRET
+            - name: JWT_REFRESH_SECRET
+              secretKeyRef:
+                name: back-end-secret
+                key: JWT_REFRESH_SECRET
+            - name: JWT_AUTH_TTL
+              valueFrom:
+                configMapKeyRef:
+                  name: back-end-config
+                  key: JWT_AUTH_TTL
+            - name: JWT_REFRESH_TTL
+              valueFrom:
+                configMapKeyRef:
+                  name: back-end-config
+                  key: JWT_REFRESH_TTL
+            - name: TWO_FACTOR_AUTHENTICATION_APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: back-end-config
+                  key: TWO_FACTOR_AUTHENTICATION_APP_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clever-party-thrower-bc-service
+spec:
+  type: NodePort
+  selector:
+    app: clever-party-thrower-bc
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30100

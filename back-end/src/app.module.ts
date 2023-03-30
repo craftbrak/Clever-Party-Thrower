@@ -33,6 +33,7 @@ import { Spending } from "./spending/entities/spending.entity";
 import { Dept } from "./dept/entities/dept.entity";
 import { ShoppingListItem } from "./shopping-list-items/entities/shopping-list-item.entity";
 
+//TODO: adapt to use DB URL if host is null
 @Module({
   imports: [
     ConfigModule.forRoot({
