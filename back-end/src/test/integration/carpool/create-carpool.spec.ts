@@ -74,7 +74,6 @@ describe("createCarpool", () => {
           .expectNoErrors();
         createdCarpool = response.data.createCarpool;
       });
-      test("Then the response should be the created Carpool", () => {});
       test("Then the carpool should have an id", async () => {
         expect(createdCarpool.id).toBeTruthy();
       });
