@@ -37,10 +37,10 @@ describe("createCarpool", () => {
           mutation CreateCarPool($createCarpoolDto: CreateCarpoolDto!) {
             createCarpool(createCarpoolInput: $createCarpoolDto) {
               id
-              startDestination {
+              startPoint {
                 id
               }
-              finalDestination {
+              endPoint {
                 id
               }
               car {
