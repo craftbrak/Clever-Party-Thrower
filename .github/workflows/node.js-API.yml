@@ -125,25 +125,9 @@ jobs:
       - name: build project
         run: npm run build
 
-      #      - name: Run the unit tests suites
-      #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
-      #        #        run: npm run test
-      #        env:
-      #          TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
-      #          DATABASE_HOST: ${{vars.DATABASE_HOST}}
-      #          DATABASE_PORT: ${{vars.DATABASE_PORT}}
-      #          DATABASE_USER: ${{vars.DATABASE_USER}}
-      #          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
-      #          DATABASE_NAME: ${{vars.DATABASE_NAME}}
-      #          JWT_SECRET: ${{secrets.JWT_SECRET}}
-      #          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
-      #          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
-      #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
-      #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
-
-      - name: Run the e2e tests suites
-        #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
-        run: npm run test:e2e
+      - name: Run the unit tests suites
+        run: npm run test -- src/dept/utils/debts.utils.spec.ts
+        #        run: npm run test
         env:
           TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
           DATABASE_HOST: ${{vars.DATABASE_HOST}}
@@ -156,6 +140,22 @@ jobs:
           JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
           JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+
+  #      - name: Run the backend integration tests suites
+  #        #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
+  #        run: npm run test:integr
+  #        env:
+  #          TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
+  #          DATABASE_HOST: ${{vars.DATABASE_HOST}}
+  #          DATABASE_PORT: ${{vars.DATABASE_PORT}}
+  #          DATABASE_USER: ${{vars.DATABASE_USER}}
+  #          DATABASE_PSW: ${{secrets.DATABASE_PSW}}
+  #          DATABASE_NAME: ${{vars.DATABASE_NAME}}
+  #          JWT_SECRET: ${{secrets.JWT_SECRET}}
+  #          JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
+  #          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
+  #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
+  #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
 
   Build_and_push_docker_image_of_back-end:
     # The type of runner that the job will run on
