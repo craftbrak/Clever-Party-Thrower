@@ -1,12 +1,13 @@
-import {EventEmitter, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {ApolloClientOptions, ApolloLink, InMemoryCache} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 import {environment} from "../environments/environment";
 import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
-import {AuthService} from "./auth/auth.service";
 
+// @ts-ignore
+const authStore = window['AuthStoreService'].getInstance();
 const uri = 'http://localhost:4242/graphql'; // <-- add the URL of the GraphQL server here
 const errorLink = onError(({graphQLErrors, networkError, response}) => {
   // React only on graphql errors
@@ -37,15 +38,14 @@ export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any
     },
   }));
   const auth = setContext((operation, context) => {
-    const token = askForTokens();
-    // const token = localStorage.getItem('authtoken');
+    const token = authStore.authToken();
 
     if (token === null) {
       return {};
     } else {
       return {
         headers: {
-          Authorization: `JWT ${token}`,
+          Authorization: token ? `Bearer ${token}` : '',
         },
       };
     }
@@ -66,17 +66,6 @@ export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any
   };
 }
 
-async function askForTokens() {
-  const emiter = new EventEmitter()
-  emiter.emit('verifyTokens')
-  window.addEventListener('tokensSet', retrieveTokens)
-  return
-}
-
-function retrieveTokens() {
-
-}
-
 @NgModule({
   exports: [ApolloModule],
   providers: [
@@ -88,7 +77,4 @@ function retrieveTokens() {
   ],
 })
 export class GraphQLModule {
-  constructor(private authService: AuthService) {
-  }
-
 }

@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@apollo/client": "^3.7.1",
+    "@ngneat/tailwind": "^7.0.3",
     "apollo-angular": "^3.0.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

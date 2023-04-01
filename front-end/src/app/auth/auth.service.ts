@@ -1,18 +1,27 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import jwt_decode from "jwt-decode";
+import {catchError, tap, throwError} from "rxjs";
 import gql from "graphql-tag";
-import {AuthOutputDto} from "../Dto/auth-output.dto";
-import {Observable} from "rxjs";
+import {AuthStoreService} from "./auth-store.service";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  LOGIN_MUTATION = gql`
+    mutation AuthLogin($AuthinputDto: AuthInputDto!) {
+      authLogin(authInputDto: $AuthinputDto) {
+        accessToken
+        refreshToken
+      }
+    }
+  `;
   private _accessToken: string | undefined;
   private _refreshToken: string | undefined;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private authStore: AuthStoreService) {
   }
 
   public async getToken(): Promise<string> {
@@ -33,22 +42,38 @@ export class AuthService {
     return "";
   }
 
-  public async login(usrname: string, passwword: string) {
-    const loginGql = gql`
-      mutation AuthLogin($AuthinputDto: AuthInputDto! ){
-        authLogin(authInputDto: $AuthinputDto){
-          accessToken
-          refreshToken
-        }
-      }
-    `
-    this.apollo.mutate<Observable<AuthOutputDto>>({mutation: loginGql, variables: {}}).subscribe((result) => {
-        console.log('got data', result);
+  public login(email: string, password: string) {
+
+    return this.apollo.mutate({
+      mutation: this.LOGIN_MUTATION,
+      variables: {
+        AuthinputDto: {
+          email,
+          password,
+        },
       },
-      error => {
-        console.log('there was an error sending the query', error);
-      },)
-  };
+    }).pipe(
+      // @ts-ignore
+      tap(({data}) => {
+        if (data && data.authLogin) {
+          const {accessToken, refreshToken} = data.authLogin;
+          this.authStore.authToken = accessToken;
+          this.authStore.refreshToken = refreshToken;
+        }
+      }),
+      catchError((error) => {
+        // Handle errors, e.g., show an error message
+        console.error('Login error:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  public isAuthenticated(): boolean {
+    const accessToken = this.authStore.authToken
+
+    return accessToken !== null;
+  }
 
   public async logout() {
   };
@@ -59,8 +84,11 @@ export class AuthService {
   public async deleteAccount() {
   };
 
-  private async refreshTokens() {
+  private validateToken() {
 
   }
 
+  private async refreshTokens() {
+
+  }
 }
