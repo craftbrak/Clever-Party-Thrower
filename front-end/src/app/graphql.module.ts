@@ -7,7 +7,6 @@ import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
 
 // @ts-ignore
-const authStore = window['AuthStoreService'].getInstance();
 const uri = 'http://localhost:4242/graphql'; // <-- add the URL of the GraphQL server here
 const errorLink = onError(({graphQLErrors, networkError, response}) => {
   // React only on graphql errors
@@ -28,7 +27,6 @@ const errorLink = onError(({graphQLErrors, networkError, response}) => {
     console.error(`[Network error]: ${networkError.message}`);
   }
 });
-let token
 
 export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const cache = new InMemoryCache({});
@@ -38,7 +36,7 @@ export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any
     },
   }));
   const auth = setContext((operation, context) => {
-    const token = authStore.authToken();
+    const token = localStorage.getItem('accessToken');
 
     if (token === null) {
       return {};

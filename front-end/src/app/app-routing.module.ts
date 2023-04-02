@@ -10,6 +10,11 @@ const routes: Routes = [
     path: 'dashboard',
     component: EventsPageComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
   }
 ];
 

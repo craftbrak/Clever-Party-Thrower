@@ -3,7 +3,6 @@ import {Apollo} from "apollo-angular";
 import jwt_decode from "jwt-decode";
 import {catchError, tap, throwError} from "rxjs";
 import gql from "graphql-tag";
-import {AuthStoreService} from "./auth-store.service";
 
 
 @Injectable({
@@ -18,13 +17,15 @@ export class AuthService {
       }
     }
   `;
-  private _accessToken: string | undefined;
-  private _refreshToken: string | undefined;
+  private _accessToken: string | null = null;
+  private _refreshToken: string | null = null;
 
-  constructor(private apollo: Apollo, private authStore: AuthStoreService) {
+  constructor(private apollo: Apollo) {
   }
 
   public async getToken(): Promise<string> {
+    this._accessToken = localStorage.getItem('accessToken');
+    this._refreshToken = localStorage.getItem('refreshToken');
     if (this._accessToken && this._refreshToken) {
       // @ts-ignore
       const {exp} = jwt_decode(this._accessToken)
@@ -57,8 +58,10 @@ export class AuthService {
       tap(({data}) => {
         if (data && data.authLogin) {
           const {accessToken, refreshToken} = data.authLogin;
-          this.authStore.authToken = accessToken;
-          this.authStore.refreshToken = refreshToken;
+          localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
+          localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
+          this._accessToken = accessToken;
+          this._refreshToken = refreshToken;
         }
       }),
       catchError((error) => {
@@ -70,8 +73,8 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const accessToken = this.authStore.authToken
-
+    let accessToken
+    this.getToken().then(token => accessToken = token);
     return accessToken !== null;
   }
 
@@ -89,6 +92,10 @@ export class AuthService {
   }
 
   private async refreshTokens() {
-
+    // let resp : AuthOutputDto;
+    // this._refreshToken = resp.refreshToken;
+    // this._accessToken = resp.accessToken;
+    // localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
+    // localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
   }
 }
