@@ -25,6 +25,7 @@ import {MatStepperModule} from "@angular/material/stepper";
 
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
