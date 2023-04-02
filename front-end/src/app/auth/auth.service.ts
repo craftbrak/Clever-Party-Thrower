@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import jwt_decode from "jwt-decode";
-import {catchError, tap, throwError} from "rxjs";
+import {catchError, Observable, tap, throwError} from "rxjs";
 import gql from "graphql-tag";
 
 
@@ -17,6 +17,32 @@ export class AuthService {
       }
     }
   `;
+  REGISTER_MUTATION = gql`
+    mutation Register(
+      $name: String!
+      $email: String!
+      $password: String!
+      $drivingLicence: Boolean!
+      $manual: Boolean!
+      $address: String!
+    ) {
+      createUser(
+        singUp: {
+          name: $name
+          email: $email
+          password: $password
+          drivingLicence: $drivingLicence
+          manual: $manual
+          addressId: $address
+        }
+      ) {
+        id
+        name
+        email
+      }
+    }
+  `;
+
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
 
@@ -81,8 +107,26 @@ export class AuthService {
   public async logout() {
   };
 
-  public async signIn() {
-  };
+  public register(
+    name: string,
+    email: string,
+    password: string,
+    drivingLicence: boolean,
+    manual: boolean,
+    address: string
+  ): Observable<any> {
+    return this.apollo.mutate({
+      mutation: this.REGISTER_MUTATION,
+      variables: {
+        name,
+        email,
+        password,
+        drivingLicence,
+        manual,
+        address,
+      },
+    });
+  }
 
   public async deleteAccount() {
   };

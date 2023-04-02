@@ -10,6 +10,14 @@ import {EventModule} from "./event/event.module";
 import {GraphQLModule} from './graphql.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from "./auth/auth.module";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatButtonModule} from "@angular/material/button";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSelectModule} from "@angular/material/select";
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -25,7 +33,17 @@ import {AuthModule} from "./auth/auth.module";
     EventModule,
     GraphQLModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatIconModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import {AuthService} from '../../auth.service';
 import {Router} from "@angular/router";
 import {Component} from "@angular/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -10,21 +11,33 @@ import {Component} from "@angular/core";
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private authService: AuthService,
+              private router: Router) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   onSubmit(): void {
-    this.authService
-      .login(this.email, this.password)
-      .subscribe(
-        () => {
-          this.router.navigate(['/dashboard']); // Replace '/protected-route' with the path to your desired route
-          //todo: Redirect to a protected route or show a success message
-        },
-        (error) => {
-          //todo: Handle errors, e.g., show an error message
-        }
-      );
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const {email, password} = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe(
+      () => {
+        // Redirect to a protected route or the dashboard after successful login
+        this.router.navigate(['/dashboard']);
+      },
+      (error) => {
+        // Handle any errors from the API
+        console.error('Login error:', error);
+      }
+    );
   }
 }

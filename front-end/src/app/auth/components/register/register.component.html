@@ -1,0 +1,108 @@
+<div class="wrapper">
+  <h1> Join The Party</h1>
+  <mat-stepper [linear]="isLinear">
+    <mat-step [stepControl]="step1FormGroup">
+      <form [formGroup]="step1FormGroup">
+        <ng-template matStepLabel>User Info</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput required type="email">
+          <mat-error *ngIf="step1FormGroup.get('email')?.hasError('email')">Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput required type="password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input formControlName="confirmPassword" matInput required type="password">
+        </mat-form-field>
+        <div class="submit-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="step2FormGroup">
+      <form [formGroup]="step2FormGroup">
+        <ng-template matStepLabel>Address</ng-template>
+        <mat-form-field>
+          <mat-label>Address Line 1</mat-label>
+          <input formControlName="addressLine1" matInput required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Address Line 2</mat-label>
+          <input formControlName="addressLine2" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Postal Code</mat-label>
+          <input formControlName="postalCode" matInput required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country" required>
+            <!-- Populate the mat-option with your list of countries -->
+            <mat-option *ngFor="let country of countries" [value]="country">{{country.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="step3FormGroup">
+      <form [formGroup]="step3FormGroup">
+        <ng-template matStepLabel>Licence</ng-template>
+        <div class="checkboxes">
+          <mat-slide-toggle color="primary" formControlName="drivingLicence">Do you have a driving licence?
+          </mat-slide-toggle>
+          <mat-slide-toggle *ngIf="step3FormGroup.get('drivingLicence')?.value" color="primary"
+                            formControlName="manual">
+            Can you drive manual transmission cars?
+          </mat-slide-toggle>
+        </div>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+        </div>
+        <div class="submit-button">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="step4FormGroup">
+      <form [formGroup]="step4FormGroup">
+        <ng-template matStepLabel>Avatar</ng-template>
+        <!-- Use dicebear API to generate avatars and display them here -->
+        <!-- Add your logic to fetch avatars from dicebear and display them as selectable items -->
+        <div class="avatar-container">
+          <mat-radio-group formControlName="avatar" required>
+            <mat-radio-button *ngFor="let avatarUrl of avatarUrls" [value]="avatarUrl">
+              <img [src]="avatarUrl" alt="Avatar" class="avatar">
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You're now ready to submit your registration!</p>
+      <div class="submit-button">
+        <button mat-button matStepperPrevious>Back</button>
+        <button (click)="onSubmit()" mat-button>Submit</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

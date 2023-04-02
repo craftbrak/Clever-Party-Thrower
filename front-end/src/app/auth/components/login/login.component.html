@@ -1,48 +1,24 @@
-<!-- src/app/login/login.component.html -->
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Sign in to your account
-      </h2>
-    </div>
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <label class="sr-only" for="email">Email:</label>
-          <input
-            [(ngModel)]="email"
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            id="email"
-            name="email"
-            placeholder="Email address"
-            required
-            type="email"
-          />
-        </div>
-        <div>
-          <label class="sr-only" for="password">Password:</label>
-          <input
-            [(ngModel)]="password"
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            id="password"
-            name="password"
-            placeholder="Password"
-            required
-            type="password"
-          />
-        </div>
-      </div>
+<div class="wrapper">
+  <div class="container">
+    <h1>Log Into Your Account</h1>
 
-      <div>
-        <button
-          [disabled]="!loginForm.valid"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          type="submit"
-        >
-          Sign in
-        </button>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput type="password"/>
+      </mat-form-field>
+      <div class="submit-button">
+        <button [disabled]="loginForm.invalid" mat-raised-button type="submit">Login</button>
       </div>
     </form>
+
+    <div class="register-link">
+      <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+    </div>
   </div>
 </div>

@@ -3,16 +3,37 @@ import {CommonModule} from '@angular/common';
 import {AuthGuard} from "./auth.guard";
 import {AuthService} from "./auth.service";
 import {LoginComponent} from './components/login/login.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RegisterComponent} from './components/register/register.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {RouterModule} from "@angular/router";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    MatCheckboxModule,
+    RouterModule,
+    MatSlideToggleModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [
     AuthGuard,
