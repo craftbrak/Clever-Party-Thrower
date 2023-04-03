@@ -17,11 +17,28 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>Password</mat-label>
-            <input formControlName="password" matInput required type="password">
+            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+            <input [type]="toggle.type" formControlName="password" matInput required>
+            <mat-hint align="end" aria-live="polite">
+              {{step1FormGroup.get('password')?.value.length}}
+            </mat-hint>
+            <mat-error *ngIf="step1FormGroup.get('password')?.hasError('minlength')">
+              Password to short
+            </mat-error>
           </mat-form-field>
+          <mat-password-strength #passwordComponent [password]="password?.value">
+          </mat-password-strength>
+          <mat-password-strength-info
+            *ngIf="showDetails"
+            [passwordComponent]="passwordComponent">
+          </mat-password-strength-info>
           <mat-form-field>
             <mat-label>Confirm Password</mat-label>
-            <input formControlName="confirmPassword" matInput required type="password">
+            <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+            <input [type]="toggle.type" formControlName="confirmPassword" id="confirmPassword" matInput required>
+            <mat-error *ngIf="step1FormGroup.get('confirmPassword')?.hasError('equalValidator')">
+              Password and confirmation do not match
+            </mat-error>
           </mat-form-field>
           <div class="submit-button">
             <button mat-button matStepperNext>Next</button>
@@ -33,12 +50,24 @@
         <form [formGroup]="step2FormGroup">
           <ng-template matStepLabel>Address</ng-template>
           <mat-form-field>
+            <mat-label>Street Number</mat-label>
+            <input formControlName="streetNumber" matInput required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Unit Number</mat-label>
+            <input formControlName="unitNumber" matInput>
+          </mat-form-field>
+          <mat-form-field>
             <mat-label>Address Line 1</mat-label>
-            <input formControlName="addressLine1" matInput required>
+            <input formControlName="line1" matInput required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Address Line 2</mat-label>
-            <input formControlName="addressLine2" matInput>
+            <input formControlName="line2" matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput required>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Postal Code</mat-label>
@@ -46,12 +75,13 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>Country</mat-label>
-            <mat-select formControlName="country" required>
+            <mat-select formControlName="countryId" required>
               <!-- Populate the mat-option with your list of countries -->
-              <mat-option *ngFor="let country of countries" [value]="country">{{country.name}}</mat-option>
+              <mat-option *ngFor="let country of countries" [value]="country.id"> {{country.code}}
+                | {{country.name}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <div class="submit-button">
+          <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -105,5 +135,6 @@
         </div>
       </mat-step>
     </mat-stepper>
+    <small class="disclaimer">Fields marked with an * are required.</small>
   </div>
 </div>

@@ -8,7 +8,7 @@ import {CreateAddressDto} from "../Dto/create-address.dto";
   providedIn: 'root',
 })
 export class AddressService {
-  GET_COUNTRIES = gql`
+  readonly GET_COUNTRIES = gql`
     query GetCountries {
       countries {
         id
@@ -17,7 +17,7 @@ export class AddressService {
       }
     }
   `;
-  CREATE_ADDRESS = gql`
+  readonly CREATE_ADDRESS = gql`
     mutation CreateAddress($input: CreateAddressDto!) {
       createAddress(createAddressInput: $input) {
         id
@@ -35,7 +35,7 @@ export class AddressService {
   }
 
   createAddress(input: CreateAddressDto) {
-    return this.apollo.mutate<{ createAddress: { id: string } }>({
+    return this.apollo.mutate({
       mutation: this.CREATE_ADDRESS,
       variables: {input},
     });

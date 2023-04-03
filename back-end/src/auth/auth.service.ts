@@ -8,7 +8,6 @@ import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { authenticator } from "otplib";
-import * as process from "process";
 
 @Injectable()
 export class AuthService {
@@ -60,17 +59,6 @@ export class AuthService {
     await this.userService.updateRefreshToken(user.id, "");
   }
 
-  private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: this.configService.get("JWT_REFRESH_TTL"),
-      secret: this.configService.get("JWT_REFRESH_SECRET"),
-    });
-    await this.userService.updateRefreshToken(payload.id, refreshToken);
-    return {
-      accessToken: this.jwtService.sign(payload),
-      refreshToken: refreshToken,
-    };
-  }
   async enable2FA(user: UserEntity, status: boolean, code: string) {
     if (status === true) {
       if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
@@ -94,6 +82,7 @@ export class AuthService {
 
   async login(user: UserEntity, code: string): Promise<AuthOutputDto> {
     let verified = false;
+    //todo: fix null User bug on login througt the front end
     if (user.is2faEnabled) {
       if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
         verified = true;
@@ -108,9 +97,22 @@ export class AuthService {
     };
     return this.getTokens(payload);
   }
+
   async disable2fa(user: UserEntity) {
     await this.userService.enable2fa(user.id, false);
     await this.userService.set2FAKey(user.id, "");
     return true;
+  }
+
+  private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: this.configService.get("JWT_REFRESH_TTL"),
+      secret: this.configService.get("JWT_REFRESH_SECRET"),
+    });
+    await this.userService.updateRefreshToken(payload.id, refreshToken);
+    return {
+      accessToken: this.jwtService.sign(payload),
+      refreshToken: refreshToken,
+    };
   }
 }

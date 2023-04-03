@@ -18,31 +18,13 @@ export class AuthService {
     }
   `;
   REGISTER_MUTATION = gql`
-    mutation Register(
-      $name: String!
-      $email: String!
-      $password: String!
-      $drivingLicence: Boolean!
-      $manual: Boolean!
-      $address: String!
-    ) {
-      createUser(
-        singUp: {
-          name: $name
-          email: $email
-          password: $password
-          drivingLicence: $drivingLicence
-          manual: $manual
-          addressId: $address
-        }
-      ) {
-        id
+    mutation CreateUser($singUp: CreateUserDto!) {
+      createUser(singUp: $singUp) {
         name
-        email
+        id
       }
     }
   `;
-
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
 
@@ -113,19 +95,22 @@ export class AuthService {
     password: string,
     drivingLicence: boolean,
     manual: boolean,
-    address: string
+    addressId: string,
+    avatar: string
   ): Observable<any> {
+    let singUp = {
+      addressId: addressId,
+      drivingLicence: drivingLicence,
+      email: email,
+      manual: manual,
+      name: name,
+      password: password,
+    }
     return this.apollo.mutate({
       mutation: this.REGISTER_MUTATION,
-      variables: {
-        name,
-        email,
-        password,
-        drivingLicence,
-        manual,
-        address,
-      },
+      variables: {singUp},
     });
+
   }
 
   public async deleteAccount() {

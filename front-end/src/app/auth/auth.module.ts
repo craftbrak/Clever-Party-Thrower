@@ -14,12 +14,15 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import {PasswordMatchDirective} from './password-match.directive';
+import {MatPasswordStrengthModule} from "@angular-material-extensions/password-strength";
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PasswordMatchDirective
   ],
   imports: [
     CommonModule,
@@ -33,7 +36,8 @@ import {MatSelectModule} from "@angular/material/select";
     MatSlideToggleModule,
     MatStepperModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPasswordStrengthModule
   ],
   providers: [
     AuthGuard,
