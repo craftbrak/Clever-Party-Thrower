@@ -21,16 +21,16 @@
         <p *ngIf="addressData?.unitNumber"><strong>Unit :</strong> {{ addressData?.unitNumber }}</p>
       </div>
       <div class="city-country">
-        <p><strong>Postal Code:</strong> {{ addressData?.postalCode }}</p>
         <p><strong>City:</strong> {{ addressData?.city }}</p>
+        <p><strong>Postal Code:</strong> {{ addressData?.postalCode }}</p>
       </div>
       <p><strong>Country:</strong> {{ getCountryName(addressData.countryId)?.name }}</p>
     </div>
 
     <div *ngIf="licenceData" class="driving-licence">
       <h3>Driving Licence</h3>
-      <p><strong>Licence Number:</strong> {{ licenceData?.drivingLicence }}</p>
-      <p><strong>Expiry Date:</strong> {{ licenceData?.manual }}</p>
+      <p><strong>I have a driving licence:</strong> {{ licenceData?.drivingLicence }}</p>
+      <p><strong>I'm capable of driving a manual transmission car:</strong> {{ licenceData?.manual }}</p>
     </div>
   </div>
 
