@@ -24,6 +24,7 @@ export class UserService {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,
       );
+    usr.email = usr.email.toLowerCase();
     // await this.httpService
     //   .get(
     //     `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
