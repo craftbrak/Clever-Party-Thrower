@@ -1,15 +1,12 @@
 import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
-import { Logger, UseGuards } from "@nestjs/common";
-import { LocalAuthGuard } from "./guards/localAuth.guard";
+import { Logger } from "@nestjs/common";
 import { AuthOutputDto } from "./dto/auth-output.dto";
 import { Public } from "./public.decorator";
 import { AuthInputDto } from "./dto/auth-input.dto";
 import { UserEntity } from "../user/entities/user.entity";
 import { CurrentUser } from "./current-user.decorator";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
-import { boolean, string } from "joi";
-import { Auth2faDto } from "./dto/auth-2fa.dto";
 
 @Resolver()
 export class AuthResolver {
@@ -26,12 +23,13 @@ export class AuthResolver {
     this.logger.debug(authInput.password, authInput.email);
     return await this.authService.login(
       (await this.authService.validateUser(
-        authInput.email,
+        authInput.email.toLowerCase(),
         authInput.password,
       )) as UserEntity,
       authInput.code,
     );
   }
+
   @Public()
   @Mutation(() => AuthOutputDto)
   async authRefresh(
@@ -46,11 +44,13 @@ export class AuthResolver {
     await this.authService.logout(usr);
     return true;
   }
+
   //todo guard
   @Mutation(() => String || Boolean)
   async enable2fa(@CurrentUser() user: UserEntity) {
     return this.authService.setup2FA(user);
   }
+
   //todo: guard
   @Mutation(() => AuthOutputDto)
   async enable2faValidate(
@@ -60,6 +60,7 @@ export class AuthResolver {
     await this.authService.enable2FA(user, true, payload.code);
     return await this.authService.login(user, payload.code);
   }
+
   @Query(() => Boolean)
   async disable2fa(@CurrentUser() user: UserEntity): Promise<boolean> {
     await this.authService.disable2fa(user);
