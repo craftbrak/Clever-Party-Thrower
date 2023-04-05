@@ -1,0 +1,16 @@
+<h3> Register your driving abilities for carpools </h3>
+<form (ngSubmit)="onSubmit()" [formGroup]="drivingLicenceForm">
+  <ng-template matStepLabel>Licence</ng-template>
+  <div class="checkboxes">
+    <mat-slide-toggle color="primary" formControlName="drivingLicence">Do you have a driving licence?
+    </mat-slide-toggle>
+    <mat-slide-toggle *ngIf="drivingLicenceForm.get('drivingLicence')?.value" [@fadeInOut]
+                      color="primary" formControlName="manual">
+      Can you drive manual transmission cars?
+    </mat-slide-toggle>
+  </div>
+  <div class="submit-button">
+    <button mat-button matStepperPrevious>Back</button>
+    <button [disabled]="!drivingLicenceForm.valid" color="primary" mat-raised-button matStepperNext>Next</button>
+  </div>
+</form>

@@ -18,11 +18,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
+import {UiComponentsModule} from "./Ui/components/ui-components.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     HttpClientModule,
@@ -44,7 +44,7 @@ import {MatStepperModule} from "@angular/material/stepper";
     MatStepperModule,
     MatSelectModule,
     MatIconModule,
-
+    UiComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+
+$my-palette: mat.define-palette(mat.$blue-grey-palette);
+.wrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  padding: 16px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 70vw;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.bg {
+  background-color: mat.get-color-from-palette($my-palette, 700);
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+  align-content: space-between;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}

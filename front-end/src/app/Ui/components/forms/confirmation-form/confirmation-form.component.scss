@@ -1,0 +1,54 @@
+.title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+  align-content: space-between;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.confirmation {
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .avatar {
+    margin-right: 1rem;
+  }
+
+  .avatar-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .info-columns {
+    display: flex;
+    justify-content: space-between;
+
+    .address,
+    .driving-licence {
+      width: 48%;
+    }
+
+    .number-line,
+    .city-country {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

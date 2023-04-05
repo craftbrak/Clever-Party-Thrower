@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from "../../auth.service";
+import {AuthService} from "../../../auth/auth.service";
 import {Country} from "../../../entities/address.entity";
 import {AddressService} from "../../../services/address.service";
 import {debounceTime} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
-import {PasswordMatchDirective} from "../../password-match.directive";
+import {PasswordMatchDirective} from "../../../auth/password-match.directive";
 
 @Component({
   selector: 'app-register',
@@ -70,18 +70,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addressService.getCountries().subscribe(({data}) => {
-      this.countries = [...data.countries].sort((country1, contry3) => {
-        if (country1.name > contry3.name) {
-          return 1;
-        }
-        if (country1.name < contry3.name) {
-          return -1;
-        }
-        return 0;
-      });
-      console.table(this.countries)
-    });
+
     this.step1FormGroup.controls['name'].valueChanges.pipe(debounceTime(45)).subscribe(name => this.querryAvatars(name))
   }
 
@@ -93,29 +82,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.step1FormGroup.valid && this.step2FormGroup.valid && this.step3FormGroup.valid && this.step4FormGroup.valid) {
-      // Call the API to create a new address
-      let addressId: string = "";
-      console.log('creating Address')
-      this.addressService.createAddress(this.step2FormGroup.value).subscribe(
-        //@ts-ignore
-        ({data}) => {
-          // Handle address creation success
-          addressId = data.createAddress.id;
-          const userData = {
-            ...this.step1FormGroup.value,
-            addressId,
-            drivingLicence: this.step3FormGroup.get('drivingLicence')?.value,
-            manual: this.step3FormGroup.get('manual')?.value,
-            avatar: this.step4FormGroup.get('avatar')?.value
-          };
-          this.registerUser(userData.name, userData.email, userData.password, userData.addressId, userData.drivingLicence, userData.manual, userData.avatar)
-        },
-        (error) => {
-          console.error('Address creation error:', error);
-        }
-      );
-    }
+
   }
 
   onStrengthChanged(strength: number) {

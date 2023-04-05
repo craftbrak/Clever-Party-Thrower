@@ -1,0 +1,27 @@
+.title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+  align-content: space-between;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.checkboxes {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 16px;
+  flex-direction: column;
+  align-items: start;
+}

@@ -1,0 +1,42 @@
+<div class="confirmation">
+  <h2>Confirmation</h2>
+
+  <div class="user-info">
+    <div *ngIf="avatarData" class="avatar">
+      <img [src]="avatarData" alt="Avatar" class="avatar-image"/>
+    </div>
+    <div *ngIf="userData" class="user-details">
+      <p><strong>Username:</strong> {{ userData?.name }}</p>
+      <p><strong>Email:</strong> {{ userData?.email }}</p>
+    </div>
+  </div>
+
+  <div class="info-columns">
+    <div *ngIf="addressData" class="address">
+      <h3>Address</h3>
+      <p><strong>Address Line 1:</strong> {{ addressData?.line1 }}</p>
+      <p *ngIf="addressData?.line2"><strong>Address Line 2:</strong> {{ addressData?.line2 }}</p>
+      <div class="number-line">
+        <p><strong>Number:</strong> {{ addressData?.streetNumber }}</p>
+        <p *ngIf="addressData?.unitNumber"><strong>Unit :</strong> {{ addressData?.unitNumber }}</p>
+      </div>
+      <div class="city-country">
+        <p><strong>Postal Code:</strong> {{ addressData?.postalCode }}</p>
+        <p><strong>City:</strong> {{ addressData?.city }}</p>
+      </div>
+      <p><strong>Country:</strong> {{ getCountryName(addressData.countryId)?.name }}</p>
+    </div>
+
+    <div *ngIf="licenceData" class="driving-licence">
+      <h3>Driving Licence</h3>
+      <p><strong>Licence Number:</strong> {{ licenceData?.drivingLicence }}</p>
+      <p><strong>Expiry Date:</strong> {{ licenceData?.manual }}</p>
+    </div>
+  </div>
+
+</div>
+<div class="submit-button">
+  <button (click)="onSubmit()" [disabled]="!userInfoValid || !addressValid || !drivingLicenceValid || !avatarValid"
+          color="primary" mat-raised-button>Submit
+  </button>
+</div>

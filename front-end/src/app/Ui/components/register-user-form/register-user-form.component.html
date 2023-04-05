@@ -1,0 +1,43 @@
+<div class="wrapper">
+  <div class="container bg">
+    <h1 class="title"> Join The Party</h1>
+    <mat-stepper [linear]="isLinear" class="bg">
+
+      <mat-step>
+        <ng-template matStepLabel>User Info</ng-template>
+        <app-user-info-form (userInfo)="onUserInfoFormSubmit($event)" (userName)="onUserNameUpdate($event)"
+                            (valid)="onUserInfoFormValidity($event)"></app-user-info-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Address</ng-template>
+        <app-address-form (address)="onAddressFormSubmit($event)"
+                          (valid)="onAddressFormValidity($event)"></app-address-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Driving License</ng-template>
+        <app-driving-licence-form (licence)="onDrivingLicenceFormSubmit($event)"
+                                  (valid)="onDrivingLicenceFormValidity($event)"></app-driving-licence-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Avatar</ng-template>
+        <app-avatar-form (avatar)="onAvatarFormSubmit($event)" (valid)="onAvatarFormValidity($event)"
+                         [userName]="userName"></app-avatar-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Confirmation</ng-template>
+        <app-confirmation-form (submitForm)="onSubmit()" [addressData]="addressData"
+                               [addressValid]="addressValid" [avatarData]="avatarData"
+                               [avatarValid]="avatarValid"
+                               [drivingLicenceValid]="drivingLicenceValid" [licenceData]="drivingLicenceData"
+                               [userData]="userInfoData"
+                               [userInfoValid]="userInfoValid"
+        ></app-confirmation-form>
+      </mat-step>
+    </mat-stepper>
+    <small class="disclaimer">Fields marked with an * are required.</small>
+  </div>
+</div>

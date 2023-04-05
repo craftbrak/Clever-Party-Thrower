@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="addressForm">
+  <ng-template matStepLabel>Address</ng-template>
+  <mat-form-field>
+    <mat-label>Street Number</mat-label>
+    <input formControlName="streetNumber" matInput required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Unit Number</mat-label>
+    <input formControlName="unitNumber" matInput>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Address Line 1</mat-label>
+    <input formControlName="line1" matInput required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Address Line 2</mat-label>
+    <input formControlName="line2" matInput>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>City</mat-label>
+    <input formControlName="city" matInput required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Postal Code</mat-label>
+    <input formControlName="postalCode" matInput required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <mat-select formControlName="countryId" required>
+      <!-- Populate the mat-option with your list of countries -->
+      <mat-option *ngFor="let country of countries" [value]="country.id"> {{country.code}}
+        | {{country.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="submit-button">
+    <button mat-button matStepperPrevious>Back</button>
+    <button [disabled]="!addressForm.valid" color="primary" mat-raised-button matStepperNext type="submit">Next</button>
+  </div>
+</form>

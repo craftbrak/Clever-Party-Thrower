@@ -1,0 +1,47 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="userInfoForm">
+  <ng-template matStepLabel>User Info</ng-template>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input formControlName="name" matInput required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input formControlName="email" matInput required type="email">
+    <mat-error *ngIf="email?.hasError('email')">Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+    <input [type]="toggle.type" formControlName="password" matInput required>
+    <mat-hint align="end" aria-live="polite">
+      {{userInfoForm.get('password')?.value.length}} / {{minPassLenthg}}
+    </mat-hint>
+    <mat-error *ngIf="password?.hasError('minlength')">
+      Password too short
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Confirm Password</mat-label>
+    <input [type]="toggle.type" formControlName="confirmPassword" id="confirmPassword" matInput required>
+    <mat-error *ngIf="confirmPassword?.hasError('equalValidator')">
+      Password and confirmation do not match
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <mat-password-strength #passwordComponent [password]="password?.value" class="green">
+    </mat-password-strength>
+    <mat-password-strength-info *ngIf="showDetails"
+                                [passwordComponent]="passwordComponent"
+                                class="green">
+    </mat-password-strength-info>
+  </div>
+  <div class="submit-button">
+    <button [disabled]="!userInfoForm.valid" color="primary" mat-raised-button matStepperNext
+            type="submit">Next
+    </button>
+  </div>
+
+</form>

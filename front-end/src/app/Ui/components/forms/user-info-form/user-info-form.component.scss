@@ -1,0 +1,23 @@
+.title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+  align-content: space-between;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.password-strenght {
+  padding-bottom: 10px;
+}

@@ -1,0 +1,22 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="avatarForm">
+  <h2>Avatar</h2>
+  <ng-template matStepLabel>Avatar</ng-template>
+  <!-- Use dicebear API to generate avatars and display them here -->
+  <!-- Add your logic to fetch avatars from dicebear and display them as selectable items -->
+  <div class="avatar-container">
+    <mat-radio-group class="avatar-container" formControlName="avatar" required>
+      <div *ngFor="let avatarUrl of avatarUrls" class="avatar-option">
+        <img [src]="avatarUrl" alt="Avatar" class="avatar">
+        <mat-radio-button [value]="avatarUrl"></mat-radio-button>
+      </div>
+    </mat-radio-group>
+  </div>
+  <mat-form-field>
+    <mat-label>Seed</mat-label>
+    <input [value]="userName" formControlName="seed" matInput>
+  </mat-form-field>
+  <div class="submit-button">
+    <button mat-button matStepperPrevious>Back</button>
+    <button [disabled]="!avatarForm.valid" color="primary" mat-raised-button matStepperNext>Next</button>
+  </div>
+</form>
