@@ -18,8 +18,8 @@ const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },
-  {path: 'register', component: RegisterComponent},
-  {path: 'register-new', component: RegisterUserFormComponent},
+  {path: 'register-old', component: RegisterComponent},
+  {path: 'register', component: RegisterUserFormComponent},
 ];
 
 @NgModule({

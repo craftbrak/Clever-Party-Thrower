@@ -115,7 +115,9 @@ export class RegisterUserFormComponent implements OnInit {
   private registerUser(name: string, email: string, password: string, addressId: string, licence: boolean, manual: boolean, avatar: string) {
     console.log("Creating User")
     this.authService.register(name, email, password, licence, manual, addressId, avatar).subscribe(reps => {
-      this.router.navigate(['/dashboard']);
+      this.authService.login(email, password).subscribe(resp => {
+        this.router.navigate(['/dashboard']);
+      })
     }, error => {
       console.error('Registering error:', error);
     })

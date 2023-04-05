@@ -66,10 +66,10 @@ export class AuthService {
       tap(({data}) => {
         if (data && data.authLogin) {
           const {accessToken, refreshToken} = data.authLogin;
-          localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
-          localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
           this._accessToken = accessToken;
           this._refreshToken = refreshToken;
+          localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
+          localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
         }
       }),
       catchError((error) => {
