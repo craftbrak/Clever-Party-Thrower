@@ -55,6 +55,27 @@ const getEventNumber = gql`
     countEvents
   }
 `
+const getEventOverview = gql`
+  query event($eventId: String!, $take: Int!){
+    event(id: $eventId ){
+      id
+      name
+      description
+      address {
+        city
+        country {
+          code
+        }
+      }
+      members(skip: 0, take: $take){
+        id
+        role
+      }
+      availableDates
+      selectedDate
+    }
+  }
+`
 
 @Injectable()
 export class EventService {
@@ -75,6 +96,13 @@ export class EventService {
         this.EventsId = result.data
       })
     )
+  }
+
+  getEventOverview(id: string) {
+    return this.apollo.watchQuery<Observable<Event[]>>({
+      query: getEventOverview,
+      variables: {skip: 0, take: this.EventNumber, eventId: id}
+    })
   }
 
   async getEventNumber() {

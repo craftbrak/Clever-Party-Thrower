@@ -28,12 +28,12 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/front-end'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        {type: 'html'},
+        {type: 'text-summary'}
       ]
     },
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
+    port: 4200,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,

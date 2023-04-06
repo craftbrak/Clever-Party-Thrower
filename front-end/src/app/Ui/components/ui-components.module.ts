@@ -22,6 +22,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatNativeDateModule} from "@angular/material/core";
 import {RouterModule} from "@angular/router";
+import {EventCreateComponent} from './event-create/event-create.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {RouterModule} from "@angular/router";
     AvatarFormComponent,
     ConfirmationFormComponent,
     DrivingLicenceFormComponent,
+    EventCreateComponent,
   ],
   imports: [
     CommonModule,

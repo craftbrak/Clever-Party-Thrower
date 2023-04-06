@@ -15,12 +15,13 @@ export class EventsPageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.eventService.getAllEventId()
-    console.log(this.eventService.EventNumber)
+    console.log('Event number:', this.eventService.EventNumber)
     this.eventService.EventsId?.pipe(
       map(data => {
         this.eventsId = data
       })
     )
+
   }
 
 }

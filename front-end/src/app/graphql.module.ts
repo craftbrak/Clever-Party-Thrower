@@ -1,75 +1,59 @@
 import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
-import {ApolloClientOptions, ApolloLink, InMemoryCache} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
-import {environment} from "../environments/environment";
-import {setContext} from "@apollo/client/link/context";
-import {onError} from "@apollo/client/link/error";
+import {ApolloLink, InMemoryCache} from '@apollo/client/core';
+import {setContext} from '@apollo/client/link/context';
+import {onError} from '@apollo/client/link/error';
 
-// @ts-ignore
-const uri = 'http://localhost:4242/graphql'; // <-- add the URL of the GraphQL server here
-const errorLink = onError(({graphQLErrors, networkError, response}) => {
-  // React only on graphql errors
-  if (graphQLErrors && graphQLErrors.length > 0) {
-    if (
-      (graphQLErrors[0] as any)?.statusCode >= 400 &&
-      (graphQLErrors[0] as any)?.statusCode < 500
-    ) {
-      // handle client side error
-      console.error(`[Client side error]: ${graphQLErrors[0].message}`);
-    } else {
-      // handle server side error
-      console.error(`[Server side error]: ${graphQLErrors[0].message}`);
-    }
-  }
-  if (networkError) {
-    // handle network error
-    console.error(`[Network error]: ${networkError.message}`);
-  }
-});
+const uri = 'http://localhost:4242/graphql';
 
-export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-  const cache = new InMemoryCache({});
-  const basic = setContext((operation, context) => ({
-    headers: {
-      Accept: 'charset=utf-8',
-    },
-  }));
-  const auth = setContext((operation, context) => {
-    const token = localStorage.getItem('accessToken');
-
-    if (token === null) {
-      return {};
-    } else {
-      return {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-      };
-    }
+export function createApollo(httpLink: HttpLink) {
+  const authLink = setContext((_, {headers}) => {
+    const accessToken = localStorage.getItem('access_token');
+    return {
+      headers: {
+        ...headers,
+        authorization: accessToken ? `Bearer ${accessToken}` : '',
+      },
+    };
   });
-  const link = ApolloLink.from([basic, auth, httpLink.create({uri})]);
-  // create http
+
+  const loggingLink = new ApolloLink((operation, forward) => {
+    console.log(`GraphQL Request: ${operation.operationName}`, operation);
+
+    return forward(operation).map((result) => {
+      console.log(`GraphQL Response: ${operation.operationName}`, result);
+      return result;
+    });
+  });
+
+  const errorLink = onError(({graphQLErrors, networkError}) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({message}) =>
+        console.error(`[GraphQL error]: ${message}`)
+      );
+
+    if (networkError) console.error(`[Network error]: ${networkError}`);
+  });
 
   return {
-    connectToDevTools: !environment.production,
-    assumeImmutableResults: true,
-    cache: cache,
-    link: ApolloLink.from([errorLink, link]),
-    defaultOptions: {
-      watchQuery: {
-        errorPolicy: 'all',
-      },
-    },
+    link: ApolloLink.from([
+      loggingLink,
+      errorLink,
+      authLink,
+      httpLink.create({uri}),
+    ]),
+    cache: new InMemoryCache(),
   };
 }
 
 @NgModule({
-  exports: [ApolloModule],
+  exports: [HttpClientModule, ApolloModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
-      useFactory: createDefaultApollo,
+      useFactory: createApollo,
       deps: [HttpLink],
     },
   ],

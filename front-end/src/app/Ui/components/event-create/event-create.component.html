@@ -1,0 +1,51 @@
+<mat-horizontal-stepper #stepper [linear]="isLinear" class="bg">
+  <mat-step>
+    <form [formGroup]="eventForm">
+      <ng-template matStepLabel>Event Details</ng-template>
+      <mat-form-field>
+        <mat-label>Event Name</mat-label>
+        <input formControlName="name" matInput required>
+        <mat-error *ngIf="eventForm.get('name')?.invalid">
+          Please enter an event name.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput required></textarea>
+        <mat-error *ngIf="eventForm.get('description')?.invalid">
+          Please enter a description.
+        </mat-error>
+      </mat-form-field>
+      <div class="submit-button">
+        <button [disabled]="!eventForm.valid" color="primary" mat-raised-button matStepperNext type="button">Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Address</ng-template>
+    <form [formGroup]="eventForm">
+      <mat-radio-group (change)="onAddressTypeChange(stepper, $event)" formControlName="addressType">
+        <mat-radio-button value="personal">Use personal address</mat-radio-button>
+        <mat-radio-button value="new">Create a new address</mat-radio-button>
+      </mat-radio-group>
+      <ng-container formGroupName="newAddress">
+        <app-address-form></app-address-form>
+      </ng-container>
+      <div class="submit-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button [disabled]="!eventForm.valid" color="primary" mat-raised-button matStepperNext type="button">Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Confirm</ng-template>
+    <p>Review the event details and submit to create the event.</p>
+    <button mat-button matStepperPrevious type="button">Back</button>
+    <button (click)="onSubmit()" [disabled]="eventForm.invalid" mat-button>Submit</button>
+  </mat-step>
+</mat-horizontal-stepper>

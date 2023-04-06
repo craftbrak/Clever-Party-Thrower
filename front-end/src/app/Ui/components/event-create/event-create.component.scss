@@ -1,7 +1,6 @@
 @use '@angular/material' as mat;
 
 $my-palette: mat.define-palette(mat.$blue-grey-palette);
-$amber-palette: mat.define-palette(mat.$amber-palette);
 .wrapper {
   display: grid;
   justify-content: center;
@@ -43,18 +42,4 @@ mat-form-field {
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
-}
-
-.register-link {
-  margin-top: 1rem;
-  text-align: center;
-
-  a {
-    color: mat.get-color-from-palette($amber-palette, 500);
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }

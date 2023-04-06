@@ -1,29 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Apollo} from "apollo-angular";
-import gql from "graphql-tag";
-import {Observable} from "rxjs";
+import {EventService} from "../../event.service";
 
-const getEventOverview = gql`
-  query event($eventId: String!, $take: Int!){
-    event(id: $eventId ){
-      id
-      name
-      description
-      address {
-        city
-        country {
-          code
-        }
-      }
-      members(skip: 0, take: $take){
-        id
-        role
-      }
-      availableDates
-      selectedDate
-    }
-  }
-`
 
 @Component({
   selector: 'event-overview',
@@ -36,19 +14,22 @@ export class EventOverviewComponent implements OnInit {
   private take: number = 0;
 
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private eventService: EventService) {
   }
 
   ngOnInit(): void {
-    this.apollo.watchQuery<Observable<Event>>({
-      query: getEventOverview,
-      variables: {eventId: this.eventId, take: this.take}
-    })
-      .valueChanges.subscribe(value => {
-      value.data.subscribe((event: Event) => {
-        this.event = event
-      })
-    })
+    console.log(this.eventId)
+    if (this.eventId)
+      this.eventService.getEventOverview(this.eventId).valueChanges.subscribe(data => console.log(data))
+    // this.apollo.watchQuery<Observable<Event>>({
+    //   query: getEventOverview,
+    //   variables: {eventId: this.eventId, take: this.take}
+    // })
+    //   .valueChanges.subscribe(value => {
+    //   value.data.subscribe((event: Event) => {
+    //     this.event = event
+    //   })
+    // })
   }
 
 }

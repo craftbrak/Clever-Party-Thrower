@@ -116,15 +116,15 @@ export class AuthService {
   public async deleteAccount() {
   };
 
-  private validateToken() {
-
-  }
-
-  private async refreshTokens() {
+  public refreshTokens() {
     // let resp : AuthOutputDto;
     // this._refreshToken = resp.refreshToken;
     // this._accessToken = resp.accessToken;
     // localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
     // localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
+  }
+
+  private validateToken() {
+
   }
 }

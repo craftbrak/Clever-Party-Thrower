@@ -24,7 +24,7 @@ export class UserService {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,
       );
-    usr.email = usr.email.toLowerCase();
+    usr.email = usr.email.toLowerCase(); //todo: add avatar on registering
     // await this.httpService
     //   .get(
     //     `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,

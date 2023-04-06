@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <div class="container">
-    <h1>Log Into Your Account</h1>
+  <div class="container bg">
+    <h1 class="title">Log In</h1>
 
     <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <mat-form-field>
@@ -13,7 +13,7 @@
         <input formControlName="password" matInput type="password"/>
       </mat-form-field>
       <div class="submit-button">
-        <button [disabled]="loginForm.invalid" mat-raised-button type="submit">Login</button>
+        <button [disabled]="loginForm.invalid" color="primary" mat-raised-button type="submit">Login</button>
       </div>
     </form>
 
