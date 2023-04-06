@@ -54,5 +54,5 @@ export class Event extends Node {
 
   @Field(() => Date, { nullable: true })
   @OneToMany(() => Spending, (spending) => spending.event)
-  availableDates: Date[];
+  availableDates: Date[]; //todo: add Api Access for adding and removing dates + Votes
 }

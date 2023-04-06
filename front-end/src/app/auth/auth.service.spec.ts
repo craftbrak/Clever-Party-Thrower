@@ -67,7 +67,7 @@ describe('AuthService', () => {
     apollo.mutate.and.returnValue(of(registerResponse));
 
     service
-      .register('John Doe', 'john.doe@example.com', 'password123', true, true, '123 Main St')
+      .register('John Doe', 'john.doe@example.com', 'password123', true, true, '123 Main St', "")
       .subscribe((response) => {
         expect(response).toEqual(registerResponse);
         done();
