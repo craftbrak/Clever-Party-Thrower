@@ -224,6 +224,7 @@ type Event {
     shoppingList: ShoppingListItem
     spendings: Spending
     selectedDate: DateTime
+    selectedDateId: String
     availableDates: DateTime
     fixedDate: Boolean!
 }
@@ -281,7 +282,7 @@ type Query {
     dept(id: ID!): Dept!
     eventDates: [EventDate!]!
     eventDate(id: String!): EventDate!
-    datesToUser(id: Int!): DatesToUser!
+    datesToUser(id: String!): DatesToUser!
 }
 
 type Mutation {
@@ -322,7 +323,7 @@ type Mutation {
     removeEventDate(id: String!): EventDate!
     createDatesToUser(createDatesToUserInput: CreateDatesToUserInput!): DatesToUser!
     updateDatesToUser(updateDatesToUserInput: UpdateDatesToUserInput!): DatesToUser!
-    removeDatesToUser(id: Int!): DatesToUser!
+    removeDatesToUser(id: String!): DatesToUser!
 }
 
 input CreateEventDto {
@@ -551,10 +552,14 @@ input UpdateEventDateInput {
 input CreateDatesToUserInput {
     """Example field (placeholder)"""
     exampleField: Int!
+    eventDateId: String!
+    userId: String!
 }
 
 input UpdateDatesToUserInput {
     """Example field (placeholder)"""
     exampleField: Int
-    id: Int!
+    eventDateId: String
+    userId: String
+    id: String!
 }

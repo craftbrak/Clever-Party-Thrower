@@ -1,26 +1,34 @@
-import { Injectable } from '@nestjs/common';
-import { CreateDatesToUserInput } from './dto/create-dates-to-user.input';
-import { UpdateDatesToUserInput } from './dto/update-dates-to-user.input';
+import { Injectable } from "@nestjs/common";
+import { CreateDatesToUserInput } from "./dto/create-dates-to-user.input";
+import { UpdateDatesToUserInput } from "./dto/update-dates-to-user.input";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DatesToUser } from "./entities/dates-to-user.entity";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class DatesToUserService {
+  constructor(
+    @InjectRepository(DatesToUser)
+    private dateToUserRepo: Repository<DatesToUser>,
+  ) {}
+
   create(createDatesToUserInput: CreateDatesToUserInput) {
-    return 'This action adds a new datesToUser';
+    return this.dateToUserRepo.create(createDatesToUserInput);
   }
 
   findAll() {
-    return `This action returns all datesToUser`;
+    return this.dateToUserRepo.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} datesToUser`;
   }
 
-  update(id: number, updateDatesToUserInput: UpdateDatesToUserInput) {
+  update(id: string, updateDatesToUserInput: UpdateDatesToUserInput) {
     return `This action updates a #${id} datesToUser`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} datesToUser`;
   }
 }
