@@ -58,6 +58,6 @@ export class Event extends Node {
   availableDates: Date[]; //todo: add Api Access for adding and removing dates + Votes
 
   @Field(() => Boolean)
-  @Column()
+  @Column({ default: false })
   fixedDate: boolean; //Todo: add to dtos and creation
 }
