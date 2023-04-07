@@ -62,7 +62,7 @@ export class Event extends Node {
   @OneToMany(() => EventDate, (eventDate) => eventDate.event)
   availableDates: EventDate[]; //todo: add Api Access for adding and removing dates + Votes
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { nullable: true })
   @Column({ default: false })
   fixedDate: boolean; //Todo: add to dtos and creation
 }
