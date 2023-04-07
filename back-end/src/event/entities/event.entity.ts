@@ -13,6 +13,7 @@ import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 import { Carpool } from "../../carpool/entities/carpool.entity";
 import { ShoppingListItem } from "../../shopping-list-items/entities/shopping-list-item.entity";
 import { Spending } from "../../spending/entities/spending.entity";
+import { EventDate } from "../../event-dates/entities/event-date.entity";
 
 @ObjectType()
 @Entity()
@@ -49,10 +50,14 @@ export class Event extends Node {
   spendings: Spending[];
 
   @Field(() => Date, { nullable: true })
-  @OneToMany(() => Spending, (spending) => spending.event)
+  @Column()
   selectedDate: Date;
 
   @Field(() => Date, { nullable: true })
-  @OneToMany(() => Spending, (spending) => spending.event)
+  @OneToMany(() => EventDate, (eventDate) => eventDate.event)
   availableDates: Date[]; //todo: add Api Access for adding and removing dates + Votes
+
+  @Field(() => Boolean)
+  @Column()
+  fixedDate: boolean; //Todo: add to dtos and creation
 }

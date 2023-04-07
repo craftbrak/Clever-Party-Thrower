@@ -11,7 +11,7 @@ import { UserEntity } from "../../user/entities/user.entity";
 import { Address } from "../../address/entities/address.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Node } from "../../pagination/entities/node.entity";
-import { Spending } from "../../spending/entities/spending.entity";
+import { DatesToUser } from "../../dates-to-user/entities/dates-to-user.entity";
 
 export enum UserRole {
   OWNER = "OWNER",
@@ -60,6 +60,6 @@ export class EventToUser extends Node {
   })
   role: UserRole;
   @Field(() => Date, { nullable: true })
-  @OneToMany(() => Spending, (spending) => spending.event)
-  availableDates: Date[];
+  @OneToMany(() => DatesToUser, (dateToUser) => dateToUser.eventToUser)
+  availableDates: DatesToUser[];
 }

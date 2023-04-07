@@ -32,6 +32,10 @@ import { RouteEntity } from "./carpool/entities/Route.entity";
 import { Spending } from "./spending/entities/spending.entity";
 import { Dept } from "./dept/entities/dept.entity";
 import { ShoppingListItem } from "./shopping-list-items/entities/shopping-list-item.entity";
+import { EventDatesModule } from "./event-dates/event-dates.module";
+import { EventDate } from "./event-dates/entities/event-date.entity";
+import { DatesToUserModule } from "./dates-to-user/dates-to-user.module";
+import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
 
 //TODO: adapt to use DB URL if host is null
 @Module({
@@ -86,6 +90,8 @@ import { ShoppingListItem } from "./shopping-list-items/entities/shopping-list-i
           Spending,
           Dept,
           ShoppingListItem,
+          EventDate,
+          DatesToUser,
         ],
         synchronize: configService.get("NODE_ENV") !== "production",
         dropSchema: false,
@@ -103,6 +109,8 @@ import { ShoppingListItem } from "./shopping-list-items/entities/shopping-list-i
     SpendingModule,
     ShoppingListItemsModule,
     DeptModule,
+    EventDatesModule,
+    DatesToUserModule,
   ],
   providers: [AppService, AppResolver],
 })

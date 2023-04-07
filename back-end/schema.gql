@@ -96,27 +96,28 @@ type UserEntity {
   cars: [Car!]!
 }
 
-type ShoppingListItem {
+type EventDate {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-  name: String!
-  price: Float!
-  assigned: UserEntity!
-  bought: Boolean!
+
+  """The date"""
+  date: String!
+  eventId: String!
+  numberVotes: Float!
   event: Event!
+  datesToUsers: DatesToUser!
 }
 
-type Spending {
+type DatesToUser {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-  buyer: UserEntity!
-  event: Event!
-  value: Float!
-  shoppingListItem: ShoppingListItem!
+  eventDate: Event!
+  eventToUser: EventToUser!
+  eventToUserId: String!
 }
 
 type EventToUser {
@@ -179,6 +180,29 @@ enum Directions {
   back
 }
 
+type ShoppingListItem {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  name: String!
+  price: Float!
+  assigned: UserEntity!
+  bought: Boolean!
+  event: Event!
+}
+
+type Spending {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  buyer: UserEntity!
+  event: Event!
+  value: Float!
+  shoppingListItem: ShoppingListItem!
+}
+
 type Event {
   id: String!
   createdAt: DateTime!
@@ -201,6 +225,7 @@ type Event {
   spendings: Spending
   selectedDate: DateTime
   availableDates: DateTime
+  fixedDate: Boolean!
 }
 
 input EventsPaginationSortBy {
@@ -254,6 +279,9 @@ type Query {
   shopingListItems: [ShoppingListItem!]!
   shopingListItem(id: String!): ShoppingListItem!
   dept(id: ID!): Dept!
+  eventDates: [EventDate!]!
+  eventDate(id: Int!): EventDate!
+  datesToUser(id: Int!): DatesToUser!
 }
 
 type Mutation {
@@ -289,6 +317,12 @@ type Mutation {
   createDept(createDeptInput: CreateDeptInput!): Dept!
   updateDept(updateDeptInput: UpdateDeptInput!): Dept!
   removeDept(id: ID!): Dept!
+  createEventDate(createEventDateInput: CreateEventDateInput!): EventDate!
+  updateEventDate(updateEventDateInput: UpdateEventDateInput!): EventDate!
+  removeEventDate(id: Int!): EventDate!
+  createDatesToUser(createDatesToUserInput: CreateDatesToUserInput!): DatesToUser!
+  updateDatesToUser(updateDatesToUserInput: UpdateDatesToUserInput!): DatesToUser!
+  removeDatesToUser(id: Int!): DatesToUser!
 }
 
 input CreateEventDto {
@@ -500,4 +534,26 @@ input UpdateDeptInput {
   creditorId: ID
   id: Int!
   repayed: Boolean! = false
+}
+
+input CreateEventDateInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateEventDateInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateDatesToUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateDatesToUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
