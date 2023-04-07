@@ -3,10 +3,10 @@
 # ------------------------------------------------------
 
 interface Node {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
 }
 
 """
@@ -15,545 +15,546 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Country {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  name: String!
-  code: String!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    name: String!
+    code: String!
 }
 
 type Address {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  unitNumber: String
-  streetNumber: String!
-  line1: String!
-  line2: String
-  city: String!
-  postalCode: String!
-  country: Country!
-  countryId: String!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    unitNumber: String
+    streetNumber: String!
+    line1: String!
+    line2: String
+    city: String!
+    postalCode: String!
+    country: Country!
+    countryId: String!
 }
 
 type Car {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  brand: String!
-  model: String!
-  maxPassengers: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    brand: String!
+    model: String!
+    maxPassengers: Int!
 
-  """consumption of the car in L/100km"""
-  consumption: Float!
-  bootSize: BootSizes!
-  fuel: Fuels!
-  manualTransmission: Boolean!
+    """consumption of the car in L/100km"""
+    consumption: Float!
+    bootSize: BootSizes!
+    fuel: Fuels!
+    manualTransmission: Boolean!
 
-  """Range of the car in km"""
-  range: Int!
-  shared: Boolean!
-  owner: UserEntity!
-  ownerId: String!
+    """Range of the car in km"""
+    range: Int!
+    shared: Boolean!
+    owner: UserEntity!
+    ownerId: String!
 }
 
 enum BootSizes {
-  None
-  Small
-  Medium
-  Big
-  CampingCar
+    None
+    Small
+    Medium
+    Big
+    CampingCar
 }
 
 enum Fuels {
-  Electric
-  Petrol
-  Diesel
-  LPG
-  HYDROGEN
+    Electric
+    Petrol
+    Diesel
+    LPG
+    HYDROGEN
 }
 
 type UserEntity {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
 
-  """Name of the user"""
-  name: String!
+    """Name of the user"""
+    name: String!
 
-  """Email of the user"""
-  email: String!
-  avatar: String
-  drivingLicence: Boolean!
-  manual: Boolean!
-  eventToUsers: [EventToUser!]!
-  address: Address
-  addressId: String
-  cars: [Car!]!
+    """Email of the user"""
+    email: String!
+    avatar: String
+    drivingLicence: Boolean!
+    manual: Boolean!
+    eventToUsers: [EventToUser!]!
+    address: Address
+    addressId: String
+    cars: [Car!]!
 }
 
 type EventDate {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
 
-  """The date"""
-  date: String!
-  eventId: String!
-  numberVotes: Float!
-  event: Event!
-  datesToUsers: DatesToUser!
+    """The date"""
+    date: String!
+    eventId: String!
+    numberVotes: Float!
+    event: Event!
+    datesToUsers: DatesToUser!
 }
 
 type DatesToUser {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  eventDate: Event!
-  eventToUser: EventToUser!
-  eventToUserId: String!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    eventDate: Event!
+    eventToUser: EventToUser!
+    eventToUserId: String!
 }
 
 type EventToUser {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  userId: String!
-  eventId: String!
-  event: Event!
-  user: UserEntity!
-  address: Address!
-  addressId: String
-  role: UserRole!
-  availableDates: DateTime
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    userId: String!
+    eventId: String!
+    event: Event!
+    user: UserEntity!
+    address: Address!
+    addressId: String
+    role: UserRole!
+    availableDates: DateTime
 }
 
 enum UserRole {
-  OWNER
-  MEMBER
-  DJ
-  INVITED
+    OWNER
+    MEMBER
+    DJ
+    INVITED
 }
 
 type RouteEntity {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  starting: Address!
-  pickup: UserEntity!
-  destination: Address!
-  index: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    starting: Address!
+    pickup: UserEntity!
+    destination: Address!
+    index: Int!
 
-  """lenght of the route in KM"""
-  length: Float!
-  carpool: Carpool!
-  departure: DateTime!
+    """lenght of the route in KM"""
+    length: Float!
+    carpool: Carpool!
+    departure: DateTime!
 }
 
 type Carpool {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  driver: UserEntity!
-  routes: [RouteEntity!]!
-  direction: Directions!
-  endPoint: Address!
-  startPoint: Address!
-  car: Car!
-  event: Event!
-  totalLength: Float!
-  departure: DateTime!
-  arrival: DateTime!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    driver: UserEntity!
+    routes: [RouteEntity!]!
+    direction: Directions!
+    endPoint: Address!
+    startPoint: Address!
+    car: Car!
+    event: Event!
+    totalLength: Float!
+    departure: DateTime!
+    arrival: DateTime!
 }
 
 enum Directions {
-  go
-  back
+    go
+    back
 }
 
 type ShoppingListItem {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  name: String!
-  price: Float!
-  assigned: UserEntity!
-  bought: Boolean!
-  event: Event!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    name: String!
+    price: Float!
+    assigned: UserEntity!
+    bought: Boolean!
+    event: Event!
 }
 
 type Spending {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  buyer: UserEntity!
-  event: Event!
-  value: Float!
-  shoppingListItem: ShoppingListItem!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    buyer: UserEntity!
+    event: Event!
+    value: Float!
+    shoppingListItem: ShoppingListItem!
 }
 
 type Event {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
 
-  """Name of the event"""
-  name: String!
+    """Name of the event"""
+    name: String!
 
-  """Description of the event"""
-  description: String!
+    """Description of the event"""
+    description: String!
 
-  """Total spent for the event"""
-  total: Float!
-  members(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): [EventToUser!]
-  address: Address
-  addressId: String
-  carpools: Carpool
-  shoppingList: ShoppingListItem
-  spendings: Spending
-  selectedDate: DateTime
-  availableDates: DateTime
-  fixedDate: Boolean!
+    """Total spent for the event"""
+    total: Float!
+    members(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): [EventToUser!]
+    address: Address
+    addressId: String
+    carpools: Carpool
+    shoppingList: ShoppingListItem
+    spendings: Spending
+    selectedDate: DateTime
+    availableDates: DateTime
+    fixedDate: Boolean!
 }
 
 input EventsPaginationSortBy {
-  createdAt: SortDirection
-  name: SortDirection
+    createdAt: SortDirection
+    name: SortDirection
 }
 
 enum SortDirection {
-  ASC
-  DESC
+    ASC
+    DESC
 }
 
 type EventsPagination {
-  totalCount: Float!
-  nodes: [Event!]!
+    totalCount: Float!
+    nodes: [Event!]!
 }
 
 type AuthOutputDto {
-  accessToken: String!
-  refreshToken: String!
+    accessToken: String!
+    refreshToken: String!
 }
 
 type Dept {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  event: Event!
-  amount: Float!
-  repayed: Boolean!
-  debtor: UserEntity!
-  creditor: UserEntity!
+    id: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    version: Int!
+    event: Event!
+    amount: Float!
+    repayed: Boolean!
+    debtor: UserEntity!
+    creditor: UserEntity!
 }
 
 type Query {
-  sayHello: String!
-  getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
-  event(id: String!): Event!
-  address(id: String!): Address!
-  countries: [Country!]!
-  country(Code: String!): Country!
-  logout: Boolean!
-  disable2fa: Boolean!
-  user(email: String!): UserEntity!
-  countEvents: Int!
-  eventToUser(id: String!): EventToUser!
-  car(id: String!): Car!
-  carpools: [Carpool!]!
-  carpool(id: String!): Carpool!
-  spending(id: String!): Spending!
-  shopingListItems: [ShoppingListItem!]!
-  shopingListItem(id: String!): ShoppingListItem!
-  dept(id: ID!): Dept!
-  eventDates: [EventDate!]!
-  eventDate(id: Int!): EventDate!
-  datesToUser(id: Int!): DatesToUser!
+    sayHello: String!
+    getEvents(skip: Int!, take: Int!, sortBy: EventsPaginationSortBy): EventsPagination!
+    event(id: String!): Event!
+    address(id: String!): Address!
+    countries: [Country!]!
+    country(Code: String!): Country!
+    logout: Boolean!
+    disable2fa: Boolean!
+    user(email: String!): UserEntity!
+    countEvents: Int!
+    eventToUser(id: String!): EventToUser!
+    car(id: String!): Car!
+    carpools: [Carpool!]!
+    carpool(id: String!): Carpool!
+    spending(id: String!): Spending!
+    shopingListItems: [ShoppingListItem!]!
+    shopingListItem(id: String!): ShoppingListItem!
+    dept(id: ID!): Dept!
+    eventDates: [EventDate!]!
+    eventDate(id: String!): EventDate!
+    datesToUser(id: Int!): DatesToUser!
 }
 
 type Mutation {
-  createEvent(createEventInput: CreateEventDto!): Event!
-  updateEvent(updateEventInput: UpdateEventDto!): Event!
-  removeEvent(id: String!): String!
-  createAddress(createAddressInput: CreateAddressDto!): Address!
-  updateAddress(updateAddressInput: UpdateAddressDto!): Address!
-  removeAddress(id: Int!): Address!
-  createCountry(CreateCountryInput: CreateCountryDto!): Country!
-  authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
-  authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
-  enable2fa: String!
-  enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
-  createUser(singUp: CreateUserDto!): UserEntity!
-  updateUser(updateUserInput: UpdateUserDto!): UserEntity!
-  removeUser(id: Int!): UserEntity!
-  createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
-  updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
-  removeEventToUser(id: String!): EventToUser!
-  createCar(createCarInput: CreateCarDto!): Car!
-  updateCar(updateCarInput: UpdateCarDto!): Car!
-  removeCar(id: String!): Car!
-  createCarpool(createCarpoolInput: CreateCarpoolDto!): Carpool!
-  updateCarpool(updateCarpoolInput: UpdateCarpoolDto!): Carpool!
-  removeCarpool(id: String!): Carpool!
-  createSpending(createSpendingInput: CreateSpendingDto!): Spending!
-  updateSpending(updateSpendingInput: UpdateSpendingDto!): Spending!
-  removeSpending(id: String!): Spending!
-  createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
-  updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
-  removeShoppingListItem(id: String!): ShoppingListItem!
-  createDept(createDeptInput: CreateDeptInput!): Dept!
-  updateDept(updateDeptInput: UpdateDeptInput!): Dept!
-  removeDept(id: ID!): Dept!
-  createEventDate(createEventDateInput: CreateEventDateInput!): EventDate!
-  updateEventDate(updateEventDateInput: UpdateEventDateInput!): EventDate!
-  removeEventDate(id: Int!): EventDate!
-  createDatesToUser(createDatesToUserInput: CreateDatesToUserInput!): DatesToUser!
-  updateDatesToUser(updateDatesToUserInput: UpdateDatesToUserInput!): DatesToUser!
-  removeDatesToUser(id: Int!): DatesToUser!
+    createEvent(createEventInput: CreateEventDto!): Event!
+    updateEvent(updateEventInput: UpdateEventDto!): Event!
+    removeEvent(id: String!): String!
+    createAddress(createAddressInput: CreateAddressDto!): Address!
+    updateAddress(updateAddressInput: UpdateAddressDto!): Address!
+    removeAddress(id: Int!): Address!
+    createCountry(CreateCountryInput: CreateCountryDto!): Country!
+    authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
+    authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
+    enable2fa: String!
+    enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
+    createUser(singUp: CreateUserDto!): UserEntity!
+    updateUser(updateUserInput: UpdateUserDto!): UserEntity!
+    removeUser(id: Int!): UserEntity!
+    createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
+    updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
+    removeEventToUser(id: String!): EventToUser!
+    createCar(createCarInput: CreateCarDto!): Car!
+    updateCar(updateCarInput: UpdateCarDto!): Car!
+    removeCar(id: String!): Car!
+    createCarpool(createCarpoolInput: CreateCarpoolDto!): Carpool!
+    updateCarpool(updateCarpoolInput: UpdateCarpoolDto!): Carpool!
+    removeCarpool(id: String!): Carpool!
+    createSpending(createSpendingInput: CreateSpendingDto!): Spending!
+    updateSpending(updateSpendingInput: UpdateSpendingDto!): Spending!
+    removeSpending(id: String!): Spending!
+    createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
+    updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
+    removeShoppingListItem(id: String!): ShoppingListItem!
+    createDept(createDeptInput: CreateDeptInput!): Dept!
+    updateDept(updateDeptInput: UpdateDeptInput!): Dept!
+    removeDept(id: ID!): Dept!
+    createEventDate(createEventDateInput: CreateEventDateInput!): EventDate!
+    updateEventDate(updateEventDateInput: UpdateEventDateInput!): EventDate!
+    removeEventDate(id: String!): EventDate!
+    createDatesToUser(createDatesToUserInput: CreateDatesToUserInput!): DatesToUser!
+    updateDatesToUser(updateDatesToUserInput: UpdateDatesToUserInput!): DatesToUser!
+    removeDatesToUser(id: Int!): DatesToUser!
 }
 
 input CreateEventDto {
-  """Name of the event"""
-  name: String!
+    """Name of the event"""
+    name: String!
 
-  """Description of the event"""
-  description: String!
+    """Description of the event"""
+    description: String!
 
-  """Total spent for the event"""
-  total: Float!
-  addressId: String!
+    """Total spent for the event"""
+    total: Float!
+    addressId: String!
 }
 
 input UpdateEventDto {
-  """Name of the event"""
-  name: String!
+    """Name of the event"""
+    name: String!
 
-  """Description of the event"""
-  description: String!
+    """Description of the event"""
+    description: String!
 
-  """Total spent for the event"""
-  total: Float!
-  addressId: String
+    """Total spent for the event"""
+    total: Float!
+    addressId: String
 
-  """Id of the event"""
-  id: String!
+    """Id of the event"""
+    id: String!
 }
 
 input CreateAddressDto {
-  unitNumber: String
-  streetNumber: String!
-  line1: String!
-  line2: String
-  city: String!
-  postalCode: String!
-  countryId: String!
+    unitNumber: String
+    streetNumber: String!
+    line1: String!
+    line2: String
+    city: String!
+    postalCode: String!
+    countryId: String!
 }
 
 input UpdateAddressDto {
-  unitNumber: String
-  streetNumber: String!
-  line1: String!
-  line2: String
-  city: String!
-  postalCode: String!
-  countryId: String!
-  id: Int!
+    unitNumber: String
+    streetNumber: String!
+    line1: String!
+    line2: String
+    city: String!
+    postalCode: String!
+    countryId: String!
+    id: Int!
 }
 
 input CreateCountryDto {
-  name: String!
-  code: String!
+    name: String!
+    code: String!
 }
 
 input AuthInputDto {
-  email: String!
-  password: String!
-  code: String
+    email: String!
+    password: String!
+    code: String
 }
 
 input AuthRefreshDto {
-  refreshToken: String!
+    refreshToken: String!
 }
 
 input CreateUserDto {
-  """Name of the user"""
-  name: String!
+    """Name of the user"""
+    name: String!
 
-  """Email of the user"""
-  email: String!
+    """Email of the user"""
+    email: String!
 
-  """Password of the user"""
-  password: String!
-  drivingLicence: Boolean!
-  manual: Boolean!
-  addressId: String
+    """Password of the user"""
+    password: String!
+    drivingLicence: Boolean!
+    manual: Boolean!
+    addressId: String
 }
 
 input UpdateUserDto {
-  """Name of the user"""
-  name: String
+    """Name of the user"""
+    name: String
 
-  """Email of the user"""
-  email: String
+    """Email of the user"""
+    email: String
 
-  """Password of the user"""
-  password: String
-  drivingLicence: Boolean
-  manual: Boolean
-  addressId: String
-  id: String!
+    """Password of the user"""
+    password: String
+    drivingLicence: Boolean
+    manual: Boolean
+    addressId: String
+    id: String!
 }
 
 input CreateEventToUserDto {
-  userId: String!
-  eventId: String!
-  addressId: String
-  availableDates: [DateTime!]
+    userId: String!
+    eventId: String!
+    addressId: String
+    availableDates: [DateTime!]
 }
 
 input UpdateEventToUserDto {
-  userId: String
-  eventId: String
-  addressId: String
-  availableDates: [DateTime!]
-  id: String!
+    userId: String
+    eventId: String
+    addressId: String
+    availableDates: [DateTime!]
+    id: String!
 }
 
 input CreateCarDto {
-  brand: String!
-  model: String!
-  maxPassengers: Int!
+    brand: String!
+    model: String!
+    maxPassengers: Int!
 
-  """consumption of the car in L/100km"""
-  consumption: Float!
-  bootSize: BootSizes!
-  fuel: Fuels!
-  manualTransmission: Boolean!
+    """consumption of the car in L/100km"""
+    consumption: Float!
+    bootSize: BootSizes!
+    fuel: Fuels!
+    manualTransmission: Boolean!
 
-  """Range of the car in km"""
-  range: Int!
+    """Range of the car in km"""
+    range: Int!
 }
 
 input UpdateCarDto {
-  brand: String
-  model: String
-  maxPassengers: Int
+    brand: String
+    model: String
+    maxPassengers: Int
 
-  """consumption of the car in L/100km"""
-  consumption: Float
-  bootSize: BootSizes
-  fuel: Fuels
-  manualTransmission: Boolean
+    """consumption of the car in L/100km"""
+    consumption: Float
+    bootSize: BootSizes
+    fuel: Fuels
+    manualTransmission: Boolean
 
-  """Range of the car in km"""
-  range: Int
-  id: String!
+    """Range of the car in km"""
+    range: Int
+    id: String!
 }
 
 input CreateCarpoolDto {
-  driverId: String!
-  direction: Directions!
-  finalDestinationId: String!
-  startDestinationId: String!
-  carId: String!
-  eventId: String!
-  totalLength: Float!
-  departure: DateTime!
-  arrival: DateTime!
+    driverId: String!
+    direction: Directions!
+    finalDestinationId: String!
+    startDestinationId: String!
+    carId: String!
+    eventId: String!
+    totalLength: Float!
+    departure: DateTime!
+    arrival: DateTime!
 }
 
 input UpdateCarpoolDto {
-  driverId: String
-  direction: Directions
-  finalDestinationId: String
-  startDestinationId: String
-  carId: String
-  eventId: String
-  totalLength: Float
-  departure: DateTime
-  arrival: DateTime
-  id: String!
+    driverId: String
+    direction: Directions
+    finalDestinationId: String
+    startDestinationId: String
+    carId: String
+    eventId: String
+    totalLength: Float
+    departure: DateTime
+    arrival: DateTime
+    id: String!
 }
 
 input CreateSpendingDto {
-  buyerId: String!
-  eventId: String!
-  value: Float!
-  shoppingListItemId: String
+    buyerId: String!
+    eventId: String!
+    value: Float!
+    shoppingListItemId: String
 }
 
 input UpdateSpendingDto {
-  buyerId: String
-  eventId: String
-  value: Float
-  shoppingListItemId: String
-  id: String!
+    buyerId: String
+    eventId: String
+    value: Float
+    shoppingListItemId: String
+    id: String!
 }
 
 input CreateShoppingListItemDto {
-  name: String!
-  price: Float!
-  assignedId: String!
-  bought: Boolean!
-  eventId: String!
+    name: String!
+    price: Float!
+    assignedId: String!
+    bought: Boolean!
+    eventId: String!
 }
 
 input UpdateShoppingListItemDto {
-  name: String!
-  price: Float!
-  assignedId: String!
-  bought: Boolean!
-  eventId: String!
-  id: String!
+    name: String!
+    price: Float!
+    assignedId: String!
+    bought: Boolean!
+    eventId: String!
+    id: String!
 }
 
 input CreateDeptInput {
-  eventId: ID!
-  amount: Float!
-  debtorId: ID!
-  creditorId: ID!
+    eventId: ID!
+    amount: Float!
+    debtorId: ID!
+    creditorId: ID!
 }
 
 input UpdateDeptInput {
-  eventId: ID
-  amount: Float
-  debtorId: ID
-  creditorId: ID
-  id: Int!
-  repayed: Boolean! = false
+    eventId: ID
+    amount: Float
+    debtorId: ID
+    creditorId: ID
+    id: Int!
+    repayed: Boolean! = false
 }
 
 input CreateEventDateInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+    date: DateTime!
+    eventId: String!
 }
 
 input UpdateEventDateInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+    date: DateTime
+    eventId: String
+    id: String!
+    numberVotes: Float!
 }
 
 input CreateDatesToUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+    """Example field (placeholder)"""
+    exampleField: Int!
 }
 
 input UpdateDatesToUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+    """Example field (placeholder)"""
+    exampleField: Int
+    id: Int!
 }

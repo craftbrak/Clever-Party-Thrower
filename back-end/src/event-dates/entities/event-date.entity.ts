@@ -13,7 +13,7 @@ export class EventDate extends Node {
   @RelationId((self: EventDate) => self.event)
   @Field(() => String)
   eventId: Event["id"];
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Number)
   numberVotes: number;
   @Field(() => Event)

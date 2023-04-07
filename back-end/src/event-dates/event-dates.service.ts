@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEventDateInput } from './dto/create-event-date.input';
-import { UpdateEventDateInput } from './dto/update-event-date.input';
+import { Injectable } from "@nestjs/common";
+import { CreateEventDateInput } from "./dto/create-event-date.input";
+import { UpdateEventDateInput } from "./dto/update-event-date.input";
+import { Repository } from "typeorm";
+import { EventDate } from "./entities/event-date.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class EventDatesService {
+  constructor(
+    @InjectRepository(EventDate)
+    private readonly eventDateRepo: Repository<EventDate>,
+  ) {}
+
   create(createEventDateInput: CreateEventDateInput) {
-    return 'This action adds a new eventDate';
+    const edate = this.eventDateRepo.create(createEventDateInput);
+    edate.eventId = createEventDateInput.eventId;
+    return edate.save();
   }
 
   findAll() {
-    return `This action returns all eventDates`;
+    return this.eventDateRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} eventDate`;
+  findOne(id: string) {
+    return this.eventDateRepo.findBy({ id: id });
   }
 
-  update(id: number, updateEventDateInput: UpdateEventDateInput) {
-    return `This action updates a #${id} eventDate`;
+  update(id: string, updateEventDateInput: UpdateEventDateInput) {
+    return this.eventDateRepo.update(
+      { id: updateEventDateInput.id },
+      updateEventDateInput,
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} eventDate`;
+  remove(id: string) {
+    return this.eventDateRepo.delete({ id: id });
   }
 }
