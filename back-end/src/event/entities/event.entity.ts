@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   RelationId,
 } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
@@ -50,12 +51,16 @@ export class Event extends Node {
   spendings: Spending[];
 
   @Field(() => Date, { nullable: true })
-  @Column({ nullable: true })
-  selectedDate: Date;
+  @OneToOne(() => EventDate, (eventDate) => eventDate.event)
+  selectedDate: EventDate;
+
+  @Field(() => String, { nullable: true })
+  @RelationId((self: Event) => self.selectedDate)
+  selectedDateId: string;
 
   @Field(() => Date, { nullable: true })
   @OneToMany(() => EventDate, (eventDate) => eventDate.event)
-  availableDates: Date[]; //todo: add Api Access for adding and removing dates + Votes
+  availableDates: EventDate[]; //todo: add Api Access for adding and removing dates + Votes
 
   @Field(() => Boolean)
   @Column({ default: false })
