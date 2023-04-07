@@ -50,7 +50,7 @@ export class Event extends Node {
   spendings: Spending[];
 
   @Field(() => Date, { nullable: true })
-  @Column()
+  @Column({ nullable: true })
   selectedDate: Date;
 
   @Field(() => Date, { nullable: true })
