@@ -1,13 +1,14 @@
 import {
-  ObjectType,
   Field,
-  Int,
   Float,
+  Int,
+  ObjectType,
   registerEnumType,
 } from "@nestjs/graphql";
 import { Column, Entity, JoinColumn, ManyToOne, RelationId } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 import { UserEntity } from "../../user/entities/user.entity";
+
 export enum BootSizes {
   None = "None",
   Small = "Small",
@@ -15,7 +16,9 @@ export enum BootSizes {
   Big = "Big",
   CampingCar = "CampingCar",
 }
+
 registerEnumType(BootSizes, { name: "BootSizes" });
+
 export enum Fuels {
   Electric = "Electric",
   Petrol = "Petrol",
@@ -23,7 +26,9 @@ export enum Fuels {
   LPG = "LPG",
   HYDROGEN = "HYDROGEN",
 }
+
 registerEnumType(Fuels, { name: "Fuels" });
+
 @ObjectType()
 @Entity()
 export class Car extends Node {
