@@ -231,9 +231,9 @@ type Event {
   carpools: Carpool
   shoppingList: ShoppingListItem
   spendings: Spending
-  selectedDate: DateTime
+  selectedDate: EventDate
   selectedDateId: String
-  availableDates: DateTime
+  availableDates: EventDate
   fixedDate: Boolean
 }
 
@@ -349,6 +349,7 @@ input CreateEventDto {
   """Total spent for the event"""
   total: Float!
   addressId: String!
+  fixedDate: Boolean!
 }
 
 input UpdateEventDto {
@@ -361,9 +362,11 @@ input UpdateEventDto {
   """Total spent for the event"""
   total: Float!
   addressId: String
+  fixedDate: Boolean
 
   """Id of the event"""
   id: String!
+  selectedDateId: String!
 }
 
 input CreateAddressDto {

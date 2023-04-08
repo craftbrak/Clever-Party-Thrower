@@ -148,6 +148,7 @@ export class IntegrationTestManager {
       name: randSentence(),
       description: randText(),
       total: randNumber(),
+      fixedDate: randBoolean(),
     });
   }
 

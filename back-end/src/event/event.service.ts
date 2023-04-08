@@ -80,6 +80,7 @@ export class EventService {
     event.name = updateEventInput.name;
     event.total = updateEventInput.total;
     event.description = updateEventInput.description;
+    event.selectedDateId = updateEventInput.selectedDateId;
     return await this.eventRepo.save(event);
   }
 

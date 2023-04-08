@@ -15,4 +15,7 @@ export class UpdateEventDto extends PartialType(CreateEventDto) {
 
   @Field(() => Float, { description: "Total spent for the event" })
   total: number;
+
+  @Field(() => String)
+  selectedDateId: string;
 }

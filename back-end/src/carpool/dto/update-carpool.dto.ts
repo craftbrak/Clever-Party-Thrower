@@ -6,5 +6,3 @@ export class UpdateCarpoolDto extends PartialType(CreateCarpoolDto) {
   @Field(() => String)
   id: string;
 }
-
-// TODO: DTOs

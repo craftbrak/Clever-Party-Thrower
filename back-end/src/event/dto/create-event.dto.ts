@@ -13,4 +13,7 @@ export class CreateEventDto {
 
   @Field(() => String)
   addressId: string;
+
+  @Field(() => Boolean)
+  fixedDate: boolean;
 }

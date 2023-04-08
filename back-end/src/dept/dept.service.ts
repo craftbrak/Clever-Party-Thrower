@@ -22,9 +22,9 @@ export class DeptService {
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
     @InjectRepository(Dept) private readonly deptRepo: Repository<Dept>,
-
     private readonly spendingService: SpendingService,
   ) {}
+
   async create(createDeptInput: CreateDeptInput) {
     createDeptInput.event = await this.eventRepository.findOneByOrFail({
       id: createDeptInput.eventId,
@@ -37,6 +37,8 @@ export class DeptService {
     });
     return this.deptRepo.create(createDeptInput).save();
   }
+
+  //TODO: add mutation + test
   async calculateDepts(eventId: string): Promise<Dept[]> {
     const expenses: Spending[] = await this.spendingService.findAllOfEventById(
       eventId,
@@ -67,6 +69,7 @@ export class DeptService {
     }
     return depts;
   }
+
   findAll() {
     return `This action returns all dept`;
   }

@@ -6,5 +6,3 @@ export class UpdateRouteDto extends PartialType(CreateRouteDto) {
   @Field(() => String)
   id: string;
 }
-
-// TODO: DTOs

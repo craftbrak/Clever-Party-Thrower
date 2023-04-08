@@ -17,5 +17,3 @@ export class CreateRouteDto {
   @Field(() => Date)
   departure: Date;
 }
-
-// TODO: DTOs
