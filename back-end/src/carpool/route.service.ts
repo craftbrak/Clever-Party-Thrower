@@ -10,7 +10,6 @@ import { RouteEntity } from "./entities/Route.entity";
 import { UpdateRouteDto } from "./dto/update-route.dto";
 
 @Injectable()
-// TODO:CRUD
 export class RouteService {
   constructor(
     @InjectRepository(Carpool)
@@ -49,7 +48,9 @@ export class RouteService {
     return this.carpoolRepository.create(route).save();
   }
 
-  async findAll() {
+  async findAll(carpoolId: string = null) {
+    if (!carpoolId)
+      return this.routeRepository.find({ where: { carpoolId: carpoolId } });
     return this.routeRepository.find();
   }
 
