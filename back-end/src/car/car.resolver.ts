@@ -11,7 +11,6 @@ import { Car } from "./entities/car.entity";
 import { CreateCarDto } from "./dto/create-car.dto";
 import { UpdateCarDto } from "./dto/update-car.dto";
 import { CurrentUser } from "../auth/current-user.decorator";
-import { JWTPayload } from "../auth/jwtPayload.interface";
 import { UserEntity } from "../user/entities/user.entity";
 
 @Resolver(() => Car)
