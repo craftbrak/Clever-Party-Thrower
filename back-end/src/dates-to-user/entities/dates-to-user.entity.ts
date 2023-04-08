@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { EventDate } from "../../event-dates/entities/event-date.entity";
-import { Column, Entity, ManyToOne, OneToMany, RelationId } from "typeorm";
+import { Column, Entity, ManyToOne, RelationId } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 import { EventToUser } from "../../event-to-user/entities/event-to-user.entity";
 
@@ -10,7 +10,7 @@ export class DatesToUser extends Node {
   @Field(() => String)
   @RelationId((self: DatesToUser) => self.eventDate)
   eventDateId: EventDate["id"];
-  @OneToMany(() => EventDate, (eventDate) => eventDate.datesToUsers)
+  @ManyToOne(() => EventDate, (eventDate) => eventDate.datesToUsers)
   @Field(() => EventDate)
   eventDate: EventDate;
   @Field(() => EventToUser)

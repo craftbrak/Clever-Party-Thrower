@@ -4,18 +4,31 @@ import { UpdateDatesToUserInput } from "./dto/update-dates-to-user.input";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DatesToUser } from "./entities/dates-to-user.entity";
 import { Repository } from "typeorm";
+import { EventDate } from "../event-dates/entities/event-date.entity";
+import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 
 @Injectable()
 export class DatesToUserService {
   constructor(
     @InjectRepository(DatesToUser)
     private dateToUserRepo: Repository<DatesToUser>,
+    @InjectRepository(EventToUser)
+    private eventToUserRepo: Repository<EventToUser>,
+    @InjectRepository(EventDate)
+    private eventDateRepo: Repository<EventDate>,
   ) {}
 
-  create(createDatesToUserInput: CreateDatesToUserInput) {
-    const dateToUser = this.dateToUserRepo.create(createDatesToUserInput);
-    dateToUser.eventToUserId = createDatesToUserInput.eventToUserId;
-    dateToUser.eventDateId = createDatesToUserInput.eventDateId;
+  async create(createDatesToUserInput: CreateDatesToUserInput) {
+    const eventToUser = await this.eventToUserRepo.findOneBy({
+      id: createDatesToUserInput.eventToUserId,
+    });
+    const eventDate = await this.eventDateRepo.findOneBy({
+      id: createDatesToUserInput.eventDateId,
+    });
+
+    const dateToUser = await this.dateToUserRepo.create(createDatesToUserInput);
+    dateToUser.eventToUser = eventToUser;
+    dateToUser.eventDate = eventDate;
     return dateToUser.save();
   }
 
@@ -23,8 +36,9 @@ export class DatesToUserService {
     return this.dateToUserRepo.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} datesToUser`;
+  async findOne(id: string) {
+    const out = await this.dateToUserRepo.findOneBy({ id: id });
+    return out;
   }
 
   update(id: string, updateDatesToUserInput: UpdateDatesToUserInput) {

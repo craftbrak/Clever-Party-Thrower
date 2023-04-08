@@ -36,6 +36,8 @@ import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-i
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { EventDatesService } from "../event-dates/event-dates.service";
+import { DatesToUserService } from "../dates-to-user/dates-to-user.service";
+import { EventDate } from "../event-dates/entities/event-date.entity";
 
 export class IntegrationTestManager {
   private app: INestApplication;
@@ -248,6 +250,21 @@ export class IntegrationTestManager {
     return EventDateService.create({
       eventId: event.id,
       date: date,
+    });
+  }
+
+  async getNewDatesToUser(
+    eventToUser: EventToUser = null,
+    eventDate: EventDate = null,
+  ) {
+    const datesToUserService =
+      this._moduleRef.get<DatesToUserService>(DatesToUserService);
+    if (!eventToUser) eventToUser = await this.getNewEventToUser();
+    if (!eventDate) eventDate = await this.getNewEventDate();
+    return datesToUserService.create({
+      eventToUserId: eventToUser.id,
+      eventDateId: eventDate.id,
+      voteValue: randNumber(),
     });
   }
 }

@@ -7,5 +7,6 @@ import { EventDate } from "./entities/event-date.entity";
 @Module({
   providers: [EventDatesResolver, EventDatesService],
   imports: [TypeOrmModule.forFeature([EventDate])],
+  exports: [EventDatesService],
 })
 export class EventDatesModule {}
