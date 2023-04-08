@@ -55,9 +55,9 @@ describe("queryDatesToUser", () => {
             id: existingDatesToUser.eventDateId,
           },
           eventToUser: {
-            id: existingatesToUser.eventToUserId,
+            id: existingDatesToUser.eventToUserId,
           },
-          voteValue: existingDatesToUser.voteValu,
+          voteValue: existingDatesToUser.voteValue,
         });
       });
     });
