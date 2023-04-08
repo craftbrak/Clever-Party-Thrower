@@ -61,7 +61,7 @@ describe("queryAddress", () => {
           line2: existingAddress.line2,
           unitNumber: existingAddress.unitNumber,
           countryId: existingAddress.country.id,
-          country: existingAddress.countryId,
+          country: { id: existingAddress.countryId },
           // Include any other fields you want to compare
         });
       });
