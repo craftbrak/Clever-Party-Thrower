@@ -115,9 +115,11 @@ type DatesToUser {
     createdAt: DateTime!
     updatedAt: DateTime!
     version: Int!
-    eventDate: Event!
+    eventDateId: String!
+    eventDate: EventDate!
     eventToUser: EventToUser!
     eventToUserId: String!
+    voteValue: Int!
 }
 
 type EventToUser {
@@ -422,14 +424,12 @@ input CreateEventToUserDto {
     userId: String!
     eventId: String!
     addressId: String
-    availableDates: [DateTime!]
 }
 
 input UpdateEventToUserDto {
     userId: String
     eventId: String
     addressId: String
-    availableDates: [DateTime!]
     id: String!
 }
 
@@ -550,16 +550,14 @@ input UpdateEventDateInput {
 }
 
 input CreateDatesToUserInput {
-    """Example field (placeholder)"""
-    exampleField: Int!
     eventDateId: String!
-    userId: String!
+    eventToUserId: String!
+    voteValue: Int!
 }
 
 input UpdateDatesToUserInput {
-    """Example field (placeholder)"""
-    exampleField: Int
     eventDateId: String
-    userId: String
+    eventToUserId: String
+    voteValue: Int
     id: String!
 }

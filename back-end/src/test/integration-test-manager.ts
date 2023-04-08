@@ -35,6 +35,7 @@ import { SpendingService } from "../spending/spending.service";
 import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-items.service";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
+import { EventDatesService } from "../event-dates/event-dates.service";
 
 export class IntegrationTestManager {
   private app: INestApplication;
@@ -219,11 +220,11 @@ export class IntegrationTestManager {
       value: amount,
     });
   }
+
   async getNewEventToUser(
     event: Event = null,
     user: UserEntity = null,
     address: Address = null,
-    dates: Date[] = [],
   ): Promise<EventToUser> {
     const eventToUserService =
       this._moduleRef.get<EventToUserService>(EventToUserService);
@@ -234,7 +235,19 @@ export class IntegrationTestManager {
       userId: user.id,
       eventId: event.id,
       addressId: address.id,
-      availableDates: dates,
+    });
+  }
+
+  async getNewEventDate(
+    event: Event = null,
+    date: Date = new Date(Date.now()),
+  ) {
+    const EventDateService =
+      this._moduleRef.get<EventDatesService>(EventDatesService);
+    if (!event) event = await this.getNewEvent();
+    return EventDateService.create({
+      eventId: event.id,
+      date: date,
     });
   }
 }

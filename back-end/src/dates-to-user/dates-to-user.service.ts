@@ -13,7 +13,10 @@ export class DatesToUserService {
   ) {}
 
   create(createDatesToUserInput: CreateDatesToUserInput) {
-    return this.dateToUserRepo.create(createDatesToUserInput);
+    const dateToUser = this.dateToUserRepo.create(createDatesToUserInput);
+    dateToUser.eventToUserId = createDatesToUserInput.eventToUserId;
+    dateToUser.eventDateId = createDatesToUserInput.eventDateId;
+    return dateToUser.save();
   }
 
   findAll() {
