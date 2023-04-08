@@ -33,6 +33,9 @@ describe("queryAddress", () => {
               city
               postalCode
               countryId
+              country {
+                id
+              }
             }
           }
         `;
@@ -58,6 +61,7 @@ describe("queryAddress", () => {
           line2: existingAddress.line2,
           unitNumber: existingAddress.unitNumber,
           countryId: existingAddress.country.id,
+          country: existingAddress.countryId,
           // Include any other fields you want to compare
         });
       });
