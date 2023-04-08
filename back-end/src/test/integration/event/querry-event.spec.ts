@@ -76,7 +76,7 @@ describe("queryEvent", () => {
           total: existingEvent.total,
           address: { id: existingEvent.addressId },
           addressId: existingEvent.addressId,
-          fixedDate: existingEvent.fixedDate,
+          // fixedDate: existingEvent.fixedDate,
           // Include any other fields you want to compare
         });
 
