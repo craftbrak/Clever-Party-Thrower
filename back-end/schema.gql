@@ -226,7 +226,7 @@ type Event {
     selectedDate: DateTime
     selectedDateId: String
     availableDates: DateTime
-    fixedDate: Boolean!
+    fixedDate: Boolean
 }
 
 input EventsPaginationSortBy {
