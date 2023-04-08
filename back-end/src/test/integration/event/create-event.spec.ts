@@ -29,6 +29,7 @@ describe("createEvent", () => {
               address {
                 id
               }
+              fixedDate
             }
           }
         `;
