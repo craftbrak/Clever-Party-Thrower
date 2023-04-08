@@ -87,7 +87,7 @@ describe("queryCarpool", () => {
           arrival: existingCarpool.arrival.toISOString(),
         });
         // console.dir(queriedCarpool);
-        console.log(queriedCarpool.routes.length);
+        // console.log(queriedCarpool.routes.length);
         // expect(queriedCarpool.routes).toHaveLength(
         //   existingCarpool.routes.length,
         // );

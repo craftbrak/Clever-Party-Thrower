@@ -316,9 +316,10 @@ type Mutation {
   createCar(createCarInput: CreateCarDto!): Car!
   updateCar(updateCarInput: UpdateCarDto!): Car!
   removeCar(id: String!): Car!
-  createCarpool(createRouteDto: CreateRouteDto!): RouteEntity!
+  createCarpool(createCarpoolInput: CreateCarpoolDto!): Carpool!
   updateCarpool(updateCarpoolInput: UpdateCarpoolDto!): Carpool!
   removeCarpool(id: String!): Carpool!
+  createRoute(createRouteDto: CreateRouteDto!): RouteEntity!
   updateRoute(updateRouteDto: UpdateRouteDto!): RouteEntity!
   removeRoute(String: String!): RouteEntity!
   createSpending(createSpendingInput: CreateSpendingDto!): Spending!
@@ -474,16 +475,16 @@ input UpdateCarDto {
   id: String!
 }
 
-input CreateRouteDto {
-  startingId: String!
-  pickupId: String!
-  destinationId: String!
-  index: Int!
-
-  """lenght of the route in KM"""
-  length: Float!
-  carpoolId: String!
+input CreateCarpoolDto {
+  driverId: String!
+  direction: Directions!
+  finalDestinationId: String!
+  startDestinationId: String!
+  carId: String!
+  eventId: String!
+  totalLength: Float!
   departure: DateTime!
+  arrival: DateTime!
 }
 
 input UpdateCarpoolDto {
@@ -497,6 +498,18 @@ input UpdateCarpoolDto {
   departure: DateTime
   arrival: DateTime
   id: String!
+}
+
+input CreateRouteDto {
+  startingId: String!
+  pickupId: String!
+  destinationId: String!
+  index: Int!
+
+  """lenght of the route in KM"""
+  length: Float!
+  carpoolId: String!
+  departure: DateTime!
 }
 
 input UpdateRouteDto {

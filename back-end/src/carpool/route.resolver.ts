@@ -9,7 +9,7 @@ export class RouteResolver {
   constructor(private readonly routeService: RouteService) {}
 
   @Mutation(() => RouteEntity)
-  createCarpool(@Args("createRouteDto") createRouteDto: CreateRouteDto) {
+  createRoute(@Args("createRouteDto") createRouteDto: CreateRouteDto) {
     return this.routeService.create(createRouteDto);
   }
 
