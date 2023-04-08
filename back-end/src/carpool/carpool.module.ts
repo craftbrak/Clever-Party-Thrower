@@ -8,6 +8,12 @@ import { Car } from "../car/entities/car.entity";
 import { UserEntity } from "../user/entities/user.entity";
 import { Address } from "../address/entities/address.entity";
 import { Event } from "../event/entities/event.entity";
+import { UserModule } from "../user/user.module";
+import { EventModule } from "../event/event.module";
+import { AddressModule } from "../address/address.module";
+import { RouteResolver } from "./route.resolver";
+import { RouteService } from "./route.service";
+import { CarModule } from "../car/car.module";
 
 @Module({
   imports: [
@@ -19,7 +25,11 @@ import { Event } from "../event/entities/event.entity";
       UserEntity,
       Address,
     ]),
+    UserModule,
+    EventModule,
+    AddressModule,
+    CarModule,
   ],
-  providers: [CarpoolResolver, CarpoolService],
+  providers: [CarpoolResolver, CarpoolService, RouteResolver, RouteService],
 })
 export class CarpoolModule {}

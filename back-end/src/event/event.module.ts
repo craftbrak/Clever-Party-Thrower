@@ -10,6 +10,6 @@ import { AddressModule } from "../address/address.module";
 @Module({
   imports: [TypeOrmModule.forFeature([Event, EventToUser]), AddressModule],
   providers: [EventResolver, EventService, EventToUserService],
-  exports: [EventToUserService],
+  exports: [EventToUserService, EventService],
 })
 export class EventModule {}
