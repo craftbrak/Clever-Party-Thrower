@@ -26,8 +26,12 @@ describe("queryDatesToUser", () => {
           query GetDatesToUser($datesToUserId: String!) {
             datesToUser(id: $datesToUserId) {
               id
-              eventDateId
-              eventToUserId
+              eventDate {
+                id
+              }
+              eventToUser {
+                id
+              }
               voteValue
             }
           }
@@ -41,16 +45,19 @@ describe("queryDatesToUser", () => {
           .query(query)
           .variables({ datesToUserId: existingDatesToUser.id })
           .expectNoErrors();
-        // console.log(response, response.errors);
         queriedDatesToUser = response.data.datesToUser;
       });
 
       test("Then the response should be the queried DatesToUser", () => {
         expect(queriedDatesToUser).toMatchObject({
           id: existingDatesToUser.id,
-          eventDateId: existingDatesToUser.eventDateId,
-          eventToUserId: existingDatesToUser.eventToUserId,
-          voteValue: existingDatesToUser.voteValue,
+          eventDate: {
+            id: existingDatesToUser.eventDateId,
+          },
+          eventToUser: {
+            id: existingatesToUser.eventToUserId,
+          },
+          voteValue: existingDatesToUser.voteValu,
         });
       });
     });

@@ -63,11 +63,13 @@ export class DatesToUserResolver {
 
   @ResolveField("eventDate", () => EventDate)
   async eventDate(@Parent() dateToUser: DatesToUser) {
-    return await this.eventDateService.findOne(dateToUser.eventToUserId);
+    const out = await this.eventDateService.findOne(dateToUser.eventDateId);
+    return out;
   }
 
   @ResolveField("eventToUser", () => EventToUser)
   async eventToUser(@Parent() dateToUser: DatesToUser) {
-    return await this.evntToUserService.findOne(dateToUser.eventToUserId);
+    const out = await this.evntToUserService.findOne(dateToUser.eventToUserId);
+    return out;
   }
 }

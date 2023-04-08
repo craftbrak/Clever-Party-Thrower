@@ -23,7 +23,7 @@ export class EventDatesService {
   }
 
   findOne(id: string) {
-    return this.eventDateRepo.findBy({ id: id });
+    return this.eventDateRepo.findOneBy({ id: id });
   }
 
   update(id: string, updateEventDateInput: UpdateEventDateInput) {
