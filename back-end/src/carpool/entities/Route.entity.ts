@@ -1,5 +1,5 @@
 import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, RelationId } from "typeorm";
 import { Node } from "../../pagination/entities/node.entity";
 import { Address } from "../../address/entities/address.entity";
 import { UserEntity } from "../../user/entities/user.entity";
@@ -27,6 +27,9 @@ export class RouteEntity extends Node implements Route {
   @Field(() => Carpool)
   @ManyToOne(() => Carpool)
   carpool: Carpool;
+  @Field(() => String)
+  @RelationId((self: RouteEntity) => self.carpool)
+  carpoolId: string;
   @Field(() => Date)
   @Column()
   departure: Date;
