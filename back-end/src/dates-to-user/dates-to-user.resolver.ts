@@ -3,6 +3,8 @@ import { DatesToUserService } from "./dates-to-user.service";
 import { DatesToUser } from "./entities/dates-to-user.entity";
 import { CreateDatesToUserInput } from "./dto/create-dates-to-user.input";
 import { UpdateDatesToUserInput } from "./dto/update-dates-to-user.input";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Resolver(() => DatesToUser)
 export class DatesToUserResolver {
@@ -17,7 +19,7 @@ export class DatesToUserResolver {
   }
 
   @Query(() => [DatesToUser], { name: "datesToUser" })
-  findAll() {
+  findAll(@CurrentUser() user: JWTPayload) {
     return this.datesToUserService.findAll();
   }
 
