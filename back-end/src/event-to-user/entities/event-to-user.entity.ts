@@ -59,7 +59,7 @@ export class EventToUser extends Node {
     default: UserRole.INVITED,
   })
   role: UserRole;
-  @Field(() => Date, { nullable: true })
+  @Field(() => [DatesToUser], { nullable: true })
   @OneToMany(() => DatesToUser, (dateToUser) => dateToUser.eventToUser)
   availableDates: DatesToUser[];
 }

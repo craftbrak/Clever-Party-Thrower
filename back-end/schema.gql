@@ -134,7 +134,7 @@ type EventToUser {
   address: Address!
   addressId: String
   role: UserRole!
-  availableDates: DateTime
+  availableDates: [DatesToUser!]
 }
 
 enum UserRole {

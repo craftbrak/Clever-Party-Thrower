@@ -22,10 +22,7 @@ describe("queryEventDate", () => {
         integrationTestManager.testUser,
       );
       existingEventDate = await integrationTestManager.getNewEventDate(e);
-      const dtu = await integrationTestManager.getNewDatesToUser(
-        etu,
-        existingEventDate,
-      );
+      await integrationTestManager.getNewDatesToUser(etu, existingEventDate);
     });
 
     describe("When querying an eventDate by its ID", () => {
