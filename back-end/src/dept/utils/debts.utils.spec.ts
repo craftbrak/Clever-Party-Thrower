@@ -23,14 +23,14 @@ describe("mapExpenses", () => {
       await integrationTestManager.getNewUser(),
     ];
     expenses = [
-      await integrationTestManager.getNewSpending(event, users[0], 1),
-      await integrationTestManager.getNewSpending(event, users[1], 5),
-      await integrationTestManager.getNewSpending(event, users[2], 5),
-      await integrationTestManager.getNewSpending(event, users[2], 5),
-      await integrationTestManager.getNewSpending(event, users[2], 5),
-      await integrationTestManager.getNewSpending(event, users[2], 5),
-      await integrationTestManager.getNewSpending(event, users[3], 10),
-      await integrationTestManager.getNewSpending(event, users[0], 5),
+      await integrationTestManager.getNewSpending(event, users[0], null, 1),
+      await integrationTestManager.getNewSpending(event, users[1], null, 5),
+      await integrationTestManager.getNewSpending(event, users[2], null, 5),
+      await integrationTestManager.getNewSpending(event, users[2], null, 5),
+      await integrationTestManager.getNewSpending(event, users[2], null, 5),
+      await integrationTestManager.getNewSpending(event, users[2], null, 5),
+      await integrationTestManager.getNewSpending(event, users[3], null, 10),
+      await integrationTestManager.getNewSpending(event, users[0], null, 5),
     ];
     event = await integrationTestManager.getNewEvent();
   });
