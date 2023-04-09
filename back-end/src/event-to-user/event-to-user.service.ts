@@ -88,7 +88,7 @@ export class EventToUserService {
         user: true,
         event: true,
         address: true,
-        availableDates: tru,
+        availableDates: true,
       },
     });
   }
