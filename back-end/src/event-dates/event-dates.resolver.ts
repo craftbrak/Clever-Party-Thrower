@@ -3,10 +3,14 @@ import { EventDatesService } from "./event-dates.service";
 import { EventDate } from "./entities/event-date.entity";
 import { CreateEventDateInput } from "./dto/create-event-date.input";
 import { UpdateEventDateInput } from "./dto/update-event-date.input";
+import { EventService } from "../event/event.service";
 
 @Resolver(() => EventDate)
 export class EventDatesResolver {
-  constructor(private readonly eventDatesService: EventDatesService) {}
+  constructor(
+    private readonly eventDatesService: EventDatesService,
+    private readonly eventService: EventService,
+  ) {}
 
   @Mutation(() => EventDate)
   createEventDate(
@@ -39,4 +43,14 @@ export class EventDatesResolver {
   removeEventDate(@Args("id", { type: () => String }) id: string) {
     return this.eventDatesService.remove(id);
   }
+
+  // @ResolveField("event", () => Event)
+  // async event(@Parent() eventDate: EventDate) {
+  //   return this.eventService.findOne(eventDate.eventId);
+  // }
+
+  // @ResolveField("datesToUsers", () => Event)
+  // async datesToUsers(@Parent() eventDate: EventDate) {
+  //   return await this.eventDatesService.getDatesToUsers(eventDate.id);
+  // }
 }

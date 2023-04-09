@@ -107,7 +107,7 @@ type EventDate {
   eventId: String!
   numberVotes: Float!
   event: Event!
-  datesToUsers: DatesToUser!
+  datesToUsers: [DatesToUser!]!
 }
 
 type DatesToUser {

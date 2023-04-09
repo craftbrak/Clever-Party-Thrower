@@ -37,8 +37,7 @@ export class DatesToUserService {
   }
 
   async findOne(id: string) {
-    const out = await this.dateToUserRepo.findOneBy({ id: id });
-    return out;
+    return await this.dateToUserRepo.findOneBy({ id: id });
   }
 
   update(id: string, updateDatesToUserInput: UpdateDatesToUserInput) {
