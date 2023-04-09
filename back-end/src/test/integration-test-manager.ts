@@ -209,10 +209,11 @@ export class IntegrationTestManager {
   async getNewSpending(
     event: Event = null,
     user: UserEntity = null,
+    shopIt: ShoppingListItem = null,
     amount: number = null,
   ): Promise<Spending> {
     if (!event) event = await this.getNewEvent();
-    const shopIt = await this.getNewShoppingListItem();
+    if (!shopIt) shopIt = await this.getNewShoppingListItem();
     if (!user) user = await this.getNewUser();
     if (!amount && amount !== 0) amount = randFloat();
     const carpoolService =
