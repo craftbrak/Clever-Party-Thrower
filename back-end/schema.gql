@@ -287,8 +287,8 @@ type Query {
   routes: [RouteEntity!]!
   route(String: String!): RouteEntity!
   spending(id: String!): Spending!
-  shopingListItems: [ShoppingListItem!]!
-  shopingListItem(id: String!): ShoppingListItem!
+  shoppingListItems: [ShoppingListItem!]!
+  shoppingListItem(id: String!): ShoppingListItem!
   dept(id: ID!): Dept!
   eventDates: [EventDate!]!
   eventDate(id: String!): EventDate!

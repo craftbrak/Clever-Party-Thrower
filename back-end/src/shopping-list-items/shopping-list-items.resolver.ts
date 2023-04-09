@@ -18,12 +18,12 @@ export class ShoppingListItemsResolver {
     return this.shopingListItemsService.create(createShoppingListItemDto);
   }
 
-  @Query(() => [ShoppingListItem], { name: "shopingListItems" })
+  @Query(() => [ShoppingListItem], { name: "shoppingListItems" })
   findAll() {
     return this.shopingListItemsService.findAll();
   }
 
-  @Query(() => ShoppingListItem, { name: "shopingListItem" })
+  @Query(() => ShoppingListItem, { name: "shoppingListItem" })
   findOne(@Args("id", { type: () => String }) id: string) {
     return this.shopingListItemsService.findOne(id);
   }

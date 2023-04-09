@@ -189,19 +189,20 @@ export class IntegrationTestManager {
     });
   }
 
-  async getNewSoppingListItem(): Promise<ShoppingListItem> {
-    const carpoolService = this._moduleRef.get<ShoppingListItemsService>(
-      ShoppingListItemsService,
-    );
-
-    const event = await this.getNewEvent();
-    const user = await this.getNewUser();
-    return await carpoolService.create({
+  async getNewShoppingListItem(
+    event: Event = null,
+    buyer: UserEntity = null,
+  ): Promise<ShoppingListItem> {
+    const shoppingListItemService =
+      this._moduleRef.get<ShoppingListItemsService>(ShoppingListItemsService);
+    if (!event) event = await this.getNewEvent();
+    if (!buyer) buyer = await this.getNewUser();
+    return await shoppingListItemService.create({
       eventId: event.id,
       name: randMusicGenre(),
       price: randFloat(),
       bought: randBoolean(),
-      assignedId: user.id,
+      assignedId: buyer.id,
     });
   }
 
@@ -211,7 +212,7 @@ export class IntegrationTestManager {
     amount: number = null,
   ): Promise<Spending> {
     if (!event) event = await this.getNewEvent();
-    const shopIt = await this.getNewSoppingListItem();
+    const shopIt = await this.getNewShoppingListItem();
     if (!user) user = await this.getNewUser();
     if (!amount && amount !== 0) amount = randFloat();
     const carpoolService =

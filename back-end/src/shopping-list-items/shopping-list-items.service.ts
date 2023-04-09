@@ -16,6 +16,7 @@ export class ShoppingListItemsService {
     private readonly userRepo: Repository<UserEntity>,
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
   ) {}
+
   //TODO: TESTING
 
   async create(createShoppingListItemInput: CreateShoppingListItemDto) {
@@ -31,13 +32,17 @@ export class ShoppingListItemsService {
     });
     return this.itemRepo.create(item).save();
   }
+
   // Todo: find by event
   async findAll() {
-    return this.itemRepo.find();
+    return this.itemRepo.find({ relations: { assigned: true, event: true } });
   }
 
   async findOne(id: string) {
-    return this.itemRepo.findOneByOrFail({ id });
+    return this.itemRepo.findOne({
+      where: { id: id },
+      relations: { assigned: true, event: true },
+    });
   }
 
   async update(
