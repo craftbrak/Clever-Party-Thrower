@@ -38,6 +38,11 @@ export class UserService {
       where: {
         email: email,
       },
+      relations: {
+        cars: true,
+        address: true,
+        eventToUsers: true,
+      },
     });
   }
 
