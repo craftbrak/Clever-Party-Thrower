@@ -165,7 +165,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
-    needs: [ Test_Back-end_unit, Test_Back-end_e2e ]
+    needs: [ Test_Back-end_unit, Test_Back-end_integration ]
     defaults:
       run:
         working-directory: ./back-end
@@ -197,7 +197,7 @@ jobs:
   Push_build_to_docker_hub:
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
-    needs: [ Test_Back-end_unit, Test_Back-end_e2e, Build_docker_image_of_back-end ]
+    needs: [ Test_Back-end_unit, Test_Back-end_integration, Build_docker_image_of_back-end ]
     defaults:
       run:
         working-directory: ./back-end
