@@ -328,7 +328,7 @@ type Mutation {
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): ShoppingListItem!
   removeShoppingListItem(id: String!): ShoppingListItem!
-  createDept(createDeptInput: CreateDeptInput!): Dept!
+  calculateDebts(eventId: String!): [Dept!]!
   updateDept(updateDeptInput: UpdateDeptInput!): Dept!
   removeDept(id: ID!): Dept!
   createEventDate(createEventDateInput: CreateEventDateInput!): EventDate!
@@ -558,13 +558,6 @@ input UpdateShoppingListItemDto {
   bought: Boolean!
   eventId: String!
   id: String!
-}
-
-input CreateDeptInput {
-  eventId: ID!
-  amount: Float!
-  debtorId: ID!
-  creditorId: ID!
 }
 
 input UpdateDeptInput {

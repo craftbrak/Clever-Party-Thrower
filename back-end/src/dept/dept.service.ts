@@ -6,13 +6,13 @@ import { Repository } from "typeorm";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Dept } from "./entities/dept.entity";
-import { SpendingService } from "../spending/spending.service";
 import { Spending } from "../spending/entities/spending.entity";
 import {
   calculateDebtsFromBalances,
   mapExpenses,
   optimiseDebts,
 } from "./utils/debts.utils";
+import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 
 @Injectable()
 export class DeptService {
@@ -21,8 +21,10 @@ export class DeptService {
     private readonly eventRepository: Repository<Event>,
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
+    @InjectRepository(EventToUser)
+    private readonly eventToUserRepo: Repository<EventToUser>,
     @InjectRepository(Dept) private readonly deptRepo: Repository<Dept>,
-    private readonly spendingService: SpendingService,
+    private readonly spendingService: SpendingServic,
   ) {}
 
   async create(createDeptInput: CreateDeptInput) {
@@ -44,9 +46,20 @@ export class DeptService {
       eventId,
     );
     const depts: Dept[] = [];
-    const event = await this.eventRepository.findOneByOrFail({ id: eventId });
+    // const event = await this.eventRepository.findOne({
+    //   where: {
+    //     id: eventId,
+    //   },
+    //   relations: {
+    //     members: true,
+    //   },
+    // });
+    const eventToUsers = await this.eventToUserRepo.find({
+      where: { eventId: eventId },
+      relations: { user: true },
+    });
     const participants = [];
-    event.members.forEach((userToEvent) => participants.push(userToEvent.user));
+    eventToUsers.forEach((userToEvent) => participants.push(userToEvent.user));
     const participantMap = await mapExpenses(expenses, participants); //contains every participant's balance
     const unOptdebts = await calculateDebtsFromBalances(
       participantMap,
