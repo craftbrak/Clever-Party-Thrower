@@ -1,6 +1,7 @@
 name: Test frontend on github ans push to docker-hub
 
-on: [ push ]
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
