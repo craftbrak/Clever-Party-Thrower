@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DrivingLicenceFormComponent } from './driving-licence-form.component';
+import {DrivingLicenceFormComponent} from './driving-licence-form.component';
+import {FormBuilder} from "@angular/forms";
 
 describe('DrivingLicenceFormComponent', () => {
   let component: DrivingLicenceFormComponent;
@@ -8,9 +9,10 @@ describe('DrivingLicenceFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DrivingLicenceFormComponent ]
+      declarations: [DrivingLicenceFormComponent],
+      providers: [FormBuilder]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ConfirmationFormComponent } from './confirmation-form.component';
+import {ConfirmationFormComponent} from './confirmation-form.component';
+import {Apollo} from "apollo-angular";
 
 describe('ConfirmationFormComponent', () => {
   let component: ConfirmationFormComponent;
@@ -8,9 +9,10 @@ describe('ConfirmationFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmationFormComponent ]
+      declarations: [ConfirmationFormComponent],
+      providers: [Apollo]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AvatarFormComponent } from './avatar-form.component';
+import {AvatarFormComponent} from './avatar-form.component';
+import {FormBuilder} from "@angular/forms";
 
 describe('AvatarFormComponent', () => {
   let component: AvatarFormComponent;
@@ -8,9 +9,10 @@ describe('AvatarFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AvatarFormComponent ]
+      declarations: [AvatarFormComponent],
+      providers: [FormBuilder]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

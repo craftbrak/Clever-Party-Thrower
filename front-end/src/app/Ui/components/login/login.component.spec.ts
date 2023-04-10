@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
 import {AuthService} from '../../../auth/auth.service';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {of, throwError} from 'rxjs';
 
@@ -21,6 +21,7 @@ describe('LoginComponent', () => {
       providers: [
         {provide: AuthService, useValue: authService},
         {provide: Router, useValue: router},
+        FormBuilder
       ],
     }).compileComponents();
   });

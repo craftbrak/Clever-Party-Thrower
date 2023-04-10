@@ -1,6 +1,6 @@
 name: Test frontend on github ans push to docker-hub
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
@@ -20,5 +20,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      #      - run: npm run test:prod
+      - run: npm run test
       - run: npm run lint
