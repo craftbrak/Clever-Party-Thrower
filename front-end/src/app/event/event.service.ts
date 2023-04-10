@@ -13,9 +13,16 @@ const Get_Events = gql`
         carpools {
           id
         }
-        selectedDate
+        selectedDate{
+          numberVotes
+          date
+        }
         addressId
-        availableDates
+        availableDates{
+          date
+          numberVotes
+        }
+        fixedDate
         spendings {
           id
         }
@@ -71,8 +78,10 @@ const getEventOverview = gql`
         id
         role
       }
-      availableDates
-      selectedDate
+      selectedDate{
+        id
+        date
+      }
     }
   }
 `

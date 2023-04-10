@@ -9,7 +9,7 @@ import gql from "graphql-tag";
   providedIn: 'root'
 })
 export class AuthService {
-  LOGIN_MUTATION = gql`
+  public LOGIN_MUTATION = gql`
     mutation AuthLogin($AuthinputDto: AuthInputDto!) {
       authLogin(authInputDto: $AuthinputDto) {
         accessToken
@@ -17,7 +17,7 @@ export class AuthService {
       }
     }
   `;
-  REGISTER_MUTATION = gql`
+  public REGISTER_MUTATION = gql`
     mutation CreateUser($singUp: CreateUserDto!) {
       createUser(singUp: $singUp) {
         name
@@ -81,8 +81,7 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    let accessToken
-    this.getToken().then(token => accessToken = token);
+    let accessToken = this._accessToken = localStorage.getItem('accessToken');
     return accessToken !== null;
   }
 
