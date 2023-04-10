@@ -22,7 +22,7 @@ export class DeptResolver {
   }
 
   @Query(() => Dept, { name: "dept" })
-  findOne(@Args("id", { type: () => ID }) id: string) {
+  findOne(@Args("id", { type: () => String }) id: string) {
     return this.deptService.findOne(id);
   }
 

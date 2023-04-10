@@ -17,6 +17,8 @@ import { SpendingService } from "../spending/spending.service";
 
 @Injectable()
 export class DeptService {
+  async;
+
   constructor(
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
@@ -85,11 +87,24 @@ export class DeptService {
   }
 
   findAll() {
-    return `This action returns all dept`;
+    return this.deptRepo.findOne({
+      relations: {
+        debtor: true,
+        creditor: true,
+        event: true,
+      },
+    });
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} dept`;
+    return this.deptRepo.findOne({
+      where: { id: id },
+      relations: {
+        debtor: true,
+        creditor: true,
+        event: true,
+      },
+    });
   }
 
   async update(updateDeptInput: UpdateDeptInput) {

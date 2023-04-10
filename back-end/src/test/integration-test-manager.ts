@@ -38,6 +38,7 @@ import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { EventDatesService } from "../event-dates/event-dates.service";
 import { DatesToUserService } from "../dates-to-user/dates-to-user.service";
 import { EventDate } from "../event-dates/entities/event-date.entity";
+import { DeptService } from "../dept/dept.service";
 
 export class IntegrationTestManager {
   private app: INestApplication;
@@ -268,6 +269,27 @@ export class IntegrationTestManager {
       eventToUserId: eventToUser.id,
       eventDateId: eventDate.id,
       voteValue: randNumber(),
+    });
+  }
+
+  async getNewDept(
+    debtor: UserEntity = null,
+    creditor: UserEntity = null,
+    event: Event = null,
+    amout: number = randNumber(),
+  ) {
+    const deptService = this._moduleRef.get(DeptService);
+    if (!debtor) debtor = await this.getNewUser();
+    if (!creditor) creditor = await this.getNewUser();
+    if (!event) event = await this.getNewEvent();
+    return deptService.create({
+      eventId: event.id,
+      amount: amout,
+      event: event,
+      creditor: creditor,
+      creditorId: creditor.id,
+      debtor: debtor,
+      debtorId: debtor.id,
     });
   }
 }

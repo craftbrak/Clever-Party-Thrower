@@ -289,7 +289,7 @@ type Query {
   spending(id: String!): Spending!
   shoppingListItems: [ShoppingListItem!]!
   shoppingListItem(id: String!): ShoppingListItem!
-  dept(id: ID!): Dept!
+  dept(id: String!): Dept!
   eventDates: [EventDate!]!
   eventDate(id: String!): EventDate!
   datesToUser(id: String!): DatesToUser!
