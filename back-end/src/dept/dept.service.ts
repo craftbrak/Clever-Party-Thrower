@@ -13,6 +13,7 @@ import {
   optimiseDebts,
 } from "./utils/debts.utils";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
+import { SpendingService } from "../spending/spending.service";
 
 @Injectable()
 export class DeptService {
@@ -24,7 +25,7 @@ export class DeptService {
     @InjectRepository(EventToUser)
     private readonly eventToUserRepo: Repository<EventToUser>,
     @InjectRepository(Dept) private readonly deptRepo: Repository<Dept>,
-    private readonly spendingService: SpendingServic,
+    private readonly spendingService: SpendingService,
   ) {}
 
   async create(createDeptInput: CreateDeptInput) {
