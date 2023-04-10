@@ -83,7 +83,7 @@ jobs:
   #          JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
   #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
   #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
-  Test_Back-end_e2e:
+  Test_Back-end_integration:
     runs-on: ubuntu-latest
     defaults:
       run:
