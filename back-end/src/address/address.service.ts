@@ -8,6 +8,7 @@ import { Country } from "./entities/country.entity";
 import { CreateCountryDto } from "./dto/create-country.dto";
 import { HttpService } from "@nestjs/axios";
 import { UserEntity } from "../user/entities/user.entity";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Injectable()
 export class AddressService implements OnApplicationBootstrap {
@@ -44,13 +45,21 @@ export class AddressService implements OnApplicationBootstrap {
     this.logger.log("Countries Inserted " + tot);
   }
 
-  async create(createAddressInput: CreateAddressDto): Promise<Address> {
+  async create(
+    createAddressInput: CreateAddressDto,
+    user?: JWTPayload,
+  ): Promise<Address> {
     const a = await this.addressRepo.create(createAddressInput).save();
     a.country = await this.findOneCountry(createAddressInput.countryId);
     if (createAddressInput.ownerId)
       a.owner = await this.userRepo.findOne({
         where: { id: createAddressInput.ownerId },
       });
+    if (user) {
+      a.owner = await this.userRepo.findOne({
+        where: { id: user.id },
+      });
+    }
     return await a.save({ reload: true });
   }
 
@@ -88,5 +97,9 @@ export class AddressService implements OnApplicationBootstrap {
 
   async createCountry(input: CreateCountryDto): Promise<Country> {
     return await this.countryRepo.create(input);
+  }
+
+  async findAllOfUser(user: JWTPayload) {
+    return await this.addressRepo.find({ where: { owner: { id: user.id } } });
   }
 }

@@ -13,6 +13,8 @@ import { CreateAddressDto } from "./dto/create-address.dto";
 import { UpdateAddressDto } from "./dto/update-address.dto";
 import { Country } from "./entities/country.entity";
 import { Public } from "../auth/public.decorator";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Resolver(() => Address)
 export class AddressResolver {
@@ -22,8 +24,9 @@ export class AddressResolver {
   @Public()
   async createAddress(
     @Args("createAddressInput") createAddressInput: CreateAddressDto,
+    @CurrentUser() user?: JWTPayload,
   ) {
-    return await this.addressService.create(createAddressInput);
+    return await this.addressService.create(createAddressInput, user);
   }
 
   @Query(() => Address, { name: "address" })
@@ -49,5 +52,10 @@ export class AddressResolver {
   @ResolveField("country", () => Country)
   async findCountry(@Parent() address: Address) {
     return await this.addressService.findOneCountry(address.countryId);
+  }
+
+  @Query(() => [Address], { name: "addresses" })
+  async getAddresses(@CurrentUser() user: JWTPayload) {
+    return await this.addressService.findAllOfUser(user);
   }
 }
