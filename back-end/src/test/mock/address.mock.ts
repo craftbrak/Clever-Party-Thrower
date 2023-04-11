@@ -9,4 +9,5 @@ export const addressMock: CreateAddressDto = {
   postalCode: randAddress().zipCode,
   streetNumber: randNumber().toString(),
   unitNumber: "",
+  ownerId: "",
 };

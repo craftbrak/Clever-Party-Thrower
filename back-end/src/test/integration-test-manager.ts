@@ -127,8 +127,9 @@ export class IntegrationTestManager {
     });
   }
 
-  async getNewAddress(): Promise<Address> {
+  async getNewAddress(user: UserEntity = null): Promise<Address> {
     const add = randAddress();
+    user = user ? user : await this.getNewUser();
     const addressService = this._moduleRef.get<AddressService>(AddressService);
     return await addressService.create({
       countryId: this._testCountry.id,
@@ -138,6 +139,7 @@ export class IntegrationTestManager {
       unitNumber: "",
       postalCode: add.zipCode,
       city: add.city,
+      ownerId: user.id,
     });
   }
 

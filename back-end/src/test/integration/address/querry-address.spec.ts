@@ -36,6 +36,10 @@ describe("queryAddress", () => {
               country {
                 id
               }
+              ownerId
+              owner {
+                id
+              }
             }
           }
         `;
@@ -62,6 +66,8 @@ describe("queryAddress", () => {
           unitNumber: existingAddress.unitNumber,
           countryId: existingAddress.country.id,
           country: { id: existingAddress.countryId },
+          ownerId: existingAddress.ownerId,
+          owner: { id: existingAddress.ownerId },
           // Include any other fields you want to compare
         });
       });

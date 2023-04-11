@@ -1,4 +1,4 @@
-import { InputType, Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
 export class CreateAddressDto {
@@ -22,4 +22,7 @@ export class CreateAddressDto {
 
   @Field(() => String)
   countryId: string;
+
+  @Field(() => String, { nullable: true })
+  ownerId: string;
 }

@@ -35,6 +35,7 @@ describe("createAddress", () => {
               line1
               line2
               unitNumber
+              ownerId
             }
           }
         `;
@@ -55,6 +56,7 @@ describe("createAddress", () => {
         // console.table(createdAddress);
         expect(createdAddress).toMatchObject({
           ...addressMock,
+          ownerId: null,
           countryId: integrationTestManager.testCountry.id,
         });
       });

@@ -6,9 +6,13 @@ import { Address } from "./entities/address.entity";
 import { Country } from "./entities/country.entity";
 import { CountryResolver } from "./country.resolver";
 import { HttpModule } from "@nestjs/axios";
+import { UserEntity } from "../user/entities/user.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Address, Country]), HttpModule],
+  imports: [
+    TypeOrmModule.forFeature([Address, Country, UserEntity]),
+    HttpModule,
+  ],
   providers: [AddressResolver, AddressService, CountryResolver],
   exports: [AddressService],
 })

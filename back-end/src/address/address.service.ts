@@ -7,17 +7,22 @@ import { DeleteResult, Repository } from "typeorm";
 import { Country } from "./entities/country.entity";
 import { CreateCountryDto } from "./dto/create-country.dto";
 import { HttpService } from "@nestjs/axios";
+import { UserEntity } from "../user/entities/user.entity";
 
 @Injectable()
 export class AddressService implements OnApplicationBootstrap {
   private readonly logger = new Logger(AddressService.name);
+
   constructor(
     @InjectRepository(Address)
     private readonly addressRepo: Repository<Address>,
     @InjectRepository(Country)
     private readonly countryRepo: Repository<Country>,
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
     private readonly httpService: HttpService,
   ) {}
+
   async onApplicationBootstrap() {
     this.logger.log("Inserting Countries in DB");
     let tot = 0;
@@ -38,9 +43,14 @@ export class AddressService implements OnApplicationBootstrap {
     });
     this.logger.log("Countries Inserted " + tot);
   }
+
   async create(createAddressInput: CreateAddressDto): Promise<Address> {
     const a = await this.addressRepo.create(createAddressInput).save();
     a.country = await this.findOneCountry(createAddressInput.countryId);
+    if (createAddressInput.ownerId)
+      a.owner = await this.userRepo.findOne({
+        where: { id: createAddressInput.ownerId },
+      });
     return await a.save({ reload: true });
   }
 
@@ -51,6 +61,7 @@ export class AddressService implements OnApplicationBootstrap {
       },
       relations: {
         country: true,
+        owner: true,
       },
     });
   }
@@ -62,15 +73,19 @@ export class AddressService implements OnApplicationBootstrap {
   async remove(id: Address["id"]): Promise<DeleteResult> {
     return await this.addressRepo.delete({ id: id });
   }
+
   async findAllCountry(): Promise<Country[]> {
     return await this.countryRepo.find();
   }
+
   async findOneCountry(id: Country["id"]): Promise<Country> {
     return await this.countryRepo.findOneByOrFail({ id });
   }
+
   async findOneCountryByCode(code: Country["code"]): Promise<Country> {
     return await this.countryRepo.findOneByOrFail({ code });
   }
+
   async createCountry(input: CreateCountryDto): Promise<Country> {
     return await this.countryRepo.create(input);
   }

@@ -4,6 +4,7 @@ import { Column, Entity, Index, ManyToOne, RelationId } from "typeorm";
 import { Country } from "./country.entity";
 import { IsPostalCode } from "class-validator";
 import { Point } from "geojson";
+import { UserEntity } from "../../user/entities/user.entity";
 
 @Entity()
 @ObjectType()
@@ -47,4 +48,12 @@ export class Address extends Node {
     nullable: true,
   })
   location: Point;
+  @Field(() => UserEntity, { nullable: true })
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.addresses, {
+    nullable: true,
+  })
+  owner: UserEntity;
+  @Field(() => String, { nullable: true })
+  @RelationId((self: Address) => self.owner)
+  ownerId: UserEntity["id"];
 }

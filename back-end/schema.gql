@@ -23,19 +23,52 @@ type Country {
   code: String!
 }
 
-type Address {
+type EventDate {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-  unitNumber: String
-  streetNumber: String!
-  line1: String!
-  line2: String
-  city: String!
-  postalCode: String!
-  country: Country!
-  countryId: String!
+
+  """The date"""
+  date: String!
+  eventId: String!
+  numberVotes: Float!
+  event: Event!
+  datesToUsers: [DatesToUser!]!
+}
+
+type DatesToUser {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  eventDateId: String!
+  eventDate: EventDate!
+  eventToUser: EventToUser!
+  eventToUserId: String!
+  voteValue: Int!
+}
+
+type EventToUser {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+  userId: String!
+  eventId: String!
+  event: Event!
+  user: UserEntity!
+  address: Address!
+  addressId: String
+  role: UserRole!
+  availableDates: [DatesToUser!]
+}
+
+enum UserRole {
+  OWNER
+  MEMBER
+  DJ
+  INVITED
 }
 
 type Car {
@@ -94,54 +127,24 @@ type UserEntity {
   address: Address
   addressId: String
   cars: [Car!]!
+  addresses: [Address!]!
 }
 
-type EventDate {
+type Address {
   id: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   version: Int!
-
-  """The date"""
-  date: String!
-  eventId: String!
-  numberVotes: Float!
-  event: Event!
-  datesToUsers: [DatesToUser!]!
-}
-
-type DatesToUser {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  eventDateId: String!
-  eventDate: EventDate!
-  eventToUser: EventToUser!
-  eventToUserId: String!
-  voteValue: Int!
-}
-
-type EventToUser {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  version: Int!
-  userId: String!
-  eventId: String!
-  event: Event!
-  user: UserEntity!
-  address: Address!
-  addressId: String
-  role: UserRole!
-  availableDates: [DatesToUser!]
-}
-
-enum UserRole {
-  OWNER
-  MEMBER
-  DJ
-  INVITED
+  unitNumber: String
+  streetNumber: String!
+  line1: String!
+  line2: String
+  city: String!
+  postalCode: String!
+  country: Country!
+  countryId: String!
+  owner: UserEntity
+  ownerId: String
 }
 
 type RouteEntity {
@@ -377,6 +380,7 @@ input CreateAddressDto {
   city: String!
   postalCode: String!
   countryId: String!
+  ownerId: String
 }
 
 input UpdateAddressDto {
@@ -387,6 +391,7 @@ input UpdateAddressDto {
   city: String!
   postalCode: String!
   countryId: String!
+  ownerId: String
   id: Int!
 }
 

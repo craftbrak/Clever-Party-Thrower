@@ -72,4 +72,7 @@ export class UserEntity extends Node {
 
   @Column({ nullable: true, default: null })
   twoFaKey?: string;
+  @Field(() => [Address])
+  @OneToMany(() => Address, (address: Address) => address.owner)
+  addresses: Address[];
 }
