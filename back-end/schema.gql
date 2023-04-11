@@ -422,6 +422,7 @@ input CreateUserDto {
   drivingLicence: Boolean!
   manual: Boolean!
   addressId: String
+  avatar: String
 }
 
 input UpdateUserDto {
@@ -436,6 +437,7 @@ input UpdateUserDto {
   drivingLicence: Boolean
   manual: Boolean
   addressId: String
+  avatar: String
   id: String!
 }
 

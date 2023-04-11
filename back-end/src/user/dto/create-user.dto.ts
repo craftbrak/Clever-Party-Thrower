@@ -19,4 +19,7 @@ export class CreateUserDto {
 
   @Field(() => String, { nullable: true })
   addressId?: string;
+
+  @Field(() => String, { nullable: true })
+  avatar?: string;
 }

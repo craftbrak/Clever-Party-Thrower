@@ -118,18 +118,20 @@ export class IntegrationTestManager {
     await this.dataSource.dropDatabase();
   }
 
-  async getNewUser(): Promise<UserEntity> {
+  async getNewUser(address: Address = null): Promise<UserEntity> {
     const userService = this._moduleRef.get<UserService>(UserService);
+    address = address ? address : await this.getNewAddress();
     return await userService.create({
       ...testUser,
-      addressId: this._testAddress.id,
+      addressId: address.id,
       email: randEmail(),
     });
   }
 
   async getNewAddress(user: UserEntity = null): Promise<Address> {
     const add = randAddress();
-    user = user ? user : await this.getNewUser();
+    // @ts-ignore
+    user = user ? user : { id: "" };
     const addressService = this._moduleRef.get<AddressService>(AddressService);
     return await addressService.create({
       countryId: this._testCountry.id,

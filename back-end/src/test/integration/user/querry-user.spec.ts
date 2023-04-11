@@ -16,7 +16,12 @@ describe("queryUserEntity", () => {
   describe("Given that the UserEntity exists", () => {
     let existingUserEntity: UserEntity;
     beforeAll(async () => {
-      existingUserEntity = await integrationTestManager.getNewUser();
+      const address = await integrationTestManager.getNewAddress();
+      existingUserEntity = await integrationTestManager.getNewUser(address);
+      await integrationTestManager.getNewAddress(existingUserEntity);
+      await integrationTestManager.getNewAddress(existingUserEntity);
+      await integrationTestManager.getNewAddress(existingUserEntity);
+      await integrationTestManager.getNewAddress(existingUserEntity);
     });
 
     describe("When querying a user entity by its ID", () => {
@@ -38,6 +43,9 @@ describe("queryUserEntity", () => {
                 id
               }
               eventToUsers {
+                id
+              }
+              addresses {
                 id
               }
             }
@@ -66,11 +74,11 @@ describe("queryUserEntity", () => {
           address: { id: existingUserEntity.address.id },
           // Include any other fields you want to compare
         });
-
         // If you want to check the length of an array property (e.g., cars or eventToUsers)
         // You can use the following check:
         expect(queriedUserEntity.cars.length).toBeGreaterThanOrEqual(0);
         expect(queriedUserEntity.eventToUsers.length).toBeGreaterThanOrEqual(0);
+        expect(queriedUserEntity.addresses.length).toBeGreaterThanOrEqual(0);
       });
     });
   });

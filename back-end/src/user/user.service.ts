@@ -7,12 +7,15 @@ import { UserEntity } from "./entities/user.entity";
 import * as argon2 from "argon2";
 import { AddressService } from "../address/address.service";
 import { HttpService } from "@nestjs/axios";
+import { Address } from "../address/entities/address.entity";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
+    @InjectRepository(Address)
+    private readonly addressRepo: Repository<Address>,
     private addressService: AddressService,
     private readonly httpService: HttpService,
   ) {}
@@ -20,16 +23,15 @@ export class UserService {
   async create(createUserInput: CreateUserDto): Promise<UserEntity> {
     createUserInput.password = await argon2.hash(createUserInput.password);
     const usr = await this.userRepo.create(createUserInput);
-    if (createUserInput.addressId)
+    if (createUserInput.addressId) {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,
       );
+      usr.address.owner = usr;
+      await usr.address.save();
+    }
     usr.email = usr.email.toLowerCase(); //todo: add avatar on registering
-    // await this.httpService
-    //   .get(
-    //     `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
-    //   )
-    //   .subscribe((value) => (usr.avatar = value.data));
+
     return await usr.save();
   }
 
@@ -42,6 +44,7 @@ export class UserService {
         cars: true,
         address: true,
         eventToUsers: true,
+        addresses: true,
       },
     });
   }

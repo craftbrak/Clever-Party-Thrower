@@ -7,10 +7,11 @@ import { EventModule } from "../event/event.module";
 import { AddressModule } from "../address/address.module";
 import { HttpModule } from "@nestjs/axios";
 import { Car } from "../car/entities/car.entity";
+import { Address } from "../address/entities/address.entity";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, Car]),
+    TypeOrmModule.forFeature([UserEntity, Car, Address]),
     EventModule,
     AddressModule,
     HttpModule,
