@@ -16,7 +16,9 @@ describe("queryAddress", () => {
   describe("Given that the Address exists", () => {
     let existingAddress: Address;
     beforeAll(async () => {
-      existingAddress = await integrationTestManager.getNewAddress();
+      existingAddress = await integrationTestManager.getNewAddress(
+        integrationTestManager.testUser,
+      );
     });
 
     describe("When querying an address by its ID", () => {
