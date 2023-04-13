@@ -82,7 +82,6 @@ describe("createUser", () => {
               manual
               address {
                 id
-                streetNumber
               }
             }
           }
@@ -116,9 +115,6 @@ describe("createUser", () => {
         expect(createdUser.addressId).toBeTruthy();
         expect(createdUser.address).toBeDefined();
         expect(createdUser.address.id).toBeTruthy();
-        expect(createdUser.address.streetNumber).toEqual(
-          integrationTestManager.testAddress.streetNumber,
-        );
       });
       test("Then the user should be in the database", async () => {
         const user = await integrationTestManager.dataSource
