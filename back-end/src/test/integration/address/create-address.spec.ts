@@ -23,7 +23,6 @@ describe("createAddress", () => {
           mutation CreateAddress($createAddressData: CreateAddressDto!) {
             createAddress(createAddressInput: $createAddressData) {
               id
-              streetNumber
               city
               country {
                 id
@@ -33,7 +32,6 @@ describe("createAddress", () => {
               countryId
               postalCode
               line1
-              line2
               unitNumber
               ownerId
             }

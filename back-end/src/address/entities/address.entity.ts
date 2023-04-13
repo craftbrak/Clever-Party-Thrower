@@ -15,15 +15,7 @@ export class Address extends Node {
 
   @Column()
   @Field(() => String)
-  streetNumber: string;
-
-  @Column()
-  @Field(() => String)
   line1: string;
-
-  @Column({ nullable: true })
-  @Field(() => String, { nullable: true })
-  line2: string;
 
   @Column()
   @Field(() => String)

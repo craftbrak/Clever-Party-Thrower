@@ -135,9 +135,7 @@ export class IntegrationTestManager {
     const addressService = this._moduleRef.get<AddressService>(AddressService);
     return await addressService.create({
       countryId: this._testCountry.id,
-      streetNumber: "30",
       line1: add.street,
-      line2: add.county,
       unitNumber: "",
       postalCode: add.zipCode,
       city: add.city,

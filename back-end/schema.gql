@@ -136,9 +136,7 @@ type Address {
   updatedAt: DateTime!
   version: Int!
   unitNumber: String
-  streetNumber: String!
   line1: String!
-  line2: String
   city: String!
   postalCode: String!
   country: Country!
@@ -375,9 +373,7 @@ input UpdateEventDto {
 
 input CreateAddressDto {
   unitNumber: String
-  streetNumber: String!
   line1: String!
-  line2: String
   city: String!
   postalCode: String!
   countryId: String!
@@ -386,9 +382,7 @@ input CreateAddressDto {
 
 input UpdateAddressDto {
   unitNumber: String
-  streetNumber: String!
   line1: String!
-  line2: String
   city: String!
   postalCode: String!
   countryId: String!
