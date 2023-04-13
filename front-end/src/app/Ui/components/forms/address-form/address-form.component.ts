@@ -20,9 +20,7 @@ export class AddressFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private addressService: AddressService) {
     this.addressForm = this.formBuilder.group({
-      streetNumber: ['', Validators.required],
       unitNumber: [''],
-      line2: [''],
       line1: ['', Validators.required],
       city: ['', Validators.required],
       countryId: ['', Validators.required],

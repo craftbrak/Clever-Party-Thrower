@@ -68,8 +68,8 @@ export class AuthService {
           const {accessToken, refreshToken} = data.authLogin;
           this._accessToken = accessToken;
           this._refreshToken = refreshToken;
-          localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
-          localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
+          localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
+          localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
         }
       }),
       catchError((error) => {

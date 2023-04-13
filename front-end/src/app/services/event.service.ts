@@ -58,7 +58,7 @@ const getEventIds = gql`
   }
 `
 const getEventNumber = gql`
-  {
+  query countEvent{
     countEvents
   }
 `
@@ -91,9 +91,14 @@ export class EventService {
   Events: Observable<Event[]> | undefined;
   EventsId: Observable<string[]> | undefined;
   EventNumber: Observable<number> | undefined
+  SAYHELLO = gql`
+    query Sayhello{
+      sayHello
+    }
+  `
 
   constructor(private apollo: Apollo) {
-    this.getEventNumber().then();
+    // this.getEventNumber().then();
   }
 
   async getAllEventId() {
@@ -117,5 +122,14 @@ export class EventService {
   async getEventNumber() {
     this.apollo.watchQuery<Observable<number>>({query: getEventNumber})
       .valueChanges.subscribe(value => this.EventNumber = value.data)
+  }
+
+  // @ts-ignore
+  createEvent(eventData: any): Observable<any> {
+    // Use eventData to send a request to the server with the GraphQL API.
+  }
+
+  testBackEnd() {
+    this.apollo.watchQuery({query: this.SAYHELLO}).valueChanges.subscribe(value => console.log(value))
   }
 }

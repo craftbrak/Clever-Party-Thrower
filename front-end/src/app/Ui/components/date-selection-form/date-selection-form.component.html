@@ -1,0 +1,22 @@
+<div>
+  <mat-radio-group (change)="onFixedDateChange($event.value)" [(ngModel)]="fixedDate">
+    <mat-radio-button checked value="true">Fixed Date</mat-radio-button>
+    <mat-radio-button value="false">Multiple Dates</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<form [formGroup]="dateSelectionForm">
+  <mat-form-field *ngIf="fixedDate">
+    <mat-label>Event Date *</mat-label>
+    <input [matDatepicker]="singleDatePicker" formControlName="singleDate" matInput>
+    <mat-datepicker-toggle [for]="singleDatePicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #singleDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="!fixedDate">
+    <mat-label>Multiple Dates *</mat-label>
+    <input [matDatepicker]="multiDatePicker" formControlName="multipleDates" matInput multiple>
+    <mat-datepicker-toggle [for]="multiDatePicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #multiDatePicker></mat-datepicker>
+  </mat-form-field>
+</form>

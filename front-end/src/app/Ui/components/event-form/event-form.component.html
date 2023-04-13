@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <div class="container bg">
+    <h1 class="title">Create an Event</h1>
+    <mat-stepper [linear]="isLinear" class="bg">
+
+      <mat-step>
+        <ng-template matStepLabel>Event Info</ng-template>
+        <app-event-info-form (eventInfo)="onEventInfoFormSubmit($event)"
+                             (valid)="onEventInfoFormValidity($event)"></app-event-info-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Address</ng-template>
+        <app-address-selection-form (selectedAddress)="onAddressFormSubmit($event)"
+                                    (valid)="onAddressFormValidity($event)"
+                                    [addresses]="existingAddresses"></app-address-selection-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Date Selection</ng-template>
+        <app-date-selection-form (dates)="onDateSelectionFormSubmit($event)"
+                                 (valid)="onDateSelectionFormValidity($event)"></app-date-selection-form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Confirmation</ng-template>
+        validation componant
+      </mat-step>
+    </mat-stepper>
+    <small class="disclaimer">Fields marked with an * are required.</small>
+  </div>
+</div>

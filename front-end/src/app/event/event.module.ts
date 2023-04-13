@@ -8,7 +8,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
-import {EventService} from "./event.service";
+import {EventService} from "../services/event.service";
 
 
 @NgModule({

@@ -10,7 +10,7 @@ import {ConfirmationFormComponent} from "./forms/confirmation-form/confirmation-
 import {DrivingLicenceFormComponent} from "./forms/driving-licence-form/driving-licence-form.component";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatPasswordStrengthModule} from "@angular-material-extensions/password-strength";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
@@ -22,7 +22,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatNativeDateModule} from "@angular/material/core";
 import {RouterModule} from "@angular/router";
-import {EventCreateComponent} from './event-create/event-create.component';
+import {EventFormComponent} from './event-form/event-form.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {EventInfoFormComponent} from './event-info-form/event-info-form.component';
+import {AddressSelectionFormComponent} from './address-selection-form/address-selection-form.component';
+import {DateSelectionFormComponent} from './date-selection-form/date-selection-form.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -35,12 +40,15 @@ import {EventCreateComponent} from './event-create/event-create.component';
     AvatarFormComponent,
     ConfirmationFormComponent,
     DrivingLicenceFormComponent,
-    EventCreateComponent,
+    EventFormComponent,
+    EventInfoFormComponent,
+    AddressSelectionFormComponent,
+    DateSelectionFormComponent,
+    DateSelectionFormComponent,
   ],
   imports: [
     CommonModule,
     MatNativeDateModule,
-    MatStepperModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatPasswordStrengthModule,
@@ -52,7 +60,11 @@ import {EventCreateComponent} from './event-create/event-create.component';
     MatSlideToggleModule,
     MatRadioModule,
     MatDatepickerModule,
-    RouterModule
+    RouterModule,
+    MatStepperModule,
+    MatCheckboxModule,
+    FormsModule,
+    MatCardModule
   ]
 })
 export class UiComponentsModule {

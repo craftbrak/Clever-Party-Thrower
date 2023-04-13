@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EventService} from "../../event.service";
+import {EventService} from "../../../services/event.service";
 import {map} from "rxjs";
 
 @Component({
@@ -14,7 +14,7 @@ export class EventsPageComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.eventService.getAllEventId()
+    // await this.eventService.getAllEventId()
     console.log('Event number:', this.eventService.EventNumber)
     this.eventService.EventsId?.pipe(
       map(data => {

@@ -10,7 +10,7 @@ const uri = 'http://localhost:4242/graphql';
 
 export function createApollo(httpLink: HttpLink) {
   const authLink = setContext((_, {headers}) => {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('accessToken');
     return {
       headers: {
         ...headers,

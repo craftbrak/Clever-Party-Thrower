@@ -1,0 +1,18 @@
+<form [formGroup]="eventInfoForm">
+  <mat-form-field>
+    <mat-label>Event Name *</mat-label>
+    <input formControlName="eventName" matInput/>
+    <mat-error *ngIf="eventInfoForm.controls['eventName'].invalid && eventInfoForm.controls['eventName'].touched">
+      Event name is required.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Event Description *</mat-label>
+    <textarea formControlName="eventDescription" matInput></textarea>
+    <mat-error
+      *ngIf="eventInfoForm.controls['eventDescription'].invalid && eventInfoForm.controls['eventDescription'].touched">
+      Event description is required.
+    </mat-error>
+  </mat-form-field>
+</form>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Apollo} from "apollo-angular";
-import {EventService} from "../../event.service";
+import {EventService} from "../../../services/event.service";
 
 
 @Component({

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "../../../auth/auth.service";
 import {Router} from "@angular/router";
 import {AddressService} from "../../../services/address.service";
@@ -9,7 +9,7 @@ import {CreateAddressDto} from "../../../Dto/create-address.dto";
   templateUrl: './register-user-form.component.html',
   styleUrls: ['./register-user-form.component.scss']
 })
-export class RegisterUserFormComponent implements OnInit {
+export class RegisterUserFormComponent {
   userInfoValid = false;
   addressValid = false;
   drivingLicenceValid = false;
@@ -27,9 +27,6 @@ export class RegisterUserFormComponent implements OnInit {
               private addressService: AddressService) {
   }
 
-  ngOnInit(): void {
-
-  }
 
   onUserInfoFormValidity(valid: boolean): void {
     this.userInfoValid = valid;

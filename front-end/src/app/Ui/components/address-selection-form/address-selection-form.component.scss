@@ -1,0 +1,42 @@
+@use '@angular/material' as mat;
+
+$my-palette: mat.define-palette(mat.$lime-palette);
+.address-container {
+  max-height: calc(100vh / 3);
+  overflow-y: auto;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem;
+  padding-right: 8px;
+}
+
+mat-card {
+  cursor: pointer;
+}
+
+.selected {
+  color: black;
+  background-color: mat.get-color-from-palette($my-palette, 600);
+}
+
+.add-address-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Custom scrollbar styles */
+.address-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.address-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.address-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}

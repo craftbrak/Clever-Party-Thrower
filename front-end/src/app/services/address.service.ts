@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
-import {Country} from "../entities/address.entity";
+import {Address, Country} from "../entities/address.entity";
 import {CreateAddressDto} from "../Dto/create-address.dto";
 
 @Injectable({
@@ -24,6 +24,22 @@ export class AddressService {
       }
     }
   `;
+  readonly GET_ADDRESSES = gql`
+    query getAddresses{
+      addresses {
+        id
+        country {
+          name
+          code
+        }
+        line1
+        unitNumber
+        city
+        postalCode
+      }
+    }
+
+  `
 
   constructor(private apollo: Apollo) {
   }
@@ -39,5 +55,9 @@ export class AddressService {
       mutation: this.CREATE_ADDRESS,
       variables: {input},
     });
+  }
+
+  getAddresses() {
+    return this.apollo.watchQuery<{ addresses: Address[] }>({query: this.GET_ADDRESSES}).valueChanges
   }
 }

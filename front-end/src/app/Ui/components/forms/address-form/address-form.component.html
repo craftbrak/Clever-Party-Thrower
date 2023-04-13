@@ -1,32 +1,24 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="addressForm">
   <ng-template matStepLabel>Address</ng-template>
   <mat-form-field>
-    <mat-label>Street Number</mat-label>
-    <input formControlName="streetNumber" matInput required>
+    <mat-label>Address</mat-label>
+    <input autocomplete="address-line1" formControlName="line1" matInput required>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Unit Number</mat-label>
-    <input formControlName="unitNumber" matInput>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Address Line 1</mat-label>
-    <input formControlName="line1" matInput required>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Address Line 2</mat-label>
-    <input formControlName="line2" matInput>
+    <mat-label>Apt, Suite, Unit, Floor, etc.</mat-label>
+    <input autocomplete="address-line2" formControlName="unitNumber" matInput>
   </mat-form-field>
   <mat-form-field>
     <mat-label>City</mat-label>
-    <input formControlName="city" matInput required>
+    <input autocomplete="address-level2" formControlName="city" matInput required>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Postal Code</mat-label>
-    <input formControlName="postalCode" matInput required>
+    <input autocomplete="postal-code" formControlName="postalCode" matInput required>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Country</mat-label>
-    <mat-select formControlName="countryId" required>
+    <mat-select autocomplete="country" formControlName="countryId" required>
       <!-- Populate the mat-option with your list of countries -->
       <mat-option *ngFor="let country of countries" [value]="country.id"> {{country.code}}
         | {{country.name}}</mat-option>
