@@ -28,9 +28,7 @@ describe("queryAddress", () => {
           query GetAddress($addressId: String!) {
             address(id: $addressId) {
               id
-              streetNumber
               line1
-              line2
               unitNumber
               city
               postalCode
@@ -60,11 +58,9 @@ describe("queryAddress", () => {
       test("Then the response should be the queried Address", () => {
         expect(queriedAddress).toMatchObject({
           id: existingAddress.id,
-          streetNumber: existingAddress.streetNumber,
           city: existingAddress.city,
           postalCode: existingAddress.postalCode,
           line1: existingAddress.line1,
-          line2: existingAddress.line2,
           unitNumber: existingAddress.unitNumber,
           countryId: existingAddress.country.id,
           country: { id: existingAddress.countryId },
