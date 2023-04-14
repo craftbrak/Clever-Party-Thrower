@@ -1,0 +1,7 @@
+<mat-card (click)="onCardClick()" [ngClass]="{ 'selected': selected }">
+  <mat-card-content>
+    <h3>{{address?.line1}} {{address?.unitNumber}}</h3>
+    <p>{{address?.city}}, {{address?.postalCode}}</p>
+    <p>{{address?.country?.name}}</p>
+  </mat-card-content>
+</mat-card>
