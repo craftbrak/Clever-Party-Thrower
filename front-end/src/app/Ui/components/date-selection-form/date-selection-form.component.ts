@@ -22,7 +22,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 export class DateSelectionFormComponent implements OnInit {
   @Output() dates: EventEmitter<Date[]> = new EventEmitter();
   @Output() valid: EventEmitter<boolean> = new EventEmitter();
-
+  // todo: fix validation
   dateForm: FormGroup;
   selectedDates: Date[] = [];
 
