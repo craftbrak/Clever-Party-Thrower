@@ -46,7 +46,6 @@ import {AddressCardComponent} from './address-card/address-card.component';
     EventInfoFormComponent,
     AddressSelectionFormComponent,
     DateSelectionFormComponent,
-    DateSelectionFormComponent,
     AddressCardComponent,
   ],
   imports: [

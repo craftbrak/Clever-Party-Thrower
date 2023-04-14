@@ -1,22 +1,37 @@
-<div>
-  <mat-radio-group (change)="onFixedDateChange($event.value)" [(ngModel)]="fixedDate">
-    <mat-radio-button checked value="true">Fixed Date</mat-radio-button>
-    <mat-radio-button value="false">Multiple Dates</mat-radio-button>
-  </mat-radio-group>
-</div>
+<form [formGroup]="dateForm">
+  <div class="date-picker-container">
+    <div class="date-input-container">
+      <mat-slide-toggle formControlName="isMultipleDates">Multiple Dates</mat-slide-toggle>
+      <mat-form-field [ngStyle]="{'width': multipledate ? '60%' : '80%'}">
+        <mat-label>Date</mat-label>
+        <input [matDatepicker]="picker" formControlName="date" matInput>
+        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button (click)="addDate()" *ngIf="multipledate" @fadeSlideInOut [disabled]="!dateForm.get('date')?.valid"
+              color="primary"
+              mat-raised-button>
+        Add Date
+      </button>
+    </div>
+  </div>
+  <div class="selected-dates">
+    <div
+      *ngFor="let date of selectedDates; let i = index"
+      @fadeSlideInOut
+      class="selected-date"
+    >
 
-<form [formGroup]="dateSelectionForm">
-  <mat-form-field *ngIf="fixedDate">
-    <mat-label>Event Date *</mat-label>
-    <input [matDatepicker]="singleDatePicker" formControlName="singleDate" matInput>
-    <mat-datepicker-toggle [for]="singleDatePicker" matSuffix></mat-datepicker-toggle>
-    <mat-datepicker #singleDatePicker></mat-datepicker>
-  </mat-form-field>
+      {{ date | date }}
+      <button (click)="removeDate(i)" color="warn" mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
 
-  <mat-form-field *ngIf="!fixedDate">
-    <mat-label>Multiple Dates *</mat-label>
-    <input [matDatepicker]="multiDatePicker" formControlName="multipleDates" matInput multiple>
-    <mat-datepicker-toggle [for]="multiDatePicker" matSuffix></mat-datepicker-toggle>
-    <mat-datepicker #multiDatePicker></mat-datepicker>
-  </mat-form-field>
+
+    </div>
+  </div>
 </form>
+<div class="submit-button">
+  <button color="warn" mat-raised-button matStepperPrevious>Back</button>
+  <button [disabled]="!isvalid()" color="primary" mat-raised-button matStepperNext>Next</button>
+</div>

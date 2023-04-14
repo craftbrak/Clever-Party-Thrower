@@ -14,6 +14,32 @@ mat-form-field {
 
 .submit-button {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 16px;
+}
+
+.date-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  align-content: center;
+  flex-wrap: nowrap;
+}
+
+.selected-dates {
+  display: flex;
+}
+
+.selected-date {
+  display: flex;
+  align-items: center;
+  margin: 8px 4px;
+  justify-content: space-between;
+  background: #7f7f7f;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.selected-date p {
+  margin-right: 8px;
 }
