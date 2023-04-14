@@ -8,7 +8,7 @@ $my-palette: mat.define-palette(mat.$lime-palette);
 
 .address-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 1rem;
   padding-right: 8px;
 }
@@ -25,6 +25,31 @@ mat-card {
 .add-address-btn {
   width: 100%;
   margin-top: 1rem;
+}
+
+.add-address-btn.smaller {
+  width: 80%; // Adjust the width as desired
+  transition: width 0.3s ease-in-out;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-btn {
+  width: 10%;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  float: left;
+  transition: width 0.3s ease-in-out;
+}
+
+.next-btn {
+  float: right;
+  margin-left: 1rem;
+  width: 10%; // Adjust the width as desired
+  transition: width 0.3s ease-in-out;
 }
 
 /* Custom scrollbar styles */

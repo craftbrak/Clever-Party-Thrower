@@ -1,20 +1,31 @@
 <form [formGroup]="addressSelectionForm">
   <input formControlName="addressId" type="hidden">
   <div @staggerAnimation class="address-container">
-    <div *ngIf="!showAddAddressForm" @slideInOut class="address-grid">
-      <mat-card (click)="onCardClick(address.id)" *ngFor="let address of addresses"
-                [ngClass]="{ 'selected': selectedAddressId === address.id }">
-        <mat-card-content>
-          <h3>{{address.line1}} </h3>
-          <p>{{address.city}}, {{address.postalCode}}</p>
-          <p>{{address.country.name}}</p>
-        </mat-card-content>
-      </mat-card>
+    <div *ngIf="!showAddAddressForm" class="address-grid">
+      <app-address-card (cardClick)="onCardClick(address.id)"
+                        *ngFor="let address of addresses"
+                        [address]="address"
+                        [selected]="selectedAddressId === address.id">
+      </app-address-card>
     </div>
   </div>
-  <button (click)="toggleAddAddressForm()" class="add-address-btn" color="accent" mat-raised-button>
-    {{ showAddAddressForm ? 'Select Existing Address' : 'Add New Address' }}
-  </button>
+  <div class="button-container">
+    <button *ngIf="!showAddAddressForm" class="back-btn"
+            color="warn" mat-raised-button matStepperPrevious>
+      back
+    </button>
+    <button (click)="toggleAddAddressForm(); onAddNewAddressClick()"
+            [ngClass]="{ 'smaller': selectedAddressId && !showAddAddressForm }"
+            class="add-address-btn" color="accent"
+            mat-raised-button>
+      {{ showAddAddressForm ? 'Select Existing Address' : 'Add New Address' }}
+    </button>
+    <button *ngIf="!showAddAddressForm" [disabled]="!addressSelectionForm.valid"
+            class="add-address-btn next-btn" color="primary"
+            mat-raised-button matStepperNext>
+      Next
+    </button>
+  </div>
   <div *ngIf="showAddAddressForm" @slideInOut class="address-add-form">
     <!-- Address add form content -->
     <app-address-form (address)="onAddressFormSubmit($event)"
@@ -22,5 +33,4 @@
   </div>
 </form>
 
-<!-- Add a button or a link to navigate to the new address creation form -->
 

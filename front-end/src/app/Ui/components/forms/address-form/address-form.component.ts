@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Country} from "../../../../entities/address.entity";
 import {AddressService} from "../../../../services/address.service";
-import {debounceTime} from "rxjs";
 
 @Component({
   selector: 'app-address-form',
@@ -44,7 +43,7 @@ export class AddressFormComponent implements OnInit {
       });
       // console.table(this.countries)
     });
-    this.addressForm.valueChanges.pipe(debounceTime(450)).subscribe(value => this.address.emit(value))
+    // this.addressForm.valueChanges.pipe(debounceTime(450)).subscribe(value => this.address.emit(value))
   }
 
   onSubmit(): void {

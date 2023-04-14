@@ -28,6 +28,8 @@ import {EventInfoFormComponent} from './event-info-form/event-info-form.componen
 import {AddressSelectionFormComponent} from './address-selection-form/address-selection-form.component';
 import {DateSelectionFormComponent} from './date-selection-form/date-selection-form.component';
 import {MatCardModule} from "@angular/material/card";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {AddressCardComponent} from './address-card/address-card.component';
 
 
 @NgModule({
@@ -45,6 +47,7 @@ import {MatCardModule} from "@angular/material/card";
     AddressSelectionFormComponent,
     DateSelectionFormComponent,
     DateSelectionFormComponent,
+    AddressCardComponent,
   ],
   imports: [
     CommonModule,
@@ -64,7 +67,8 @@ import {MatCardModule} from "@angular/material/card";
     MatStepperModule,
     MatCheckboxModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ]
 })
 export class UiComponentsModule {

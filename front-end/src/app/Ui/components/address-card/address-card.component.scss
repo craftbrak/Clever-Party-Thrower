@@ -1,7 +1,17 @@
 @use '@angular/material' as mat;
 
 $my-palette: mat.define-palette(mat.$lime-palette);
-.selected {
+
+mat-card {
+  transition: transform 200ms ease-out;
+  cursor: pointer;
+}
+
+mat-card:hover {
+  transform: scale(1.5);
+}
+
+mat-card.selected {
   color: black;
   background-color: mat.get-color-from-palette($my-palette, 600);
 }

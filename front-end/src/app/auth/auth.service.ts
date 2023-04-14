@@ -3,6 +3,7 @@ import {Apollo} from "apollo-angular";
 import jwt_decode from "jwt-decode";
 import {catchError, Observable, tap, throwError} from "rxjs";
 import gql from "graphql-tag";
+import {JWTPayload} from "../entities/JWTPayload.entity";
 
 
 @Injectable({
@@ -25,6 +26,7 @@ export class AuthService {
       }
     }
   `;
+  public user: JWTPayload | null = null
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
 
@@ -70,6 +72,11 @@ export class AuthService {
           this._refreshToken = refreshToken;
           localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
           localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
+          this.user = jwt_decode(accessToken)
+          // @ts-ignore
+          localStorage.setItem('userid', this.user?.id)
+
+          console.log(this.user)
         }
       }),
       catchError((error) => {

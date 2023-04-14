@@ -21,6 +21,14 @@ export class AddressService {
     mutation CreateAddress($input: CreateAddressDto!) {
       createAddress(createAddressInput: $input) {
         id
+        country {
+          name
+          code
+        }
+        line1
+        unitNumber
+        city
+        postalCode
       }
     }
   `;
@@ -51,7 +59,7 @@ export class AddressService {
   }
 
   createAddress(input: CreateAddressDto) {
-    return this.apollo.mutate({
+    return this.apollo.mutate<Address>({
       mutation: this.CREATE_ADDRESS,
       variables: {input},
     });

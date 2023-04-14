@@ -82,9 +82,7 @@ export class RegisterUserFormComponent {
         city: this.addressData.city,
         countryId: this.addressData.countryId,
         line1: this.addressData.line1,
-        line2: this.addressData.line2,
         postalCode: this.addressData.postalCode,
-        streetNumber: this.addressData.streetNumber,
         unitNumber: this.addressData.unitNumber
 
       }
