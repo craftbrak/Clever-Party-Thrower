@@ -1,7 +1,7 @@
 <form [formGroup]="dateForm">
   <div class="date-picker-container">
     <div class="date-input-container">
-      <mat-slide-toggle formControlName="isMultipleDates">Multiple Dates</mat-slide-toggle>
+      <mat-slide-toggle (click)="toggleMultiple()" formControlName="isMultipleDates">Multiple Dates</mat-slide-toggle>
       <mat-form-field [ngStyle]="{'width': multipledate ? '60%' : '80%'}">
         <mat-label>Date</mat-label>
         <input [matDatepicker]="picker" formControlName="date" matInput>
@@ -15,7 +15,7 @@
       </button>
     </div>
   </div>
-  <div class="selected-dates">
+  <div *ngIf="multipledate" class="selected-dates">
     <div
       *ngFor="let date of selectedDates; let i = index"
       @fadeSlideInOut

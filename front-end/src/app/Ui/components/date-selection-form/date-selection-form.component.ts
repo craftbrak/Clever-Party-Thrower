@@ -51,12 +51,26 @@ export class DateSelectionFormComponent implements OnInit {
     }
   }
 
+  toggleMultiple() {
+    if (!this.multipledate) {
+      this.selectedDates = []
+    }
+  }
+
   removeDate(index: number) {
     this.selectedDates.splice(index, 1);
     this.dates.emit(this.selectedDates);
   }
 
   isvalid(): boolean {
-    return this.dateForm.valid || (this.selectedDates.length > 0 || !this.dateForm.get('isMultipleDates')?.value)
+    if (this.multipledate) {
+      // console.log(this.selectedDates.length, "multiple")
+      return this.selectedDates.length > 0
+    } else {
+      // console.log(this.dateForm.valid, "single")
+      return this.dateForm.valid
+
+    }
+
   }
 }
