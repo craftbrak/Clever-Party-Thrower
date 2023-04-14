@@ -20,6 +20,11 @@ $my-palette: mat.define-palette(mat.$blue-grey-palette);
   box-sizing: border-box;
 }
 
+submit-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
 
 .bg {
   background-color: mat.get-color-from-palette($my-palette, 700);
