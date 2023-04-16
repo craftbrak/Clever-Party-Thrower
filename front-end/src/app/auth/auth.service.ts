@@ -26,6 +26,14 @@ export class AuthService {
       }
     }
   `;
+  public REFRESH_Mutuation = gql`
+    mutation RefreshTokens($input: AuthRefreshDto!){
+      authRefresh(AuthRefreshDto: $input ){
+        accessToken
+        refreshToken
+      }
+    }
+  `
   public user: JWTPayload | null = null
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
@@ -122,7 +130,31 @@ export class AuthService {
   public async deleteAccount() {
   };
 
-  public refreshTokens() {
+  public refreshTokens(): void {
+    this.apollo.mutate({
+      mutation: this.REFRESH_Mutuation, variables: {}
+    }).pipe(
+      // @ts-ignore
+      tap(({data}) => {
+        if (data && data.authRefresh) {
+          const {accessToken, refreshToken} = data.authRefresh;
+          this._accessToken = accessToken;
+          this._refreshToken = refreshToken;
+          localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
+          localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
+          this.user = jwt_decode(accessToken)
+          // @ts-ignore
+          localStorage.setItem('userid', this.user?.id)
+
+          console.log(this.user)
+        }
+      }),
+      catchError((error) => {
+        // Handle errors, e.g., show an error message
+        console.error('Login error:', error);
+        return throwError(error);
+      })
+    );
     // let resp : AuthOutputDto;
     // this._refreshToken = resp.refreshToken;
     // this._accessToken = resp.accessToken;
