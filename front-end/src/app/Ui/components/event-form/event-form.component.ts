@@ -52,6 +52,7 @@ export class EventFormComponent implements OnInit {
   }
 
   onDateSelectionFormSubmit(data: any): void {
+    console.table(data)
     this.datesData = data;
   }
 
@@ -63,26 +64,34 @@ export class EventFormComponent implements OnInit {
 
     if (this.eventInfoValid && this.addressValid && this.datesValid) {
       // Process the event creation data and submit it.
+      // const eventData = {
+      //   ...this.eventInfoData,
+      //   addressId: this.addressData.id,
+      //   fixedDate: this.datesData.length === 1,
+      //   multipleDates: this.datesData,
+      //   userId: localStorage.getItem("userId")
+      // };
+      console.log('setup eventData')
+      console.table(this.eventInfoData)
+      console.table(this.addressData)
+      console.table(this.datesData)
       const eventData = {
-        ...this.eventInfoData,
-        addressId: this.addressData.addressId,
-        fixedDate: this.datesData.fixedDate,
-        multipleDates: this.datesData.multipleDates
-      };
-      this.createEvent(eventData);
-    }
-  }
-
-  private createEvent(eventData: any) {
-    console.log("Creating Event");
-    this.eventService.createEvent(eventData).subscribe(
-      (response) => {
-        console.log('Event creation success:', response);
-        this.router.navigate(['/dashboard']);
-      },
-      (error) => {
-        console.error('Event creation error:', error);
+        name: this.eventInfoData.eventName,
+        description: this.eventInfoData.eventDescription,
+        total: 0,
+        addressId: this.addressData.id,
+        fixedDate: this.datesData.length === 1,
       }
-    );
+      const eventToUserData = {
+        userId: localStorage.getItem("userid"),
+        addressId: this.addressData.id,
+      }
+      const eventDateData = this.datesData
+      this.eventService.createEventAndRelatedData(eventData, eventToUserData, eventDateData)
+        .subscribe((next) => {
+          this.router.navigate(['/'])
+        })
+
+    }
   }
 }

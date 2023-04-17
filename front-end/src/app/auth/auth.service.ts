@@ -131,17 +131,20 @@ export class AuthService {
   };
 
   public refreshTokens(): void {
+    console.info("refresshing Token")
     this.apollo.mutate({
       mutation: this.REFRESH_Mutuation, variables: {}
     }).pipe(
       // @ts-ignore
       tap(({data}) => {
+        console.info(data)
         if (data && data.authRefresh) {
           const {accessToken, refreshToken} = data.authRefresh;
           this._accessToken = accessToken;
           this._refreshToken = refreshToken;
           localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
           localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
+          console.info(data)
           this.user = jwt_decode(accessToken)
           // @ts-ignore
           localStorage.setItem('userid', this.user?.id)

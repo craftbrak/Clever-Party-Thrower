@@ -22,7 +22,7 @@
       class="selected-date"
     >
 
-      {{ date | date }}
+      {{ date | date:  'EEEE dd MMMM yyyy' }}
       <button (click)="removeDate(i)" color="warn" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>

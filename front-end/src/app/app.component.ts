@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
   }
 
   scheduleTokenRefresh() {
-    const expiresIn = 200000;
-    const refreshBuffer = 100;
+    const expiresIn = 400000;
+    const refreshBuffer = 1;
 
     timer(expiresIn - refreshBuffer)
       .subscribe(async () => {

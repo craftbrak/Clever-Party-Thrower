@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Address} from "../../../entities/address.entity";
+import {Address} from "../../../../entities/address.entity";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
-import {AddressService} from "../../../services/address.service";
-import {AuthService} from "../../../auth/auth.service";
+import {AddressService} from "../../../../services/address.service";
+import {AuthService} from "../../../../auth/auth.service";
 
 @Component({
   selector: 'app-address-selection-form',
@@ -82,7 +82,6 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
   onCardClick(addressId: string) {
     this.selectedAddressId = addressId;
     this.addressSelectionForm.get("addressId")?.patchValue(addressId);
-    console.log(this.addressSelectionForm.valid)
   }
 
   toggleAddAddressForm(): void {

@@ -20,10 +20,12 @@ $my-palette: mat.define-palette(mat.$blue-grey-palette);
   box-sizing: border-box;
 }
 
-submit-button {
+.submit-button {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 16px;
+  align-content: center;
+  align-items: center;
 }
 
 .bg {
@@ -44,8 +46,70 @@ mat-form-field {
   align-content: space-between;
 }
 
-.submit-button {
+
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.event-description {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.confirmation-wrapper {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
+  justify-content: space-between;
+}
+
+.confirmation-left {
+  width: 50%;
+}
+
+.confirmation-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+
+.date-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.date-item {
+  flex-basis: calc(50% - 10px);
+  margin-bottom: 20px;
+  // Custom styles for each date item, if any
+}
+
+@media (max-width: 767px) {
+  .date-item {
+    flex-basis: 100%;
+  }
 }

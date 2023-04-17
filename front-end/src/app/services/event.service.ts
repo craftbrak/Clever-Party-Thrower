@@ -91,11 +91,6 @@ export class EventService {
   Events: Observable<Event[]> | undefined;
   EventsId: Observable<string[]> | undefined;
   EventNumber: Observable<number> | undefined
-  SAYHELLO = gql`
-    query Sayhello{
-      sayHello
-    }
-  `
 
   constructor(private apollo: Apollo) {
     // this.getEventNumber().then();
@@ -124,12 +119,97 @@ export class EventService {
       .valueChanges.subscribe(value => this.EventNumber = value.data)
   }
 
-  // @ts-ignore
-  createEvent(eventData: any): Observable<any> {
-    // Use eventData to send a request to the server with the GraphQL API.
+  createEventAndRelatedData(eventData: any, eventToUserData: any, eventDateData: any) {
+    const createEventMutation = gql`
+      mutation CreateEvent($input: CreateEventDto!) {
+        createEvent(createEventInput: $input) {
+          id
+          name
+          description
+          total
+          addressId
+          fixedDate
+        }
+      }
+    `;
+    return new Observable((observer) => {
+      console.info("creating event")
+      this.apollo
+        .mutate({
+          mutation: createEventMutation,
+          variables: {
+            input: eventData
+          }
+        }) //@ts-ignore
+        .subscribe(({data}) => {
+          const eventId = data.createEvent.id;
+
+          this.createEventToUser(eventToUserData, eventId);
+          this.createEventDate(eventDateData, eventId);
+          observer.next({status: 'success', data: data});
+          observer.complete();
+        }, (error) => {
+          observer.error({status: 'error', message: "failed to create a event", error: error})
+        });
+    })
+  }
+
+  createEventToUser(eventToUserData: any, eventId: string) {
+    const createEventToUserMutation = gql`
+      mutation CreateEventToUser($input: CreateEventToUserDto!) {
+        createEventToUser(createEventToUserInput: $input) {
+          id
+          userId
+          eventId
+          addressId
+        }
+      }
+    `;
+    console.info("creating event to user with data ", eventToUserData, eventId)
+    this.apollo
+      .mutate({
+        mutation: createEventToUserMutation,
+        variables: {
+          input: {
+            ...eventToUserData,
+            eventId
+          }
+        }
+      }) //@ts-ignore
+      .subscribe(({data}) => {
+        console.info('EventToUser created:', data.createEventToUser);
+      });
+  }
+
+  createEventDate(eventDateData: Date[], eventId: string) {
+    const createEventDateMutation = gql`
+      mutation CreateEventDate($input: CreateEventDateInput!) {
+        createEventDate(createEventDateInput: $input) {
+          id
+          date
+          eventId
+          numberVotes
+        }
+      }
+    `;
+    for (const date of eventDateData) {
+      this.apollo
+        .mutate({
+          mutation: createEventDateMutation,
+          variables: {
+            input: {
+              date,
+              eventId
+            }
+          }
+        })//@ts-ignore
+        .subscribe(({data}) => {
+          console.log('EventDate created:', data.createEventDate);
+        });
+    }
   }
 
   testBackEnd() {
-    this.apollo.watchQuery({query: this.SAYHELLO}).valueChanges.subscribe(value => console.log(value))
+    // this.apollo.watchQuery({query: this.SAYHELLO}).valueChanges.subscribe(value => console.log(value))
   }
 }

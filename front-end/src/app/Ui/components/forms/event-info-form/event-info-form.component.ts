@@ -15,7 +15,7 @@ export class EventInfoFormComponent {
   constructor(private fb: FormBuilder) {
     this.eventInfoForm = this.fb.group({
       eventName: ['', Validators.required],
-      eventDescription: ['', Validators.required],
+      eventDescription: [''],
     });
 
     this.eventInfoForm.valueChanges.subscribe((value) => {

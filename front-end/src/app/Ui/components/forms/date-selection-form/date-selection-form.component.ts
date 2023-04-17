@@ -37,15 +37,21 @@ export class DateSelectionFormComponent implements OnInit {
     return this.dateForm.get("isMultipleDates")?.value
   }
 
+  get date() {
+    return this.dateForm.get('date')
+  }
+
   ngOnInit(): void {
     this.dateForm.valueChanges.subscribe(() => {
       this.valid.emit(this.isvalid());
+      if (!this.dateForm.get('isMultipleDates')?.value) this.dates.emit([this.date?.value])
     });
   }
 
   addDate() {
     if (this.dateForm.valid) {
-      this.selectedDates.push(this.dateForm.get('date')?.value);
+      if (!this.selectedDates.find((dt) => dt.toISOString() === this.date?.value.toISOString()))
+        this.selectedDates.push(this.date?.value);
       this.dates.emit(this.selectedDates);
       this.dateForm.get('date')?.reset();
     }

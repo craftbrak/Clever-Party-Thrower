@@ -24,9 +24,39 @@
 
       <mat-step>
         <ng-template matStepLabel>Confirmation</ng-template>
-        validation componant
+        <h3>Overview of the event</h3>
+        <div class="confirmation-wrapper">
+          <div class="confirmation-left">
+            <div *ngIf="eventInfoValid">
+              <h4>{{eventInfoData.eventName}}</h4>
+              <div class="event-description">{{eventInfoData.eventDescription}}</div>
+            </div>
+          </div>
+          <div class="confirmation-right">
+            <div *ngIf="datesValid">
+              <h4>Dates</h4>
+              <div class="date-container">
+                <div *ngFor="let date of datesData" class="date-item">
+                  {{date | date: 'EEEE dd MMMM yyyy'}}
+                </div>
+              </div>
+            </div>
+            <div *ngIf="addressValid">
+              <app-address-card [address]="addressData"></app-address-card>
+            </div>
+          </div>
+        </div>
+        <div class="submit-button">
+          <button color="warn" mat-raised-button matStepperPrevious>Back</button>
+          <button (click)="onSubmit()" [disabled]="!eventInfoValid && !addressValid && !datesValid" color="primary"
+                  mat-raised-button
+                  matStepperNext>Submit
+          </button>
+        </div>
       </mat-step>
+
     </mat-stepper>
     <small class="disclaimer">Fields marked with an * are required.</small>
+
   </div>
 </div>

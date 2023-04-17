@@ -8,18 +8,9 @@ $my-palette: mat.define-palette(mat.$lime-palette);
 
 .address-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(21vh, 1fr));
   grid-gap: 1rem;
   padding-right: 8px;
-}
-
-mat-card {
-  cursor: pointer;
-}
-
-.selected {
-  color: black;
-  background-color: mat.get-color-from-palette($my-palette, 600);
 }
 
 .add-address-btn {

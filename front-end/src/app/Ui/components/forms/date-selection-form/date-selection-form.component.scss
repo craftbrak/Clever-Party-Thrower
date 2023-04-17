@@ -1,3 +1,7 @@
+@use '@angular/material' as mat;
+
+$my-palette: mat.define-palette(mat.$blue_grey-palette);
+
 .title {
   display: flex;
   flex-direction: row;
@@ -28,6 +32,7 @@ mat-form-field {
 
 .selected-dates {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .selected-date {
@@ -35,7 +40,7 @@ mat-form-field {
   align-items: center;
   margin: 8px 4px;
   justify-content: space-between;
-  background: #7f7f7f;
+  background-color: mat.get-color-from-palette($my-palette, 800);
   border-radius: 5px;
   padding: 5px;
 }
