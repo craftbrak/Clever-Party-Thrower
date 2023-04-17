@@ -34,11 +34,20 @@ export class AuthService {
       }
     }
   `
-  public user: JWTPayload | null = null
+  public user: JWTPayload | null = null;
+  public tokenTTL: number = 1000
   private _accessToken: string | null = null;
   private _refreshToken: string | null = null;
 
   constructor(private apollo: Apollo) {
+    this.getToken()
+    if (this._accessToken) {
+      this.user = jwt_decode(this._accessToken)
+
+      // @ts-ignore
+      this.tokenTTL = this.user.exp - this.user?.iat
+      console.log(this.tokenTTL)
+    }
   }
 
   public async getToken(): Promise<string> {
@@ -76,15 +85,7 @@ export class AuthService {
       tap(({data}) => {
         if (data && data.authLogin) {
           const {accessToken, refreshToken} = data.authLogin;
-          this._accessToken = accessToken;
-          this._refreshToken = refreshToken;
-          localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
-          localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
-          this.user = jwt_decode(accessToken)
-          // @ts-ignore
-          localStorage.setItem('userid', this.user?.id)
-
-          console.log(this.user)
+          this.setTokens(accessToken, refreshToken)
         }
       }),
       catchError((error) => {
@@ -132,24 +133,14 @@ export class AuthService {
 
   public refreshTokens(): void {
     console.info("refresshing Token")
+
     this.apollo.mutate({
-      mutation: this.REFRESH_Mutuation, variables: {}
-    }).pipe(
-      // @ts-ignore
+      mutation: this.REFRESH_Mutuation, variables: {input: {refreshToken: localStorage.getItem('refreshToken')}}
+    }).pipe(// @ts-ignore
       tap(({data}) => {
-        console.info(data)
         if (data && data.authRefresh) {
           const {accessToken, refreshToken} = data.authRefresh;
-          this._accessToken = accessToken;
-          this._refreshToken = refreshToken;
-          localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
-          localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
-          console.info(data)
-          this.user = jwt_decode(accessToken)
-          // @ts-ignore
-          localStorage.setItem('userid', this.user?.id)
-
-          console.log(this.user)
+          this.setTokens(accessToken, refreshToken)
         }
       }),
       catchError((error) => {
@@ -157,15 +148,22 @@ export class AuthService {
         console.error('Login error:', error);
         return throwError(error);
       })
-    );
-    // let resp : AuthOutputDto;
-    // this._refreshToken = resp.refreshToken;
-    // this._accessToken = resp.accessToken;
-    // localStorage.setItem('accessToken', JSON.stringify(this._accessToken));
-    // localStorage.setItem('refreshToken', JSON.stringify(this._refreshToken));
+    ).subscribe(); // Add this line
   }
+
 
   private validateToken() {
 
+  }
+
+  private setTokens(accessToken: string, refreshToken: string) {
+    console.debug("setting tokens")
+    this._accessToken = accessToken;
+    this._refreshToken = refreshToken;
+    localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
+    localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
+    this.user = jwt_decode(accessToken)
+    // @ts-ignore
+    localStorage.setItem('userid', this.user?.id)
   }
 }

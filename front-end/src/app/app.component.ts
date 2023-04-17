@@ -19,12 +19,13 @@ export class AppComponent implements OnInit {
   }
 
   scheduleTokenRefresh() {
-    const expiresIn = 400000;
-    const refreshBuffer = 1;
+    const expiresIn = this.authService.tokenTTL * 1000;
+    const refreshBuffer = 10000;
 
     timer(expiresIn - refreshBuffer)
       .subscribe(async () => {
         await this.authService.refreshTokens();
+        // console.log(this.authService.user)
         this.scheduleTokenRefresh() // Schedule the next refresh
       });
   }
