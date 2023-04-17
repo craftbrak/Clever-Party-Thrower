@@ -1,6 +1,6 @@
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag"
-import {map, Observable} from "rxjs";
+import {forkJoin, map, Observable} from "rxjs";
 import {Event} from "../entities/event.entity";
 import {Injectable} from "@angular/core";
 
@@ -144,10 +144,12 @@ export class EventService {
         .subscribe(({data}) => {
           const eventId = data.createEvent.id;
 
-          this.createEventToUser(eventToUserData, eventId);
-          this.createEventDate(eventDateData, eventId);
-          observer.next({status: 'success', data: data});
-          observer.complete();
+          this.createEventToUser(eventToUserData, eventId).subscribe();
+          const observables = eventDateData.map((date: Date) => this.createEventDate(date, eventId))
+          forkJoin(observables).subscribe((results) => {
+            observer.next({status: 'success', data: data});
+            observer.complete();
+          })
         }, (error) => {
           observer.error({status: 'error', message: "failed to create a event", error: error})
         });
@@ -166,7 +168,7 @@ export class EventService {
       }
     `;
     console.info("creating event to user with data ", eventToUserData, eventId)
-    this.apollo
+    return this.apollo
       .mutate({
         mutation: createEventToUserMutation,
         variables: {
@@ -175,13 +177,10 @@ export class EventService {
             eventId
           }
         }
-      }) //@ts-ignore
-      .subscribe(({data}) => {
-        console.info('EventToUser created:', data.createEventToUser);
-      });
+      })
   }
 
-  createEventDate(eventDateData: Date[], eventId: string) {
+  createEventDate(date: Date, eventId: string) {
     const createEventDateMutation = gql`
       mutation CreateEventDate($input: CreateEventDateInput!) {
         createEventDate(createEventDateInput: $input) {
@@ -192,21 +191,16 @@ export class EventService {
         }
       }
     `;
-    for (const date of eventDateData) {
-      this.apollo
-        .mutate({
-          mutation: createEventDateMutation,
-          variables: {
-            input: {
-              date,
-              eventId
-            }
+    this.apollo
+      .mutate({
+        mutation: createEventDateMutation,
+        variables: {
+          input: {
+            date,
+            eventId
           }
-        })//@ts-ignore
-        .subscribe(({data}) => {
-          console.log('EventDate created:', data.createEventDate);
-        });
-    }
+        }
+      })
   }
 
   testBackEnd() {
