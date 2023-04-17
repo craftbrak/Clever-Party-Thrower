@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {timer} from "rxjs";
 import {AuthService} from "./auth/auth.service";
+import {EventService} from "./services/event.service";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {AuthService} from "./auth/auth.service";
 export class AppComponent implements OnInit {
   title = 'Clever Party Thrower';
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private eventService: EventService) {
   }
 
   ngOnInit(): void {
