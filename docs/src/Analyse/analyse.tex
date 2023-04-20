@@ -1,13 +1,17 @@
 %! Author = louis
 %! Date = 28-10-22
 
-Le projet ayant comme contrainte principale d'être disponible sur toutes les plateformes majeures, une base web me parait évidente.
-Pourtant, le web implique aussi avec la limitation principale qu'est le besoin de connection permanente au serveur.\\\\
-Pour remédier à ce problème une PWA ( Application Web Progressive ) nous permettrait de bénéficier des avantages du web,
+Le projet ayant comme contrainte principale d'être disponible sur toutes les plateformes majeures, une base web me paraît évidente.
+Pourtant, le web implique aussi la limitation principale qu'est le besoin de connexion permanente au serveur.\\
+Pour remédier à ce problème, une PWA (Application Web Progressive) nous permettrait de bénéficier des avantages du web,
 tout en permettant aux utilisateurs de conserver une version locale de l'application.
-De plus une PWA permet d'etre installée comme une application native Android ou IOS pour les plateformes mobiles, ce qui facilite l'accès.\\
+De plus, une PWA permet d'être installée comme une application native Android ou iOS pour les plateformes mobiles, ce qui facilite l'accès.\
+Cependant, les PWA augmentent aussi énormément la complexité du projet et limitent le développeur dans son choix d'outils.
+La première version de l'application sera donc un site web responsive qui pourrait éventuellement être transformé en PWA par la suite.
 
-Une PWA comme toute application web nécessite plusieurs composants:
+Il ne faut cependant pas perdre de vue le second objectif de cette application qu'est la possibilité de la déployer simplement.
+
+Toute application web nécessite plusieurs composants:
 \begin{itemize}
     \item Une interface utilisateur
     \subitem un gestionnaire de données
@@ -23,20 +27,20 @@ Une PWA comme toute application web nécessite plusieurs composants:
 \end{itemize}
 
 \subsubsection{TypeScript}
-Avant de regarder quels outils utiliser pour les différents composants je pense qu'il est important de choisir un language de programmation.\\
+Avant de regarder quels outils utiliser pour les différents composants, je pense qu'il est important de choisir un langage de programmation.\\
 
-Pour ce projet j'ai décidé d'utiliser le même language pour les 2 composants majeurs que sont le front-end et le back-end.
-Plusieurs choix s'offraient alors à moi, JavaScript, Kotlin, TypeScript ou n'importe quel langage compilable en web assembly\\
+Pour ce projet, j'ai décidé d'utiliser le même langage pour les 2 composants majeurs que sont le front-end et le back-end.
+Plusieurs choix s'offraient alors à moi, JavaScript, Kotlin, TypeScript ou n'importe quel langage compilable en web assembly.\\
 
 JavaScript n'était pas vraiment un bon choix vu qu'il ne propose pas de typage, ce qui rend le code moins prédictible et robuste.\\
 
-Kotlin est un bon candidat, il offre un typage statique, mais propose de l'inférence de type, peu être transpiler vers du JavaScript ou du web assembly,
-les outils de développement pour kotlin sont aussi très bons, mais la documentation pour une utilisation web est plutôt pauvre, comparer aux autres options.\\\\
+Kotlin est un bon candidat, il offre un typage statique, mais propose de l'inférence de type, peut être transpilé vers du JavaScript ou du web assembly,
+les outils de développement pour Kotlin sont aussi très bons, mais la documentation pour une utilisation web est plutôt pauvre, comparée aux autres options.\\\\
 
-TypeScript a quant à lui tous les avantages de Kotlin, grâce au typage fort, et profite aussi de la documentation et des outils javaScript grâce à sa nature de superset.
-Lorsque l'on développe un produit web surtout pour un développeur full-stack TypeScript est l'idéal.\\
-Ses outils, l'environnement JavaScript, la sécurité des Types et du null, la documentation, sont toutes des bonnes raisons d'utiliser TypeScript.
-Pour toutes ces raisons TypeScript est le language idéal pour le développement Web.
+TypeScript a quant à lui tous les avantages de Kotlin, grâce au typage fort, et profite aussi de la documentation et des outils JavaScript grâce à sa nature de superset.
+Lorsque l'on développe un produit web, surtout pour un développeur full-stack, TypeScript est l'idéal.\\
+Ses outils, l'environnement JavaScript, la sécurité des types et du null, la documentation, sont toutes de bonnes raisons d'utiliser TypeScript.
+Pour toutes ces raisons, TypeScript est le langage idéal pour le développement Web.
 
 \subsection{Front-end}\label{subsec:front-end}
 Pour ce qui est de l'interface utilisateur ( le front-end ) j'ai décidé d'utiliser Angular car ce framework utilise TypeScript nativement tout en supportant aussi les PWA\@.
@@ -70,7 +74,7 @@ offre beaucoup de composants différents en plus de plusieurs composants de layo
 PrimeNg offre aussi un grand nombre de composants, mais n'offre pas de layout par contre,
 PrimeNg permet d'utiliser un autre thème que Material.\\\\
 NgBootstrap est un simple wrapper pour Bootstrap css et propose tous les composants de bootstrap.
-Vu que mon objectif est de créer une PWA qui sera installable sur Android,
+Vu que mon objectif final serait de créer une PWA qui sera installable sur Android,
 utiliser un thème similaire à ceux des applications Google intégrera mieux l'application.
 \newpage
 
@@ -120,6 +124,38 @@ Postgres est une base de donnée très utiliser en production, est très perform
 \paragraph{Structure de donnée}
 Pour stocker toutes les données nécessaires au fonctionnement de l'application, il nous faut une structure de donnée cohérente.
 Voici un schema\ref{fig:dbSchema} de la base de donnée et de sa structure:
+
+\subsection{Hébergement}\label{subsec:hebergement}
+Afin de permettre aux utilisateurs qui le désirent d'auto-héberger l'application, un environnement préconfiguré ou agnostique
+de son hôte est, selon moi, la meilleure solution.
+Nous allons donc conteneuriser l'application.
+\subsubsection{Conteneurisation}
+Pour conteneuriser l'application, plusieurs solutions s'offrent à nous, nous pouvons tout d'abord créer une image Docker qui sera toute l'application.
+Cette image serait à la fois la base de données, le service d'API, et le serveur web hébergeant le front-end.
+Cette solution est très loin d'être parfaite, mais présente tout de même un énorme avantage pour l'utilisateur, mettre en place l'application peut se faire en une seule commande.
+Par contre, cette solution ne permet pas aux éventuels futurs développeurs de ce projet d'ajouter simplement d'autres services comme un serveur mail ou un autre type de base de données.
+Essayons de conserver l'avantage que propose cette solution monolithique, mais en séparant les différents services (serveur web, API, Base de données, \ldots) dans différents conteneurs.
+Il existe plusieurs solutions qui permettent de déployer plusieurs conteneurs avec une seule commande, il y a Docker Swarm, Docker Compose et d'autres systèmes d'orchestration comme Kubernetes.
+Afin de permettre aux utilisateurs qui désireraient auto-héberger l'application de manière simple, je pense qu'un simple script
+Docker Compose me paraît le mieux, je voudrais cependant aussi permettre à des utilisateurs plus avancés d'héberger l'application en Haute Disponibilité.
+\subsubsection{Orchestration}
+Pour permettre la haute disponibilité, il faut que l'application n'ait pas un seul point de faute, par exemple sans haute disponibilité, si le système d'exploitation du serveur crash, toute l'application tombe.
+Afin d'être résilient à ce genre de panne, nous allons introduire de la redondance à tous les niveaux du système d'hébergement, et cela, grâce à un outil permettant d'orchestrer des conteneurs sur plusieurs machines.
+Il existe plusieurs outils permettant l'orchestration de conteneurs dans un cluster de machines, mais le plus simple à aborder est de loin Kubernetes.
+Nous allons donc mettre en place un Kubernetes permettant d'héberger l'application en haute disponibilité.
+De plus, ce cluster nous permettra aussi de gérer les certificats TLS de manière simple.
+Très bien, nous avons décidé de mettre en place un cluster Kubernetes, mais cela ne rend pas notre cluster portable,
+une fois mis en place, il reste unique tel un flocon de neige.
+Une solution existe aussi pour ce problème, l'infrastructure as code.
+\subsubsection{Infrastructure as code}
+Comment rendre notre cluster et par extension notre application déployable en une seule commande ?
+J'ai pour cela décidé d'utiliser Ansible, qui permet de déployer mon cluster peu importe l'état de la machine.
+Ansible permet effectivement d'être agnostique.
+Un simple script shell aurait suffi, mais ce dernier n'est pas agnostique de l'état de l'OS,
+par exemple si une commande demande à créer le répertoire /home/foo mais qu'il existe déjà,
+le script shell plantera.
+Ansible, lui, n'aura pas de problème à continuer son exécution, car pour lui, si le répertoire existe, c'est bon.
+
 %Todo: fix possitioning Shema DB
 \begin{figure}[h!]
     \includegraphics[width=\linewidth]{./images/dbShema}\caption{Architecture de la base de donnée}\label{fig:dbSchema}
