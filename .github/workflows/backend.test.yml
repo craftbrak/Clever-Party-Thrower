@@ -161,6 +161,8 @@ jobs:
           JWT_REFRESH_SECRET: ${{secrets.JWT_REFRESH_SECRET}}
           JWT_AUTH_TTL: ${{vars.JWT_AUTH_TTL}}
           JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
+          EMAIL_ADDRESS: ${{secrets.EMAIL_ADDRESS}}
+          EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
 
   Build_docker_image_of_back-end:
