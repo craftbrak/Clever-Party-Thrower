@@ -36,6 +36,7 @@ import { EventDatesModule } from "./event-dates/event-dates.module";
 import { EventDate } from "./event-dates/entities/event-date.entity";
 import { DatesToUserModule } from "./dates-to-user/dates-to-user.module";
 import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
+import { EmailService } from "./email.service";
 
 //TODO: adapt to use DB URL if host is null
 @Module({
@@ -56,6 +57,11 @@ import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
         JWT_AUTH_TTL: Joi.string().required().default("5m"),
         JWT_REFRESH_SECRET: Joi.string().default(randomUUID()),
         JWT_REFRESH_TTL: Joi.string().required().default("5h"),
+        EMAIL_ADDRESS: Joi.string()
+          .required()
+          .email()
+          .default("cleverpartythrowe@gmail.com"),
+        EMAIL_PASSWORD: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -112,7 +118,7 @@ import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
     EventDatesModule,
     DatesToUserModule,
   ],
-  providers: [AppService, AppResolver],
+  providers: [AppService, AppResolver, EmailService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
