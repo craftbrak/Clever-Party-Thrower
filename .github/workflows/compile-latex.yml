@@ -13,20 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up TeX Live
-        uses: dante-ev/latex-action@latest
-        with:
-          working_directory: .
-          root_file: main.tex
-          extra_system_packages: texlive-latex-extra texlive-bibtex-extra texlive-science
-
       - name: Compile LaTeX document
-        run: |
-          latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
-          bibtex main
-          makeglossaries main
-          latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
-          latexmk -c
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          working_directory: .
+          extra_packages: texlive-latex-extra texlive-bibtex-extra texlive-science
+          run: |
+            latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
+            bibtex main
+            makeglossaries main
+            latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
+            latexmk -c
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
