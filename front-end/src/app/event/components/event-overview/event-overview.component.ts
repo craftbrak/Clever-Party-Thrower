@@ -4,7 +4,7 @@ import {EventService} from "../../../services/event.service";
 
 
 @Component({
-  selector: 'event-overview',
+  selector: 'app-event-overview',
   templateUrl: './event-overview.component.html',
   styleUrls: ['./event-overview.component.scss']
 })

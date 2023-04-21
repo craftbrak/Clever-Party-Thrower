@@ -3,7 +3,7 @@ import {EventService} from "../../../services/event.service";
 import {map} from "rxjs";
 
 @Component({
-  selector: 'events-page',
+  selector: 'app-events-page',
   templateUrl: './events.page.component.html',
   styleUrls: ['./events.page.component.scss']
 })
