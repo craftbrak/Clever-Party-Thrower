@@ -16,12 +16,9 @@ jobs:
       - name: Set up TeX Live
         uses: dante-ev/latex-action@latest
         with:
-          pre_compile: |
-            tlmgr update --self
-            tlmgr install latexmk
-            tlmgr install bibtex
-            tlmgr install glossaries
-            tlmgr install glossaries-extra
+          working_directory: .
+          root_file: main.tex
+          extra_system_packages: texlive-latex-extra texlive-bibtex-extra texlive-science
 
       - name: Compile LaTeX document
         run: |
