@@ -53,7 +53,7 @@ jobs:
         run: npm run build
 
       - name: Run the unit tests suites
-        run: npm run test -- src/dept/utils/debts.utils.spec.ts
+        run: npm run test -- src/dept/utils/debts.utils.spec.ts src/email.service.spec.ts
         #        run: npm run test
         env:
           TEST_DATABASE_NAME: ${{vars.TEST_DATABASE_NAME}}
