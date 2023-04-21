@@ -196,7 +196,7 @@ jobs:
         with:
           context: ./back-end
           file: ./back-end/Dockerfile
-          push: true
+          push: false
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
   Push_build_to_docker_hub:
     runs-on: ubuntu-latest
@@ -229,7 +229,7 @@ jobs:
           context: ./back-end
           file: ./back-end/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:${{github.sha}}
 
 #  Update_and_restart_docker_container_versions_on_remote:
 #    name: Deploy To Cluster
