@@ -1,0 +1,38 @@
+name: Compile LaTeX Document
+
+on:
+  push:
+    branches:
+      - main # Change this to your default branch if it's not 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up TeX Live
+        uses: dante-ev/latex-action@v1.0.0
+        with:
+          pre_compile: |
+            tlmgr update --self
+            tlmgr install latexmk
+            tlmgr install bibtex
+            tlmgr install glossaries
+            tlmgr install glossaries-extra
+
+      - name: Compile LaTeX document
+        run: |
+          latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
+          bibtex main
+          makeglossaries main
+          latexmk -pdf -synctex=1 -interaction=nonstopmode -file-line-error -halt-on-error main.tex
+          latexmk -c
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-report
+          path: main.pdf
