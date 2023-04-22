@@ -8,6 +8,7 @@ import { AddressModule } from "../address/address.module";
 import { HttpModule } from "@nestjs/axios";
 import { Car } from "../car/entities/car.entity";
 import { Address } from "../address/entities/address.entity";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Address } from "../address/entities/address.entity";
     EventModule,
     AddressModule,
     HttpModule,
+    JwtModule,
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],
