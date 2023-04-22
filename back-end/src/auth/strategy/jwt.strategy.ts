@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       if (payload.isTwoFaAuthenticated) {
         return await this.userService.findOne(payload.email);
       } else {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException("Please connect with 2FA");
       }
     } else return await this.userService.findOne(payload.email);
   }
