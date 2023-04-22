@@ -2,6 +2,13 @@ import { Spending } from "../../spending/entities/spending.entity";
 import { Event } from "../../event/entities/event.entity";
 import { UserEntity } from "../../user/entities/user.entity";
 
+/**
+ * this function takes a list of spending and a list of participant and calculates each participant's balance
+ * It spread the cost of all expenses to all participants
+ * @param expenses
+ * @param participants
+ * @return the map of balances
+ */
 export async function mapExpenses(
   expenses: Spending[],
   participants: UserEntity[],
@@ -28,6 +35,13 @@ export async function mapExpenses(
   // );
   return pMap;
 }
+
+/**
+ * This function uses a map of user and number representing eatch uses balance to calculate all the debts of eatch user
+ * @param balances the map
+ * @param eventId the event on with the debts will be linked
+ * @return list of debts returning all balances to 0
+ */
 export async function calculateDebtsFromBalances(
   balances: Map<string, number>,
   eventId: string,
@@ -60,6 +74,11 @@ export async function calculateDebtsFromBalances(
   });
   return debts;
 }
+
+/**
+ * This function has for objective to reduce the number of debts by fusionning debts between the same users
+ * @param debts A list of debts that has to be minimised
+ */
 export async function optimiseDebts(debts: Debt[]): Promise<Debt[]> {
   const optimisedDebts: Debt[] = [];
   const exploredUser = new Map<UserEntity["id"], UserEntity["id"]>();
