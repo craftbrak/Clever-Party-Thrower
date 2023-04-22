@@ -19,7 +19,14 @@
     pdfpagemode=FullScreen,
 }
 
-
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+% display heading, like subsubsection
+{-3.25ex\@plus -1ex \@minus -.2ex}%
+{1.5ex \@plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\setcounter{secnumdepth}{4}
+\makeatother
 % Document
 \begin{document}
     \begin{titlepage}
