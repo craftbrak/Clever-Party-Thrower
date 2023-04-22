@@ -2,14 +2,26 @@
 %! Date = 28-10-22
 
 % Preamble
-\documentclass[12pt]{article}
+\documentclass[12pt, a4paper, oneside]{article}
 
 % Packages
-\usepackage{amsmath}
-\usepackage{lstdoc}
-\usepackage{hyperref}
-\usepackage{pdfpages}
+\usepackage[french]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage[colorlinks=true, pdfborder {0 0 0},linkcolor=black]{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{lipsum}
+\usepackage[nomain, toc, xindy, acronym]{glossaries}
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[labelformat=empty]{caption}
+\usepackage{titlepic}
+\usepackage[xindy]{imakeidx}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage{pdfpages}
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
@@ -18,6 +30,10 @@
     pdftitle={Clever-Party-Thrower, une application web hébergée via Kubernetes et Ansible},
     pdfpagemode=FullScreen,
 }
+\fancyhf{}
+\fancyhead[LO,RE]{\sffamily\itshape \leftmark}
+\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
 
 \makeatletter
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
