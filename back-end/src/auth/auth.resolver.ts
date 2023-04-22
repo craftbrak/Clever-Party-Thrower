@@ -7,6 +7,7 @@ import { AuthInputDto } from "./dto/auth-input.dto";
 import { UserEntity } from "../user/entities/user.entity";
 import { CurrentUser } from "./current-user.decorator";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
+import { VerifyEmailDto } from "./dto/verify_email_dto";
 
 @Resolver()
 export class AuthResolver {
@@ -65,5 +66,9 @@ export class AuthResolver {
   async disable2fa(@CurrentUser() user: UserEntity): Promise<boolean> {
     await this.authService.disable2fa(user);
     return true;
+  }
+  @Public()
+  async verifyEmail(@Args("VerifyEmailDTO") dto: VerifyEmailDto) {
+    return await this.authService.verifyEmail(dto);
   }
 }

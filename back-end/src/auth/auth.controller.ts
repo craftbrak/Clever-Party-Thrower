@@ -1,4 +1,12 @@
-import { Body, Controller, Param, Post, Req, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LocalAuthGuard } from "./guards/localAuth.guard";
 import { UserEntity } from "../user/entities/user.entity";
@@ -28,8 +36,16 @@ export class AuthController {
   async refresh(@Body("AuthRefreshDto") authRefreshDto: AuthRefreshDto) {
     return await this.authService.refresh(authRefreshDto);
   }
-  async enable2FA() {}
+  /*async enable2FA() {}
   async login2fa() {}
   async disable2fa() {}
-  async logout() {}
+  async logout() {}*/
+
+  @Public()
+  @Get(":token")
+  async verifyEmail(@Param("token") token: string) {
+    return this.authService.verifyEmail({
+      verificationToken: token,
+    });
+  }
 }

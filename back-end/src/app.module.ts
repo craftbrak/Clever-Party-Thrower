@@ -62,6 +62,7 @@ import { EmailService } from "./email.service";
           .email()
           .default("cleverpartythrowe@gmail.com"),
         EMAIL_PASSWORD: Joi.string().required(),
+        EMAIL_VERIFICATION_URL: Joi.string().required(),
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

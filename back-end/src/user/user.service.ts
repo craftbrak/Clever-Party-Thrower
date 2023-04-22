@@ -8,6 +8,10 @@ import * as argon2 from "argon2";
 import { AddressService } from "../address/address.service";
 import { HttpService } from "@nestjs/axios";
 import { Address } from "../address/entities/address.entity";
+import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
+import { randUuid } from "@ngneat/falso";
+import { EmailService } from "../email.service";
 
 @Injectable()
 export class UserService {
@@ -18,6 +22,8 @@ export class UserService {
     private readonly addressRepo: Repository<Address>,
     private addressService: AddressService,
     private readonly httpService: HttpService,
+    private readonly jwtService: JwtService,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(createUserInput: CreateUserDto): Promise<UserEntity> {
@@ -31,6 +37,7 @@ export class UserService {
       await usr.address.save();
     }
     usr.email = usr.email.toLowerCase(); //todo: add avatar on registering
+    this.sendVerificationEmail(usr);
 
     return await usr.save();
   }
@@ -66,7 +73,11 @@ export class UserService {
         updateUserInput.addressId,
       );
     }
-    if (updateUserInput.email) usr.email = updateUserInput.email;
+    if (updateUserInput.email && usr.email != updateUserInput.email) {
+      usr.email = updateUserInput.email;
+      usr.isVerified = false;
+      this.sendVerificationEmail(usr);
+    }
     if (updateUserInput.name) usr.name = updateUserInput.name;
     if (updateUserInput.password) usr.password = updateUserInput.password;
     const resp = await this.httpService
@@ -95,13 +106,35 @@ export class UserService {
     if (status == false) usr.twoFaKey = null;
     await usr.save();
   }
+  sendVerificationEmail(user: UserEntity) {
+    const payload = {
+      sub: user.id,
+      key: "email-validation",
+    };
+    const options = {
+      expiresIn: "24h", // Set an expiration time for the token (optional)
+    };
+    const token = this.jwtService.sign(payload, options);
+    this.emailService.sendEmailVerification(user.email, token);
 
-  async verifyUser(id: string, token: string) {
-    const usr = await this.userRepo.findOneByOrFail({ id: id });
-    if (await argon2.verify(usr.hashedEmailValidationToken, token)) {
-      usr.isVerified = true;
+    //todo: send email with token http://localhost:3000/emailVerification/{userId}/{token}
+  }
+  async verifyUser(token: string) {
+    try {
+      const decodedToken: any = this.jwtService.verify(token);
+
+      if (decodedToken.type === "email-validation") {
+        // The token is valid, return the user ID
+        const usr = await this.userRepo.findOneOrFail({
+          where: { id: decodedToken.sub },
+        });
+        usr.isVerified = true;
+        await usr.save();
+      }
+    } catch (err) {
+      // Handle token expiration or any other error
     }
-    await usr.save();
+    return false;
   }
 
   async set2FAKey(id: string, token: string) {

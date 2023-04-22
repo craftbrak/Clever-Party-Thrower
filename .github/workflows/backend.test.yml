@@ -69,6 +69,7 @@ jobs:
           EMAIL_ADDRESS: ${{secrets.EMAIL_ADDRESS}}
           EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+          EMAIL_VERIFICATION_URL: ${{vars.EMAIL_VERIFICATION_URL}}
 
   #      - name: Run the e2e tests suites
   #        #        run: npm run test -- src/dept/utils/debts.utils.spec.ts
@@ -164,6 +165,7 @@ jobs:
           EMAIL_ADDRESS: ${{secrets.EMAIL_ADDRESS}}
           EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
+          EMAIL_VERIFICATION_URL: ${{vars.EMAIL_VERIFICATION_URL}}
 
   Build_docker_image_of_back-end:
     # The type of runner that the job will run on

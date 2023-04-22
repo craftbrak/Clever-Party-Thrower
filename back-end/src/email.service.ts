@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import * as nodemailer from "nodemailer";
 import { ConfigService } from "@nestjs/config";
 
@@ -53,7 +55,9 @@ export class EmailService {
       html: `
       <h3>Email Verification</h3>
       <p>To verify your email, please click the following link:</p>
-      <a href="https://your-app-url.com/verify-email?token=${token}">Verify Email</a>
+      <a href="https://${this.configService.get(
+        "EMAIL_VERIFICATION_URL",
+      )}/auth/${token}">Verify Email</a>
     `,
     };
     return this.transporter.sendMail(mailOptions);

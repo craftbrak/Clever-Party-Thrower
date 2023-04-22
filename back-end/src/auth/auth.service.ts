@@ -8,6 +8,7 @@ import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { authenticator } from "otplib";
+import { VerifyEmailDto } from "./dto/verify_email_dto";
 
 @Injectable()
 export class AuthService {
@@ -114,5 +115,8 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
       refreshToken: refreshToken,
     };
+  }
+  async verifyEmail(dto: VerifyEmailDto): Promise<boolean> {
+    return this.userService.verifyUser(dto.verificationToken);
   }
 }
