@@ -24,6 +24,7 @@ export class UserService {
     private readonly httpService: HttpService,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
+    private readonly configService: ConfigService,
   ) {}
 
   async create(createUserInput: CreateUserDto): Promise<UserEntity> {
@@ -109,6 +110,7 @@ export class UserService {
     };
     const options = {
       expiresIn: "24h", // Set an expiration time for the token (optional)
+      secret: this.configService.get("JWT_EMAIL_SECRET"),
     };
     const token = this.jwtService.sign(payload, options);
     this.emailService.sendEmailVerification(user.email, token);

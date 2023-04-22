@@ -57,6 +57,7 @@ import { EmailModule } from "./email/email.module";
         JWT_AUTH_TTL: Joi.string().required().default("5m"),
         JWT_REFRESH_SECRET: Joi.string().default(randomUUID()),
         JWT_REFRESH_TTL: Joi.string().required().default("5h"),
+        JWT_EMAIL_SECRET: Joi.string().default(randomUUID()),
         EMAIL_ADDRESS: Joi.string()
           .required()
           .email()

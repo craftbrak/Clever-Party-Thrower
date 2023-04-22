@@ -11,6 +11,7 @@ import { Address } from "../address/entities/address.entity";
 import { JwtModule } from "@nestjs/jwt";
 import { AppModule } from "../app.module";
 import { EmailModule } from "../email/email.module";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EmailModule } from "../email/email.module";
     HttpModule,
     JwtModule,
     EmailModule,
+    ConfigService,
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],
