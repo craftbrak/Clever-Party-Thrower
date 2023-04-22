@@ -36,6 +36,7 @@
     "@nestjs/typeorm": "^9.0.1",
     "@ngneat/falso": "^6.1.0",
     "@types/geojson": "^7946.0.10",
+    "@types/nodemailer": "^6.4.7",
     "apollo-server-express": "^3.10.3",
     "argon2": "^0.30.1",
     "class-transformer": "^0.5.1",

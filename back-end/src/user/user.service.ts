@@ -36,7 +36,8 @@ export class UserService {
       usr.address.owner = usr;
       await usr.address.save();
     }
-    usr.email = usr.email.toLowerCase(); //todo: add avatar on registering
+    usr.email = usr.email.toLowerCase();
+    usr.avatar = createUserInput.avatar;
     this.sendVerificationEmail(usr);
 
     return await usr.save();
@@ -80,12 +81,7 @@ export class UserService {
     }
     if (updateUserInput.name) usr.name = updateUserInput.name;
     if (updateUserInput.password) usr.password = updateUserInput.password;
-    const resp = await this.httpService
-      .get(
-        `https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=${usr.name}`,
-      )
-      .toPromise();
-    usr.avatar = resp.data.toString();
+    usr.avatar = updateUserInput.avatar;
     await usr.save();
     return usr;
   }
@@ -116,8 +112,6 @@ export class UserService {
     };
     const token = this.jwtService.sign(payload, options);
     this.emailService.sendEmailVerification(user.email, token);
-
-    //todo: send email with token http://localhost:3000/emailVerification/{userId}/{token}
   }
   async verifyUser(token: string) {
     try {
