@@ -39,7 +39,7 @@ export class UserService {
     }
     usr.email = usr.email.toLowerCase();
     usr.avatar = createUserInput.avatar;
-    this.sendVerificationEmail(usr);
+    // this.sendVerificationEmail(usr); Todo: fix credentials
 
     return await usr.save();
   }
