@@ -11,7 +11,7 @@ import { Address } from "../address/entities/address.entity";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { randUuid } from "@ngneat/falso";
-import { EmailService } from "../email.service";
+import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class UserService {

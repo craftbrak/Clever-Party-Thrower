@@ -9,6 +9,8 @@ import { HttpModule } from "@nestjs/axios";
 import { Car } from "../car/entities/car.entity";
 import { Address } from "../address/entities/address.entity";
 import { JwtModule } from "@nestjs/jwt";
+import { AppModule } from "../app.module";
+import { EmailModule } from "../email/email.module";
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { JwtModule } from "@nestjs/jwt";
     AddressModule,
     HttpModule,
     JwtModule,
+    EmailModule,
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],

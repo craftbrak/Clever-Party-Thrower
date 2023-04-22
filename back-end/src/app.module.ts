@@ -36,7 +36,7 @@ import { EventDatesModule } from "./event-dates/event-dates.module";
 import { EventDate } from "./event-dates/entities/event-date.entity";
 import { DatesToUserModule } from "./dates-to-user/dates-to-user.module";
 import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
-import { EmailService } from "./email.service";
+import { EmailModule } from "./email/email.module";
 
 //TODO: adapt to use DB URL if host is null
 @Module({
@@ -118,8 +118,9 @@ import { EmailService } from "./email.service";
     DeptModule,
     EventDatesModule,
     DatesToUserModule,
+    EmailModule,
   ],
-  providers: [AppService, AppResolver, EmailService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {

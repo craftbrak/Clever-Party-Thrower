@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { EmailService } from "./email.service";
+import { EmailService } from "./email/email.service";
 import { ConfigModule } from "@nestjs/config";
 
 const sendMailMock = jest.fn();
