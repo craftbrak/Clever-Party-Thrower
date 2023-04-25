@@ -1,12 +1,12 @@
 version: '3.5'
 
 services:
-  postgres: #TODO: Trafeak rules
+  postgres:
     container_name: postgres_container
     image: postgis/postgis
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-psw}
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       PGDATA: /data/postgres
     env_file:
       - back-end/database.env
@@ -16,31 +16,108 @@ services:
       - "5432:5432"
     networks:
       - postgres
+      - traefik
     restart: unless-stopped
 
-  CPT-API: #TODO: env + secrets + Trafeak rules + network
+  CPT-API:
     container_name: CPT-API
     image: louisdewilde/clever-party-thrower-back-end
+    environment:
+      DATABASE_NAME: ${POSTGRES_DB:-postgres}
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      PORT: 8689
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
+      TWO_FACTOR_AUTHENTICATION_APP_NAME: ${TWO_FACTOR_AUTHENTICATION_APP_NAME}
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL}
+      JWT_AUTH_TTL: ${JWT_AUTH_TTL}
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+      JWT_REFRESH_SECRET_FILE: /run/secrets/jwt_refresh_secret
+      EMAIL_PASSWORD_FILE: /run/secrets/email_password
+    secrets:
+      - db_password
+      - jwt_secret
+      - jwt_refresh_secret
+      - email_password
     networks:
       - postgres
+      - traefik
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.CPT-API.rule=Host(`${CPT_API_DOMAIN}`)"
+      - "traefik.http.routers.CPT-API.entrypoints=websecure"
+      - "traefik.http.routers.CPT-API.middlewares=https_redirect"
+      - "traefik.http.routers.CPT-API.tls.certresolver=myresolver"
     ports:
       - "8689:8689"
 
-  CPT-Web: #TODO: build container + env + Trafeak rules + network
+  CPT-Web:
     container_name: CPT-Web
+    build: .
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.CPT-Web.rule=Host(`${CPT_WEB_DOMAIN}`)"
+      - "traefik.http.routers.CPT-Web.entrypoints=websecure"
+      - "traefik.http.routers.CPT-Web.middlewares=https_redirect"
+      - "traefik.http.routers.CPT-Web.tls.certresolver=myresolver"
+    environment:
+      API_URL: ${CPT_API_DOMAIN}
 
-
-  Trafeak: #TODO: setup trafeak + network
+  Trafeak:
     container_name: Trafeak
+    image: traefik:v2.5
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/acme/acme.json"
+      # ... (other configurations)
+    labels:
+      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
+    environment:
+      CF_API_EMAIL: ${CF_API_EMAIL}
+      CF_API_KEY_FILE: /run/secrets/cf_api_key
+    secrets:
+      - cf_api_key
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_acme:/acme
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - traefik
+    restart: unless-stopped
 
 networks:
   postgres:
     driver: bridge
-secrets: #TODO: show how to create docker external secrets in doc
-  db_pasword:
+  traefik:
+    driver: bridge
+
+secrets:
+  db_password:
     file: db_password.txt
-  db_root_pasword:
-    file: db_password.txt
+  jwt_secret:
+    file: jwt_secret.txt
+  jwt_refresh_secret:
+    file: jwt_refresh_secret.txt
+  email_password:
+    file: email_password.txt
+  cf_api_key:
+    file: cf_api_key.txt
+
 volumes:
   postgres:
+  traefik_acme:
