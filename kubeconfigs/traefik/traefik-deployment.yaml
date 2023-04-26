@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      containers:
+        - name: traefik
+          image: traefik:v2.5
+          args:
+            - "--configFile=/config/traefik.toml"
+          ports:
+            - name: web
+              containerPort: 80
+            - name: websecure
+              containerPort: 443
+          volumeMounts:
+            - name: traefik-config
+              mountPath: /config
+            - name: cloudflare-api-key
+              mountPath: /etc/traefik/acme
+      volumes:
+        - name: traefik-config
+          configMap:
+            name: traefik-config
+        - name: cloudflare-api-key
+          secret:
+            secretName: traefik-cloudflare-api-key

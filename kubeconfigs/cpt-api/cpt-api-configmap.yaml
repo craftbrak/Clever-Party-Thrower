@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cpt-api-configmap
+data:
+  EMAIL_ADDRESS: "your_email_address"
+  TWO_FACTOR_AUTHENTICATION_APP_NAME: "your_app_name"
+  JWT_REFRESH_TTL: "your_jwt_refresh_ttl"
+  JWT_AUTH_TTL: "your_jwt_auth_ttl"
+  DATABASE_NAME: "your_database_name"
+  DATABASE_USER: "your_database_user"
+  DATABASE_PORT: "your_database_port"
+  DATABASE_HOST: "your_database_host"
+  PORT: "your_api_port"

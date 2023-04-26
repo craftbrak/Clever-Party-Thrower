@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: louisdewilde/clever-party-thrower-back-end
+          image: louisdewilde/clever-party-thrower-back-end:${{github.sha}}
           ports:
             - containerPort:
                 valueFrom:

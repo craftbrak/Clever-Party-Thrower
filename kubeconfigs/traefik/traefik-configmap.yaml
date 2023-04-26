@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+data:
+  traefik.toml: |
+    [global]
+    checkNewVersion = true
+    sendAnonymousUsage = false
+
+    [entryPoints]
+    [entryPoints.web]
+    address = ":80"
+    
+    [entryPoints.websecure]
+    address = ":443"
+
+    [providers.kubernetesIngress]
+    ingressClass = "traefik"
+
+    [certificatesResolvers.myresolver.acme]
+    email = "<your_acme_email>"
+    storage = "acme.json"
+    [certificatesResolvers.myresolver.acme.dnsChallenge]
+    provider = "cloudflare"
+    delayBeforeCheck = 0
+    resolvers = ["1.1.1.1:53", "8.8.8.8:53"]
+    apiKey = "/etc/traefik/acme/cf_api_key"
+

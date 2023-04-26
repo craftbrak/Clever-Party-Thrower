@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpt-api
+  namespace: cpt-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpt-api
+  template:
+    metadata:
+      labels:
+        app: cpt-api
+    spec:
+      containers:
+        - name: cpt-api
+          image: louisdewilde/clever-party-thrower-back-end
+          ports:
+            - containerPort: 8689
+          envFrom:
+            - configMapRef:
+                name: cpt-api-configmap
+            - secretRef:
+                name: cpt-api-secret

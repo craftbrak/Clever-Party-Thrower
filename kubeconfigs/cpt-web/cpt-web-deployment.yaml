@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpt-web
+  namespace: cpt-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpt-web
+  template:
+    metadata:
+      labels:
+        app: cpt-web
+    spec:
+      containers:
+        - name: cpt-web
+          image: <your_cpt_web_image>
+          envFrom:
+            - configMapRef:
+                name: cpt-web-config
+          ports:
+            - containerPort: 80
