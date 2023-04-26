@@ -231,7 +231,9 @@ jobs:
           context: ./back-end
           file: ./back-end/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:${{github.sha}}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
 
 #  Update_and_restart_docker_container_versions_on_remote:
 #    name: Deploy To Cluster
