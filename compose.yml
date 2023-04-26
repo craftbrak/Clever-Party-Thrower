@@ -68,8 +68,8 @@ services:
     environment:
       API_URL: ${CPT_API_DOMAIN}
 
-  Trafeak:
-    container_name: Trafeak
+  Traefik:
+    container_name: Traefik
     image: traefik:v2.5
     command:
       - "--api.insecure=true"
@@ -99,6 +99,12 @@ services:
     networks:
       - traefik
     restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 4 --cleanup
 
 networks:
   postgres:
