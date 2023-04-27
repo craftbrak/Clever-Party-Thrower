@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       PGDATA: /data/postgres
     env_file:
-      - back-end/database.env
+      - .env
     volumes:
       - postgres:/data/postgres
     ports:
@@ -19,8 +19,8 @@ services:
       - traefik
     restart: unless-stopped
 
-  CPT-API:
-    container_name: CPT-API
+  cpt-api:
+    container_name: cpt-api
     image: louisdewilde/clever-party-thrower-back-end
     environment:
       DATABASE_NAME: ${POSTGRES_DB:-postgres}
@@ -54,9 +54,9 @@ services:
     ports:
       - "8689:8689"
 
-  CPT-Web:
-    container_name: CPT-Web
-    build: .
+  cpt-web:
+    container_name: cpt-web
+    image: louisdewilde/clever-party-thrower-front-end
     networks:
       - traefik
     labels:
@@ -68,7 +68,7 @@ services:
     environment:
       API_URL: ${CPT_API_DOMAIN}
 
-  Traefik:
+  traefik:
     container_name: Traefik
     image: traefik:v2.5
     command:
