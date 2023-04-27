@@ -23,5 +23,6 @@ RUN npm install -g npm-check-updates \
 RUN npm ci --only=production
 # Bundle app source
 COPY . /app
+RUN npm run build
 EXPOSE 3000
-CMD node /app/index.js
+CMD npm run start:prod

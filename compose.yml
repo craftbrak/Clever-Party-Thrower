@@ -66,7 +66,7 @@ services:
       - "traefik.http.routers.CPT-Web.middlewares=https_redirect"
       - "traefik.http.routers.CPT-Web.tls.certresolver=myresolver"
     environment:
-      API_URL: ${CPT_API_DOMAIN}
+      api-url: ${CPT_URL}
 
   traefik:
     container_name: Traefik
