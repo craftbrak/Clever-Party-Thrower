@@ -3,7 +3,10 @@
 
 name: Test back-end on github and push on docker-hub
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - "*"
 
 jobs:
   Test_Back-end_unit:
@@ -201,6 +204,7 @@ jobs:
           push: false
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/clever-party-thrower-back-end:latest
   Push_build_to_docker_hub:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     # build docker image and push to docker hub
     needs: [ Test_Back-end_unit, Test_Back-end_integration, Build_docker_image_of_back-end ]
