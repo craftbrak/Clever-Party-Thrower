@@ -21,7 +21,7 @@ services:
 
   cpt-api:
     container_name: cpt-api
-    image: louisdewilde/clever-party-thrower-back-end
+    image: louisdewilde/clever-party-thrower-back-end:latest
     environment:
       DATABASE_NAME: ${POSTGRES_DB:-postgres}
       DATABASE_USER: ${POSTGRES_USER:-postgres}
@@ -56,7 +56,7 @@ services:
 
   cpt-web:
     container_name: cpt-web
-    image: louisdewilde/clever-party-thrower-front-end
+    image: louisdewilde/clever-party-thrower-front-end:latest
     networks:
       - traefik
     labels:
@@ -101,6 +101,7 @@ services:
     restart: unless-stopped
 
   watchtower:
+    container_name: watchtower
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
