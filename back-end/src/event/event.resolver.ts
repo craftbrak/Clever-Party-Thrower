@@ -30,6 +30,7 @@ export class EventResolver {
   @Query(() => EventsPagination, { name: "getEvents" })
   async findAll(
     @Args() args: EventsPaginationArgs,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @CurrentUser() user: JWTPayload,
   ) {
     return await this.eventService.findAll(args);

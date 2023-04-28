@@ -10,7 +10,6 @@ import { HttpService } from "@nestjs/axios";
 import { Address } from "../address/entities/address.entity";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { randUuid } from "@ngneat/falso";
 import { EmailService } from "../email/email.service";
 
 @Injectable()
@@ -103,6 +102,7 @@ export class UserService {
     if (status == false) usr.twoFaKey = null;
     await usr.save();
   }
+
   sendVerificationEmail(user: UserEntity) {
     const payload = {
       sub: user.id,
@@ -115,6 +115,7 @@ export class UserService {
     const token = this.jwtService.sign(payload, options);
     this.emailService.sendEmailVerification(user.email, token);
   }
+
   async verifyUser(token: string) {
     try {
       const decodedToken: any = this.jwtService.verify(token);

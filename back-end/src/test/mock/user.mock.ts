@@ -4,7 +4,6 @@ import {
   randEmail,
   randFullName,
   randPassword,
-  randUrl,
 } from "@ngneat/falso";
 
 export const testUser: CreateUserDto = {
@@ -31,6 +30,7 @@ export const userMock2: CreateUserDto = {
   manual: randBoolean(),
   password: randPassword(),
 };
+
 export function userMock(): CreateUserDto {
   return {
     email: randEmail(),

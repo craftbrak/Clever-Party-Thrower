@@ -1,8 +1,6 @@
 import { IntegrationTestManager } from "../../integration-test-manager";
-import { AuthOutputDto } from "../../../auth/dto/auth-output.dto";
 import gql from "graphql-tag";
 import request from "supertest-graphql";
-import { testUser } from "../../mock/user.mock";
 
 describe("logout", () => {
   jest.setTimeout(20000);
@@ -22,9 +20,7 @@ describe("logout", () => {
             logout
           }
         `;
-        const response = await request<{ logout: boolean }>(
-          integrationTestManager.httpServer,
-        )
+        await request<{ logout: boolean }>(integrationTestManager.httpServer)
           .set({
             Authorization: `Bearer ${integrationTestManager.accessToken.accessToken}`,
           })

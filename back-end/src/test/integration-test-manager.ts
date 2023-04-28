@@ -130,6 +130,7 @@ export class IntegrationTestManager {
 
   async getNewAddress(user: UserEntity = null): Promise<Address> {
     const add = randAddress();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     user = user ? user : { id: "" };
     const addressService = this._moduleRef.get<AddressService>(AddressService);
