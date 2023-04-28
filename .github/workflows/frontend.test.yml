@@ -61,7 +61,7 @@ jobs:
               },
             });
   build:
-    need: [ audit ]
+    needs: [ audit ]
     runs-on: ubuntu-latest
     defaults:
       run:
