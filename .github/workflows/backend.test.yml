@@ -9,7 +9,7 @@ on:
       - "*"
 
 jobs:
-  npm_audit:
+  audit:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -36,7 +36,38 @@ jobs:
             echo "Warning: npm audit found packages that need to be fixed."
           fi
           set -e
+
+  build:
+    needs: [ audit ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Nest.js app
+        run: npm run build
+
   Test_Back-end_unit:
+    needs: [ build ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -117,6 +148,7 @@ jobs:
   #          JWT_REFRESH_TTL: ${{vars.JWT_REFRESH_TTL}}
   #          TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
   Test_Back-end_integration:
+    needs: [ build ]
     runs-on: ubuntu-latest
     defaults:
       run:
