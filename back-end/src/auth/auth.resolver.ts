@@ -67,6 +67,7 @@ export class AuthResolver {
     await this.authService.disable2fa(user);
     return true;
   }
+
   @Public()
   async verifyEmail(@Args("VerifyEmailDTO") dto: VerifyEmailDto) {
     return await this.authService.verifyEmail(dto);

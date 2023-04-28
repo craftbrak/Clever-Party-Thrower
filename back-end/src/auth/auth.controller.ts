@@ -1,23 +1,14 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { LocalAuthGuard } from "./guards/localAuth.guard";
 import { UserEntity } from "../user/entities/user.entity";
 import { Request } from "express";
 import { Public } from "./public.decorator";
-import { Args } from "@nestjs/graphql";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
   @Public()
   @Post("login")
   async login(
@@ -31,15 +22,17 @@ export class AuthController {
       code,
     );
   }
+
   @Public()
   @Post("refresh")
   async refresh(@Body("AuthRefreshDto") authRefreshDto: AuthRefreshDto) {
     return await this.authService.refresh(authRefreshDto);
   }
+
   /*async enable2FA() {}
-  async login2fa() {}
-  async disable2fa() {}
-  async logout() {}*/
+    async login2fa() {}
+    async disable2fa() {}
+    async logout() {}*/
 
   @Public()
   @Get(":token")

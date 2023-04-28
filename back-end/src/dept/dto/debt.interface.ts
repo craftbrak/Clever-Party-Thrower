@@ -3,5 +3,4 @@ interface Debt {
   creditorId: string;
   debtorId: string;
   eventId: string;
-
 }

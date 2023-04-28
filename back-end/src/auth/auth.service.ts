@@ -105,6 +105,10 @@ export class AuthService {
     return true;
   }
 
+  async verifyEmail(dto: VerifyEmailDto): Promise<boolean> {
+    return this.userService.verifyUser(dto.verificationToken);
+  }
+
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: this.configService.get("JWT_REFRESH_TTL"),
@@ -115,8 +119,5 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
       refreshToken: refreshToken,
     };
-  }
-  async verifyEmail(dto: VerifyEmailDto): Promise<boolean> {
-    return this.userService.verifyUser(dto.verificationToken);
   }
 }

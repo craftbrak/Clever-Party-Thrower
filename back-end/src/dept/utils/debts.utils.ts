@@ -1,5 +1,4 @@
 import { Spending } from "../../spending/entities/spending.entity";
-import { Event } from "../../event/entities/event.entity";
 import { UserEntity } from "../../user/entities/user.entity";
 
 /**
