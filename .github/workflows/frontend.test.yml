@@ -39,7 +39,7 @@ jobs:
         with:
           script: |
             const { repo: { owner, repo }, sha } = context;
-            await github.checks.create({
+            await github.rest.checks.create({
               owner,
               repo,
               name: 'npm-audit',
@@ -122,7 +122,7 @@ jobs:
   #      - name: Test Angular app
   #        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   build_docker_image:
-    needs: [ lint, test, build ]
+    needs: [ lint, test ]
     runs-on: ubuntu-latest
     defaults:
       run:
