@@ -6,9 +6,7 @@ on:
       - "*"
 
 jobs:
-  npm_audit:
-    if: github.ref == 'refs/heads/main'
-    needs: [ test ]
+  audit:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -63,6 +61,7 @@ jobs:
               },
             });
   build:
+    need: [ audit ]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -162,7 +161,7 @@ jobs:
 
 
   build_and_push_to_dockerhub:
-    needs: [ lint, test, build ]
+    needs: [ build_docker_image ]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     defaults:
