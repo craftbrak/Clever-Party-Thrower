@@ -27,15 +27,15 @@ jobs:
         id: npm_audit
         continue-on-error: true
         run: |
-          audit_output=$(npm audit --json)
+          audit_output=$(npm audit --json || true)
           vulnerabilities_count=$(echo "$audit_output" | jq '.metadata.vulnerabilities.total')
           echo "Vulnerabilities count: $vulnerabilities_count"
           echo "audit_output_json=$audit_output" >> $GITHUB_ENV
           if [ $vulnerabilities_count -ne 0 ]; then
-          echo "Warning: npm audit found packages that need to be fixed."
-          echo "::set-output name=audit_status::1"
+            echo "Warning: npm audit found packages that need to be fixed."
+            echo "::set-output name=audit_status::1"
           else
-          echo "::set-output name=audit_status::0"
+            echo "::set-output name=audit_status::0"
           fi
 
       - name: Create annotation if npm audit found issues
