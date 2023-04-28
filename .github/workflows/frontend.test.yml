@@ -27,18 +27,26 @@ jobs:
         id: npm_audit
         continue-on-error: true
         run: |
-          set +e
-          npm audit
-          exit_code=$?
-          echo "::set-output name=audit_status::$exit_code"
-          set -e
+          audit_output=$(npm audit --json)
+          vulnerabilities_count=$(echo "$audit_output" | jq '.metadata.vulnerabilities.total')
+          echo "Vulnerabilities count: $vulnerabilities_count"
+          echo "audit_output_json=$audit_output" >> $GITHUB_ENV
+          if [ $vulnerabilities_count -ne 0 ]; then
+          echo "Warning: npm audit found packages that need to be fixed."
+          echo "::set-output name=audit_status::1"
+          else
+          echo "::set-output name=audit_status::0"
+          fi
 
       - name: Create annotation if npm audit found issues
-        if: steps.npm_audit.outputs.audit_status != '0'
+        if: steps.npm_audit.outputs.audit_status == '1'
         uses: actions/github-script@v5
         with:
           script: |
             const { repo: { owner, repo }, sha } = context;
+            const auditOutputJson = process.env.audit_output_json;
+            const vulnerabilities = JSON.parse(auditOutputJson).metadata.vulnerabilities;
+            
             await github.rest.checks.create({
               owner,
               repo,
@@ -48,14 +56,14 @@ jobs:
               conclusion: 'neutral',
               output: {
                 title: 'npm audit found packages that need to be fixed',
-                summary: 'Check the npm audit output for more details',
+                summary: `Vulnerabilities found: ${vulnerabilities.total}`,
                 annotations: [
                   {
                     path: 'package.json',
                     start_line: 1,
                     end_line: 1,
                     annotation_level: 'warning',
-                    message: 'npm audit found packages that need to be fixed',
+                    message: `npm audit found ${vulnerabilities.total} vulnerabilities.`,
                   },
                 ],
               },
