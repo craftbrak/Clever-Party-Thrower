@@ -1,7 +1,3 @@
-I have updated the README to include all the necessary environment variables and added an example of the `.env` file. Users will now be able to copy the `docker-compose.yml` file and create the `.env` file without cloning the entire repository.
-
----
-
 # Clever Party Thrower (CPT) Stack Deployment Guide
 
 This guide will help you set up the CPT stack using Docker Compose. The stack includes the following services:
