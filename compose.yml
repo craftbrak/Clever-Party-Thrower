@@ -36,6 +36,7 @@ services:
       JWT_SECRET_FILE: /run/secrets/jwt_secret
       JWT_REFRESH_SECRET_FILE: /run/secrets/jwt_refresh_secret
       EMAIL_PASSWORD_FILE: /run/secrets/email_password
+      EMAIL_VERIFICATION_URL: ${API_URL}
     secrets:
       - db_password
       - jwt_secret
@@ -66,7 +67,7 @@ services:
       - "traefik.http.routers.CPT-Web.middlewares=https_redirect"
       - "traefik.http.routers.CPT-Web.tls.certresolver=myresolver"
     environment:
-      api-url: ${CPT_URL}
+      api-url: ${API_URL}
 
   traefik:
     container_name: Traefik
