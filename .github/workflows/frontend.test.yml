@@ -7,6 +7,7 @@ on:
 
 jobs:
   audit:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,7 +31,8 @@ jobs:
           audit_output=$(npm audit --json || true)
           vulnerabilities_count=$(echo "$audit_output" | jq '.metadata.vulnerabilities.total')
           echo "Vulnerabilities count: $vulnerabilities_count"
-          echo "audit_output_json=$audit_output" >> $GITHUB_ENV
+          audit_output_base64=$(echo "$audit_output" | base64 -w 0)
+          echo "audit_output_base64=$audit_output_base64" >> $GITHUB_ENV
           if [ $vulnerabilities_count -ne 0 ]; then
             echo "Warning: npm audit found packages that need to be fixed."
             echo "::set-output name=audit_status::1"
@@ -44,7 +46,8 @@ jobs:
         with:
           script: |
             const { repo: { owner, repo }, sha } = context;
-            const auditOutputJson = process.env.audit_output_json;
+            const auditOutputBase64 = process.env.audit_output_base64;
+            const auditOutputJson = Buffer.from(auditOutputBase64, 'base64').toString('utf-8');
             const vulnerabilities = JSON.parse(auditOutputJson).metadata.vulnerabilities;
             
             await github.rest.checks.create({
