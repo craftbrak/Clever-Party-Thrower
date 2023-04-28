@@ -9,6 +9,33 @@ on:
       - "*"
 
 jobs:
+  npm_audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./back-end
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        continue-on-error: true
+        run: |
+          set +e
+          npm audit
+          exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "Warning: npm audit found packages that need to be fixed."
+          fi
+          set -e
   Test_Back-end_unit:
     runs-on: ubuntu-latest
     defaults:
@@ -47,7 +74,7 @@ jobs:
       - name: Set up Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -127,7 +154,7 @@ jobs:
       - name: Set up Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -169,33 +196,6 @@ jobs:
           EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
           TWO_FACTOR_AUTHENTICATION_APP_NAME: ${{vars.TWO_FACTOR_AUTHENTICATION_APP_NAME}}
           EMAIL_VERIFICATION_URL: ${{vars.EMAIL_VERIFICATION_URL}}
-  npm_audit:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./front-end
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run npm audit
-        continue-on-error: true
-        run: |
-          set +e
-          npm audit
-          exit_code=$?
-          if [ $exit_code -ne 0 ]; then
-            echo "Warning: npm audit found packages that need to be fixed."
-          fi
-          set -e
   Build_docker_image_of_back-end:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
