@@ -10,7 +10,7 @@ server {
 
     location /api/config {
         default_type application/json;
-        return 200 '{"apiUrl": "${API_URL}"}';
+        return 200 '{"apiUrl": "http://${BACKEND_HOST}:${BACKEND_PORT}/';
     }
 
     # Uncomment the following sections if you want to enable them
