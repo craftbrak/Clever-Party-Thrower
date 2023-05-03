@@ -7,6 +7,7 @@ import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 
 const uri = `https://${window.location.hostname}/api`;
+console.log(uri)
 
 export function createApollo(httpLink: HttpLink) {
   const authLink = setContext((_, {headers}) => {
