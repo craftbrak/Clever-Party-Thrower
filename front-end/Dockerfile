@@ -20,6 +20,7 @@ RUN npm run build -- --outputPath=dist
 FROM nginx:1.19
 
 # Copy the built Angular app and your custom NGINX configuration (if any)
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY start-nginx.sh /start-nginx.sh
 
