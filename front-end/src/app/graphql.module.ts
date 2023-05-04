@@ -6,13 +6,22 @@ import {ApolloLink, InMemoryCache} from '@apollo/client/core';
 import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 
-const uri = `https://${window.location.hostname}/api`;
+// const uri = `https://${window.location.hostname}/api/config`;
+const uri = `https://api-cpt.louisdewilde.be/api/config`;
 console.log(uri)
 
+export async function fetchApiUrl() {
+  const response = await fetch(uri);
+  return await response.json();
+}
+
 export function createApollo(httpLink: HttpLink) {
-  const authLink = setContext((_, {headers}) => {
+  const uriPromise = fetchApiUrl();
+  const authLink = setContext(async (_, {headers}) => {
+    const uri2 = (await uriPromise)?.apiUrl ?? "";
     const accessToken = localStorage.getItem('accessToken');
     return {
+      uri2,
       headers: {
         ...headers,
         authorization: accessToken ? `Bearer ${accessToken}` : '',
@@ -43,7 +52,6 @@ export function createApollo(httpLink: HttpLink) {
       loggingLink,
       errorLink,
       authLink,
-      httpLink.create({uri}),
     ]),
     cache: new InMemoryCache(),
   };
