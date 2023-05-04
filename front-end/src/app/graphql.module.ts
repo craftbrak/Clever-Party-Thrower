@@ -20,6 +20,7 @@ export function createApollo(httpLink: HttpLink) {
   const authLink = setContext(async (_, {headers}) => {
     const uri2 = (await uriPromise)?.apiUrl ?? "";
     const accessToken = localStorage.getItem('accessToken');
+    console.log(uri2)
     return {
       uri2,
       headers: {
@@ -43,7 +44,6 @@ export function createApollo(httpLink: HttpLink) {
       graphQLErrors.forEach(({message}) =>
         console.error(`[GraphQL error]: ${message}`)
       );
-
     if (networkError) console.error(`[Network error]: ${networkError}`);
   });
 
