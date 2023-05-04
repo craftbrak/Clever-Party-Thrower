@@ -5,101 +5,59 @@ services:
     container_name: postgres_container
     image: postgis/postgis
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Change this variable
+      POSTGRES_DB: postgres
       PGDATA: /data/postgres
-    env_file:
-      - .env
     volumes:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
-      - traefik
     restart: unless-stopped
 
   cpt-api:
+    depends_on:
+      - postgres
     container_name: cpt-api
     image: louisdewilde/clever-party-thrower-back-end:latest
     environment:
-      DATABASE_NAME: ${POSTGRES_DB:-postgres}
-      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PSW: ${POSTGRES_PASSWORD} # Change this variable
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
       PORT: 8689
-      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
-      TWO_FACTOR_AUTHENTICATION_APP_NAME: ${TWO_FACTOR_AUTHENTICATION_APP_NAME}
-      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL}
-      JWT_AUTH_TTL: ${JWT_AUTH_TTL}
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
-      JWT_SECRET_FILE: /run/secrets/jwt_secret
-      JWT_REFRESH_SECRET_FILE: /run/secrets/jwt_refresh_secret
-      EMAIL_PASSWORD_FILE: /run/secrets/email_password
-      EMAIL_VERIFICATION_URL: ${API_URL}
-    secrets:
-      - db_password
-      - jwt_secret
-      - jwt_refresh_secret
-      - email_password
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS} # Change this variable
+      TWO_FACTOR_AUTHENTICATION_APP_NAME: ${TWO_FACTOR_AUTHENTICATION_APP_NAME} # Change this variable if needed
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL} # Change this variable if needed
+      JWT_AUTH_TTL: ${JWT_AUTH_TTL} # Change this variable if needed
+      JWT_SECRET: ${JWT_SECRET} # Change this variable
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET} # Change this variable
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD} # Change this variable
+      EMAIL_VERIFICATION_URL: ${API_URL} # Change this variable
     networks:
       - postgres
-      - traefik
+      - web
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.CPT-API.rule=Host(`${CPT_API_DOMAIN}`)"
-      - "traefik.http.routers.CPT-API.entrypoints=websecure"
-      - "traefik.http.routers.CPT-API.middlewares=https_redirect"
-      - "traefik.http.routers.CPT-API.tls.certresolver=myresolver"
     ports:
       - "8689:8689"
 
   cpt-web:
     container_name: cpt-web
     image: louisdewilde/clever-party-thrower-front-end:latest
-    networks:
-      - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.CPT-Web.rule=Host(`${CPT_WEB_DOMAIN}`)"
-      - "traefik.http.routers.CPT-Web.entrypoints=websecure"
-      - "traefik.http.routers.CPT-Web.middlewares=https_redirect"
-      - "traefik.http.routers.CPT-Web.tls.certresolver=myresolver"
-    environment:
-      api-url: ${API_URL}
-
-  traefik:
-    container_name: Traefik
-    image: traefik:v2.5
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
-      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
-      - "--certificatesresolvers.myresolver.acme.storage=/acme/acme.json"
-      # ... (other configurations)
-    labels:
-      - "traefik.http.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.https_redirect.redirectscheme.permanent=true"
-    environment:
-      CF_API_EMAIL: ${CF_API_EMAIL}
-      CF_API_KEY_FILE: /run/secrets/cf_api_key
-    secrets:
-      - cf_api_key
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - traefik_acme:/acme
+    depends_on:
+      - cpt-api
     ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - traefik
+      - "8080:80"
+    environment:
+      BACKEND_HOST: cpt-api.louisdewilde.be
+      BACKEND_PORT: 443
     restart: unless-stopped
+    networks:
+      - web
+
 
   watchtower:
     container_name: watchtower
@@ -111,21 +69,8 @@ services:
 networks:
   postgres:
     driver: bridge
-  traefik:
+  web:
     driver: bridge
-
-secrets:
-  db_password:
-    file: db_password.txt
-  jwt_secret:
-    file: jwt_secret.txt
-  jwt_refresh_secret:
-    file: jwt_refresh_secret.txt
-  email_password:
-    file: email_password.txt
-  cf_api_key:
-    file: cf_api_key.txt
 
 volumes:
   postgres:
-  traefik_acme:
