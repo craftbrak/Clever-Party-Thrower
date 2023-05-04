@@ -9,6 +9,12 @@ server {
     }
 
     location /api/config {
+    # Add these lines to allow CORS
+        add_header 'Access-Control-Allow-Origin' 'http://localhost:4200';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
         default_type application/json;
         return 200 '{"apiUrl": "https://${BACKEND_HOST}:${BACKEND_PORT}/';
     }
