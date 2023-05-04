@@ -9,7 +9,7 @@ if (environment.production) {
 }
 
 async function fetchApiUrlAndBootstrap() {
-  const uri = '/api/config';
+  const uri = environment.apiUrl;
   const response = await fetch(uri);
   const data = await response.json();
   localStorage.setItem('apiUrl', data.apiUrl);
