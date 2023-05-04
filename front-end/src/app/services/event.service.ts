@@ -3,6 +3,7 @@ import gql from "graphql-tag"
 import {forkJoin, map, Observable} from "rxjs";
 import {Event} from "../entities/event.entity";
 import {Injectable} from "@angular/core";
+import {UserRole} from "../entities/event-to-user.entity";
 
 const Get_Events = gql`
   {
@@ -164,6 +165,7 @@ export class EventService {
           userId
           eventId
           addressId
+          userRole
         }
       }
     `;
@@ -174,7 +176,8 @@ export class EventService {
         variables: {
           input: {
             ...eventToUserData,
-            eventId
+            eventId: eventId,
+            role: UserRole.OWNER
           }
         }
       })
