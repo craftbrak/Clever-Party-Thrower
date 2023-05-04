@@ -6,30 +6,20 @@ import {ApolloLink, InMemoryCache} from '@apollo/client/core';
 import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 
-// const uri = `https://${window.location.hostname}/api/config`;
-const uri = `https://cpt.louisdewilde.be/api/config`;
-console.log(uri)
-
-export async function fetchApiUrl() {
-  const response = await fetch(uri);
-  return await response.json();
-}
 
 export function createApollo(httpLink: HttpLink) {
-  const uriPromise = fetchApiUrl();
+  const apiUrl = localStorage.getItem('apiUrl') ?? "";
   const authLink = setContext(async (_, {headers}) => {
-    const uri2 = (await uriPromise)?.apiUrl ?? "";
+
     const accessToken = localStorage.getItem('accessToken');
-    console.log(uri2)
+
     return {
-      uri2,
       headers: {
         ...headers,
         authorization: accessToken ? `Bearer ${accessToken}` : '',
       },
     };
   });
-
   const loggingLink = new ApolloLink((operation, forward) => {
     console.log(`GraphQL Request: ${operation.operationName}`, operation);
 
@@ -52,6 +42,7 @@ export function createApollo(httpLink: HttpLink) {
       loggingLink,
       errorLink,
       authLink,
+      httpLink.create({uri: apiUrl + 'graphql'})
     ]),
     cache: new InMemoryCache(),
   };
