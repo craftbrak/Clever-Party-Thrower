@@ -9,7 +9,7 @@ if (environment.production) {
 }
 
 async function fetchApiUrlAndBootstrap() {
-  const uri = 'https://cpt.louisdewilde.be/api/config';
+  const uri = '/api/config';
   const response = await fetch(uri);
   const data = await response.json();
   localStorage.setItem('apiUrl', data.apiUrl);
