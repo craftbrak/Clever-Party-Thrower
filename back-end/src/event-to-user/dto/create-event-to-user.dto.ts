@@ -2,6 +2,7 @@ import { Field, InputType } from "@nestjs/graphql";
 import { UserEntity } from "../../user/entities/user.entity";
 import { Event } from "../../event/entities/event.entity";
 import { Address } from "../../address/entities/address.entity";
+import { UserRole } from "../entities/event-to-user.entity";
 
 @InputType()
 export class CreateEventToUserDto {
@@ -13,4 +14,7 @@ export class CreateEventToUserDto {
 
   @Field(() => String, { nullable: true })
   addressId: Address["id"];
+
+  @Field(() => UserRole, { nullable: true, defaultValue: UserRole.INVITED })
+  role?: UserRole;
 }
