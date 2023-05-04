@@ -7,7 +7,7 @@ import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 
 // const uri = `https://${window.location.hostname}/api/config`;
-const uri = `https://api-cpt.louisdewilde.be/api/config`;
+const uri = `https://cpt.louisdewilde.be/api/config`;
 console.log(uri)
 
 export async function fetchApiUrl() {
