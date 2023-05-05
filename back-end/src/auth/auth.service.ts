@@ -24,6 +24,7 @@ export class AuthService {
   ): Promise<Partial<UserEntity>> {
     const user = await this.userService.findOne(email);
     if (user && (await argon2.verify(user.password, pass))) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       if (user.is2faEnabled) {
         return null;

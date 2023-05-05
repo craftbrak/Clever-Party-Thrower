@@ -43,8 +43,8 @@ export class UserService {
     return await usr.save();
   }
 
-  async findOne(email: UserEntity["email"]) {
-    return await this.userRepo.findOneOrFail({
+  async findOne(email: UserEntity["email"]): Promise<UserEntity | null> {
+    return await this.userRepo.findOne({
       where: {
         email: email,
       },
