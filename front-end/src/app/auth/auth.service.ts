@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import jwt_decode from "jwt-decode";
-import {catchError, Observable, tap, throwError} from "rxjs";
+import {catchError, map, Observable, tap, throwError} from "rxjs";
 import gql from "graphql-tag";
 import {JWTPayload} from "../entities/JWTPayload.entity";
 
@@ -15,6 +15,7 @@ export class AuthService {
       authLogin(authInputDto: $AuthinputDto) {
         accessToken
         refreshToken
+        invalidCredentials
       }
     }
   `;
@@ -82,11 +83,15 @@ export class AuthService {
       },
     }).pipe(
       // @ts-ignore
-      tap(({data}) => {
+      map(({data}) => {
         if (data && data.authLogin) {
-          const {accessToken, refreshToken} = data.authLogin;
-          this.setTokens(accessToken, refreshToken)
+          const {accessToken, refreshToken, invalidCredentials} = data.authLogin;
+          if (!invalidCredentials) {
+            this.setTokens(accessToken, refreshToken)
+            return true
+          }
         }
+        return false
       }),
       catchError((error) => {
         // Handle errors, e.g., show an error message
@@ -158,11 +163,12 @@ export class AuthService {
 
   private setTokens(accessToken: string, refreshToken: string) {
     console.debug("setting tokens")
+    console.log(accessToken, refreshToken)
     this._accessToken = accessToken;
     this._refreshToken = refreshToken;
-    localStorage.setItem('accessToken', this._accessToken ? this._accessToken : '');
-    localStorage.setItem('refreshToken', this._refreshToken ? this._refreshToken : '');
-    this.user = jwt_decode(accessToken)
+    localStorage.setItem('accessToken', this._accessToken ?? '');
+    localStorage.setItem('refreshToken', this._refreshToken ?? '');
+    if (accessToken.length > 0) this.user = jwt_decode(accessToken)
     // @ts-ignore
     localStorage.setItem('userid', this.user?.id)
   }

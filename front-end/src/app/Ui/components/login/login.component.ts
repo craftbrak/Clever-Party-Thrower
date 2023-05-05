@@ -1,6 +1,6 @@
 import {AuthService} from '../../../auth/auth.service';
 import {Router} from "@angular/router";
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -8,10 +8,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   loginForm: FormGroup;
+  CredentialsInValid = false
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -30,14 +31,20 @@ export class LoginComponent {
     const {email, password} = this.loginForm.value;
 
     this.authService.login(email, password).subscribe(
-      () => {
+      (value) => {
+        value ? this.router.navigate(['/dashboard']) : this.CredentialsInValid = true;
         // Redirect to a protected route or the dashboard after successful login
-        this.router.navigate(['/dashboard']);
       },
       (error) => {
         // Handle any errors from the API
         console.error('Login error:', error);
       }
     );
+  }
+
+  ngOnInit(): void {
+    this.loginForm.valueChanges.subscribe(() => {
+      this.CredentialsInValid = false
+    })
   }
 }
