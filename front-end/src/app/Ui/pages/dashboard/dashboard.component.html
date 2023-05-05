@@ -1,0 +1,6 @@
+<div class="dashboard">
+  <h1>Dashboard</h1>
+  <button (click)="openCreateEventForm()">Create New Event</button>
+  <!-- Add your existing form component here when the button is clicked -->
+  <app-event-form *ngIf="showCreateEventForm"></app-event-form>
+</div>

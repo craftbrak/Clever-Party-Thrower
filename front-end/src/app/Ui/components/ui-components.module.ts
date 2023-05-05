@@ -30,6 +30,7 @@ import {DateSelectionFormComponent} from './forms/date-selection-form/date-selec
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {AddressCardComponent} from './address-card/address-card.component';
+import {EventInfoComponent} from './event-info/event-info.component';
 
 
 @NgModule({
@@ -47,6 +48,10 @@ import {AddressCardComponent} from './address-card/address-card.component';
     AddressSelectionFormComponent,
     DateSelectionFormComponent,
     AddressCardComponent,
+    EventInfoComponent,
+  ],
+  exports: [
+    EventFormComponent
   ],
   imports: [
     CommonModule,
