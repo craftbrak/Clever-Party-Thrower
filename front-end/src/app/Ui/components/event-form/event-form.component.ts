@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {EventService} from "../../../services/event.service";
 import {Address} from "../../../entities/address.entity";
 import {AddressService} from "../../../services/address.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-event-form',
@@ -19,7 +20,8 @@ export class EventFormComponent implements OnInit {
   isLinear: boolean = false;
   existingAddresses: Address[] = []
 
-  constructor(private addressService: AddressService, private eventService: EventService, private router: Router) {
+  constructor(private addressService: AddressService, private eventService: EventService, private router: Router, public dialogRef: MatDialogRef<EventFormComponent>) {
+    dialogRef.disableClose = false;
   }
 
   ngOnInit(): void {
@@ -93,5 +95,10 @@ export class EventFormComponent implements OnInit {
         })
 
     }
+    this.dialogRef.close('submit');
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 }
