@@ -157,7 +157,7 @@ export class EventService {
     })
   }
 
-  createEventToUser(eventToUserData: any, eventId: string) {
+  createEventToUser(eventToUserData: any, eventId: string, userRole = UserRole.INVITED) {
     const createEventToUserMutation = gql`
       mutation CreateEventToUser($input: CreateEventToUserDto!) {
         createEventToUser(createEventToUserInput: $input) {
@@ -177,7 +177,7 @@ export class EventService {
           input: {
             ...eventToUserData,
             eventId: eventId,
-            role: UserRole.OWNER
+            role: userRole
           }
         }
       })
