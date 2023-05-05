@@ -81,10 +81,16 @@ export class AuthService {
     return otpUrl;
   }
 
-  async login(user: UserEntity, code: string): Promise<AuthOutputDto> {
+  async login(user: UserEntity | null, code: string): Promise<AuthOutputDto> {
     let verified = false;
     //todo: fix null User bug on login througt the front end
-    if (user.is2faEnabled) {
+    if (!user)
+      return {
+        invalidCredentials: true,
+        refreshToken: "",
+        accessToken: "",
+      };
+    if (user?.is2faEnabled) {
       if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
         verified = true;
       }
@@ -118,6 +124,7 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
       refreshToken: refreshToken,
+      invalidCredentials: false,
     };
   }
 }

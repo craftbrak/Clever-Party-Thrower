@@ -21,7 +21,7 @@ export class AuthResolver {
     @Context("req") req,
     @Args("authInputDto") authInput: AuthInputDto,
   ) {
-    this.logger.debug(authInput.password, authInput.email);
+    // this.logger.debug(authInput.password, authInput.email);
     return await this.authService.login(
       (await this.authService.validateUser(
         authInput.email.toLowerCase(),
