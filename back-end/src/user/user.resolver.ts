@@ -18,7 +18,8 @@ import { AddressService } from "../address/address.service";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { CurrentUser } from "../auth/current-user.decorator";
 import { JWTPayload } from "../auth/jwtPayload.interface";
-import { UnauthorizedException } from "@nestjs/common";
+import { UseGuards } from "@nestjs/common";
+import { IsUserGuard } from "../auth/guards/is-user-guard.service";
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -42,18 +43,20 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity)
+  @UseGuards(IsUserGuard)
   async updateUser(
     @Args("updateUserInput") updateUserInput: UpdateUserDto,
     @CurrentUser() user: JWTPayload,
   ) {
-    if (user.id === updateUserInput.id) {
-      return await this.userService.update(updateUserInput.id, updateUserInput);
-    } else {
-      throw UnauthorizedException;
-    }
+    // if (user.id === updateUserInput.id) {
+    return await this.userService.update(updateUserInput.id, updateUserInput);
+    // } else {
+    //   throw UnauthorizedException;
+    // }
   }
 
   @Mutation(() => UserEntity)
+  @UseGuards(IsUserGuard)
   async removeUser(@Args("id", { type: () => Int }) id: UserEntity["id"]) {
     return await this.userService.remove(id);
   }
