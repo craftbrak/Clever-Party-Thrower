@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from "@nestjs/common";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -37,6 +42,7 @@ import { EventDate } from "./event-dates/entities/event-date.entity";
 import { DatesToUserModule } from "./dates-to-user/dates-to-user.module";
 import { DatesToUser } from "./dates-to-user/entities/dates-to-user.entity";
 import { EmailModule } from "./email/email.module";
+import { LoggingMiddleware } from "./logs/logger.middleware";
 
 //TODO: adapt to use DB URL if host is null
 @Module({
@@ -125,6 +131,8 @@ import { EmailModule } from "./email/email.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply().forRoutes("*");
+    consumer
+      .apply(LoggingMiddleware)
+      .forRoutes({ path: "graphql", method: RequestMethod.ALL });
   }
 }
