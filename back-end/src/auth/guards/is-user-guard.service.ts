@@ -3,8 +3,6 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 
 @Injectable()
 export class IsUserGuard implements CanActivate {
-  constructor() {}
-
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
