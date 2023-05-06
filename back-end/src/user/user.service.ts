@@ -80,7 +80,8 @@ export class UserService {
       this.sendVerificationEmail(usr);
     }
     if (updateUserInput.name) usr.name = updateUserInput.name;
-    if (updateUserInput.password) usr.password = updateUserInput.password;
+    if (updateUserInput.password)
+      usr.password = await argon2.hash(updateUserInput.password);
     usr.avatar = updateUserInput.avatar;
     await usr.save();
     return usr;
