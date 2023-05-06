@@ -16,6 +16,9 @@ import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { JWTPayload } from "../auth/jwtPayload.interface";
+import { UnauthorizedException } from "@nestjs/common";
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -24,6 +27,7 @@ export class UserResolver {
     private readonly addressService: AddressService,
     private readonly eventToUserService: EventToUserService,
   ) {}
+
   @Public()
   @Mutation(() => UserEntity)
   async createUser(@Args("singUp") createUserInput: CreateUserDto) {
@@ -38,8 +42,15 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity)
-  async updateUser(@Args("updateUserInput") updateUserInput: UpdateUserDto) {
-    return await this.userService.update(updateUserInput.id, updateUserInput);
+  async updateUser(
+    @Args("updateUserInput") updateUserInput: UpdateUserDto,
+    @CurrentUser() user: JWTPayload,
+  ) {
+    if (user.id === updateUserInput.id) {
+      return await this.userService.update(updateUserInput.id, updateUserInput);
+    } else {
+      throw UnauthorizedException;
+    }
   }
 
   @Mutation(() => UserEntity)
