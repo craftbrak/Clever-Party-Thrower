@@ -31,6 +31,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {AddressCardComponent} from './address-card/address-card.component';
 import {EventInfoComponent} from './event-info/event-info.component';
+import {EventDetailsComponent} from './event-details/event-details.component';
+import {MembersComponent} from './event-details/members/members.component';
+import {ShoppinglistComponent} from './event-details/shoppinglist/shoppinglist.component';
+import {CarpoolComponent} from './event-details/carpool/carpool.component';
+import {ExpensesComponent} from './event-details/expenses/expenses.component';
 
 
 @NgModule({
@@ -49,6 +54,11 @@ import {EventInfoComponent} from './event-info/event-info.component';
     DateSelectionFormComponent,
     AddressCardComponent,
     EventInfoComponent,
+    EventDetailsComponent,
+    MembersComponent,
+    ShoppinglistComponent,
+    CarpoolComponent,
+    ExpensesComponent,
   ],
   exports: [
     EventFormComponent,
