@@ -5,6 +5,7 @@ import {UiComponentsModule} from "../components/ui-components.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatCardModule} from "@angular/material/card";
     MatDialogModule,
     UiComponentsModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class UiPagesModule {
