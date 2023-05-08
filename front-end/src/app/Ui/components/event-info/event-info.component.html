@@ -1,22 +1,21 @@
-<a (click)="onlinkclick(eventData?.id ?? '')" class="custom-raised-btn" mat-raised-button>
-  <div class="event-card-wrapper">
-    <!--  <img alt="Profile picture" class="profile-picture" mat-card-image-->
-    <!--       src="{{owner?.avatar}}">-->
-    <div>
-      <h4>{{ eventData!!.event!!.name }}</h4>
-    </div>
-    <div>
-
-      <p *ngIf="eventData?.event?.selectedDate?.date">Selected Date: {{ eventData?.event?.selectedDate?.date }}</p>
-      <!--    <p *ngIf="eventData?.event?.availableDates?.length > 0">Available-->
-      <!--      Dates: {{ eventData?.event?.availableDates?.length }}</p>-->
-      <div class="location-members">
-        <p>Location: {{ eventData?.event?.address?.country?.code }}, {{ eventData?.event?.address?.city }}</p>
-        <p>Members: {{ eventData?.event?.members?.length }}</p>
+<div class="event-card-wrapper">
+  <a (click)="onlinkclick(eventData?.event?.id ?? '')" class="custom-raised-btn" mat-raised-button>
+    <div class="header">
+      <img alt="Profile picture" class="profile-picture" mat-card-image src="{{owner?.avatar}}">
+      <div class="name">
+        <h4>{{ eventData!!.event!!.name }}</h4>
       </div>
-      <!--      <p>{{ eventData!!.event.description }}</p>-->
     </div>
-  </div>
-</a>
+    <div class="date">
+      <p *ngIf="eventData?.event?.selectedDate?.date">Selected Date: {{ eventData?.event?.selectedDate?.date }}</p>
+    </div>
+    <div class="location-members">
+      <p>Location: {{ eventData?.event?.address?.country?.code }}, {{ eventData?.event?.address?.city }}</p>
+      <p>Members: {{ eventData?.event?.members?.length }}</p>
+    </div>
+    <div *ngIf="togglesDetails" class="details">
+      {{ eventData!!.event.description }}
+    </div>
 
-
+  </a>
+</div>

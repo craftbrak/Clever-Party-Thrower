@@ -21,14 +21,14 @@ export interface UserEvents {
 export class DashboardComponent {
 
   showCreateEventForm = false;
-  // userEvents: UserEvents | undefined
   userEvents$: Observable<UserEvents | undefined>;
+  eventId: string | null | undefined
 
   constructor(private dialog: MatDialog, private eventService: EventService, private authService: AuthService,
               private changeDetector: ChangeDetectorRef, private router: Router) {
-    // this.loadUserEventData(this.authService.user?.email ?? "");
     const email = this.authService.user?.email ?? "";
     this.userEvents$ = this.eventService.getUserEventData(email);
+    this.eventService.selectedEventId$.subscribe(value => this.eventId = value)
   }
 
   openCreateEventForm() {
@@ -44,18 +44,7 @@ export class DashboardComponent {
   }
 
   linked = (id: string) => {
-    this.router.navigate(['?event', id])
+    this.eventService.updateEventId(id)
   }
-  // loadUserEventData(email: string) {
-  //   this.eventService.getUserEventData(email).subscribe(
-  //     (data: UserEvents) => {
-  //       this.userEvents = data;
-  //       this.userEventToUsers = data.user.eventToUsers;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching user event data:', error);
-  //     },
-  //   );
-  // }
 
 }

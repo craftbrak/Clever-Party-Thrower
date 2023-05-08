@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserRole} from "../../../entities/event-to-user.entity";
+import {EventService} from "../../../services/event.service";
 
 export interface EventToUserData {
   id: string;
@@ -40,9 +41,14 @@ export interface EventToUserData {
 export class EventInfoComponent implements OnInit {
   @Input() eventData: EventToUserData | undefined;
   owner: any | undefined
+  togglesDetails = false
 
-  constructor() {
-
+  constructor(private eventService: EventService) {
+    this.eventService.selectedEventId$.subscribe(value => {
+      if (value === this.eventData?.event?.id) {
+        this.togglesDetails = true
+      } else this.togglesDetails = false
+    })
   }
 
   @Input() cliked: (id: string) => void = () => {
@@ -59,5 +65,4 @@ export class EventInfoComponent implements OnInit {
   onlinkclick(id: string) {
     this.cliked(id)
   }
-
 }

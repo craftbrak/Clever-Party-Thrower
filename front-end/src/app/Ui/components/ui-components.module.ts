@@ -36,6 +36,9 @@ import {MembersComponent} from './event-details/members/members.component';
 import {ShoppinglistComponent} from './event-details/shoppinglist/shoppinglist.component';
 import {CarpoolComponent} from './event-details/carpool/carpool.component';
 import {ExpensesComponent} from './event-details/expenses/expenses.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -62,7 +65,8 @@ import {ExpensesComponent} from './event-details/expenses/expenses.component';
   ],
   exports: [
     EventFormComponent,
-    EventInfoComponent
+    EventInfoComponent,
+    EventDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +87,10 @@ import {ExpensesComponent} from './event-details/expenses/expenses.component';
     MatCheckboxModule,
     FormsModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatButtonToggleModule
   ]
 })
 export class UiComponentsModule {

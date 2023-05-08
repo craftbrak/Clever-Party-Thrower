@@ -1,35 +1,18 @@
-.event-card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  flex-direction: row;
-  align-items: center;
-}
 
 .add-event-btn {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   padding: 16px;
-  font-size: 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-width: 20vw;
-  max-width: 30vw;
-  max-height: 15vh;
-  min-height: 13.5vh;
+  width: 93%;
+  height: 10%;
   margin: 10px;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-}
-
-.dashboard {
-  display: flex;
-  height: 75vh;
-  min-width: 20vw;
 }
 
 .title {
@@ -39,4 +22,41 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+}
+
+#main {
+  display: flex;
+}
+
+#eventList {
+  width: 25%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#eventDetails {
+  width: 75%;
+}
+
+.scrollable-section {
+  position: relative;
+  max-height: 100vh; // Set the max height for the scrollable sections
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// Style the scrollbars (Webkit-based browsers)
+.scrollable-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb {
+  background-color: #726f6f; // Change to your preferred color
+  border-radius: 4px;
+}
+
+// Style the scrollbars (Firefox)
+.scrollable-section {
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent; // Change to your preferred color
 }

@@ -1,40 +1,69 @@
-.event-card-wrapper {
-  max-width: 30vw;
-  min-width: 20vw;
-  flex: 1;
+.custom-raised-btn {
+  display: flex;
+  padding: 16px;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-content: stretch;
+  justify-content: center;
+  align-items: stretch;
+
 }
 
-//mat-card {
-//  border: none;
-//  //position: relative;
-//}
+.event-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  width: 93%;
+}
 
-//.profile-picture {
-//  width: 40px;
-//  height: 40px;
-//  position: absolute;
-//  top: 10px;
-//  left: 10px;
-//  border-radius: 50%;
-//}
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 
-//mat-card-header {
-//  padding-left: 60px;
-//}
+.profile-picture {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  margin-right: 16px;
+}
 
-div p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.name {
+  flex-grow: 1;
+}
+
+.date {
+  width: 100%;
 }
 
 .location-members {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
-.custom-raised-btn {
-  display: flex;
-  align-items: center;
-  margin: 10px;
+.details {
+  max-height: 20vh; // Set a desired max height for the scrollable description
+  overflow-y: auto;
+  margin-top: 8px;
+  white-space: normal;
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent;
+}
+
+.details::-webkit-scrollbar-thumb {
+  background-color: #726f6f;
+  border-radius: 4px;
+}
+
+.details ::-webkit-scrollbar {
+  width: 8px;
 }

@@ -1,6 +1,6 @@
 import {Apollo} from "apollo-angular";
 import gql from "graphql-tag"
-import {forkJoin, map, Observable} from "rxjs";
+import {BehaviorSubject, forkJoin, map, Observable} from "rxjs";
 import {Event} from "../entities/event.entity";
 import {Injectable} from "@angular/core";
 import {UserRole} from "../entities/event-to-user.entity";
@@ -107,8 +107,15 @@ export class EventService {
   EventsId: string[] | undefined;
   EventNumber: number | undefined
 
+  private selectedEventIdSource = new BehaviorSubject<string | null>(null)
+  selectedEventId$ = this.selectedEventIdSource.asObservable()
+
   constructor(private apollo: Apollo) {
     this.getEventNumber().then();
+  }
+
+  updateEventId(id: string) {
+    this.selectedEventIdSource.next(id)
   }
 
   async getAllEventId() {
@@ -234,4 +241,5 @@ export class EventService {
   testBackEnd() {
     // this.apollo.watchQuery({query: this.SAYHELLO}).valueChanges.subscribe(value => console.log(value))
   }
+  
 }
