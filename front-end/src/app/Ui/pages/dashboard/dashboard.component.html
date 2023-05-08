@@ -1,15 +1,20 @@
-<h1 class="title"> Your Events </h1>
-<div class="dashboard">
-  <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
-    <div *ngFor="let event of userEvents.user.eventToUsers">
-      <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
+<section id="eventList">
+  <h1 class="title"> Your Events </h1>
+  <div class="dashboard">
+    <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
+      <div *ngFor="let event of userEvents.user.eventToUsers">
+        <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
+      </div>
+      <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
+        Create New Event
+      </button>
     </div>
-    <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
-      Create New Event
-    </button>
+
+
+    <!-- Add your existing form component here when the button is clicked -->
+    <app-event-form *ngIf="showCreateEventForm"></app-event-form>
   </div>
+</section>
+<section id="eventDetails">
 
-
-  <!-- Add your existing form component here when the button is clicked -->
-  <app-event-form *ngIf="showCreateEventForm"></app-event-form>
-</div>
+</section>

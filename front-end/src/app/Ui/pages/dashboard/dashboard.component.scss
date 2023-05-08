@@ -29,11 +29,12 @@
 .dashboard {
   display: flex;
   height: 75vh;
+  min-width: 20vw;
 }
 
 .title {
   display: flex;
-  height: 20vh;
+  height: 5vh;
   align-content: center;
   flex-wrap: nowrap;
   align-items: center;
