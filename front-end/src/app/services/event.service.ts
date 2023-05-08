@@ -4,6 +4,7 @@ import {forkJoin, map, Observable} from "rxjs";
 import {Event} from "../entities/event.entity";
 import {Injectable} from "@angular/core";
 import {UserRole} from "../entities/event-to-user.entity";
+import {UserEvents} from "../Ui/pages/dashboard/dashboard.component";
 
 const Get_Events = gql`
   {
@@ -63,60 +64,83 @@ const getEventNumber = gql`
     countEvents
   }
 `
-const getEventOverview = gql`
-  query event($eventId: String!, $take: Int!){
-    event(id: $eventId ){
-      id
-      name
-      description
-      address {
-        city
-        country {
-          code
-        }
-      }
-      members(skip: 0, take: $take){
+const GET_USER_EVENT_DATA = gql`
+  query GetUserEventsAndDetails($id: String!) {
+    user(email: $id) {
+      eventToUsers {
         id
         role
-      }
-      selectedDate{
-        id
-        date
+        event {
+          id
+          name
+          selectedDate {
+            date
+          }
+          availableDates {
+            date
+          }
+          description
+          address {
+            country{
+              code
+            }
+            city
+          }
+          members(skip: 0, take: 10) {
+            id
+            role
+            user {
+              id
+              name
+              avatar
+            }
+          }
+        }
       }
     }
   }
-`
+`;
 
 @Injectable()
 export class EventService {
-  Events: Observable<Event[]> | undefined;
-  EventsId: Observable<string[]> | undefined;
-  EventNumber: Observable<number> | undefined
+  Events: (Observable<Event[]>) = Observable.create([]);
+  EventsId: string[] | undefined;
+  EventNumber: number | undefined
 
   constructor(private apollo: Apollo) {
-    // this.getEventNumber().then();
+    this.getEventNumber().then();
   }
 
   async getAllEventId() {
     await this.getEventNumber()
     this.apollo.watchQuery<Observable<any>>({query: getEventIds, variables: {take: this.EventNumber}})
-      .valueChanges.pipe(
-      map((result) => {
-        console.log(result.data)
-        this.EventsId = result.data
+      .valueChanges.subscribe(value => {
+      value.data.subscribe(value1 => {
+        this.EventsId = value1
       })
-    )
-  }
-
-  getEventOverview(id: string) {
-    return this.apollo.watchQuery<Observable<Event[]>>({
-      query: getEventOverview,
-      variables: {skip: 0, take: this.EventNumber, eventId: id}
     })
   }
 
+  // getEventOverview(id: string) {
+  //   return this.apollo.watchQuery<Observable<Event[]>>({
+  //     query: getEventOverview,
+  //     variables: {skip: 0, take: this.EventNumber, eventId: id}
+  //   })
+  // }
+  getUserEventData(email: string): Observable<UserEvents> {
+    return this.apollo
+      .watchQuery<UserEvents>({
+        query: GET_USER_EVENT_DATA,
+        variables: {id: email},
+      })
+      .valueChanges.pipe(map(result => {
+        console.log(result.data)
+        return result.data
+      }));
+  }
+
   async getEventNumber() {
-    this.apollo.watchQuery<Observable<number>>({query: getEventNumber})
+    this.apollo.watchQuery<number>({query: getEventNumber})
       .valueChanges.subscribe(value => this.EventNumber = value.data)
   }
 
@@ -165,7 +189,7 @@ export class EventService {
           userId
           eventId
           addressId
-          userRole
+          role
         }
       }
     `;
@@ -175,8 +199,9 @@ export class EventService {
         mutation: createEventToUserMutation,
         variables: {
           input: {
-            ...eventToUserData,
+            userId: eventToUserData.userId,
             eventId: eventId,
+            addressId: eventToUserData.addressId,
             role: userRole
           }
         }
@@ -194,7 +219,7 @@ export class EventService {
         }
       }
     `;
-    this.apollo
+    return this.apollo
       .mutate({
         mutation: createEventDateMutation,
         variables: {

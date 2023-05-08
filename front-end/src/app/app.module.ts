@@ -20,6 +20,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {UiComponentsModule} from "./Ui/components/ui-components.module";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {UiPagesModule} from "./Ui/pages/ui-pages.module";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
     MatStepperModule,
     MatSelectModule,
     MatIconModule,
-    UiComponentsModule
+    UiComponentsModule,
+    UiPagesModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -51,7 +51,8 @@ import {EventInfoComponent} from './event-info/event-info.component';
     EventInfoComponent,
   ],
   exports: [
-    EventFormComponent
+    EventFormComponent,
+    EventInfoComponent
   ],
   imports: [
     CommonModule,

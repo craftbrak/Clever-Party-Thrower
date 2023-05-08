@@ -20,7 +20,8 @@ export class EventOverviewComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.eventId)
     if (this.eventId)
-      this.eventService.getEventOverview(this.eventId).valueChanges.subscribe(data => console.log(data))
+      console.log('depricated')
+    // this.eventService.getEventOverview(this.eventId).valueChanges.subscribe(data => console.log(data))
     // this.apollo.watchQuery<Observable<Event>>({
     //   query: getEventOverview,
     //   variables: {eventId: this.eventId, take: this.take}
