@@ -16,8 +16,9 @@ export class MemberComponent implements OnInit {
   userRoles = [UserRole.INVITED, UserRole.MEMBER];
   showRoleSelector = false
   showParticipationSelector = false
+  useravatar: string = ""
 
-  constructor(private eventService: EventService, private authService: AuthService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private eventService: EventService, private authService: AuthService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
       'account_circle',
       this.domSanitizer.bypassSecurityTrustResourceUrl('https://fonts.gstatic.com/s/i/materialicons/account_circle/v12/24px.svg')
@@ -29,7 +30,9 @@ export class MemberComponent implements OnInit {
       // this.showRoleSelector = !this.showRoleSelector
       this.showParticipationSelector = !this.showParticipationSelector
     }
-    console.log(this.member?.user, this.authService.user?.id)
+    this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.member?.user.avatar)
+    console.log(this.useravatar)
+
   }
 
 }
