@@ -140,6 +140,7 @@ export class EventService {
       .watchQuery<UserEvents>({
         query: GET_USER_EVENT_DATA,
         variables: {id: email},
+        fetchPolicy: 'network-only',
       })
       .valueChanges.pipe(map(result => {
         console.log(result.data)
@@ -177,12 +178,14 @@ export class EventService {
         .subscribe(({data}) => {
           const eventId = data.createEvent.id;
 
-          this.createEventToUser(eventToUserData, eventId, UserRole.OWNER).subscribe();
-          const observables = eventDateData.map((date: Date) => this.createEventDate(date, eventId))
-          forkJoin(observables).subscribe((results) => {
-            observer.next({status: 'success', data: data});
-            observer.complete();
-          })
+          this.createEventToUser(eventToUserData, eventId, UserRole.OWNER).subscribe(value => {
+            const observables = eventDateData.map((date: Date) => this.createEventDate(date, eventId))
+            forkJoin(observables).subscribe((results) => {
+              observer.next({status: 'success', data: data});
+              observer.complete();
+            })
+          });
+
         }, (error) => {
           observer.error({status: 'error', message: "failed to create a event", error: error})
         });

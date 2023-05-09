@@ -3,12 +3,13 @@
     <h1 class="title"> Your Events </h1>
     <div class="dashboard">
       <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
-        <div *ngFor="let event of userEvents.user.eventToUsers">
-          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
-        </div>
         <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
           <mat-icon>add</mat-icon>
         </button>
+        <div *ngFor="let event of userEvents.user.eventToUsers">
+          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
+        </div>
+
       </div>
 
 

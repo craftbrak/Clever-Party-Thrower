@@ -62,6 +62,7 @@ export class EventToUserService {
       relations: {
         user: true,
         event: true,
+        availableDates: true,
       },
     });
     return { nodes, totalCount };
