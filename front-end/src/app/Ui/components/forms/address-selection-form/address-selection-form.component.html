@@ -1,7 +1,7 @@
 <form [formGroup]="addressSelectionForm">
   <input formControlName="addressId" type="hidden">
-  <div @staggerAnimation class="address-container">
-    <div *ngIf="!showAddAddressForm" class="address-grid">
+  <div *ngIf="!showAddAddressForm" @staggerAnimation class="address-container">
+    <div *ngIf="address$ | async as addresses " class="address-grid">
       <app-address-card (cardClick)="onCardClick(address.id)"
                         *ngFor="let address of addresses"
                         [address]="address"

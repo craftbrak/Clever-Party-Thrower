@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Address} from "../../../../entities/address.entity";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {AddressService} from "../../../../services/address.service";
 import {AuthService} from "../../../../auth/auth.service";
+import {Observable, startWith, Subject, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-address-selection-form',
@@ -31,7 +32,9 @@ import {AuthService} from "../../../../auth/auth.service";
   ]
 })
 export class AddressSelectionFormComponent implements OnInit, OnDestroy {
-  @Input() addresses: Address[] = [];
+  // @Input() addresses: Address[] = [];
+  address$: Observable<Address[]>
+  addressRefreshTrigger$: Subject<void>
   @Output() valid = new EventEmitter<boolean>();
   @Output() selectedAddress = new EventEmitter<Address>();
   @Output() addNewAddress = new EventEmitter<void>();
@@ -39,22 +42,34 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
   addressSelectionForm: FormGroup;
   selectedAddressId: string = '';
   showAddAddressForm = false;
-  addressCreatevalid = false;
+  addressCreateValid = false;
 
   cols: number | undefined;
 
   private resizeObserver: ResizeObserver | undefined;
+  private addressess: Address[] | undefined;
 
   constructor(private fb: FormBuilder, private addressService: AddressService, private authService: AuthService) {
     this.addressSelectionForm = this.fb.group({
       addressId: ['', Validators.required],
     });
+    this.addressRefreshTrigger$ = new Subject<void>();
 
+    this.address$ = this.addressRefreshTrigger$.pipe(
+      startWith(null),
+      switchMap(() => {
+        return this.addressService.getAddresses()
+      }),
+      tap(addresses => {
+        this.addressess = addresses; // This is your local component variable
+      })
+    )
     this.addressSelectionForm.valueChanges.subscribe((value) => {
-      console.log(value.addressId)
-      this.valid.emit(this.addressSelectionForm.valid);
-      const a = this.addresses.find(a => a.id === value.addressId)
+      // console.log(value.addressId)
+      const a = this.addressess?.find(a => a.id === value.addressId)
+      console.log(a)
       this.selectedAddress.emit(a);
+      this.valid.emit(this.addressSelectionForm.valid);
     });
   }
 
@@ -67,10 +82,10 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
       }
     });
     this.resizeObserver.observe(document.body);
-    if (this.addresses.length > 0) {
-      this.selectedAddressId = this.addresses[0].id;
-      this.addressSelectionForm.patchValue({addressId: this.selectedAddressId});
-    }
+    // if (this.addresses.length > 0) {
+    //   this.selectedAddressId = this.addresses[0].id;
+    //   this.addressSelectionForm.patchValue({addressId: this.selectedAddressId});
+    // }
   }
 
 
@@ -98,7 +113,7 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
 
   onAddressFormSubmit(data: any): void {
     console.log(data)
-    if (this.addressCreatevalid) {
+    if (this.addressCreateValid) {
       this.addressService.createAddress({
         line1: String(data.line1),
         city: String(data.city),
@@ -107,15 +122,20 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
         unitNumber: String(data.unitNumber),
         ownerId: String(localStorage.getItem('userid'))
       }).subscribe(value => {
-        // @ts-ignore
-        if (!value.loading) this.addresses.push(value.data.createAddress)
+        this.refreshData()
+        this.selectedAddress.emit(value);
+        this.valid.emit(true);
       })
     }
     //todo: refresh the list of available addresses
   }
 
+  refreshData() {
+    this.addressRefreshTrigger$.next();
+  }
+
   onAddressFormValidity(valid: boolean): void {
-    this.addressCreatevalid = valid
+    this.addressCreateValid = valid
   }
 
   private updateCols(width: number) {
