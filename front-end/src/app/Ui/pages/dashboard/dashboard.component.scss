@@ -26,12 +26,17 @@
 
 #main {
   display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
 }
 
 #eventList {
-  width: 25%;
+  max-width: 25%;
   height: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 #eventDetails {

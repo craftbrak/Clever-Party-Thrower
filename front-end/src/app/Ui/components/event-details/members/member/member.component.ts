@@ -31,7 +31,6 @@ export class MemberComponent implements OnInit {
       this.showParticipationSelector = !this.showParticipationSelector
     }
     this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.member?.user.avatar)
-    console.log(this.useravatar)
 
   }
 

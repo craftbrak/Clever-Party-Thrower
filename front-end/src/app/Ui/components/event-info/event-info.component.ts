@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserRole} from "../../../entities/event-to-user.entity";
 import {EventService} from "../../../services/event.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 export interface EventToUserData {
   id: string;
@@ -42,8 +43,9 @@ export class EventInfoComponent implements OnInit {
   @Input() eventData: EventToUserData | undefined;
   owner: any | undefined
   togglesDetails = false
+  useravatar: string | undefined
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private sanitizer: DomSanitizer,) {
     this.eventService.selectedEventId$.subscribe(value => {
       if (value === this.eventData?.event?.id) {
         this.togglesDetails = true
@@ -55,11 +57,10 @@ export class EventInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.owner = this.eventData?.event.members.find(m => {
-      m.role == UserRole.OWNER
-    })?.user
+    this.owner = this.eventData?.event.members.find(member => member.role === UserRole.OWNER)?.user
     console.log(this.eventData?.event.members)
-    console.log(this.owner)
+    this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.owner?.avatar)
+    console.log(this.useravatar)
   }
 
   onlinkclick(id: string) {
