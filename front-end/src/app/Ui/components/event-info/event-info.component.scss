@@ -55,15 +55,19 @@
   overflow-y: auto;
   margin-top: 8px;
   white-space: normal;
-  scrollbar-width: thin;
-  scrollbar-color: #726f6f transparent;
+}
+
+.details::-webkit-scrollbar {
+  width: 8px;
 }
 
 .details::-webkit-scrollbar-thumb {
-  background-color: #726f6f;
+  background-color: #726f6f; // Change to your preferred color
   border-radius: 4px;
 }
 
-.details ::-webkit-scrollbar {
-  width: 8px;
+// Style the scrollbars (Firefox)
+.details {
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent; // Change to your preferred color
 }
