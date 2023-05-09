@@ -26,6 +26,7 @@ export class EventToUserService {
     etoU.userId = input.userId;
     etoU.eventId = input.eventId;
     etoU.address = await this.addressService.findOne(input.addressId);
+    etoU.role = input.role;
     return await this.eventToUserRepository.save(
       await this.eventToUserRepository.create(etoU),
     );
