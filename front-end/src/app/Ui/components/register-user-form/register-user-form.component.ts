@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, SecurityContext} from '@angular/core';
 import {AuthService} from "../../../auth/auth.service";
 import {Router} from "@angular/router";
 import {AddressService} from "../../../services/address.service";
 import {CreateAddressDto} from "../../../Dto/create-address.dto";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-register-user',
@@ -24,7 +25,8 @@ export class RegisterUserFormComponent {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private addressService: AddressService) {
+              private addressService: AddressService,
+              private sanitizer: DomSanitizer) {
   }
 
 
@@ -96,7 +98,7 @@ export class RegisterUserFormComponent {
             addressId: addressId,
             drivingLicence: this.drivingLicenceData?.drivingLicence,
             manual: this.drivingLicenceData?.manual,
-            avatar: this.avatarData
+            avatar: this.sanitizer.sanitize(SecurityContext.URL, this.avatarData)
           };
           this.registerUser(userData.name, userData.email, userData.password, userData.addressId, userData.drivingLicence, userData.manual, userData.avatar)
         },

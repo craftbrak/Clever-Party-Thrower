@@ -125,7 +125,7 @@ export class AuthService {
       manual: manual,
       name: name,
       password: password,
-      avatar: avatar.toString()
+      avatar: avatar
     }
     console.table(singUp)
     return this.apollo.mutate({
