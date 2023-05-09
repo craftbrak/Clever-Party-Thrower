@@ -41,6 +41,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DateSelectionComponent} from './event-details/date-selection/date-selection.component';
 import {MemberComponent} from './event-details/members/member/member.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import {MemberComponent} from './event-details/members/member/member.component';
     MatGridListModule,
     MatTabsModule,
     MatSidenavModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatToolbarModule
   ]
 })
 export class UiComponentsModule {
