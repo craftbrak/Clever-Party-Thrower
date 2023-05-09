@@ -27,7 +27,7 @@ export class EventFormComponent implements OnInit {
   ngOnInit(): void {
     this.eventService.testBackEnd()
     this.addressService.getAddresses().subscribe(value => {
-      console.table(value.data.addresses)
+      // console.table(value.data.addresses)
       this.existingAddresses = value.data.addresses
     })
   }
@@ -46,7 +46,7 @@ export class EventFormComponent implements OnInit {
 
   onEventInfoFormSubmit(data: any): void {
     this.eventInfoData = data;
-    console.table(data)
+    // console.table(data)
   }
 
   onAddressFormSubmit(data: any): void {
@@ -54,15 +54,15 @@ export class EventFormComponent implements OnInit {
   }
 
   onDateSelectionFormSubmit(data: any): void {
-    console.table(data)
+    // console.table(data)
     this.datesData = data;
   }
 
   onSubmit(): void {
-    console.warn("submitted")
-    console.log(this.eventInfoData);
-    console.log(this.addressData);
-    console.log(this.datesData);
+    // console.warn("submitted")
+    // console.log(this.eventInfoData);
+    // console.log(this.addressData);
+    // console.log(this.datesData);
 
     if (this.eventInfoValid && this.addressValid && this.datesValid) {
       // Process the event creation data and submit it.
@@ -73,10 +73,10 @@ export class EventFormComponent implements OnInit {
       //   multipleDates: this.datesData,
       //   userId: localStorage.getItem("userId")
       // };
-      console.log('setup eventData')
-      console.table(this.eventInfoData)
-      console.table(this.addressData)
-      console.table(this.datesData)
+      // console.log('setup eventData')
+      // console.table(this.eventInfoData)
+      // console.table(this.addressData)
+      // console.table(this.datesData)
       const eventData = {
         name: this.eventInfoData.eventName,
         description: this.eventInfoData.eventDescription,
