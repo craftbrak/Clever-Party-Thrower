@@ -177,7 +177,7 @@ export class EventService {
         .subscribe(({data}) => {
           const eventId = data.createEvent.id;
 
-          this.createEventToUser(eventToUserData, eventId).subscribe();
+          this.createEventToUser(eventToUserData, eventId, UserRole.OWNER).subscribe();
           const observables = eventDateData.map((date: Date) => this.createEventDate(date, eventId))
           forkJoin(observables).subscribe((results) => {
             observer.next({status: 'success', data: data});
@@ -273,5 +273,5 @@ export class EventService {
       .valueChanges.pipe(map((result) => result.data.event.members));
   }
 
-  
+
 }
