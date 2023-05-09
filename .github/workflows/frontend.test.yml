@@ -7,7 +7,6 @@ on:
 
 jobs:
   audit:
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -133,6 +132,7 @@ jobs:
   #      - name: Test Angular app
   #        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   build_docker_image:
+    if: github.ref == 'refs/heads/main'
     needs: [ lint, test ]
     runs-on: ubuntu-latest
     defaults:
