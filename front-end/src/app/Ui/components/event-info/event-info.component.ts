@@ -43,7 +43,7 @@ export class EventInfoComponent implements OnInit {
   @Input() eventData: EventToUserData | undefined;
   owner: any | undefined
   togglesDetails = false
-  useravatar: string | undefined
+  useravatar: string = ""
 
   constructor(private eventService: EventService, private sanitizer: DomSanitizer,) {
     this.eventService.selectedEventId$.subscribe(value => {
@@ -58,9 +58,7 @@ export class EventInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.owner = this.eventData?.event.members.find(member => member.role === UserRole.OWNER)?.user
-    console.log(this.eventData?.event.members)
     this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.owner?.avatar)
-    console.log(this.useravatar)
   }
 
   onlinkclick(id: string) {

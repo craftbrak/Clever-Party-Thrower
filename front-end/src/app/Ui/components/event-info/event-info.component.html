@@ -1,7 +1,9 @@
 <div class="event-card-wrapper">
   <a (click)="onlinkclick(eventData?.event?.id ?? '')" class="custom-raised-btn" mat-raised-button>
     <div class="header">
-      <img [src]="useravatar" alt="Profile picture" class="profile-picture" mat-card-image>
+      <span *ngIf="useravatar.length >= 0">
+        <img [src]="useravatar" alt="Profile picture" class="profile-picture" mat-card-image>
+      </span>
       <div class="name">
         <h4>{{ eventData!!.event!!.name }}</h4>
       </div>
@@ -10,8 +12,13 @@
       <p *ngIf="eventData?.event?.selectedDate?.date">Selected Date: {{ eventData?.event?.selectedDate?.date }}</p>
     </div>
     <div class="location-members">
-      <p>Location: {{ eventData?.event?.address?.country?.code }}, {{ eventData?.event?.address?.city }}</p>
-      <p>Members: {{ eventData?.event?.members?.length }}</p>
+      <p>
+        <mat-icon [inline]="true">location_on</mat-icon>
+        :
+        {{ eventData?.event?.address?.city }}, {{ eventData?.event?.address?.country?.code }}</p>
+      <p>
+        <mat-icon inline="true">group</mat-icon>
+        : {{ eventData?.event?.members?.length }}</p>
     </div>
     <div *ngIf="togglesDetails" class="details">
       {{ eventData!!.event.description }}

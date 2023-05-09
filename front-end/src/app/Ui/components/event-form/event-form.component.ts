@@ -91,11 +91,10 @@ export class EventFormComponent implements OnInit {
       const eventDateData = this.datesData
       this.eventService.createEventAndRelatedData(eventData, eventToUserData, eventDateData)
         .subscribe((next) => {
-          this.router.navigate(['/'])
+          this.dialogRef.close('submit');
         })
 
     }
-    this.dialogRef.close('submit');
   }
 
   onCancel() {

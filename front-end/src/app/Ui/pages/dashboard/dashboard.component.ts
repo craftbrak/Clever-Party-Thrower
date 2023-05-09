@@ -39,6 +39,7 @@ export class DashboardComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'submit') {
         this.eventService.getUserEventData(this.authService.user?.email ?? "")
+        console.log('refresshingData')
       }
     });
   }
