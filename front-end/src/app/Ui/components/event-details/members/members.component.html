@@ -1,1 +1,10 @@
-<p>members works!</p>
+<div *ngIf="memberData$ | async as memberData">
+  <div *ngFor="let member of memberData">
+    <app-member [member]="member"></app-member>
+  </div>
+</div>
+<div>
+  <button color="primary" mat-raised-button>
+    <mat-icon> add</mat-icon>
+  </button>
+</div>

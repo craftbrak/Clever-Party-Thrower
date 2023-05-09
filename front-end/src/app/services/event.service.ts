@@ -5,6 +5,7 @@ import {Event} from "../entities/event.entity";
 import {Injectable} from "@angular/core";
 import {UserRole} from "../entities/event-to-user.entity";
 import {UserEvents} from "../Ui/pages/dashboard/dashboard.component";
+import {MemberData} from "../Ui/components/event-details/members/members.component";
 
 const Get_Events = gql`
   {
@@ -241,5 +242,36 @@ export class EventService {
   testBackEnd() {
     // this.apollo.watchQuery({query: this.SAYHELLO}).valueChanges.subscribe(value => console.log(value))
   }
+
+  getEventUsers(id: string): Observable<MemberData[]> {
+    const GET_EVENT_BY_ID = gql`
+      query GetEventById($id: String!) {
+        event(id: $id) {
+          id
+          members (skip:0, take: 100) {
+            id
+            role
+            user {
+              id
+              name
+              avatar
+            }
+          }
+        }
+      }
+    `;
+    return this.apollo
+      .watchQuery<{
+        event: {
+          id: string
+          members: MemberData[]
+        }
+      }>({
+        query: GET_EVENT_BY_ID,
+        variables: {id},
+      })
+      .valueChanges.pipe(map((result) => result.data.event.members));
+  }
+
   
 }

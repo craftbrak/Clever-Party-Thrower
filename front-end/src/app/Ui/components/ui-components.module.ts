@@ -39,6 +39,8 @@ import {ExpensesComponent} from './event-details/expenses/expenses.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {DateSelectionComponent} from './event-details/date-selection/date-selection.component';
+import {MemberComponent} from './event-details/members/member/member.component';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     ShoppinglistComponent,
     CarpoolComponent,
     ExpensesComponent,
+    DateSelectionComponent,
+    MemberComponent,
   ],
   exports: [
     EventFormComponent,

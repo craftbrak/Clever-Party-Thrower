@@ -16,8 +16,8 @@ export class EventDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.eventService.selectedEventId$.subscribe(value => {
       this.eventId = value
-
     })
+
   }
 
 }
