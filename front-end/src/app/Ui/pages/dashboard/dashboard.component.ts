@@ -49,7 +49,7 @@ export class DashboardComponent implements OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'submit') {
         this.refreshData();
-        console.log('refreshingData')
+        // console.log('refreshingData')
       }
     });
   }

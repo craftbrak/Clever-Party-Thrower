@@ -112,7 +112,7 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
   }
 
   onAddressFormSubmit(data: any): void {
-    console.log(data)
+    // console.log(data)
     if (this.addressCreateValid) {
       this.addressService.createAddress({
         line1: String(data.line1),

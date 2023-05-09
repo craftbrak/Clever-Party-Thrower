@@ -143,7 +143,7 @@ export class EventService {
         fetchPolicy: 'network-only',
       })
       .valueChanges.pipe(map(result => {
-        console.log(result.data)
+        // console.log(result.data)
         return result.data
       }));
   }
