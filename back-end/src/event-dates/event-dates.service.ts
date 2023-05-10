@@ -48,6 +48,13 @@ export class EventDatesService {
     return out;
   }
 
+  async findAllOfEvent(id: string) {
+    return this.eventDateRepo.find({
+      where: { eventId: id },
+      relations: { event: true },
+    });
+  }
+
   update(id: string, updateEventDateInput: UpdateEventDateInput) {
     return this.eventDateRepo.update(
       { id: updateEventDateInput.id },

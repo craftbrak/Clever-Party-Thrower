@@ -67,13 +67,14 @@ export class EventService {
   }
 
   async findOne(id: Event["id"]): Promise<Event> {
-    return await this.eventRepo.findOneOrFail({
+    const out = await this.eventRepo.findOneOrFail({
       where: { id: id },
       relations: {
         availableDates: true,
         selectedDate: true,
       },
     });
+    return out;
   }
 
   async update(

@@ -234,7 +234,7 @@ type Event {
   spendings: Spending
   selectedDate: EventDate
   selectedDateId: String
-  availableDates: EventDate
+  availableDates: [EventDate!]
   fixedDate: Boolean
 }
 
