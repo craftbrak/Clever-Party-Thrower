@@ -65,8 +65,14 @@ export class EventDatesService {
     return this.eventDateRepo.delete({ id: id });
   }
 
-  // async getDatesToUsers(eventdateId: string) {
-  //   const out = await this.dateToUserRepo.find();
-  //   return out;
-  // }
+  async getDatesToUsers(eventdateId: string) {
+    return (
+      await this.eventDateRepo.findOne({
+        where: { id: eventdateId },
+        relations: {
+          datesToUsers: true,
+        },
+      })
+    ).datesToUsers;
+  }
 }

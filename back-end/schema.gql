@@ -35,6 +35,7 @@ type EventDate {
   numberVotes: Float!
   event: Event!
   datesToUsers: [DatesToUser!]!
+  eventSelected: Event
 }
 
 type DatesToUser {
@@ -357,19 +358,19 @@ input CreateEventDto {
 
 input UpdateEventDto {
   """Name of the event"""
-  name: String!
+  name: String
 
   """Description of the event"""
-  description: String!
+  description: String
 
   """Total spent for the event"""
-  total: Float!
+  total: Float
   addressId: String
   fixedDate: Boolean
 
   """Id of the event"""
   id: String!
-  selectedDateId: String!
+  selectedDateId: String
 }
 
 input CreateAddressDto {

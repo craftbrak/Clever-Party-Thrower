@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-container {
+  padding: 1%;
+  display: flex;
+  margin: 1%;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  border-radius: 10px;
+  min-height: 4vh;
+}
+
+.bg {
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 10%;
+}
+
+.add-btn-container {
+  display: flex;
+  justify-content: space-evenly;
+}

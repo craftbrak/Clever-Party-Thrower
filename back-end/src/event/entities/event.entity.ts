@@ -52,6 +52,7 @@ export class Event extends Node {
 
   @Field(() => EventDate, { nullable: true })
   @OneToOne(() => EventDate, (eventDate) => eventDate.event)
+  @JoinColumn({ name: "selectedDateId" })
   selectedDate: EventDate;
 
   @Field(() => String, { nullable: true })

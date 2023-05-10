@@ -7,6 +7,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   RelationId,
 } from "typeorm";
 import { DatesToUser } from "../../dates-to-user/entities/dates-to-user.entity";
@@ -31,4 +32,7 @@ export class EventDate extends Node {
   @OneToMany(() => DatesToUser, (DatestoUser) => DatestoUser.eventDate)
   @JoinColumn()
   datesToUsers: DatesToUser[];
+  @Field(() => Event, { nullable: true })
+  @OneToOne(() => Event, (event) => event.selectedDate)
+  eventSelected: Event;
 }
