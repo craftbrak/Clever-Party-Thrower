@@ -10,9 +10,14 @@ if (environment.production) {
 
 async function fetchApiUrlAndBootstrap() {
   const uri = environment.apiUrl;
-  const response = await fetch(uri);
-  const data = await response.json();
-  localStorage.setItem('apiUrl', data.apiUrl);
+  if (environment.production) {
+    const response = await fetch(uri);
+    const data = await response.json();
+    localStorage.setItem('apiUrl', data.apiUrl);
+  } else {
+    localStorage.setItem('apiUrl', environment.apiUrl);
+  }
+
 
   platformBrowserDynamic()
     .bootstrapModule(AppModule)

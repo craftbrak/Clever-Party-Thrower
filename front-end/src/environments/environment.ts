@@ -4,7 +4,23 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://cpt.louisdewilde.be/api/config',
+  apiUrl: 'http://localhost:4242/',
+  mock_backend: true,
+  // mockData: {
+  //   events: [{id: "3", name: "test 3", description: "", total: 23}],
+  //   users: [],
+  //   countries: [],
+  //   addesses: [],
+  //   cars: [],
+  //   depts: [],
+  //   carpool: [],
+  //   routes: [],
+  //   userToEvents: [],
+  //   eventDates: [],
+  //   datesToUsers: [],
+  //   spendings: [],
+  //   shoppinglistItems: []
+  // }
 };
 
 /*

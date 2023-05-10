@@ -3,6 +3,7 @@ import {Apollo} from "apollo-angular";
 import gql from "graphql-tag";
 import {Address, Country} from "../entities/address.entity";
 import {CreateAddressDto} from "../Dto/create-address.dto";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
@@ -58,14 +59,19 @@ export class AddressService {
     }).valueChanges;
   }
 
-  createAddress(input: CreateAddressDto) {
-    return this.apollo.mutate<Address>({
+  createAddress(input: CreateAddressDto): Observable<Address> {
+
+    return this.apollo.mutate<{ createAddress: Address }>({
       mutation: this.CREATE_ADDRESS,
-      variables: {input},
-    });
+      variables: {input}, // @ts-ignore
+    }).pipe(map(value => value.data.createAddress));
   }
 
-  getAddresses() {
-    return this.apollo.watchQuery<{ addresses: Address[] }>({query: this.GET_ADDRESSES}).valueChanges
+  getAddresses(): Observable<Address[]> {
+    return this.apollo.watchQuery<{
+      addresses: Address[]
+    }>({query: this.GET_ADDRESSES, fetchPolicy: "network-only"}).valueChanges.pipe(map(result => {
+      return result.data.addresses
+    }))
   }
 }

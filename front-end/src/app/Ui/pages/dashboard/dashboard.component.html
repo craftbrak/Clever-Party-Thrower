@@ -1,6 +1,24 @@
-<div class="dashboard">
-  <h1>Dashboard</h1>
-  <button (click)="openCreateEventForm()">Create New Event</button>
-  <!-- Add your existing form component here when the button is clicked -->
-  <app-event-form *ngIf="showCreateEventForm"></app-event-form>
+<div id="main">
+  <section class="scrollable-section" id="eventList">
+    <h1 class="title"> Your Events </h1>
+    <div class="dashboard">
+      <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
+        <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
+          <mat-icon>add</mat-icon>
+        </button>
+        <div *ngFor="let event of userEvents.user.eventToUsers">
+          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
+        </div>
+
+      </div>
+
+
+      <!-- Add your existing form component here when the button is clicked -->
+      <app-event-form *ngIf="showCreateEventForm"></app-event-form>
+    </div>
+  </section>
+  <section *ngIf="eventId" class="scrollable-section" id="eventDetails">
+    <app-event-details></app-event-details>
+  </section>
 </div>
+

@@ -1,0 +1,17 @@
+.member-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+  align-items: center;
+}
+
+app-member {
+  margin: 1%;
+}
+
+.btncontainer {
+  display: flex;
+  justify-content: space-around;
+}

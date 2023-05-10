@@ -26,10 +26,10 @@ export class EventFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.testBackEnd()
-    this.addressService.getAddresses().subscribe(value => {
-      console.table(value.data.addresses)
-      this.existingAddresses = value.data.addresses
-    })
+    // this.addressService.getAddresses().subscribe(value => {
+    //   // console.table(value.data.addresses)
+    //   this.existingAddresses = value.data.addresses
+    // })
   }
 
   onEventInfoFormValidity(valid: boolean): void {
@@ -46,7 +46,7 @@ export class EventFormComponent implements OnInit {
 
   onEventInfoFormSubmit(data: any): void {
     this.eventInfoData = data;
-    console.table(data)
+    // console.table(data)
   }
 
   onAddressFormSubmit(data: any): void {
@@ -54,29 +54,17 @@ export class EventFormComponent implements OnInit {
   }
 
   onDateSelectionFormSubmit(data: any): void {
-    console.table(data)
+    // console.table(data)
     this.datesData = data;
   }
 
   onSubmit(): void {
-    console.warn("submitted")
-    console.log(this.eventInfoData);
-    console.log(this.addressData);
-    console.log(this.datesData);
-
+    // console.warn("submitted")
+    // console.log(this.eventInfoData);
+    // console.log(this.addressData);
+    // console.log(this.datesData);
+    console.log(this.addressValid)
     if (this.eventInfoValid && this.addressValid && this.datesValid) {
-      // Process the event creation data and submit it.
-      // const eventData = {
-      //   ...this.eventInfoData,
-      //   addressId: this.addressData.id,
-      //   fixedDate: this.datesData.length === 1,
-      //   multipleDates: this.datesData,
-      //   userId: localStorage.getItem("userId")
-      // };
-      console.log('setup eventData')
-      console.table(this.eventInfoData)
-      console.table(this.addressData)
-      console.table(this.datesData)
       const eventData = {
         name: this.eventInfoData.eventName,
         description: this.eventInfoData.eventDescription,
@@ -91,11 +79,10 @@ export class EventFormComponent implements OnInit {
       const eventDateData = this.datesData
       this.eventService.createEventAndRelatedData(eventData, eventToUserData, eventDateData)
         .subscribe((next) => {
-          this.router.navigate(['/'])
+          this.dialogRef.close('submit');
         })
 
     }
-    this.dialogRef.close('submit');
   }
 
   onCancel() {

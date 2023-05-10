@@ -2,6 +2,7 @@ import { IntegrationTestManager } from "../../integration-test-manager";
 import gql from "graphql-tag";
 import request from "supertest-graphql";
 import { Event } from "../../../event/entities/event.entity";
+import { randSoonDate } from "@ngneat/falso";
 
 describe("queryEvent", () => {
   jest.setTimeout(20000);
@@ -17,6 +18,22 @@ describe("queryEvent", () => {
     let existingEvent: Event;
     beforeAll(async () => {
       existingEvent = await integrationTestManager.getNewEvent();
+      await integrationTestManager.getNewEventToUser(
+        existingEvent,
+        integrationTestManager.testUser,
+      );
+      await integrationTestManager.getNewEventDate(
+        existingEvent,
+        randSoonDate(),
+      );
+      await integrationTestManager.getNewEventDate(
+        existingEvent,
+        randSoonDate(),
+      );
+      await integrationTestManager.getNewEventDate(
+        existingEvent,
+        randSoonDate(),
+      );
     });
     //TODO: test every sub entity
     describe("When querying an event by its ID", () => {

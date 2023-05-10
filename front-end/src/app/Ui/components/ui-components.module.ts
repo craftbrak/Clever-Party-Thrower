@@ -31,6 +31,17 @@ import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {AddressCardComponent} from './address-card/address-card.component';
 import {EventInfoComponent} from './event-info/event-info.component';
+import {EventDetailsComponent} from './event-details/event-details.component';
+import {MembersComponent} from './event-details/members/members.component';
+import {ShoppinglistComponent} from './event-details/shoppinglist/shoppinglist.component';
+import {CarpoolComponent} from './event-details/carpool/carpool.component';
+import {ExpensesComponent} from './event-details/expenses/expenses.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {DateSelectionComponent} from './event-details/date-selection/date-selection.component';
+import {MemberComponent} from './event-details/members/member/member.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -49,9 +60,18 @@ import {EventInfoComponent} from './event-info/event-info.component';
     DateSelectionFormComponent,
     AddressCardComponent,
     EventInfoComponent,
+    EventDetailsComponent,
+    MembersComponent,
+    ShoppinglistComponent,
+    CarpoolComponent,
+    ExpensesComponent,
+    DateSelectionComponent,
+    MemberComponent,
   ],
   exports: [
-    EventFormComponent
+    EventFormComponent,
+    EventInfoComponent,
+    EventDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -72,7 +92,11 @@ import {EventInfoComponent} from './event-info/event-info.component';
     MatCheckboxModule,
     FormsModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
+    MatToolbarModule
   ]
 })
 export class UiComponentsModule {

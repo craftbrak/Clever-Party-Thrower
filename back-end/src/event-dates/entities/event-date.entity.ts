@@ -27,7 +27,6 @@ export class EventDate extends Node {
   @ManyToOne(() => Event, (event) => event.availableDates)
   @JoinColumn()
   event: Event;
-
   @Field(() => [DatesToUser])
   @OneToMany(() => DatesToUser, (DatestoUser) => DatestoUser.eventDate)
   @JoinColumn()

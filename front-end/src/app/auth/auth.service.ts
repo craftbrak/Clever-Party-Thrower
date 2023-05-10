@@ -125,7 +125,9 @@ export class AuthService {
       manual: manual,
       name: name,
       password: password,
+      avatar: avatar
     }
+    console.table(singUp)
     return this.apollo.mutate({
       mutation: this.REGISTER_MUTATION,
       variables: {singUp},

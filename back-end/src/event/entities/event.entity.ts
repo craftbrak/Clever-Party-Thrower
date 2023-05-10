@@ -58,7 +58,7 @@ export class Event extends Node {
   @RelationId((self: Event) => self.selectedDate)
   selectedDateId: string;
 
-  @Field(() => EventDate, { nullable: true })
+  @Field(() => [EventDate], { nullable: true })
   @OneToMany(() => EventDate, (eventDate) => eventDate.event)
   availableDates: EventDate[]; //todo: add Api Access for adding and removing dates + Votes
 

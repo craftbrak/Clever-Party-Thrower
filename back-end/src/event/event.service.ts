@@ -52,6 +52,8 @@ export class EventService {
       },
       relations: {
         members: true,
+        availableDates: true,
+        selectedDate: true,
       },
     });
     return { nodes, totalCount };
@@ -65,7 +67,13 @@ export class EventService {
   }
 
   async findOne(id: Event["id"]): Promise<Event> {
-    return await this.eventRepo.findOneOrFail({ where: { id: id } });
+    return await this.eventRepo.findOneOrFail({
+      where: { id: id },
+      relations: {
+        availableDates: true,
+        selectedDate: true,
+      },
+    });
   }
 
   async update(
