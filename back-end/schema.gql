@@ -230,7 +230,7 @@ type Event {
   address: Address
   addressId: String
   carpools: Carpool
-  shoppingList: ShoppingListItem
+  shoppingList: [ShoppingListItem!]
   spendings: Spending
   selectedDate: EventDate
   selectedDateId: String

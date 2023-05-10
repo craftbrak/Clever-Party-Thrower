@@ -19,6 +19,7 @@ import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
 import { JWTPayload } from "../auth/jwtPayload.interface";
+import { EventDate } from "../event-dates/entities/event-date.entity";
 
 @Resolver(() => Event)
 export class EventResolver {
@@ -73,5 +74,15 @@ export class EventResolver {
   @ResolveField("address", () => Address)
   async address(@Parent() event: Event) {
     return this.addressService.findOne(event.addressId);
+  }
+
+  @ResolveField(() => [EventDate])
+  async availableDates(@Parent() event: Event): Promise<EventDate[]> {
+    return this.eventService.getAvailableDates(event.id);
+  }
+
+  @ResolveField(() => EventDate, { nullable: true })
+  async selectedDate(@Parent() event: Event): Promise<EventDate> {
+    return this.eventService.getSelectedDate(event.id);
   }
 }

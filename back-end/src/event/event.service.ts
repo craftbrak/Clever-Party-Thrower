@@ -105,4 +105,22 @@ export class EventService {
   ) {
     return (await this.eventToUserService.findAllOfEvent(args, event)).nodes;
   }
+
+  async getAvailableDates(id: string) {
+    return (
+      await this.eventRepo.findOne({
+        where: { id: id },
+        relations: { availableDates: true },
+      })
+    ).availableDates;
+  }
+
+  async getSelectedDate(id: string) {
+    return (
+      await this.eventRepo.findOne({
+        where: { id: id },
+        relations: { availableDates: true },
+      })
+    ).selectedDate;
+  }
 }
