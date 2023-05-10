@@ -36,7 +36,7 @@ export class EventDatesService {
   }
 
   async findOne(id: string) {
-    const out = await this.eventDateRepo.findOne({
+    return await this.eventDateRepo.findOne({
       where: {
         id: id,
       },
@@ -45,7 +45,6 @@ export class EventDatesService {
         event: true,
       },
     });
-    return out;
   }
 
   async findAllOfEvent(id: string) {
