@@ -41,10 +41,15 @@ export class DatesToUserService {
   }
 
   update(id: string, updateDatesToUserInput: UpdateDatesToUserInput) {
-    return `This action updates a #${id} datesToUser`;
+    return `This action updates a #${id} datesToUser`; //todo: implement update
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} datesToUser`;
+  async remove(id: string) {
+    const a = await this.dateToUserRepo.find({
+      where: {
+        id: id,
+      },
+    });
+    return (await this.dateToUserRepo.remove(a))[0];
   }
 }

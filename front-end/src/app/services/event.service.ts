@@ -6,6 +6,7 @@ import {Injectable} from "@angular/core";
 import {UserRole} from "../entities/event-to-user.entity";
 import {UserEvents} from "../Ui/pages/dashboard/dashboard.component";
 import {MemberData} from "../Ui/components/event-details/members/members.component";
+import {Event_requestData} from "../Ui/components/event-details/date-selection/date-selection.component";
 
 const Get_Events = gql`
   {
@@ -75,9 +76,11 @@ const GET_USER_EVENT_DATA = gql`
           id
           name
           selectedDate {
+            id
             date
           }
           availableDates {
+            id
             date
           }
           description
@@ -111,12 +114,19 @@ export class EventService {
   private selectedEventIdSource = new BehaviorSubject<string | null>(null)
   selectedEventId$ = this.selectedEventIdSource.asObservable()
 
+  private eventToUserSource = new BehaviorSubject<string | null>(null)
+  eventToUserId$ = this.eventToUserSource.asObservable()
+
   constructor(private apollo: Apollo) {
-    this.getEventNumber().then();
   }
 
   updateEventId(id: string) {
+    console.log("updating event")
     this.selectedEventIdSource.next(id)
+  }
+
+  updateEventToUserId(id: string) {
+    this.eventToUserSource.next(id)
   }
 
   async getAllEventId() {
@@ -276,5 +286,159 @@ export class EventService {
       .valueChanges.pipe(map((result) => result.data.event.members));
   }
 
+  getEventDatesData(id: string): Observable<Event_requestData> {
+    const getEventQuery = gql`
+      query Event($eventId: String!) {
+        event(id: $eventId) {
+          id
+          selectedDate {
+            id
+            date
+            datesToUsers {
+              voteValue
+              eventToUser {
+                role
+                user {
+                  avatar
+                  name
+                  id
+                }
+                id
+              }
+              id
+            }
+            numberVotes
+          }
+          fixedDate
+          availableDates {
+            id
+            numberVotes
+            date
+            datesToUsers {
+              voteValue
+              eventToUser {
+                role
+                user {
+                  avatar
+                  name
+                  id
+                }
+                id
+              }
+              id
+            }
+          }
+        }
+      }
+    `;
+    return this.apollo.watchQuery<{ event: Event_requestData }>({
+      query: getEventQuery,
+      variables: {
+        eventId: id,
+      },
+      fetchPolicy: "network-only"
+    }).valueChanges.pipe(
+      map(result => result.data.event)
+    );
+  }
 
+  UpdateSelectedDate(eventId: string, eventDateId: string) {
+    const updateEventMutation = gql`
+      mutation UpdateEvent($updateEventInput: UpdateEventDto!) {
+        updateEvent(updateEventInput: $updateEventInput) {
+          id
+          selectedDate {
+            id
+            date
+          }
+          fixedDate
+        }
+      }
+    `;
+
+    return this.apollo.mutate({
+      mutation: updateEventMutation,
+      variables: {
+        updateEventInput: {
+          id: eventId,
+          selectedDateId: eventDateId
+        }
+      } // @ts-ignore
+    }).pipe(map(value => value.data))
+  }
+
+  AddEventDate(eventId: string, date: Date): Observable<{ eventDate: { id: string, date: string } }> {
+    const mut = gql`
+      mutation CreateEventDate($createEventDateInput: CreateEventDateInput!) {
+        createEventDate(createEventDateInput: $createEventDateInput) {
+          id
+          date
+        }
+      }`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        createEventDateInput: {
+          eventId: eventId,
+          date: date
+        }
+      }//@ts-ignore
+    }).pipe(map(value => value.data))
+  }
+
+  voteForDate(eventDateId: string, eventToUserId: string, voteValue: number, originalNumberOfVotes: number) {
+    const mut = gql`mutation CreateDatesToUser($createDatesToUserInput: CreateDatesToUserInput!, $updateEventDateInput: UpdateEventDateInput!) {
+      createDatesToUser(createDatesToUserInput: $createDatesToUserInput) {
+        id
+        eventToUser {
+          id
+          user {
+            id
+            avatar
+            name
+          }
+        }
+      }
+      updateEventDate(updateEventDateInput: $updateEventDateInput) {
+        numberVotes
+        date
+        id
+      }
+    }`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        createDatesToUserInput: {
+          eventDateId: eventDateId,
+          eventToUserId: eventToUserId,
+          voteValue: 1
+        },
+        updateEventDateInput: {
+          id: eventDateId,
+          numberVotes: originalNumberOfVotes + 1
+        }
+      }//@ts-ignore
+    }).pipe(map(value => value.data))
+  }
+
+  removeVoteForDate(dateToUserId: string, eventDateId: string, orignialNumberOfVotes: number) {
+    const mut = gql`mutation RemoveDatesToUser($removeDatesToUserId: String!, $updateEventDateUpdateEventDateInput2: UpdateEventDateInput!) {
+      removeDatesToUser(id: $removeDatesToUserId)
+      ateEventDate(updateEventDateInput: $updateEventDateUpdateEventDateInput2) {
+        id
+        numberVotes
+      }
+    }`
+
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        removeDatesToUserId: dateToUserId,
+        updateEventDateUpdateEventDateInput2: {
+          id: eventDateId,
+          numberVotes: orignialNumberOfVotes
+        }
+      }// @ts-ignore
+    }).pipe(map(value => value.data))
+  }
 }

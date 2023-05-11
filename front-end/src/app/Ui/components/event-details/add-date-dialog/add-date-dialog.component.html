@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" style="padding: 5%">
+  <mat-form-field>
+    <input [matDatepicker]="picker" matInput placeholder="Choose a date">
+    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button color="primary" mat-raised-button type="submit">Submit</button>
+</form>

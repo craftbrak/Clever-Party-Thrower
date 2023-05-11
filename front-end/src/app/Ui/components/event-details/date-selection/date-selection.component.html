@@ -1,1 +1,55 @@
-<p>date-selection works!</p>
+<!--{{eventDates$ | async | json}}-->
+<div class="main">
+  <form [formGroup]="selectForm">
+    <div *ngIf="eventDates$ |async as eventDates">
+      <div>
+        <mat-radio-group formControlName="option">
+          <div *ngFor="let eDate of eventDates.availableDates"
+               [class]="eventDates.selectedDate?.id === eDate.id? 'bg-light date-container' : 'bg date-container'">
+            <div>
+              {{eDate.date | date}}
+            </div>
+            <div>
+              {{eDate.numberVotes}}
+            </div>
+            <div class="btn-container">
+              <button (click)="voteForDate(eDate.id)" *ngIf="!selectDate && !eventDates.fixedDate && !hasVoted(eDate)"
+                      color="accent"
+                      mat-raised-button>
+                <!--            <mat-icon>check</mat-icon>-->
+                +1
+              </button>
+              <!--              <button (click)="removeVote(eDate.id)" *ngIf="!selectDate && !eventDates.fixedDate && hasVoted(eDate)"-->
+              <!--                      color="warn" mat-raised-button>-->
+              <!--                <mat-icon>close</mat-icon>-->
+              <!--              </button>-->
+
+              <mat-radio-button *ngIf="selectDate" [value]="eDate.id">
+              </mat-radio-button>
+            </div>
+
+          </div>
+        </mat-radio-group>
+      </div>
+      <div *ngIf="isOwner && !selectDate " class="add-btn-container">
+        <button (click)="addDate()" color="primary" mat-raised-button style="width: 45%">
+          <mat-icon> add</mat-icon>
+        </button>
+        <button (click)="toggleSelectionInterface()"
+                color="primary"
+                mat-raised-button
+                style="width: 45%">
+          {{eventDates.fixedDate ? "Change Date" : "Select Date" }}
+        </button>
+      </div>
+      <div *ngIf="selectDate" class="add-btn-container">
+        <button (click)="submitSelectionForm()" color="accent" mat-raised-button style="width: 55%">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button (click)="toggleSelectionInterface()" mat-raised-button style="width: 35%">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

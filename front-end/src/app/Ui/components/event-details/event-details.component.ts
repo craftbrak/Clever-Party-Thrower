@@ -8,6 +8,7 @@ import {EventService} from "../../../services/event.service";
 })
 export class EventDetailsComponent implements OnInit {
   eventId: string | undefined | null
+  evenToUserId: string | undefined;
 
   constructor(private eventService: EventService) {
 
@@ -17,7 +18,7 @@ export class EventDetailsComponent implements OnInit {
     this.eventService.selectedEventId$.subscribe(value => {
       this.eventId = value
     })
-
+    this.eventService.eventToUserId$.subscribe(value => this.evenToUserId = value!)
   }
 
 }

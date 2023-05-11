@@ -21,6 +21,10 @@
   background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
 }
 
+.bg-light {
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, A400);
+}
+
 .btn-container {
   display: flex;
   justify-content: space-evenly;
