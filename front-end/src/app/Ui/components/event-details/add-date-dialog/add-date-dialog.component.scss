@@ -1,0 +1,6 @@
+@use '@angular/material' as mat;
+
+
+.bg {
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+}

@@ -10,9 +10,11 @@ export interface EventToUserData {
     id: string;
     name: string;
     selectedDate: {
+      id: string;
       date: string;
     };
     availableDates: {
+      id: string;
       date: string;
     }[];
     description: string;
@@ -53,7 +55,7 @@ export class EventInfoComponent implements OnInit {
     })
   }
 
-  @Input() cliked: (id: string) => void = () => {
+  @Input() cliked: (eventId: string, eventToUserId: string) => void = () => {
   }
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class EventInfoComponent implements OnInit {
     this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.owner?.avatar)
   }
 
-  onlinkclick(id: string) {
-    this.cliked(id)
+  onlinkclick(id: string, eventToUserId: string) {
+    this.cliked(id, eventToUserId)
   }
 }

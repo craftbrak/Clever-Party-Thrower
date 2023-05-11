@@ -56,20 +56,20 @@ export class DatesToUserResolver {
     );
   }
 
-  @Mutation(() => DatesToUser)
-  removeDatesToUser(@Args("id", { type: () => String }) id: string) {
-    return this.datesToUserService.remove(id);
+  @Mutation(() => Boolean)
+  async removeDatesToUser(
+    @Args("id", { type: () => String }) id: string,
+  ): Promise<boolean> {
+    return !!(await this.datesToUserService.remove(id));
   }
 
   @ResolveField("eventDate", () => EventDate)
   async eventDate(@Parent() dateToUser: DatesToUser) {
-    const out = await this.eventDateService.findOne(dateToUser.eventDateId);
-    return out;
+    return await this.eventDateService.findOne(dateToUser.eventDateId);
   }
 
   @ResolveField("eventToUser", () => EventToUser)
   async eventToUser(@Parent() dateToUser: DatesToUser) {
-    const out = await this.evntToUserService.findOne(dateToUser.eventToUserId);
-    return out;
+    return await this.evntToUserService.findOne(dateToUser.eventToUserId);
   }
 }

@@ -1,4 +1,4 @@
-﻿import { Injectable } from "@nestjs/common";
+﻿import { Injectable, Logger } from "@nestjs/common";
 import { CreateEventDto } from "./dto/create-event.dto";
 import { UpdateEventDto } from "./dto/update-event.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -17,6 +17,8 @@ import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Injectable()
 export class EventService {
+  private readonly logger = new Logger(EventService.name);
+
   constructor(
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
     private eventToUserService: EventToUserService,
@@ -84,12 +86,24 @@ export class EventService {
       where: {
         id: eventId,
       },
+      relations: {
+        availableDates: true,
+      },
     });
     event.name = updateEventInput.name;
     event.total = updateEventInput.total;
     event.description = updateEventInput.description;
-    event.selectedDateId = updateEventInput.selectedDateId;
-    return await this.eventRepo.save(event);
+    if (updateEventInput.selectedDateId !== "") {
+      event.fixedDate = true;
+      event.selectedDateId = updateEventInput.selectedDateId;
+      const date = event.availableDates.find(
+        (value) => value.id === updateEventInput.selectedDateId,
+      );
+      event.selectedDate = date;
+      this.logger.log(`updating event with ${updateEventInput.selectedDateId}`);
+    }
+    const out = await this.eventRepo.save(event);
+    return out;
   }
 
   async remove(eventId: Event["id"]): Promise<string> {
@@ -104,5 +118,23 @@ export class EventService {
     event: Event /*user: JWTPayload*/,
   ) {
     return (await this.eventToUserService.findAllOfEvent(args, event)).nodes;
+  }
+
+  async getAvailableDates(id: string) {
+    return (
+      await this.eventRepo.findOne({
+        where: { id: id },
+        relations: { availableDates: true },
+      })
+    ).availableDates;
+  }
+
+  async getSelectedDate(id: string) {
+    return (
+      await this.eventRepo.findOne({
+        where: { id: id },
+        relations: { selectedDate: true },
+      })
+    ).selectedDate;
   }
 }

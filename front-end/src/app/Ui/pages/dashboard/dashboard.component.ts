@@ -54,8 +54,9 @@ export class DashboardComponent implements OnDestroy {
     });
   }
 
-  linked = (id: string) => {
-    this.eventService.updateEventId(id)
+  linked = (eventId: string, eventToUserId: string) => {
+    this.eventService.updateEventId(eventId)
+    this.eventService.updateEventToUserId(eventToUserId)
   }
 
   ngOnDestroy() {

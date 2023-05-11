@@ -54,19 +54,26 @@ export class EventDatesService {
     });
   }
 
-  update(id: string, updateEventDateInput: UpdateEventDateInput) {
-    return this.eventDateRepo.update(
-      { id: updateEventDateInput.id },
-      updateEventDateInput,
-    );
+  async update(id: string, updateEventDateInput: UpdateEventDateInput) {
+    const out = await this.eventDateRepo.findOne({
+      where: { id: updateEventDateInput.id },
+    });
+    out.numberVotes = updateEventDateInput.numberVotes;
+    return await out.save();
   }
 
   remove(id: string) {
     return this.eventDateRepo.delete({ id: id });
   }
 
-  // async getDatesToUsers(eventdateId: string) {
-  //   const out = await this.dateToUserRepo.find();
-  //   return out;
-  // }
+  async getDatesToUsers(eventdateId: string) {
+    return (
+      await this.eventDateRepo.findOne({
+        where: { id: eventdateId },
+        relations: {
+          datesToUsers: true,
+        },
+      })
+    ).datesToUsers;
+  }
 }

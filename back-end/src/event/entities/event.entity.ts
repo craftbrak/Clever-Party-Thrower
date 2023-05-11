@@ -42,7 +42,7 @@ export class Event extends Node {
   @OneToMany(() => Carpool, (carpool) => carpool.event)
   carpools: Carpool[]; //TODO: DTO
 
-  @Field(() => ShoppingListItem, { nullable: true })
+  @Field(() => [ShoppingListItem], { nullable: true })
   @OneToMany(() => ShoppingListItem, (items) => items.event)
   shoppingList: ShoppingListItem[]; //TODO: DTO
 
@@ -52,6 +52,7 @@ export class Event extends Node {
 
   @Field(() => EventDate, { nullable: true })
   @OneToOne(() => EventDate, (eventDate) => eventDate.event)
+  @JoinColumn({ name: "selectedDateId" })
   selectedDate: EventDate;
 
   @Field(() => String, { nullable: true })

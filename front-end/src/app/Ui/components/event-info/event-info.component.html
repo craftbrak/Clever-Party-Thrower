@@ -1,5 +1,5 @@
 <div class="event-card-wrapper">
-  <a (click)="onlinkclick(eventData?.event?.id ?? '')" class="custom-raised-btn" mat-raised-button>
+  <a (click)="onlinkclick(eventData!!.event.id, eventData!.id)" class="custom-raised-btn" mat-raised-button>
     <div class="header">
       <span *ngIf="useravatar.length >= 0">
         <img [src]="useravatar" alt="Profile picture" class="profile-picture" mat-card-image>

@@ -4,8 +4,8 @@ import {AuthGuard} from "./auth/auth.guard";
 import {LoginComponent} from "./Ui/components/login/login.component";
 import {RegisterComponent} from "./Ui/components/register/register.component";
 import {RegisterUserFormComponent} from "./Ui/components/register-user-form/register-user-form.component";
-import {EventFormComponent} from "./Ui/components/event-form/event-form.component";
 import {DashboardComponent} from "./Ui/pages/dashboard/dashboard.component";
+import {DateSelectionComponent} from "./Ui/components/event-details/date-selection/date-selection.component";
 // import {EventCreateComponent} from "./Ui/components/event-create/event-create.component";
 
 const routes: Routes = [
@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {path: 'register-old', component: RegisterComponent},
   {path: 'register', component: RegisterUserFormComponent},
-  {path: 'create-event', component: EventFormComponent},
+  {path: 'eventDates', component: DateSelectionComponent},
 ];
 
 @NgModule({

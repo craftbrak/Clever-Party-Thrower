@@ -1,4 +1,11 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from "@nestjs/graphql";
 import { EventDatesService } from "./event-dates.service";
 import { EventDate } from "./entities/event-date.entity";
 import { CreateEventDateInput } from "./dto/create-event-date.input";
@@ -44,13 +51,13 @@ export class EventDatesResolver {
     return this.eventDatesService.remove(id);
   }
 
-  // @ResolveField("event", () => Event)
-  // async event(@Parent() eventDate: EventDate) {
-  //   return this.eventService.findOne(eventDate.eventId);
-  // }
+  @ResolveField("event", () => Event)
+  async event(@Parent() eventDate: EventDate) {
+    return this.eventService.findOne(eventDate.eventId);
+  }
 
-  // @ResolveField("datesToUsers", () => Event)
-  // async datesToUsers(@Parent() eventDate: EventDate) {
-  //   return await this.eventDatesService.getDatesToUsers(eventDate.id);
-  // }
+  @ResolveField("datesToUsers", () => Event)
+  async datesToUsers(@Parent() eventDate: EventDate) {
+    return await this.eventDatesService.getDatesToUsers(eventDate.id);
+  }
 }
