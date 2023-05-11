@@ -1,0 +1,22 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="shoppingForm!" class="form-container">
+  <mat-form-field appearance="outline">
+    <mat-label>Assignee</mat-label>
+    <mat-select formControlName="assignedId">
+      <mat-option *ngFor="let assignee of assignees" [value]="assignee.user.id">{{assignee.user.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input formControlName="name" matInput type="text">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Price</mat-label>
+    <input formControlName="price" matInput type="number">
+  </mat-form-field>
+
+  <mat-checkbox formControlName="bought">Bought</mat-checkbox>
+
+  <button color="primary" mat-raised-button type="submit">Submit</button>
+</form>

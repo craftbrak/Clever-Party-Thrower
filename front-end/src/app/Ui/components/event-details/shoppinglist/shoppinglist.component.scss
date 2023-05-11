@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+
+.item-container {
+  display: flex;
+  gap: 2vh;
+  flex-direction: column;
+}
+
+.shopping-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+  border-radius: 10px;
+}
+
+.item-name,
+.item-price,
+.item-assigned,
+.item-bought {
+  flex: 1 0 200px; /* this means the items will wrap if the width becomes less than 200px */
+  margin: 5px;
+  text-align: center;
+}
+
+.item-assigned {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-assigned img {
+  width: 50px; /* adjust this as needed */
+  height: 50px; /* adjust this as needed */
+  border-radius: 50%; /* makes the image circular */
+  margin-left: 10px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2%;
+}

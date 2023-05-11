@@ -10,15 +10,15 @@ export class UpdateShoppingListItemDto extends PartialType(
 ) {
   @Field(() => String)
   id: string;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   name: string;
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   price: number;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @ManyToOne(() => UserEntity, { nullable: true })
   assignedId: UserEntity["id"];
-  @Field(() => Boolean)
+  @Field(() => Boolean, { nullable: true })
   bought: boolean;
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   eventId: Event["id"];
 }

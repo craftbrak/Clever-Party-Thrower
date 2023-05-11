@@ -3,7 +3,7 @@ import {EventService} from "../../../../services/event.service";
 import {Observable, startWith, Subject, switchMap, tap} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {AddDateDialogComponent} from "../add-date-dialog/add-date-dialog.component";
+import {AddDateDialogComponent} from "./add-date-dialog/add-date-dialog.component";
 import {AuthService} from "../../../../auth/auth.service";
 import {isLetter} from "graphql/language/characterClasses";
 

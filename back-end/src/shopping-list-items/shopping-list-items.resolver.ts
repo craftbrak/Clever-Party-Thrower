@@ -1,8 +1,17 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from "@nestjs/graphql";
 import { ShoppingListItemsService } from "./shopping-list-items.service";
 import { ShoppingListItem } from "./entities/shopping-list-item.entity";
 import { CreateShoppingListItemDto } from "./dto/create-shopping-list-item.dto";
 import { UpdateShoppingListItemDto } from "./dto/update-shopping-list-item.dto";
+import { Event } from "../event/entities/event.entity";
+import { UserEntity } from "../user/entities/user.entity";
 
 @Resolver(() => ShoppingListItem)
 export class ShoppingListItemsResolver {
@@ -28,19 +37,25 @@ export class ShoppingListItemsResolver {
     return this.shopingListItemsService.findOne(id);
   }
 
-  @Mutation(() => ShoppingListItem)
-  updateShoppingListItem(
+  @Mutation(() => Boolean)
+  async updateShoppingListItem(
     @Args("updateShoppingListItemInput")
     updateShoppingListItemDto: UpdateShoppingListItemDto,
   ) {
-    return this.shopingListItemsService.update(
+    const out = await this.shopingListItemsService.update(
       updateShoppingListItemDto.id,
       updateShoppingListItemDto,
     );
+    return out.affected > 0;
   }
 
   @Mutation(() => ShoppingListItem)
   removeShoppingListItem(@Args("id", { type: () => String }) id: string) {
     return this.shopingListItemsService.remove(id);
+  }
+
+  @ResolveField("assigned", () => UserEntity, { nullable: true })
+  async shoppingList(@Parent() event: Event): Promise<UserEntity> {
+    return this.shopingListItemsService.getAssignee(event.id);
   }
 }

@@ -7,6 +7,7 @@ import {UserRole} from "../entities/event-to-user.entity";
 import {UserEvents} from "../Ui/pages/dashboard/dashboard.component";
 import {MemberData} from "../Ui/components/event-details/members/members.component";
 import {Event_requestData} from "../Ui/components/event-details/date-selection/date-selection.component";
+import {Event_shoppingList} from "../Ui/components/event-details/shoppinglist/shoppinglist.component";
 
 const Get_Events = gql`
   {
@@ -121,7 +122,6 @@ export class EventService {
   }
 
   updateEventId(id: string) {
-    console.log("updating event")
     this.selectedEventIdSource.next(id)
   }
 
@@ -258,7 +258,7 @@ export class EventService {
 
   getEventUsers(id: string): Observable<MemberData[]> {
     const GET_EVENT_BY_ID = gql`
-      query GetEventById($id: String!) {
+      query GetEventUsers($id: String!) {
         event(id: $id) {
           id
           members (skip:0, take: 100) {
@@ -288,7 +288,7 @@ export class EventService {
 
   getEventDatesData(id: string): Observable<Event_requestData> {
     const getEventQuery = gql`
-      query Event($eventId: String!) {
+      query getEventDates($eventId: String!) {
         event(id: $eventId) {
           id
           selectedDate {
@@ -440,5 +440,82 @@ export class EventService {
         }
       }// @ts-ignore
     }).pipe(map(value => value.data))
+  }
+
+  getEventShoppingList(eventId: string): Observable<Event_shoppingList> {
+    const mut = gql`
+      query GetEventShoppingList($eventId: String!) {
+        event(id: $eventId) {
+          shoppingList {
+            assigned {
+              avatar
+              id
+              name
+            }
+            id
+            name
+            price
+            bought
+          }
+          id
+        }
+      }`
+    return this.apollo.watchQuery<{ event: Event_shoppingList }>({
+      query: mut,
+      fetchPolicy: "network-only",
+      variables: {
+        eventId: eventId
+      }
+    }).valueChanges.pipe(map(value => value.data.event))
+  }
+
+  addShoppingListItem(eventId: string, createShoppingListItem: {
+    assignedId: string,
+    bought: boolean,
+    name: string,
+    price: number
+  }) {
+    const mut = gql`
+      mutation CreateShoppingListItem($createShoppingListItemDto: CreateShoppingListItemDto!) {
+        createShoppingListItem(createShoppingListItemDto: $createShoppingListItemDto) {
+          id
+        }
+      }`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        createShoppingListItemDto: {
+          assignedId: createShoppingListItem.assignedId,
+          bought: createShoppingListItem.bought,
+          eventId: eventId,
+          name: createShoppingListItem.name,
+          price: createShoppingListItem.price
+        }
+      }//@ts-ignore
+    }).pipe(map(value => value.data))
+
+  }
+
+  updateShoppingListItem(itemId: string, createShoppingListItem: {
+    bought?: boolean,
+    name?: string,
+    price?: number
+  }) {
+    const mut = gql`
+      mutation UpdateShoppingListItem($updateShoppingListItemInput: UpdateShoppingListItemDto!) {
+        updateShoppingListItem(updateShoppingListItemInput: $updateShoppingListItemInput)
+      }`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        updateShoppingListItemInput: {
+          id: itemId,
+          bought: createShoppingListItem.bought,
+          name: createShoppingListItem.name,
+          price: createShoppingListItem.price
+        }
+      }//@ts-ignore
+    }).pipe(map(value => value.data))
+
   }
 }

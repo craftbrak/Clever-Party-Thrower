@@ -20,6 +20,7 @@ import { Address } from "../address/entities/address.entity";
 import { AddressService } from "../address/address.service";
 import { JWTPayload } from "../auth/jwtPayload.interface";
 import { EventDate } from "../event-dates/entities/event-date.entity";
+import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
 
 @Resolver(() => Event)
 export class EventResolver {
@@ -84,5 +85,10 @@ export class EventResolver {
   @ResolveField(() => EventDate, { nullable: true })
   async selectedDate(@Parent() event: Event): Promise<EventDate> {
     return this.eventService.getSelectedDate(event.id);
+  }
+
+  @ResolveField(() => [ShoppingListItem], { nullable: true })
+  async shoppingList(@Parent() event: Event): Promise<ShoppingListItem[]> {
+    return this.eventService.getshoppingList(event.id);
   }
 }

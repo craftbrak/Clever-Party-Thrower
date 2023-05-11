@@ -55,4 +55,8 @@ export class ShoppingListItemsService {
   async remove(id: string) {
     return this.itemRepo.delete({ id });
   }
+
+  async getAssignee(id: string) {
+    return (await this.findOne(id)).assigned;
+  }
 }
