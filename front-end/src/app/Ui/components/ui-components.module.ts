@@ -42,7 +42,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DateSelectionComponent} from './event-details/date-selection/date-selection.component';
 import {MemberComponent} from './event-details/members/member/member.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {AddDateDialogComponent} from './event-details/add-date-dialog/add-date-dialog.component';
+import {AddDateDialogComponent} from './event-details/date-selection/add-date-dialog/add-date-dialog.component';
+import {AddShoppingItemComponent} from './event-details/shoppinglist/add-shopping-item/add-shopping-item.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import {AddDateDialogComponent} from './event-details/add-date-dialog/add-date-d
     DateSelectionComponent,
     MemberComponent,
     AddDateDialogComponent,
+    AddShoppingItemComponent,
   ],
   exports: [
     EventFormComponent,

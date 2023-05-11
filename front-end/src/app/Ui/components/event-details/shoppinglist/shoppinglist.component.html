@@ -1,1 +1,31 @@
-<p>shoppinglist works!</p>
+<div>
+  <div *ngIf="state$| async as shoppingList" class="item-container">
+    <div *ngFor="let item of shoppingList.shoppingList">
+      <div class="shopping-item">
+        <div class="item-name">
+          {{item.name}}
+        </div>
+        <div class="item-price">
+          {{item.price}} $
+        </div>
+        <div class="item-assigned">
+          {{item.assigned.name}}
+          <img [src]=" this.sanitizer.bypassSecurityTrustUrl(item.assigned.avatar) " alt="avatar-pick">
+          <!--        todo: sanitise the avatar URL -->
+        </div>
+        <div class="item-bought">
+          <mat-checkbox (click)="updateItemBougthStatus(item.id, item.bought)"
+                        [checked]="item.bought" color="accent"></mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-container">
+    <button (click)="openDialog()" color="primary" mat-raised-button style="width: 50%">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+
