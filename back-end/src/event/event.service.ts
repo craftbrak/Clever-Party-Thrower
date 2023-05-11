@@ -137,4 +137,13 @@ export class EventService {
       })
     ).selectedDate;
   }
+
+  async getshoppingList(id: string) {
+    return (
+      await this.eventRepo.findOne({
+        where: { id: id },
+        relations: { shoppingList: true },
+      })
+    ).shoppingList;
+  }
 }
