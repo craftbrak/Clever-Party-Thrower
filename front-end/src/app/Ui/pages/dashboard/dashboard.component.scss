@@ -32,7 +32,7 @@
 }
 
 #eventList {
-  max-width: 25%;
+  width: 25%;
   height: 100%;
   overflow-y: auto;
   display: flex;
@@ -45,7 +45,7 @@
 
 .scrollable-section {
   position: relative;
-  max-height: 100vh; // Set the max height for the scrollable sections
+  max-height: 90vh; // Set the max height for the scrollable sections
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -64,4 +64,13 @@
 .scrollable-section {
   scrollbar-width: thin;
   scrollbar-color: #726f6f transparent; // Change to your preferred color
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

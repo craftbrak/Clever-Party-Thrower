@@ -68,4 +68,8 @@ export class DashboardComponent implements OnDestroy {
   refreshData() {
     this.dataRefreshTrigger$.next();
   }
+
+  menuOpen() {
+    console.log('menuOpened')
+  }
 }

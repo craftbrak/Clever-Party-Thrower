@@ -1,6 +1,25 @@
+<mat-toolbar color="primary">
+  <span>Clever Party thrower</span>
+  <span class="spacer"></span>
+  <div>
+    <button (click)="menuOpen()" [matMenuTriggerFor]="appMenu" mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
 <div id="main">
   <section class="scrollable-section" id="eventList">
-    <h1 class="title"> Your Events </h1>
     <div class="dashboard">
       <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
         <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
