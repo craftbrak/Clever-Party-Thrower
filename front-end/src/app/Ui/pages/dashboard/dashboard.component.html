@@ -41,25 +41,29 @@
       <app-event-form *ngIf="showCreateEventForm"></app-event-form>
     </div>
   </section>
-  <!--  <section *ngIf="(windowService.checkScreenSize() | async)" [@drawerAnimation]="'in'"-->
-  <!--           class="scrollable-section eventList" id="">-->
-  <!--    <div class="dashboard">-->
-  <!--      <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">-->
-  <!--        <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>-->
-  <!--          <mat-icon>add</mat-icon>-->
-  <!--        </button>-->
-  <!--        <div *ngFor="let event of userEvents.user.eventToUsers">-->
-  <!--          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>-->
-  <!--        </div>-->
+  <section *ngIf="(windowService.checkScreenSize() | async) && !eventId" [@drawerAnimation]="'in'"
+           class="scrollable-section eventSelector" id="">
+    <div class="dashboard">
+      <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
+        <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
+          <mat-icon>add</mat-icon>
+        </button>
+        <div *ngFor="let event of userEvents.user.eventToUsers">
+          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>
+        </div>
 
-  <!--      </div>-->
+      </div>
 
 
-  <!--      &lt;!&ndash; Add your existing form component here when the button is clicked &ndash;&gt;-->
-  <!--      <app-event-form *ngIf="showCreateEventForm"></app-event-form>-->
-  <!--    </div>-->
-  <!--  </section>-->
-  <section *ngIf="eventId" class="scrollable-section" id="eventDetails">
+      <!-- Add your existing form component here when the button is clicked -->
+      <app-event-form *ngIf="showCreateEventForm"></app-event-form>
+    </div>
+  </section>
+  <section *ngIf="eventId && (windowService.checkScreenSize() | async)" class="scrollable-section eventFullDetails">
+    <app-event-details></app-event-details>
+  </section>
+  <section *ngIf="eventId && (windowService.checkScreenSize() | async)===false"
+           class="scrollable-section eventFullDetails">
     <app-event-details></app-event-details>
   </section>
 </div>
