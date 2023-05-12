@@ -164,14 +164,11 @@ export class AuthService {
   }
 
   private setTokens(accessToken: string, refreshToken: string) {
-    console.debug("setting tokens")
-    console.log(accessToken, refreshToken)
     this._accessToken = accessToken;
     this._refreshToken = refreshToken;
     localStorage.setItem('accessToken', this._accessToken ?? '');
     localStorage.setItem('refreshToken', this._refreshToken ?? '');
     if (accessToken.length > 0) this.user = jwt_decode(accessToken)
-    // @ts-ignore
-    localStorage.setItem('userid', this.user?.id)
+    localStorage.setItem('userid', this.user?.id!)
   }
 }

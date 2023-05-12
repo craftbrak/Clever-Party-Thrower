@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Copy URL</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class=" linkBox">
+    <p>{{data.url}}</p>
+    <button (click)="copyToClipboard(data.url)" aria-label="Copy to clipboard" color="primary" mat-icon-button>
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</mat-dialog-content>

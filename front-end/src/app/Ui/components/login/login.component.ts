@@ -1,7 +1,8 @@
 import {AuthService} from '../../../auth/auth.service';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {EventService} from "../../../services/event.service";
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,13 @@ export class LoginComponent implements OnInit {
   password: string = '';
   loginForm: FormGroup;
   CredentialsInValid = false
+  private eventId: string | null | undefined;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private eventService: EventService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -32,7 +36,17 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe(
       (value) => {
-        value ? this.router.navigate(['/dashboard']) : this.CredentialsInValid = true;
+        if (value) {
+          if (this.eventId) {
+            this.eventService.addEventToUser(this.eventId, this.authService.user?.id!).subscribe(value => {
+              this.router.navigate(['/dashboard'])
+            })
+          } else {
+            this.router.navigate(['/dashboard'])
+          }
+        } else {
+          this.CredentialsInValid = true
+        }
         // Redirect to a protected route or the dashboard after successful login
       },
       (error) => {
@@ -46,5 +60,12 @@ export class LoginComponent implements OnInit {
     this.loginForm.valueChanges.subscribe(() => {
       this.CredentialsInValid = false
     })
+    this.route.paramMap.subscribe(params => {
+      this.eventId = params.get('eventId');
+    });
+  }
+
+  redirectToRegister() {
+    this.router.navigate(['/register', this.eventId])
   }
 }

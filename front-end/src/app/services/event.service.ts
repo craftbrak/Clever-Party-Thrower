@@ -517,4 +517,23 @@ export class EventService {
       }//@ts-ignore
     }).pipe(map(value => value.data))
   }
+
+  addEventToUser(eventId: string, userId: string) {
+    const mut = gql`mutation CreateEventToUser($ce: CreateEventToUserDto!) {
+  createEventToUser(createEventToUserInput: $ce) {
+    id
+  }
+}`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        ce: {
+          userId: userId,
+          eventId: eventId
+        }
+      },
+      fetchPolicy: "network-only" //@ts-ignore
+    }).pipe(map(value => value.data))
+  }
+
 }

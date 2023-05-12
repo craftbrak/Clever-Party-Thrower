@@ -44,6 +44,11 @@ import {MemberComponent} from './event-details/members/member/member.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AddDateDialogComponent} from './event-details/date-selection/add-date-dialog/add-date-dialog.component';
 import {AddShoppingItemComponent} from './event-details/shoppinglist/add-shopping-item/add-shopping-item.component';
+import {
+  AddEventToUserLinkDialogComponent
+} from './event-details/members/add-event-to-user-link-dialog/add-event-to-user-link-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ToastComponent} from './toast/toast.component';
 
 
 @NgModule({
@@ -71,11 +76,14 @@ import {AddShoppingItemComponent} from './event-details/shoppinglist/add-shoppin
     MemberComponent,
     AddDateDialogComponent,
     AddShoppingItemComponent,
+    AddEventToUserLinkDialogComponent,
+    ToastComponent,
   ],
   exports: [
     EventFormComponent,
     EventInfoComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +108,8 @@ import {AddShoppingItemComponent} from './event-details/shoppinglist/add-shoppin
     MatTabsModule,
     MatSidenavModule,
     MatButtonToggleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDialogModule
   ]
 })
 export class UiComponentsModule {
