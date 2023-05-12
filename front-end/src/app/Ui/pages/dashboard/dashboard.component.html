@@ -1,12 +1,15 @@
 <mat-toolbar color="primary">
-  <span>Clever Party thrower</span>
+  <button (click)="drawerService.toggle()" *ngIf="(windowService.checkScreenSize() | async)" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Your App Name</span>
   <span class="spacer"></span>
   <div>
-    <button (click)="menuOpen()" [matMenuTriggerFor]="appMenu" mat-icon-button>
+    <button [matMenuTriggerFor]="appMenu" mat-icon-button>
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #appMenu="matMenu">
-      <button mat-menu-item>
+      <button (click)="userSettings()" mat-menu-item>
         <mat-icon>settings</mat-icon>
         <span>Settings</span>
       </button>
@@ -18,8 +21,10 @@
   </div>
 </mat-toolbar>
 
+
 <div id="main">
-  <section class="scrollable-section" id="eventList">
+  <section *ngIf="(windowService.checkScreenSize() | async) === false ||drawerService.isOpen" [@drawerAnimation]="'in'"
+           class="scrollable-section" id="eventList">
     <div class="dashboard">
       <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
         <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
@@ -36,6 +41,24 @@
       <app-event-form *ngIf="showCreateEventForm"></app-event-form>
     </div>
   </section>
+  <!--  <section *ngIf="(windowService.checkScreenSize() | async)" [@drawerAnimation]="'in'"-->
+  <!--           class="scrollable-section eventList" id="">-->
+  <!--    <div class="dashboard">-->
+  <!--      <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">-->
+  <!--        <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>-->
+  <!--          <mat-icon>add</mat-icon>-->
+  <!--        </button>-->
+  <!--        <div *ngFor="let event of userEvents.user.eventToUsers">-->
+  <!--          <app-event-info [cliked]="linked" [eventData]="event"></app-event-info>-->
+  <!--        </div>-->
+
+  <!--      </div>-->
+
+
+  <!--      &lt;!&ndash; Add your existing form component here when the button is clicked &ndash;&gt;-->
+  <!--      <app-event-form *ngIf="showCreateEventForm"></app-event-form>-->
+  <!--    </div>-->
+  <!--  </section>-->
   <section *ngIf="eventId" class="scrollable-section" id="eventDetails">
     <app-event-details></app-event-details>
   </section>
