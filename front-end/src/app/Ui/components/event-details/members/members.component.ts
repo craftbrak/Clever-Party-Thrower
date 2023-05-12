@@ -40,7 +40,7 @@ export class MembersComponent implements OnInit {
   showDialog() {
     const dialogRef = this.dialog.open(AddEventToUserLinkDialogComponent, {
       data: {
-        url: `https://${window.location.host}/login/${this.eventId}`
+        url: `${window.location.protocol}://${window.location.host}/login/${this.eventId}`
       },
       maxWidth: '80vw'
     });
