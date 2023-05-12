@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {timer} from "rxjs";
 import {AuthService} from "./auth/auth.service";
 import {EventService} from "./services/event.service";
+import {ToastService} from "./services/toast.service";
+import {ToastComponent} from "./Ui/components/toast/toast.component";
 
 
 @Component({
@@ -11,8 +13,14 @@ import {EventService} from "./services/event.service";
 })
 export class AppComponent implements OnInit {
   title = 'Clever Party Thrower';
+  @ViewChild('toast') toastComponent!: ToastComponent;
+  toastMessage: string = '';
 
-  constructor(private authService: AuthService, private eventService: EventService) {
+  constructor(private authService: AuthService, private eventService: EventService, private toastService: ToastService) {
+    this.toastService.toastSubject.subscribe(message => {
+      this.toastMessage = message;
+      this.toastComponent.showToast();
+    });
   }
 
   ngOnInit(): void {
