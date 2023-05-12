@@ -17,12 +17,14 @@ export class MemberComponent implements OnInit {
   showRoleSelector = false
   showParticipationSelector = false
   useravatar: string = ""
+  eventId: string | undefined
 
   constructor(private sanitizer: DomSanitizer, private eventService: EventService, private authService: AuthService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
       'account_circle',
       this.domSanitizer.bypassSecurityTrustResourceUrl('https://fonts.gstatic.com/s/i/materialicons/account_circle/v12/24px.svg')
     );
+    this.eventService.selectedEventId$.subscribe(value => this.eventId = value!)
   }
 
   ngOnInit(): void {
@@ -34,4 +36,10 @@ export class MemberComponent implements OnInit {
 
   }
 
+  confirmParticipation(userToEventId: string) {
+    this.eventService.updateUserRole(userToEventId, UserRole.MEMBER).subscribe(value => {
+      this.eventService.updateEventId(this.eventId!)
+      console.log(this.member)
+    })
+  }
 }

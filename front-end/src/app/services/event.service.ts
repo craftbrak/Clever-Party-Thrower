@@ -536,4 +536,21 @@ export class EventService {
     }).pipe(map(value => value.data))
   }
 
+  updateUserRole(eventToUserId: string, role: UserRole) {
+    const mut = gql`
+    mutation UpdateEventToUser($updateEventToUserInput: UpdateEventToUserDto!) {
+  updateEventToUser(updateEventToUserInput: $updateEventToUserInput) {
+    id
+  }
+}`
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        updateEventToUserInput: {
+          id: eventToUserId,
+          role: role
+        }
+      }
+    })
+  }
 }

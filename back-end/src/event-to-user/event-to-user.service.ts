@@ -104,6 +104,7 @@ export class EventToUserService {
         id: eventId,
       },
     });
+    eventToUser.role = input.role;
     eventToUser.eventId = input.eventId;
     eventToUser.userId = input.userId;
     eventToUser.addressId = input.addressId;
