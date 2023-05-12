@@ -516,6 +516,5 @@ export class EventService {
         }
       }//@ts-ignore
     }).pipe(map(value => value.data))
-
   }
 }

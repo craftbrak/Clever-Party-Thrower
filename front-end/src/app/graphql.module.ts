@@ -31,8 +31,13 @@ export function createApollo(httpLink: HttpLink) {
 
   const errorLink = onError(({graphQLErrors, networkError}) => {
     if (graphQLErrors)
-      graphQLErrors.forEach(({message}) =>
-        console.error(`[GraphQL error]: ${message}`)
+      graphQLErrors.forEach(({message}) => {
+          console.error(`[GraphQL error]: ${message}`)
+          if (message === "Unauthorized") {
+            // console.log("should Redirect")
+            window.location.href = '/login';
+          }
+        }
       );
     if (networkError) console.error(`[Network error]: ${networkError}`);
   });

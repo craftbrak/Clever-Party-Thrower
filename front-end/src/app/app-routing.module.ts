@@ -20,9 +20,9 @@ const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },
-  {path: 'register-old', component: RegisterComponent},
-  {path: 'register', component: RegisterUserFormComponent},
-  {path: 'eventDates', component: DateSelectionComponent},
+  {path: 'register-old', component: RegisterComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterUserFormComponent, canActivate: [AuthGuard]},
+  {path: 'eventDates', component: DateSelectionComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
