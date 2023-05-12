@@ -72,4 +72,12 @@ export class DashboardComponent implements OnDestroy {
   menuOpen() {
     console.log('menuOpened')
   }
+
+  logout() {
+    this.authService.logout()
+  }
+
+  userSettings() {
+    throw Error("Not Implemented")//todo: implement user update
+  }
 }
