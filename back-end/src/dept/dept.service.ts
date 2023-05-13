@@ -128,4 +128,8 @@ export class DeptService {
   remove(id: string) {
     return `This action removes a #${id} dept`;
   }
+
+  getEventDebts(id: string) {
+    return this.calculateDepts(id);
+  }
 }
