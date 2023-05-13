@@ -8,6 +8,7 @@ import {UserEvents} from "../Ui/pages/dashboard/dashboard.component";
 import {MemberData} from "../Ui/components/event-details/members/members.component";
 import {Event_requestData} from "../Ui/components/event-details/date-selection/date-selection.component";
 import {Event_shoppingList} from "../Ui/components/event-details/shoppinglist/shoppinglist.component";
+import {EventData} from "../../entities/gql-retun-types";
 
 const Get_Events = gql`
   {
@@ -552,5 +553,33 @@ export class EventService {
         }
       }
     })
+  }
+
+  getEventDetail(eventId: string): Observable<EventData> {
+    const mut = gql`
+    query Event($eventId: String!) {
+  event(id: $eventId) {
+    id
+    name
+    description
+    address {
+      postalCode
+      unitNumber
+      line1
+      city
+      country {
+        name
+        id
+      }
+      id
+    }
+  }
+}`
+    return this.apollo.query<EventData>({
+      query: mut,
+      variables: {
+        eventId: eventId
+      }
+    }).pipe(map(value => value.data))
   }
 }

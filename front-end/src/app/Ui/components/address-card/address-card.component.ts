@@ -17,7 +17,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class AddressCardComponent {
-  @Input() address?: Address;
+  @Input() address?: Address | any;
   @Input() selected?: boolean;
   @Output() cardClick: EventEmitter<void> = new EventEmitter<void>();
   animationState: 'default' | 'clicked' = 'default';
