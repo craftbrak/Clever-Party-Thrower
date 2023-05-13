@@ -20,7 +20,7 @@ export class Spending extends Node {
   @Column({ type: "float" })
   value: number;
 
-  @Field(() => ShoppingListItem)
+  @Field(() => ShoppingListItem, { nullable: true })
   @ManyToOne(() => ShoppingListItem, { nullable: true })
   shoppingListItem: ShoppingListItem;
 }

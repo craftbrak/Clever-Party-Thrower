@@ -210,7 +210,7 @@ type Spending {
   buyer: UserEntity!
   event: Event!
   value: Float!
-  shoppingListItem: ShoppingListItem!
+  shoppingListItem: ShoppingListItem
 }
 
 type Event {
@@ -290,10 +290,13 @@ type Query {
   carpool(id: String!): Carpool!
   routes: [RouteEntity!]!
   route(String: String!): RouteEntity!
+  spendings(eventId: String): [Spending!]!
   spending(id: String!): Spending!
   shoppingListItems: [ShoppingListItem!]!
   shoppingListItem(id: String!): ShoppingListItem!
+  depts: [Dept!]!
   dept(id: String!): Dept!
+  getEventDebts(eventId: ID!): [Dept!]!
   eventDates: [EventDate!]!
   eventDate(id: String!): EventDate!
   datesToUser(id: String!): DatesToUser!

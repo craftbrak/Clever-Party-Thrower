@@ -42,7 +42,13 @@ export class SpendingService {
     return this.spendingRepository.create(spending).save();
   }
 
-  async findAll() {
+  async findAll(eventId?: string) {
+    if (eventId) {
+      return this.spendingRepository.find({
+        where: { event: { id: eventId } },
+        relations: { event: true, buyer: true, shoppingListItem: true },
+      });
+    }
     return this.spendingRepository.find({
       relations: { event: true, shoppingListItem: true, buyer: true },
     });
@@ -89,5 +95,13 @@ export class SpendingService {
   async findAllOfEventById(eventId: string): Promise<Spending[]> {
     const all = await this.findAll();
     return all.filter((spending) => (spending.event.id = eventId));
+  }
+
+  async getshoppingListItem(id: string) {
+    const out = await this.spendingRepository.findOne({
+      where: { id: id },
+      relations: { shoppingListItem: true },
+    });
+    return out.shoppingListItem;
   }
 }
