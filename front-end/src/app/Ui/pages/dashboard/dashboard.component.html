@@ -24,7 +24,7 @@
 
 <div id="main">
   <section *ngIf="(windowService.checkScreenSize() | async) === false ||drawerService.isOpen" [@drawerAnimation]="'in'"
-           class="scrollable-section" id="eventList">
+           [class]=" (drawerService.isOpen? 'fullscreen scrollable-section':'smul scrollable-section')" id="eventList">
     <div class="dashboard">
       <div *ngIf="userEvents$ | async as userEvents" class="event-card-container">
         <button (click)="openCreateEventForm()" class="add-event-btn" color="primary" mat-raised-button>
@@ -59,11 +59,12 @@
       <app-event-form *ngIf="showCreateEventForm"></app-event-form>
     </div>
   </section>
-  <section *ngIf="eventId && (windowService.checkScreenSize() | async)" class="scrollable-section eventFullDetails">
+  <section *ngIf="eventId && (windowService.checkScreenSize() | async)&& !drawerService.isOpen"
+           class="scrollable-section eventFullDetails">
     <app-event-details></app-event-details>
   </section>
-  <section *ngIf="eventId && (windowService.checkScreenSize() | async)===false"
-           class="scrollable-section eventFullDetails">
+  <section *ngIf="eventId && (windowService.checkScreenSize() | async)===false "
+           class="eventFullDetails">
     <app-event-details></app-event-details>
   </section>
 </div>
