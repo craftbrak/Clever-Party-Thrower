@@ -36,3 +36,23 @@ interface EventDebts {
     name: string;
   };
 }
+
+export interface Buyer {
+  id: string;
+  avatar: string;
+  name: string;
+}
+
+export interface ShoppingListItem {
+  id: string;
+  name: string;
+}
+
+export interface SpendingData {
+  id: string;
+  value: number;
+  buyer: Buyer;
+  shoppingListItem: ShoppingListItem | null;
+}
+
+

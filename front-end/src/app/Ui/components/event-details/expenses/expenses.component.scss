@@ -1,13 +1,19 @@
 @use '@angular/material' as mat;
 
-.debs-container {
+.debs, .expense {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   padding: 2%;
   background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
   border-radius: 10px;
+}
+
+.item-container {
+  display: flex;
+  gap: 1vh;
+  flex-direction: column;
 }
 
 .user {
@@ -21,4 +27,12 @@
   height: 50px; /* adjust this as needed */
   border-radius: 50%; /* makes the image circular */
   margin-left: 10px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 30px;
+  margin-top: 1vh;
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Apollo} from "apollo-angular";
 import {BehaviorSubject, map} from "rxjs";
-import {DeptData} from "../../entities/gql-retun-types";
+import {DeptData, SpendingData} from "../../entities/gql-retun-types";
 import gql from "graphql-tag";
 
 @Injectable({
@@ -10,7 +10,7 @@ import gql from "graphql-tag";
 export class ExpensesService {
   private debtsSource = new BehaviorSubject<DeptData | undefined>(undefined)
   debts$ = this.debtsSource.asObservable()
-  private expenseSource = new BehaviorSubject<any | undefined>(undefined)
+  private expenseSource = new BehaviorSubject<SpendingData[] | undefined>(undefined)
   expenses$ = this.expenseSource.asObservable()
 
   constructor(private apollo: Apollo) {
@@ -66,10 +66,11 @@ export class ExpensesService {
         }
       }
     `
-    return this.apollo.watchQuery({
+    return this.apollo.watchQuery<{ spendings: SpendingData[] }>({
       query: gql1,
       variables: {eventId: eventId}
-    }).valueChanges.pipe(map(value => value.data)).subscribe(value => {
+    }).valueChanges.pipe(map(value => value.data.spendings)).subscribe(value => {
+      console.log(value)
       this.expenseSource.next(value)
     })
   }

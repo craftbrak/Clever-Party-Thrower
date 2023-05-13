@@ -5,7 +5,6 @@ import {EventService} from "./services/event.service";
 import {ToastService} from "./services/toast.service";
 import {ToastComponent} from "./Ui/components/toast/toast.component";
 import {ExpensesService} from "./services/expenses.service";
-import {WindowService} from "./services/window.service";
 
 
 @Component({
@@ -18,7 +17,7 @@ export class AppComponent implements OnInit {
   @ViewChild('toast') toastComponent!: ToastComponent;
   toastMessage: string = '';
 
-  constructor(private authService: AuthService, private eventService: EventService, private toastService: ToastService, private expensesService: ExpensesService, private windwService: WindowService) {
+  constructor(private authService: AuthService, private eventService: EventService, private toastService: ToastService, private expensesService: ExpensesService) {
     this.toastService.toastSubject.subscribe(message => {
       this.toastMessage = message;
       this.toastComponent.showToast();

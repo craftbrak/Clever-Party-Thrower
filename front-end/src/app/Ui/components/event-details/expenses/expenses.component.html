@@ -1,62 +1,68 @@
-<div *ngIf="expensesService.debts$ | async as debts">
-  <div *ngFor="let debt of debts.getEventDebts" class="debs-container">
-    <div class="debtor user">
-      <div class="debtorName">
-        {{debt.debtor.name}}
+<div class="main">
+  <div *ngIf="expensesService.debts$ | async as debts" class="item-container">
+    <h3>
+      <mat-icon>currency_exchange</mat-icon>
+      Debts
+    </h3>
+    <div *ngFor="let debt of debts.getEventDebts" class="debs">
+      <div class="debtor user">
+        <div class="debtorName">
+          {{debt.debtor.name}}
+        </div>
+        <div>
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
+        </div>
       </div>
-      <div>
-        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
-      </div>
-    </div>
-    <div class="amount">
+      <div class="amount">
 
-      {{debt.amount}}
-    </div>
-    <div class="arrow">
-      <mat-icon>arrow_forward</mat-icon>
-    </div>
-    <div class="creditor user">
-      <div class="creditorName">
-        {{debt.creditor.name}}
-      </div>
-      <div>
-        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.creditor.avatar)" alt="avatar">
-      </div>
-    </div>
+        {{debt.amount}}€
 
-    <div class="repayed">
-      <mat-checkbox [checked]="debt.repayed" [disabled]="false"></mat-checkbox>
+      </div>
+      <div class="arrow">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+      <div class="creditor user">
+        <div class="creditorName">
+          {{debt.creditor.name}}
+        </div>
+        <div>
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.creditor.avatar)" alt="avatar">
+        </div>
+      </div>
+
+      <div class="repayed">
+        <button mat-icon-button>
+          <mat-icon [ngStyle]="{'color': debt.repayed ? 'green' : 'red', 'font-size': '36px'}">paid</mat-icon>
+        </button>
+        <!--        <mat-checkbox color="" [checked]="debt.repayed" [disabled]="false"></mat-checkbox>-->
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="expensesService.expenses$ | async as debts">
-  <div *ngFor="let debt of debts.getEventDebts" class="debs-container">
-    <div class="debtor user">
+  <div *ngIf="expensesService.expenses$ | async as spending" class="item-container">
+    <h3>
+      <mat-icon>payments</mat-icon>
+      Expenses
+    </h3>
+    <div *ngFor="let expense of spending" class="expense">
+      <div class="debtor user">
+
+        {{expense.buyer.name}}
+        <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.buyer.avatar)" alt="avatar">
+
+
+      </div>
+      <div>
+        <mat-icon>payments</mat-icon>
+      </div>
+      <div class="amount">
+        {{expense.value}}€
+      </div>
+      <div>
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
       <div class="debtorName">
-        {{debt.debtor.name}}
+        {{expense.shoppingListItem?.name}}
       </div>
-      <div>
-        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
-      </div>
-    </div>
-    <div class="amount">
-
-      {{debt.amount}}
-    </div>
-    <div class="arrow">
-      <mat-icon>arrow_forward</mat-icon>
-    </div>
-    <div class="creditor user">
-      <div class="creditorName">
-        {{debt.creditor.name}}
-      </div>
-      <div>
-        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.creditor.avatar)" alt="avatar">
-      </div>
-    </div>
-
-    <div class="repayed">
-      <mat-checkbox [checked]="debt.repayed" [disabled]="false"></mat-checkbox>
     </div>
   </div>
 </div>
