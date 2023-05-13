@@ -16,3 +16,23 @@ export type EventData = {
     },
   },
 };
+
+export interface DeptData {
+  getEventDebts: EventDebts[]
+}
+
+interface EventDebts {
+  id: string;
+  amount: number;
+  repayed: boolean;
+  debtor: {
+    avatar: string;
+    id: string;
+    name: string;
+  };
+  creditor: {
+    id: string;
+    avatar: string;
+    name: string;
+  };
+}

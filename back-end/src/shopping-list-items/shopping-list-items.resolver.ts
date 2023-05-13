@@ -46,7 +46,7 @@ export class ShoppingListItemsResolver {
       updateShoppingListItemDto.id,
       updateShoppingListItemDto,
     );
-    return out.affected > 0;
+    return !!out;
   }
 
   @Mutation(() => ShoppingListItem)

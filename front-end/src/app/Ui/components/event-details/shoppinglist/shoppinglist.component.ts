@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddShoppingItemComponent} from "./add-shopping-item/add-shopping-item.component";
 import {Observable, startWith, Subject, switchMap, tap} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ExpensesService} from "../../../../services/expenses.service";
 
 @Component({
   selector: 'app-shoppinglist',
@@ -18,7 +19,7 @@ export class ShoppinglistComponent {
   state$: Observable<Event_shoppingList> | undefined
   private dataRefreshTrigger$: Subject<void>;
 
-  constructor(public sanitizer: DomSanitizer, public dialog: MatDialog, private eventService: EventService, private authService: AuthService,) {
+  constructor(private expenseService: ExpensesService, public sanitizer: DomSanitizer, public dialog: MatDialog, private eventService: EventService, private authService: AuthService,) {
     console.log('shoping')
     this.dataRefreshTrigger$ = new Subject<void>();
     this.state$ =
@@ -52,8 +53,8 @@ export class ShoppinglistComponent {
   }
 
   updateItemBougthStatus(id: string, value: boolean) {
-    console.debug('item changed')
-    this.eventService.updateShoppingListItem(id, {bought: value}).subscribe(value1 => this.dataRefreshTrigger$.next())
+    console.debug('item changed', value)
+    this.eventService.updateShoppingListItem(id, {bought: !value}).subscribe(value1 => this.dataRefreshTrigger$.next())
   }
 
 }

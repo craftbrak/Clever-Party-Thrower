@@ -467,7 +467,9 @@ export class EventService {
       variables: {
         eventId: eventId
       }
-    }).valueChanges.pipe(map(value => value.data.event))
+    }).valueChanges.pipe(map(value => {
+      return value.data.event
+    }))
   }
 
   addShoppingListItem(eventId: string, createShoppingListItem: {
@@ -575,11 +577,11 @@ export class EventService {
     }
   }
 }`
-    return this.apollo.query<EventData>({
+    return this.apollo.watchQuery<EventData>({
       query: mut,
       variables: {
         eventId: eventId
       }
-    }).pipe(map(value => value.data))
+    }).valueChanges.pipe(map(value => value.data))
   }
 }

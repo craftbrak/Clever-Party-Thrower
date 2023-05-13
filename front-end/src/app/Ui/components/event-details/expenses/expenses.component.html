@@ -1,1 +1,62 @@
-<p>expenses works!</p>
+<div *ngIf="expensesService.debts$ | async as debts">
+  <div *ngFor="let debt of debts.getEventDebts" class="debs-container">
+    <div class="debtor user">
+      <div class="debtorName">
+        {{debt.debtor.name}}
+      </div>
+      <div>
+        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
+      </div>
+    </div>
+    <div class="amount">
+
+      {{debt.amount}}
+    </div>
+    <div class="arrow">
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+    <div class="creditor user">
+      <div class="creditorName">
+        {{debt.creditor.name}}
+      </div>
+      <div>
+        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.creditor.avatar)" alt="avatar">
+      </div>
+    </div>
+
+    <div class="repayed">
+      <mat-checkbox [checked]="debt.repayed" [disabled]="false"></mat-checkbox>
+    </div>
+  </div>
+</div>
+<div *ngIf="expensesService.expenses$ | async as debts">
+  <div *ngFor="let debt of debts.getEventDebts" class="debs-container">
+    <div class="debtor user">
+      <div class="debtorName">
+        {{debt.debtor.name}}
+      </div>
+      <div>
+        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
+      </div>
+    </div>
+    <div class="amount">
+
+      {{debt.amount}}
+    </div>
+    <div class="arrow">
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+    <div class="creditor user">
+      <div class="creditorName">
+        {{debt.creditor.name}}
+      </div>
+      <div>
+        <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.creditor.avatar)" alt="avatar">
+      </div>
+    </div>
+
+    <div class="repayed">
+      <mat-checkbox [checked]="debt.repayed" [disabled]="false"></mat-checkbox>
+    </div>
+  </div>
+</div>

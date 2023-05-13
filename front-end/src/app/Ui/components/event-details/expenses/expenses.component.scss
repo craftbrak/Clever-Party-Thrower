@@ -1,0 +1,24 @@
+@use '@angular/material' as mat;
+
+.debs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2%;
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+  border-radius: 10px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user img {
+  width: 50px; /* adjust this as needed */
+  height: 50px; /* adjust this as needed */
+  border-radius: 50%; /* makes the image circular */
+  margin-left: 10px;
+}
