@@ -212,21 +212,24 @@ export class IntegrationTestManager {
 
   async getNewSpending(
     event: Event = null,
-    user: UserEntity = null,
+    user1: UserEntity = null,
     shopIt: ShoppingListItem = null,
     amount: number = null,
+    user2: UserEntity = null,
   ): Promise<Spending> {
     if (!event) event = await this.getNewEvent();
     if (!shopIt) shopIt = await this.getNewShoppingListItem();
-    if (!user) user = await this.getNewUser();
+    if (!user1) user1 = await this.getNewUser();
+    if (!user2) user2 = await this.getNewUser();
     if (!amount && amount !== 0) amount = randFloat();
     const carpoolService =
       this._moduleRef.get<SpendingService>(SpendingService);
     return await carpoolService.create({
       eventId: event.id,
       shoppingListItemId: shopIt.id,
-      buyerId: user.id,
+      buyerId: user1.id,
       value: amount,
+      beneficiaryId: user2.id,
     });
   }
 
@@ -244,6 +247,7 @@ export class IntegrationTestManager {
       userId: user.id,
       eventId: event.id,
       addressId: address.id,
+      balance: 0,
     });
   }
 

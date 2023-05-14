@@ -20,7 +20,19 @@ export class Spending extends Node {
   @Column({ type: "float" })
   value: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  name?: string;
+
   @Field(() => ShoppingListItem, { nullable: true })
   @ManyToOne(() => ShoppingListItem, { nullable: true })
   shoppingListItem: ShoppingListItem;
+
+  @Field(() => UserEntity)
+  @ManyToOne(() => UserEntity)
+  beneficiary: UserEntity;
+
+  // @Field(()=> Boolean, {defaultValue:false})
+  // @Column({default:false})
+  // payedOf: boolean;
 }

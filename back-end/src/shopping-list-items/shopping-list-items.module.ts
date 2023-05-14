@@ -6,10 +6,12 @@ import { ShoppingListItem } from "./entities/shopping-list-item.entity";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Spending } from "../spending/entities/spending.entity";
+import { SpendingModule } from "../spending/spending.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ShoppingListItem, UserEntity, Event, Spending]),
+    SpendingModule,
   ],
   providers: [ShoppingListItemsResolver, ShoppingListItemsService],
 })

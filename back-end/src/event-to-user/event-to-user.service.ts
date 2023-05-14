@@ -27,6 +27,7 @@ export class EventToUserService {
     etoU.eventId = input.eventId;
     etoU.address = await this.addressService.findOne(input.addressId);
     etoU.role = input.role;
+    etoU.balance = input.balance;
     return await this.eventToUserRepository.save(
       await this.eventToUserRepository.create(etoU),
     );
@@ -104,10 +105,21 @@ export class EventToUserService {
         id: eventId,
       },
     });
-    eventToUser.role = input.role;
-    eventToUser.eventId = input.eventId;
-    eventToUser.userId = input.userId;
-    eventToUser.addressId = input.addressId;
+    if (input.role) {
+      eventToUser.role = input.role;
+    }
+    if (input.eventId) {
+      eventToUser.eventId = input.eventId;
+    }
+    if (input.userId) {
+      eventToUser.userId = input.userId;
+    }
+    if (input.addressId) {
+      eventToUser.addressId = input.addressId;
+    }
+    if (input.balance) {
+      eventToUser.balance = input.balance;
+    }
     return await this.eventToUserRepository.save(eventToUser);
   }
 

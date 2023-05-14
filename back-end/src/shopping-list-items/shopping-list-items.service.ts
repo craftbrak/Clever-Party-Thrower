@@ -7,6 +7,7 @@ import { Repository } from "typeorm";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Spending } from "../spending/entities/spending.entity";
+import { SpendingService } from "../spending/spending.service";
 
 @Injectable()
 export class ShoppingListItemsService {
@@ -19,6 +20,7 @@ export class ShoppingListItemsService {
     private readonly eventRepo: Repository<Event>,
     @InjectRepository(Spending)
     private readonly spendingRepo: Repository<Spending>,
+    private spendingService: SpendingService,
   ) {}
 
   //TODO: TESTING
@@ -66,27 +68,11 @@ export class ShoppingListItemsService {
       });
     }
     if (updateShoppingListItemInput.bought) {
-      const spendingDto = {
-        shoppingListItemId: item.id,
-        eventId: item.event.id,
-        value: item.price,
-        buyerId: item.assigned.id,
-      };
-      const spending = await this.spendingRepo.create(spendingDto);
-      spending.buyer = item.assigned;
-      spending.event = item.event;
-      spending.shoppingListItem = item;
-      await spending.save();
+      await this.spendingService.createShoppingListItemSpendings(item);
       item.bought = updateShoppingListItemInput.bought;
     }
-    if (!updateShoppingListItemInput.bought) {
-      const spending = await this.spendingRepo.findOne({
-        where: { shoppingListItem: { id: id } },
-        relations: { shoppingListItem: true },
-      });
-      if (spending) {
-        await this.spendingRepo.remove(spending);
-      }
+    if (updateShoppingListItemInput.bought === false) {
+      await this.spendingService.deleteShoppingListItemSpendings(item);
       item.bought = updateShoppingListItemInput.bought;
     }
     if (updateShoppingListItemInput.name) {

@@ -7,10 +7,12 @@ export const EventToUserMock = (
   event: Event,
   user: UserEntity,
   address: Address,
+  balance: number,
 ): CreateEventToUserDto => {
   return {
     eventId: event.id,
     userId: user.id,
     addressId: address.id,
+    balance: balance,
   };
 };

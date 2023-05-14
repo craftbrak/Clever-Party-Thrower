@@ -11,12 +11,14 @@ import { Spending } from "./entities/spending.entity";
 import { CreateSpendingDto } from "./dto/create-spending.dto";
 import { UpdateSpendingDto } from "./dto/update-spending.dto";
 import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
+import { UsePipes, ValidationPipe } from "@nestjs/common";
 
 @Resolver(() => Spending)
 export class SpendingResolver {
   constructor(private readonly spendingService: SpendingService) {}
 
   @Mutation(() => Spending)
+  @UsePipes(ValidationPipe)
   createSpending(
     @Args("createSpendingInput") createSpendingInput: CreateSpendingDto,
   ) {
@@ -52,6 +54,6 @@ export class SpendingResolver {
 
   @ResolveField("shoppingListItem", () => ShoppingListItem)
   async shoppingListItem(@Parent() spending: Spending) {
-    return this.spendingService.getshoppingListItem(spending.id);
+    return this.spendingService.getShoppingListItem(spending.id);
   }
 }
