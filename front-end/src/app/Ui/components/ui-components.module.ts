@@ -50,9 +50,7 @@ import {
 import {MatDialogModule} from "@angular/material/dialog";
 import {ToastComponent} from './toast/toast.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {
-  CreateCarFormComponentComponent
-} from './event-details/carpool/create-car-form-component/create-car-form-component.component';
+import {CreateCarFormComponent} from "./event-details/carpool/create-car-form/create-car-form.component";
 
 
 @NgModule({
@@ -82,7 +80,7 @@ import {
     AddShoppingItemComponent,
     AddEventToUserLinkDialogComponent,
     ToastComponent,
-    CreateCarFormComponentComponent,
+    CreateCarFormComponent,
   ],
   exports: [
     EventFormComponent,
