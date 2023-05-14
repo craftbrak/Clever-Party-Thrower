@@ -1,26 +1,11 @@
 <div class="main">
+  <h3>
+    <mat-icon>currency_exchange</mat-icon>
+    Debts
+  </h3>
   <div *ngIf="expensesService.debts$ | async as debts" class="item-container">
-    <h3>
-      <mat-icon>currency_exchange</mat-icon>
-      Debts
-    </h3>
+
     <div *ngFor="let debt of debts.getEventDebts" class="debs">
-      <div class="debtor user">
-        <div class="debtorName">
-          {{debt.debtor.name}}
-        </div>
-        <div>
-          <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
-        </div>
-      </div>
-      <div class="amount">
-
-        {{debt.amount}}€
-
-      </div>
-      <div class="arrow">
-        <mat-icon>arrow_forward</mat-icon>
-      </div>
       <div class="creditor user">
         <div class="creditorName">
           {{debt.creditor.name}}
@@ -30,39 +15,78 @@
         </div>
       </div>
 
+
+      <div class="amount">
+
+        {{debt.amount}}€
+
+      </div>
+      <div class="arrow">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+      <div class="debtor user">
+        <div class="debtorName">
+          {{debt.debtor.name}}
+        </div>
+        <div>
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(debt.debtor.avatar)" alt="avatar">
+        </div>
+      </div>
       <div class="repayed">
-        <button mat-icon-button>
-          <mat-icon [ngStyle]="{'color': debt.repayed ? 'green' : 'red', 'font-size': '36px'}">paid</mat-icon>
+        <button (click)="toggleDebt(debt.id,!debt.repayed , debt)" mat-button>
+          <mat-icon [ngStyle]="{'color': debt.repayed ? 'green' : 'red', 'font-size': '30px'}">paid</mat-icon>
         </button>
         <!--        <mat-checkbox color="" [checked]="debt.repayed" [disabled]="false"></mat-checkbox>-->
       </div>
     </div>
   </div>
-  <div *ngIf="expensesService.expenses$ | async as spending" class="item-container">
+  <div style="display: flex; flex-direction: row">
     <h3>
       <mat-icon>payments</mat-icon>
       Expenses
     </h3>
-    <div *ngFor="let expense of spending" class="expense">
-      <div class="debtor user">
+    <button (click)="toggleExpenses()" aria-label="Example icon-button with a heart icon" color="primary"
+            mat-icon-button matTooltip="Primary">
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="showExpenses " class="item-container">
+    <div *ngIf="expensesService.expenses$ | async as spending " class="item-container">
 
-        {{expense.buyer.name}}
-        <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.buyer.avatar)" alt="avatar">
+      <div *ngFor="let expense of spending" class="expense">
+        <div class="debtor user">
+
+          {{expense.buyer.name}}
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.buyer.avatar)" alt="avatar">
 
 
-      </div>
-      <div>
-        <mat-icon>payments</mat-icon>
-      </div>
-      <div class="amount">
-        {{expense.value}}€
-      </div>
-      <div>
-        <mat-icon>arrow_forward</mat-icon>
-      </div>
-      <div class="debtorName">
-        {{expense.shoppingListItem?.name}}
+        </div>
+        <div>
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="amount">
+          {{expense.value}}€
+        </div>
+        <div>
+          <mat-icon>arrow_forward</mat-icon>
+        </div>
+        <div class="debtor user">
+
+          {{expense.beneficiary.name}}
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.beneficiary.avatar)" alt="avatar">
+
+
+        </div>
+        <div class="debtorName">
+          {{expense.shoppingListItem?.name}}
+          {{expense.name}}
+        </div>
       </div>
     </div>
+    <button color="primary" mat-raised-button>
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
+
+
 </div>

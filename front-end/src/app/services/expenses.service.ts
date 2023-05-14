@@ -14,7 +14,6 @@ export class ExpensesService {
   expenses$ = this.expenseSource.asObservable()
 
   constructor(private apollo: Apollo) {
-
   }
 
   updateDebts(eventId: string) {
@@ -36,46 +35,45 @@ export class ExpensesService {
         }
       }
     }`
-    this.apollo.watchQuery<DeptData>({
+    return this.apollo.watchQuery<DeptData>({
       query: mut,
-      variables: {eventId: eventId}
+      variables: {eventId: eventId},
+      fetchPolicy: "no-cache"
     }).valueChanges
-      .pipe(map(value => value.data))
-      .subscribe(value => {
-        this.debtsSource.next(value)
-        console.log(value)
-      })
-
+      .pipe(map(value => value.data)).subscribe(value => this.debtsSource.next(value))
   }
 
   updateExpenses(eventId: string) {
     const gql1 = gql`
-      query Spendings($EventId: String) {
-        spendings(eventId: $EventId) {
-          id
-          value
-          buyer {
-            id
-            avatar
-            name
-          }
-          shoppingListItem {
-            id
-            name
-          }
-        }
-      }
+      query Spendings($eventId: String) {
+  spendings(eventId: $eventId) {
+    id
+    value
+    buyer {
+      id
+      avatar
+      name
+    }
+    shoppingListItem {
+      id
+      name
+    }
+    beneficiary {
+      name
+      id
+      avatar
+    }
+  }
+}
     `
     return this.apollo.watchQuery<{ spendings: SpendingData[] }>({
       query: gql1,
-      variables: {eventId: eventId}
-    }).valueChanges.pipe(map(value => value.data.spendings)).subscribe(value => {
-      console.log(value)
-      this.expenseSource.next(value)
-    })
+      variables: {eventId: eventId},
+      fetchPolicy: "no-cache"
+    }).valueChanges.pipe(map(value => value.data.spendings)).subscribe(value => this.expenseSource.next(value))
   }
 
-  addExpense(eventId: string, buyerId: string, value: number, shoppingListItemId?: string) {
+  addExpense(eventId: string, buyerId: string, value: number, beneficiaryId: string, name: string, shoppingListItemId?: string) {
     const mut = gql`mutation CreateSpending($createSpendingInput: CreateSpendingDto!) {
         createSpending(createSpendingInput: $createSpendingInput) {
           id
@@ -83,11 +81,35 @@ export class ExpensesService {
       }`
     return this.apollo.mutate<{ id: string }>({
       mutation: mut, variables: {
-        buyerId: buyerId,
-        eventId: eventId,
-        value: value,
-        shoppingListItemId: shoppingListItemId
+        createSpendingInput: {
+          buyerId: buyerId,
+          beneficiaryId: beneficiaryId,
+          name: name,
+          eventId: eventId,
+          value: value,
+          shoppingListItemId: shoppingListItemId
+        }
       }//@ts-ignore
     }).pipe(map(value1 => value1.data))
+  }
+
+  toggleDebt(id: string, value: boolean) {
+    const mut = gql`
+      mutation UpdateDept($updateDeptInput: UpdateDeptInput!) {
+        updateDept(updateDeptInput: $updateDeptInput) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables:
+        {
+          updateDeptInput: {
+            id: id,
+            repayed: value
+          }
+        }
+    })
   }
 }

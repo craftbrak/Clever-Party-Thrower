@@ -14,12 +14,20 @@
   display: flex;
   gap: 1vh;
   flex-direction: column;
+  max-height: 75%;
+  min-height: 15vh;
+  overflow: auto;
+  transition: height 300ms ease-in-out, opacity 300ms ease-in-out;
 }
 
 .user {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+h3 {
+  max-height: 3vh;
 }
 
 .user img {
@@ -33,6 +41,39 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 30px;
+  gap: 0.5vh;
   margin-top: 1vh;
+  max-height: 83vh;
+  overflow: auto;
 }
+
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background-color: #726f6f; // Change to your preferred color
+  border-radius: 4px;
+}
+
+// Style the scrollbars (Firefox)
+.main {
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent; // Change to your preferred color
+}
+
+.item-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.item-container::-webkit-scrollbar-thumb {
+  background-color: #726f6f; // Change to your preferred color
+  border-radius: 4px;
+}
+
+// Style the scrollbars (Firefox)
+.item-container {
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent; // Change to your preferred color
+}
+

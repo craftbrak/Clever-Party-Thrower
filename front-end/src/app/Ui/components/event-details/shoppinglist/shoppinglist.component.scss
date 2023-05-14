@@ -4,6 +4,23 @@
   display: flex;
   gap: 2vh;
   flex-direction: column;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.item-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.item-container::-webkit-scrollbar-thumb {
+  background-color: #726f6f; // Change to your preferred color
+  border-radius: 4px;
+}
+
+// Style the scrollbars (Firefox)
+.item-container {
+  scrollbar-width: thin;
+  scrollbar-color: #726f6f transparent; // Change to your preferred color
 }
 
 .shopping-item {

@@ -49,6 +49,10 @@ import {
 } from './event-details/members/add-event-to-user-link-dialog/add-event-to-user-link-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ToastComponent} from './toast/toast.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {
+  CreateCarFormComponentComponent
+} from './event-details/carpool/create-car-form-component/create-car-form-component.component';
 
 
 @NgModule({
@@ -78,6 +82,7 @@ import {ToastComponent} from './toast/toast.component';
     AddShoppingItemComponent,
     AddEventToUserLinkDialogComponent,
     ToastComponent,
+    CreateCarFormComponentComponent,
   ],
   exports: [
     EventFormComponent,
@@ -109,7 +114,8 @@ import {ToastComponent} from './toast/toast.component';
     MatSidenavModule,
     MatButtonToggleModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ]
 })
 export class UiComponentsModule {

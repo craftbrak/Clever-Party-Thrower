@@ -21,7 +21,7 @@ export interface DeptData {
   getEventDebts: EventDebts[]
 }
 
-interface EventDebts {
+export interface EventDebts {
   id: string;
   amount: number;
   repayed: boolean;
@@ -50,8 +50,10 @@ export interface ShoppingListItem {
 
 export interface SpendingData {
   id: string;
+  name?: string
   value: number;
   buyer: Buyer;
+  beneficiary: Buyer;
   shoppingListItem: ShoppingListItem | null;
 }
 

@@ -30,7 +30,6 @@ export class ShoppinglistComponent {
         }),
         tap(value => {
           this.eventShoppingList = value
-          console.debug(value)
         })
       );
     this.eventService.selectedEventId$.subscribe(value => {
@@ -54,7 +53,11 @@ export class ShoppinglistComponent {
 
   updateItemBougthStatus(id: string, value: boolean) {
     console.debug('item changed', value)
-    this.eventService.updateShoppingListItem(id, {bought: !value}).subscribe(value1 => this.dataRefreshTrigger$.next())
+    this.eventService.updateShoppingListItem(id, {bought: !value}).subscribe(value1 => {
+      this.expenseService.updateExpenses(this.eventId!)
+      this.expenseService.updateDebts(this.eventId!)
+      this.dataRefreshTrigger$.next()
+    })
   }
 
 }
