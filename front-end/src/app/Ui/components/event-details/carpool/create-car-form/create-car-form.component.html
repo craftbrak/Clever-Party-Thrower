@@ -1,8 +1,6 @@
 <h1>Create Car</h1>
 <form (ngSubmit)="submitForm()" [formGroup]="carForm" class="form-container">
-
-
-  <div class="form-field-group">
+  <div class="form-field-row">
     <div class="form-field">
       <mat-form-field appearance="fill">
         <mat-label>Brand</mat-label>
@@ -17,23 +15,22 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="form-field-group">
+  <div class="form-field-row">
     <div class="form-field">
       <mat-form-field appearance="fill">
         <mat-label>Max Passengers</mat-label>
-        <input formControlName="maxPassengers" matInput required>
+        <input formControlName="maxPassengers" matInput required type="number">
       </mat-form-field>
     </div>
 
     <div class="form-field">
       <mat-form-field appearance="fill">
-        <mat-label>Consumption</mat-label>
-        <input formControlName="consumption" matInput required>
+        <mat-label>Consumption (L/100km)</mat-label>
+        <input formControlName="consumption" matInput required type="number">
       </mat-form-field>
     </div>
   </div>
-
-  <div class="form-field-group">
+  <div class="form-field-row">
     <div class="form-field">
       <mat-form-field appearance="fill">
         <mat-label>Boot Size</mat-label>
@@ -53,19 +50,14 @@
     </div>
   </div>
 
-  <div class="form-field-group">
+  <div class="form-field-row">
     <div class="form-field">
-      <mat-form-field appearance="fill">
-        <mat-label>Manual Transmission</mat-label>
-        <input formControlName="manualTransmission" matInput required>
-      </mat-form-field>
+      <mat-slide-toggle formControlName="manualTransmission">Manual Transmission</mat-slide-toggle>
     </div>
 
-    <div class="form-field">
-      <mat-form-field appearance="fill">
-        <mat-label>Range</mat-label>
-        <input formControlName="range" matInput required>
-      </mat-form-field>
+    <div class="slider-value range-field">
+      <mat-slider formControlName="range" max="1400" min="100" thumbLabel tickInterval="10"></mat-slider>
+      <input [value]="carForm.get('range')?.value" class="range-field" formControlName="range" matInput required><span> km</span>
     </div>
   </div>
 
