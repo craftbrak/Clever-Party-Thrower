@@ -13,7 +13,7 @@ export class DeptResolver {
   // }
   @Mutation(() => [Dept], { name: "calculateDebts" })
   calculateDebts(@Args("eventId") eventId: string) {
-    return this.deptService.calculateDepts(eventId);
+    return this.deptService.getEventDebts(eventId);
   }
 
   @Query(() => [Dept], { name: "depts" })
