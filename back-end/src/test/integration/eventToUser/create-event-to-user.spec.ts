@@ -28,7 +28,7 @@ describe("createEventToUser", () => {
         const address = await integrationTestManager.getNewAddress();
         const user = await integrationTestManager.getNewUser();
         const event = await integrationTestManager.getNewEvent();
-        eventToUserMock = EventToUserMock(event, user, address);
+        eventToUserMock = EventToUserMock(event, user, address, 0);
         const query = gql`
           mutation CreateCarPool($createEventToUserDto: CreateEventToUserDto!) {
             createEventToUser(createEventToUserInput: $createEventToUserDto) {

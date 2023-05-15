@@ -10,7 +10,11 @@ export class CreateSpendingDto {
 
   @Field(() => Float)
   value: number;
-
+  @Field(() => String, { nullable: true })
+  name?: string;
   @Field(() => String, { nullable: true })
   shoppingListItemId?: string;
+
+  @Field(() => String)
+  beneficiaryId: string;
 }

@@ -1,0 +1,73 @@
+<h1>Create Car</h1>
+<form (ngSubmit)="submitForm()" [formGroup]="carForm" class="form-container">
+
+
+  <div class="form-field-group">
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Brand</mat-label>
+        <input formControlName="brand" matInput required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Model</mat-label>
+        <input formControlName="model" matInput required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-field-group">
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Max Passengers</mat-label>
+        <input formControlName="maxPassengers" matInput required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Consumption</mat-label>
+        <input formControlName="consumption" matInput required>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-field-group">
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Boot Size</mat-label>
+        <mat-select formControlName="bootSize" required>
+          <mat-option *ngFor="let size of bootSizes" [value]="size">{{ size }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Fuel</mat-label>
+        <mat-select formControlName="fuel" required>
+          <mat-option *ngFor="let fuel of fuels" [value]="fuel">{{ fuel }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-field-group">
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Manual Transmission</mat-label>
+        <input formControlName="manualTransmission" matInput required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Range</mat-label>
+        <input formControlName="range" matInput required>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <button color="primary" mat-raised-button type="submit">Create</button>
+</form>

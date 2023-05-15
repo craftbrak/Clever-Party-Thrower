@@ -6,12 +6,6 @@ import { Repository } from "typeorm";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { Dept } from "./entities/dept.entity";
-import { Spending } from "../spending/entities/spending.entity";
-import {
-  calculateDebtsFromBalances,
-  mapExpenses,
-  optimiseDebts,
-} from "./utils/debts.utils";
 import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 import { SpendingService } from "../spending/spending.service";
 
@@ -27,7 +21,9 @@ export class DeptService {
     @InjectRepository(EventToUser)
     private readonly eventToUserRepo: Repository<EventToUser>,
     @InjectRepository(Dept) private readonly deptRepo: Repository<Dept>,
-    private readonly spendingService: SpendingService,
+    @InjectRepository(EventToUser)
+    private readonly eventToUserRepository: Repository<EventToUser>,
+    private spendingService: SpendingService,
   ) {}
 
   async create(createDeptInput: CreateDeptInput) {
@@ -43,47 +39,66 @@ export class DeptService {
     return this.deptRepo.create(createDeptInput).save();
   }
 
-  //TODO: add mutation + test
   async calculateDepts(eventId: string): Promise<Dept[]> {
-    const expenses: Spending[] = await this.spendingService.findAllOfEventById(
-      eventId,
-    );
-    const depts: Dept[] = [];
-    // const event = await this.eventRepository.findOne({
-    //   where: {
-    //     id: eventId,
-    //   },
-    //   relations: {
-    //     members: true,
-    //   },
-    // });
-    const eventToUsers = await this.eventToUserRepo.find({
+    await this.spendingService.updateUserBalance(eventId);
+    // Récupérer tous les soldes pour l'événement
+    const userBalances = await this.eventToUserRepository.find({
       where: { eventId: eventId },
-      relations: { user: true },
+      relations: {
+        event: true,
+        user: true,
+      },
     });
-    const participants = [];
-    eventToUsers.forEach((userToEvent) => participants.push(userToEvent.user));
-    const participantMap = await mapExpenses(expenses, participants); //contains every participant's balance
-    const unOptdebts = await calculateDebtsFromBalances(
-      participantMap,
-      eventId,
-    );
-    const debts = await optimiseDebts(unOptdebts);
 
-    for (const debt of debts) {
-      depts.push(
-        await this.create({
-          amount: debt.amount,
-          debtorId: debt.debtorId,
-          creditorId: debt.creditorId,
-          eventId: eventId,
-          event: null,
-          creditor: null,
-          debtor: null,
-        }),
+    // Tri des soldes pour séparer les débiteurs et les créanciers
+    const debtors = userBalances.filter(
+      (userBalance) => userBalance.balance > 0,
+    );
+    const creditors = userBalances.filter(
+      (userBalance) => userBalance.balance < 0,
+    );
+
+    // Tant qu'il y a des débiteurs et des créanciers
+    while (debtors.length > 0 && creditors.length > 0) {
+      // Trouver le débiteur et le créancier avec les soldes les plus élevés
+      const maxDebtor = debtors.reduce((a, b) =>
+        a.balance > b.balance ? a : b,
       );
+      const maxCreditor = creditors.reduce((a, b) =>
+        a.balance < b.balance ? a : b,
+      );
+
+      // Calculer le montant de la dette à rembourser
+      const debtAmount = Math.min(maxDebtor.balance, -maxCreditor.balance);
+
+      // Créer une nouvelle dette
+      const newDebt = this.deptRepo.create({
+        debtor: maxDebtor.user,
+        creditor: maxCreditor.user,
+        amount: debtAmount,
+        event: maxDebtor.event,
+        repayed: false,
+      });
+
+      // Sauvegarder la dette dans la base de données
+      await this.deptRepo.save(newDebt);
+
+      // Mettre à jour les soldes du débiteur et du créancier
+      maxDebtor.balance -= debtAmount;
+      maxCreditor.balance += debtAmount;
+
+      // Si le solde du débiteur ou du créancier est maintenant 0, le retirer de la liste
+      if (maxDebtor.balance === 0) {
+        debtors.splice(debtors.indexOf(maxDebtor), 1);
+      }
+      if (maxCreditor.balance === 0) {
+        creditors.splice(creditors.indexOf(maxCreditor), 1);
+      }
     }
-    return depts;
+
+    // Mettre à jour les soldes dans la base de données
+    await this.eventToUserRepository.save([...debtors, ...creditors]);
+    return await this.deptRepo.find({ where: { event: { id: eventId } } });
   }
 
   findAll() {
@@ -111,21 +126,42 @@ export class DeptService {
     const dept = await this.deptRepo.findOneByOrFail({
       id: updateDeptInput.id,
     });
-    dept.event = await this.eventRepository.findOneByOrFail({
-      id: updateDeptInput.eventId,
-    });
-    dept.debtor = await this.userRepo.findOneByOrFail({
-      id: updateDeptInput.debtorId,
-    });
-    dept.creditor = await this.userRepo.findOneByOrFail({
-      id: updateDeptInput.creditorId,
-    });
-    dept.amount = updateDeptInput.amount;
-    dept.repayed = updateDeptInput.repayed;
-    return dept.save();
+    if (updateDeptInput.eventId) {
+      dept.event = await this.eventRepository.findOneByOrFail({
+        id: updateDeptInput.eventId,
+      });
+    }
+    if (updateDeptInput.debtorId) {
+      dept.debtor = await this.userRepo.findOneByOrFail({
+        id: updateDeptInput.debtorId,
+      });
+    }
+    if (updateDeptInput.creditorId) {
+      dept.creditor = await this.userRepo.findOneByOrFail({
+        id: updateDeptInput.creditorId,
+      });
+    }
+    if (updateDeptInput.amount) {
+      dept.amount = updateDeptInput.amount;
+    }
+    if (updateDeptInput.repayed !== undefined) {
+      dept.repayed = updateDeptInput.repayed;
+    }
+    const out = await dept.save();
+    return out;
   }
 
   remove(id: string) {
     return `This action removes a #${id} dept`;
+  }
+
+  async getEventDebts(id: string) {
+    await this.deptRepo.delete({ event: { id: id } });
+    await this.calculateDepts(id);
+
+    return this.deptRepo.find({
+      where: { event: { id: id } },
+      relations: { debtor: true, event: true, creditor: true },
+    });
   }
 }

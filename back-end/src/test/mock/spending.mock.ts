@@ -6,13 +6,15 @@ import { ShoppingListItem } from "../../shopping-list-items/entities/shopping-li
 
 export const SpendingMock = (
   event: Event,
-  user: UserEntity,
+  buyer: UserEntity,
+  beneficary: UserEntity,
   item: ShoppingListItem = null,
 ): CreateSpendingDto => {
   return {
     value: randFloat(),
-    buyerId: user.id,
+    buyerId: buyer.id,
     eventId: event.id,
     shoppingListItemId: item?.id,
+    beneficiaryId: beneficary.id,
   };
 };

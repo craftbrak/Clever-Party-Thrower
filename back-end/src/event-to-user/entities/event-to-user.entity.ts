@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, Float, ObjectType, registerEnumType } from "@nestjs/graphql";
 import {
   Column,
   Entity,
@@ -62,4 +62,8 @@ export class EventToUser extends Node {
   @Field(() => [DatesToUser], { nullable: true })
   @OneToMany(() => DatesToUser, (dateToUser) => dateToUser.eventToUser)
   availableDates: DatesToUser[];
+
+  @Field(() => Float)
+  @Column({ default: 0, type: "float" })
+  balance: number;
 }

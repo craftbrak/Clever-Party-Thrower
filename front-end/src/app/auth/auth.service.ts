@@ -107,6 +107,7 @@ export class AuthService {
   }
 
   public async logout() {
+    throw Error("Need implementation") //todo: implement logout
   };
 
   public register(

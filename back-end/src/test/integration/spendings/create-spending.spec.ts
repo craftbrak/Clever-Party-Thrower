@@ -23,6 +23,7 @@ describe("createSpending", () => {
         spendingMock = await SpendingMock(
           await integrationTestManager.getNewEvent(),
           await integrationTestManager.getNewUser(),
+          await integrationTestManager.getNewUser(),
         );
         const query = gql`
           mutation CreateSpending($createSpending: CreateSpendingDto!) {

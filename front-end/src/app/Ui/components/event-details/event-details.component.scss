@@ -1,7 +1,27 @@
+@use '@angular/material' as mat;
+
+
 mat-tab-group {
   width: 80%;
 }
 
 .tab-container {
   display: flex;
+  padding-left: 1%;
+}
+
+.desciption {
+  background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh;
+}
+
+.details {
+  display: flex;
+  gap: 0.4vh;
+  flex-direction: column;
 }

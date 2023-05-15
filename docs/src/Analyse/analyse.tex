@@ -1,5 +1,6 @@
 %! Author = louis
 %! Date = 28-10-22
+
 \subsection{Aspects technologique}\label{subsec:aspects-technologique}
 Le projet ayant comme contrainte principale d'être disponible sur toutes les plateformes majeures, une base web me paraît évidente.
 Pourtant, le web implique aussi la limitation principale qu'est le besoin de connexion permanente au serveur.\\
@@ -163,7 +164,7 @@ Une fois établi, il demeure unique, à l'instar d'un flocon de neige.
 Pour résoudre ce problème, nous ferons appel à l'infrastructure en tant que code (Infrastructure as Code - IaC).
 
 \paragraph{Infrastructure as code}
-  Comment rendre notre cluster et par extension notre application déployable en une seule commande ?
+Comment rendre notre cluster et par extension notre application déployable en une seule commande ?
 J'ai opté pour l'utilisation d'Ansible afin de déployer mon cluster, indépendamment de l'état de la machine.
 Ansible offre effectivement une approche agnostique qui facilite le processus de déploiement.
 
@@ -179,8 +180,9 @@ Le code de l'application est testé à l'aide de tests unitaires et de tests d'i
 Ces tests permettent de vérifier le bon fonctionnement des fonctionnalités individuelles et de leur intégration au sein de l'ensemble du système.
 
 \subsubsection{Sécurité et confidentialité}
+
 \paragraph{Sécurité}
-L'application n'utilise pas HTTPS vu que cela nécessiterait des certificates SSL, cependant il est vivement conseiller d'utiliser  un reverse proxy pour réaliser la terminaison SSL.\\
+L'application n'utilise pas HTTPS vu que cela nécessiterait des certificates SSL, cependant il est vivement conseiller d'utiliser un reverse proxy pour réaliser la terminaison SSL.\\
 Néanmoins, les mots de passe sont chiffrés et salés avant d'être stockés en base de données grâce à Argon2.\\
 Angular et NestJs permettent d'empêcher les attaques de type SQL injection.
 En ce qui concerne les attaques de type DoS ou DDoS, aucune protection n'est mise en place au niveau applicatif, car il est plus simple d'implémenter cette sécurité au niveau du réseau.\\\\
@@ -222,3 +224,6 @@ De plus le code sera gere au moyen de repository git
 
 L'application étant construite avec Angular et NestJs, elle est très modulaire par nature.
 Cela facilite son évolution et permet d'ajouter ou de modifier des fonctionnalités sans impacter l'ensemble du système.
+
+
+%todo: algorithm

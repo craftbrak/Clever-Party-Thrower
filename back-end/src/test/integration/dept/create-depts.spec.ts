@@ -78,8 +78,8 @@ describe("calculateDebts", () => {
       await integrationTestManager.getNewEventToUser(event, u1);
       await integrationTestManager.getNewEventToUser(event, u2);
       await integrationTestManager.getNewEventToUser(event, u3);
-      await integrationTestManager.getNewSpending(event, u1, null, 10);
-      await integrationTestManager.getNewSpending(event, u2, null, 40);
+      await integrationTestManager.getNewSpending(event, u1, null, 10, u2);
+      await integrationTestManager.getNewSpending(event, u2, null, 40, u3);
       eventId = event.id;
 
       // Create necessary Spending instances related to the event here

@@ -9,18 +9,31 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
+        <mat-icon>event_available</mat-icon>
+        <span> Date</span>
+      </ng-template>
+      <app-date-selection [isOwner]="!false"></app-date-selection>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>info</mat-icon>
+        <span> Details</span>
+      </ng-template>
+      <div *ngIf="eventInfo$|async as eventInfo" class="details">
+        <div class="desciption"> {{eventInfo.event.description}}</div>
+        <div>
+          <app-address-card [address]="eventInfo.event.address"></app-address-card>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
         <mat-icon>shopping_cart</mat-icon>
         <span> Shopping list</span>
       </ng-template>
       <app-shoppinglist></app-shoppinglist>
     </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>airport_shuttle</mat-icon>
-        <span> Carpool</span>
-      </ng-template>
-      <app-carpool></app-carpool>
-    </mat-tab>
+
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>payments</mat-icon>
@@ -30,10 +43,10 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon>event_available</mat-icon>
-        <span> Date</span>
+        <mat-icon>airport_shuttle</mat-icon>
+        <span> Carpool</span>
       </ng-template>
-      <app-date-selection [isOwner]="!false"></app-date-selection>
+      <app-carpool></app-carpool>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -16,7 +16,7 @@
       </select>
     </div>
     <div *ngIf="showParticipationSelector" class="participation-selector">
-      <button class="participation-button" mat-raised-button>
+      <button (click)="confirmParticipation(member!.id)" class="participation-button" mat-raised-button>
         I will be there
         <mat-icon>✔</mat-icon>
       </button>

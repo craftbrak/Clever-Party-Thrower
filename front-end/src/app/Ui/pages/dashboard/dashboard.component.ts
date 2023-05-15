@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnDestroy} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {EventFormComponent} from "../../components/event-form/event-form.component";
 import {EventService} from "../../../services/event.service";
@@ -6,6 +6,9 @@ import {AuthService} from "../../../auth/auth.service";
 import {EventToUserData} from "../../components/event-info/event-info.component";
 import {Observable, startWith, Subject, Subscription, switchMap} from "rxjs";
 import {Router} from "@angular/router";
+import {DrawerService} from "../../../services/drawer.service";
+import {WindowService} from "../../../services/window.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export interface UserEvents {
   user: {
@@ -16,7 +19,18 @@ export interface UserEvents {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    trigger('drawerAnimation', [
+      state('in', style({transform: 'translateX(0)'})),
+      transition('void => *', [
+        style({transform: 'translateX(-100%)'}),
+        animate(100)
+      ]),
+      transition('* => void', [
+        animate(100, style({transform: 'translateX(-100%)'}))
+      ])
+    ])]
 })
 export class DashboardComponent implements OnDestroy {
 
@@ -26,7 +40,7 @@ export class DashboardComponent implements OnDestroy {
   private dataRefreshTrigger$: Subject<void>;
   private readonly eventIdSubscription: Subscription;
 
-  constructor(private dialog: MatDialog, private eventService: EventService, private authService: AuthService,
+  constructor(public windowService: WindowService, public drawerService: DrawerService, private dialog: MatDialog, private eventService: EventService, private authService: AuthService,
               private changeDetector: ChangeDetectorRef, private router: Router) {
     const email = this.authService.user?.email ?? "";
     this.eventIdSubscription = this.eventService.selectedEventId$.subscribe(value => this.eventId = value)
@@ -67,5 +81,35 @@ export class DashboardComponent implements OnDestroy {
 
   refreshData() {
     this.dataRefreshTrigger$.next();
+  }
+
+  menuOpen() {
+    console.log('menuOpened')
+  }
+
+  logout() {
+    this.authService.logout()
+  }
+
+  userSettings() {
+    throw Error("Not Implemented")//todo: implement user update
+  }
+
+  toggleMenu() {
+    this.drawerService.toggle();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: { target: { innerWidth: number; }; }) {
+    this.windowService.onResize(event.target.innerWidth);
+  }
+
+  showEventList() {
+
+
+    // if (this.eventId){
+    //   return this.drawerService.isOpen;
+    // }else return false
+    return this.eventId ? this.drawerService.isOpen : false
   }
 }

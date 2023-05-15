@@ -13,10 +13,10 @@ export class DeptResolver {
   // }
   @Mutation(() => [Dept], { name: "calculateDebts" })
   calculateDebts(@Args("eventId") eventId: string) {
-    return this.deptService.calculateDepts(eventId);
+    return this.deptService.getEventDebts(eventId);
   }
 
-  @Query(() => [Dept], { name: "dept" })
+  @Query(() => [Dept], { name: "depts" })
   findAll() {
     return this.deptService.findAll();
   }
@@ -34,5 +34,10 @@ export class DeptResolver {
   @Mutation(() => Dept)
   removeDept(@Args("id", { type: () => ID }) id: string) {
     return this.deptService.remove(id);
+  }
+
+  @Query(() => [Dept])
+  getEventDebts(@Args("eventId", { type: () => ID }) id: string) {
+    return this.deptService.getEventDebts(id);
   }
 }

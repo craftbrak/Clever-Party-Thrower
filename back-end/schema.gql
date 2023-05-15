@@ -63,6 +63,7 @@ type EventToUser {
   addressId: String
   role: UserRole!
   availableDates: [DatesToUser!]
+  balance: Float!
 }
 
 enum UserRole {
@@ -210,7 +211,9 @@ type Spending {
   buyer: UserEntity!
   event: Event!
   value: Float!
-  shoppingListItem: ShoppingListItem!
+  name: String
+  shoppingListItem: ShoppingListItem
+  beneficiary: UserEntity!
 }
 
 type Event {
@@ -290,10 +293,13 @@ type Query {
   carpool(id: String!): Carpool!
   routes: [RouteEntity!]!
   route(String: String!): RouteEntity!
+  spendings(eventId: String): [Spending!]!
   spending(id: String!): Spending!
   shoppingListItems: [ShoppingListItem!]!
   shoppingListItem(id: String!): ShoppingListItem!
+  depts: [Dept!]!
   dept(id: String!): Dept!
+  getEventDebts(eventId: ID!): [Dept!]!
   eventDates: [EventDate!]!
   eventDate(id: String!): EventDate!
   datesToUser(id: String!): DatesToUser!
@@ -443,6 +449,7 @@ input CreateEventToUserDto {
   eventId: String!
   addressId: String
   role: UserRole = INVITED
+  balance: Float! = 0
 }
 
 input UpdateEventToUserDto {
@@ -450,6 +457,7 @@ input UpdateEventToUserDto {
   eventId: String
   addressId: String
   role: UserRole = INVITED
+  balance: Float = 0
   id: String!
 }
 
@@ -538,14 +546,18 @@ input CreateSpendingDto {
   buyerId: String!
   eventId: String!
   value: Float!
+  name: String
   shoppingListItemId: String
+  beneficiaryId: String!
 }
 
 input UpdateSpendingDto {
   buyerId: String
   eventId: String
   value: Float
+  name: String
   shoppingListItemId: String
+  beneficiaryId: String
   id: String!
 }
 
@@ -571,7 +583,7 @@ input UpdateDeptInput {
   amount: Float
   debtorId: ID
   creditorId: ID
-  id: Int!
+  id: String!
   repayed: Boolean! = false
 }
 
