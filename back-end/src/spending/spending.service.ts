@@ -11,8 +11,6 @@ import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
 
 @Injectable()
 export class SpendingService {
-  //TODO: CRUD
-  //TODO: matching
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,

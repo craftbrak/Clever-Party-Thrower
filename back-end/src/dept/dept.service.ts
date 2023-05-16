@@ -147,8 +147,7 @@ export class DeptService {
     if (updateDeptInput.repayed !== undefined) {
       dept.repayed = updateDeptInput.repayed;
     }
-    const out = await dept.save();
-    return out;
+    return await dept.save();
   }
 
   remove(id: string) {

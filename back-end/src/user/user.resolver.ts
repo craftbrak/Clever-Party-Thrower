@@ -61,7 +61,7 @@ export class UserResolver {
     return await this.userService.remove(id);
   }
 
-  @ResolveField("eventToUsers", () => [EventToUser]) //TODO: FIX NAME OF FIELD
+  @ResolveField("eventToUsers", () => [EventToUser])
   async events(@Parent() user: UserEntity) {
     return await this.eventToUserService.findAllOfUser(user);
   }

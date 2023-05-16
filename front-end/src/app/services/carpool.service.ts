@@ -10,9 +10,9 @@ import {BehaviorSubject, map} from "rxjs";
   providedIn: 'root'
 })
 export class CarpoolService {
-  userCarsSource = new BehaviorSubject<userCars | undefined>(undefined)
+  userCarsSource = new BehaviorSubject<userCars | null>(null)
   userCars = this.userCarsSource.asObservable()
-  carpoolsSource = new BehaviorSubject<any | undefined>(undefined)
+  carpoolsSource = new BehaviorSubject<null | EventCarpool[]>(null)
   carpools = this.carpoolsSource.asObservable()
   eventId: string | undefined
 
@@ -172,7 +172,7 @@ export class CarpoolService {
         }
       }
     `
-    this.apollo.watchQuery({
+    this.apollo.watchQuery<EventCarPools>({
       query: querry,
       variables: {
         eventId: this.eventId
@@ -180,6 +180,7 @@ export class CarpoolService {
       fetchPolicy: "network-only"
     }).valueChanges.pipe(map(value => {
       console.log(value)
+      return value.data.event.carpools
     })).subscribe(value => {
       this.carpoolsSource.next(value)
     })
@@ -209,4 +210,69 @@ export interface userCars {
   drivingLicence: boolean,
   manual: boolean,
   cars: Car[]
+}
+
+
+export interface Country {
+  id: string;
+  name: string;
+}
+
+interface Address {
+  city: string;
+  line1: string;
+  unitNumber: string;
+  postalCode: string;
+  country: Country;
+  id: string;
+}
+
+interface UserEntity {
+  avatar: string;
+  name: string;
+  id: string;
+}
+
+interface RouteEntity {
+  departure: string;
+  destination: Address;
+  length: number;
+  pickup: UserEntity;
+  starting: Address;
+  id: string;
+}
+
+interface carpoolCar {
+  brand: string;
+  bootSize: string;
+  consumption: number;
+  fuel: string;
+  id: string;
+  manualTransmission: boolean;
+  maxPassengers: number;
+  model: string;
+  range: number;
+  shared: boolean;
+  ownerId: string;
+}
+
+export interface EventCarpool {
+  arrival: string;
+  startPoint: Address;
+  id: string;
+  routes: RouteEntity[];
+  totalLength: number;
+  endPoint: Address;
+  departure: string;
+  createdAt: string;
+  driver: UserEntity;
+  direction: string;
+  car: carpoolCar;
+}
+
+interface EventCarPools {
+  event: {
+    carpools: EventCarpool[];
+    id: string
+  };
 }
