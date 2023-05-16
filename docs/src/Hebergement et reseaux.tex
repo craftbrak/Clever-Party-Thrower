@@ -16,6 +16,25 @@ En parallèle de ma formation sur Kubernetes, j'ai également exploré Ansible e
 Ce playbook Ansible facilite le déploiement d'un cluster K3S complet, avec ou sans haute disponibilité.
 De plus, le playbook déploie également des applications telles que kubeVip, MetalLB, Rancher, Traefik, Cert-manager, LongHorn et ArgoCD.
 
+\subsubsection{Le Playbook}
+Le Playbook permet de déployer Kubernetes sur plusieurs machines, appelées nodes, afin d'ajouter de la résilience au cluster. Plus il y a de nodes, plus le cluster peut en perdre sans interruption de service. Les différentes applications utilisées pour permettre cette haute disponibilité sont les suivantes :
+
+\begin{itemize}
+    \item \textbf{Kubernetes} : Kubernetes synchronise et répartit toutes les configurations et les ressources entre les différentes nodes afin de garantir que chacune d'entre elles peut à tout moment gérer le trafic.
+
+    python
+    Copy code
+    \item \textbf{Kubevip} : Kubevip sert à créer une adresse virtuelle pour la gestion du cluster. Cette adresse virtuelle permet de conserver une connexion avec le cluster tant qu'au moins une des nodes master est en ligne et fonctionnelle.
+
+    \item \textbf{MetalLB} : MetalLB est un load balancer qui, comme son nom l'indique, permet d'équilibrer la charge de travail. Il attribue également des adresses IP à des pods (conteneurs dans Kubernetes) en fonction de leur nom ou espace de nom et ce, dans une plage définie.
+
+    \item \textbf{Certmanager} : Certmanager permet de créer et renouveler les différents certificats via Let's Encrypt, en plus de permettre à Kubernetes de les gérer comme toute autre ressource, et donc de les synchroniser entre les différentes nodes.
+
+    \item \textbf{Traefik} : Traefik protège les différents services du cluster via ce reverse proxy qui gère lui-même le reverse proxy.
+
+    \item \textbf{Longhorn} : Longhorn permet de créer des volumes partagés et disponibles sur plusieurs nodes en même temps, garantissant ainsi aux pods exploitant ces volumes qu'ils seront toujours accessibles.
+\end{itemize}
+
 \subsection{Les Conteneurs}\label{subsec:les-conteneurs}
 Le conteneur back-end est relativement simple.
 Il utilise une image node:latest.
@@ -32,3 +51,20 @@ Cependant, Kubernetes, et surtout la haute disponibilité, exige beaucoup de res
 Les différentes machines virtuelles manquaient constamment de mémoire ou d'espace disque.
 J'ai ainsi décidé d'utiliser un simple docker-compose pour optimiser les ressources de mon serveur, permettant d'héberger toutes mes applications plutôt que de se limiter à une seule avec des performances médiocres.
 À l'avenir, si les limites matérielles ne sont plus un obstacle, j'envisagerai de déployer une infrastructure Kubernetes via Ansible, avec l'ajout d'un système de surveillance.
+
+\subsection{Sécurité et hébergement}\label{subsec:securite-et-hebergement}
+Étant donné que le client est potentiellement responsable de l'hébergement de l'application, une grande partie des responsabilités en termes de sécurité lui revient.
+L'application doit être hébergée derrière un reverse proxy pour assurer la terminaison SSL, par exemple.
+Les deux différentes méthodes d'hébergement assurent la sécurité de la base de données via le réseau Docker : seul le backend a accès à la base de données.
+
+Les différentes applications sont maintenues à jour soit via ArgoCD sur Kubernetes, soit via Watchtower sur Docker Compose.
+Ces deux applications surveillent l'état du dépôt Docker Hub en temps réel et mettent à jour les services lors d'un changement.
+
+Pour mon installation, j'ai choisi de faire confiance à Cloudflare pour sécuriser mon hébergement.
+J'utilise un tunnel et leur reverse proxy afin de garantir la sécurité de mes services.
+Cloudflare gère non seulement les certificats, mais permet aussi de bloquer les attaques de type DDoS. De plus, grâce au tunnel, je n'ai pas à configurer mon pare-feu ni à exposer mon adresse IP publique.
+
+À l'avenir, j'aimerais utiliser un pare-feu comme PfSense/OpenSense pour me permettre de faire du port forwarding directement tout en garantissant la sécurité de l'application.
+De plus, lorsque l'application sera hébergée sur un cluster Kubernetes, la gestion des certificats et de la terminaison SSL sera effectuée par le cluster.
+La configuration actuelle obtenue via le playbook Ansible met déjà en place un certificat privé pour l'application, géré par Certmanager, ce qui le rend hautement disponible.
+Cette disponibilité me permettra d'utiliser plusieurs instances concurrentes de Traefik réparties entre les différentes nodes du cluster.
