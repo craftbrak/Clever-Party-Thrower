@@ -51,7 +51,7 @@ export class ExpensesComponent {
   }
 
   toggleDebt(id: string, value: boolean, debt: EventDebts) {
-    this.expensesService.toggleDebt(id, value).subscribe(value1 => {
+    this.expensesService.toggleDebt(id, value).subscribe(() => {
       this.addExpense("Refund", debt.debtor.id, debt.creditor.id, this.eventId!, debt.amount)
     })
   }

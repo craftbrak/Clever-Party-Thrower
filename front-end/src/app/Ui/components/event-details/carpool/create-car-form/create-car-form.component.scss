@@ -1,14 +1,27 @@
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-field-group {
+.form-field-row {
   display: flex;
   gap: 16px;
 }
 
-.form-field {
-  flex: 1;
+.range-field {
+  max-width: 11vw;
+}
+
+.slider-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.range-field {
+  text-align: right;
+}
+
+input.range-field::-webkit-outer-spin-button,
+input.range-field::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.range-field {
+  -moz-appearance: textfield;
 }

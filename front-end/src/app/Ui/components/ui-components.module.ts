@@ -51,6 +51,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ToastComponent} from './toast/toast.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {CreateCarFormComponent} from "./event-details/carpool/create-car-form/create-car-form.component";
+import {MatSliderModule} from "@angular/material/slider";
+import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-pool-form/create-car-pool-form.component';
 
 
 @NgModule({
@@ -81,6 +83,7 @@ import {CreateCarFormComponent} from "./event-details/carpool/create-car-form/cr
     AddEventToUserLinkDialogComponent,
     ToastComponent,
     CreateCarFormComponent,
+    CreateCarPoolFormComponent,
   ],
   exports: [
     EventFormComponent,
@@ -113,7 +116,8 @@ import {CreateCarFormComponent} from "./event-details/carpool/create-car-form/cr
     MatButtonToggleModule,
     MatToolbarModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSliderModule
   ]
 })
 export class UiComponentsModule {

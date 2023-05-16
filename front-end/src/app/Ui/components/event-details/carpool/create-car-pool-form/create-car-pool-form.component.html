@@ -1,0 +1,64 @@
+<mat-horizontal-stepper #stepper [linear]="false">
+  <mat-step [stepControl]="carpoolForm.get('car')!">
+    <form [formGroup]="carForm">
+      <ng-template matStepLabel>Select Car</ng-template>
+
+      <mat-select formControlName="selectedCar" placeholder="Select car">
+        <mat-option *ngFor="let car of (carpoolService.userCars| async)?.cars" [value]="car">{{car.brand}}</mat-option>
+      </mat-select>
+      <button (click)="openCarModal()" mat-raised-button>Add Car</button>
+
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="carpoolForm.get('location')!">
+    <form [formGroup]="locationForm">
+      <ng-template matStepLabel>Select Location</ng-template>
+
+      <app-address-selection-form (selectedAddress)="carpoolForm.controls['address']?.setValue($event)"
+                                  formControlName="address"></app-address-selection-form>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="carpoolForm.get('details')!">
+    <form [formGroup]="detailsForm">
+      <ng-template matStepLabel>Enter Details</ng-template>
+
+      <mat-select formControlName="direction" placeholder="Direction">
+        <mat-option value="to">To the event</mat-option>
+        <mat-option value="from">From the event</mat-option>
+        <mat-option value="both">Both</mat-option>
+      </mat-select>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Driver</mat-label>
+        <input formControlName="driver" matInput placeholder="Ex. John Doe">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input [matDatepicker]="picker1" formControlName="departure" matInput placeholder="Departure time">
+        <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input [matDatepicker]="picker2" formControlName="arrival" matInput placeholder="Arrival time">
+        <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button [disabled]="carpoolForm.get('details')!.invalid" mat-raised-button type="submit">Create Carpool</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

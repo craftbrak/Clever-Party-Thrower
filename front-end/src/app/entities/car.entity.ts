@@ -7,6 +7,7 @@ export enum BootSizes {
   Big = "Big",
   CampingCar = "CampingCar",
 }
+
 export enum Fuels {
   Electric = "Electric",
   Petrol = "Petrol",
@@ -14,6 +15,7 @@ export enum Fuels {
   LPG = "LPG",
   HYDROGEN = "HYDROGEN",
 }
+
 export interface Car extends Node {
   brand: string;
   model: string;
@@ -23,7 +25,7 @@ export interface Car extends Node {
 
   bootSize: BootSizes;
 
-  fuel:  Fuels ;
+  fuel: Fuels;
 
   manualTransmission: boolean;
 
@@ -31,7 +33,7 @@ export interface Car extends Node {
 
   shared: boolean;
 
-  owner: UserEntity;
+  owner?: UserEntity;
 
   ownerId: UserEntity["id"];
 }
