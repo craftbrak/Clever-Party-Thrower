@@ -77,38 +77,32 @@
         \tableofcontents
     \end{KeepFromToc}
     \newpage
-   % \bibliography{main}
+    % \bibliography{main}
     %\bibliographystyle{plain}
+
+
     \section{Introduction}\label{sec:introduction}
     \input{introduction}
     \newpage
 
+
     \section{Choix du sujet}\label{subsec:choix-du-sujet}
     \input{choix-du-sujet}
     \newpage
+
 
     \section{Cahier des charges}\label{sec:cahier-des-charges}
     \input{CDC/cdc}
     \newpage
 
 
-%    Présentation du projet et contexte
-%    Objectifs du travail de fin d'études
-%
-%    Choix du sujet
-%    Intérêt technique et pour un client
-%    Plus-value et positionnement par rapport aux solutions existantes
-%    Validation par étude de marché ou sondages (si applicable)
-%
-%    Cahier des charges
-%    Présentation des besoins du client (fonctionnalités, User Stories)
-%    Contraintes (matérielles, temporelles, etc.)
-%    Méthodologie proposée (conception, réalisation, validation)
-%
-%    Analyse de la problématique
-%    Identification des besoins techniques
-%    Choix justifiés des technologies utilisées
-%    Conception de la solution (schémas UML, schémas de base de données, etc.)
+    \section{Analyse}\label{sec:analyse}
+    \input{Analyse/analyse}
+
+
+    \section{Hebergement et aspects reseaux }\label{sec:hebergement-et-aspects-reseaux}
+    \input{Hebergement et reseaux}
+
 %
 %    Hébergement et aspects réseaux
 %    Solution d'hébergement choisie
@@ -157,12 +151,6 @@
 %    Importance et implications du projet
 
 
-
-
-
-    \section{Analyse}\label{sec:analyse}
-    \input{Analyse/analyse}
-
     %\backendx
     % La db (shema+ ORM + GDPR)
     % graphql
@@ -174,6 +162,7 @@
     % les service
     % l'authentification par token
 
+
     \section{hebergement}
     % proxmox
     % ansible
@@ -181,5 +170,6 @@
     % traefik, certmanager & https
     % longhorn & rancher
     % reseau (ce qui aurais du etre fait et ce qui est fait)
+%   docekr-compose
     \newpage
 \end{document}

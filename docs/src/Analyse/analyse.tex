@@ -22,9 +22,10 @@ Toute application web nécessite plusieurs composants:
     \subitem Une Base de Donnée
     \subitem Un ORM
     \subitem Une API définie
-    \subitem Un système de matching pour le covoiturage
-    \subitem Un système de création de trajet pour le covoiturage
-    \subitem Un système de matching pour les dépenses
+%    \subitem Un système de matching pour le covoiturage
+%    \subitem Un système de création de trajet pour le covoiturage
+    \subitem Un système de matching pour les dettes
+    \subitem Un système d'équilibrage des dépenses entre les utilisateurs
 \end{itemize}
 
 \paragraph{TypeScript}
@@ -62,7 +63,7 @@ Je vais donc utiliser cette librairie pour récupérer mes données au pres de m
 Utiliser une librairie de composants permet de simplifier la création de l'interface grâce à des blocks de construction appelé composants\@.
 Angular permet d'utiliser des librairies de composants avec leur propre logique, structure, et CSS\@.
 Ces librairies fournissent aussi un ensemble de classe CSS pour rendre nos propres composants jolis.\\
-De plus elles permettent de rendre notre application responsive sans devoir y penser pour chaque composant.
+De plus, elles permettent de rendre notre application responsive sans devoir y penser pour chaque composant.
 Il existe plusieurs librairies majeures, les principales sont:
 \begin{itemize}
     \item Angular Material
@@ -79,7 +80,7 @@ Vu que mon objectif final serait de créer une PWA qui sera installable sur Andr
 utiliser un thème similaire à ceux des applications Google intégrera mieux l'application.
 \newpage
 
-\subsubsection{Back-end}\label{subsec:back-end}
+\subsubsection{Back-end}\label{subsubsec:back-end}
 Le serveur back-end doit être capable de mettre à disposition les données nécessaires au fonctionnement de l'application.
 Cependant, le back-end sera aussi responsable des calculs d'équilibrage des dépenses, des matching de covoiturage et des trajets.\\\\
 
@@ -126,7 +127,7 @@ Postgres est une base de donnée très utilisée en production, très performant
 Pour stocker toutes les données nécessaires au fonctionnement de l'application, il nous faut une structure de donnée cohérente.
 Voici un schema\ref{fig:dbSchema} de la base de donnée et de sa structure:
 
-%Todo: fix possitioning Shema DB
+%Todo: fix possitioning Shema DB and update
 \begin{figure}[h!]
     \includegraphics[width=\linewidth]{./images/dbShema}\caption{Architecture de la base de donnée}\label{fig:dbSchema}
     \centering
