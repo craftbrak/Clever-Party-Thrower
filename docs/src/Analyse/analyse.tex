@@ -78,13 +78,12 @@ PrimeNg permet d'utiliser un autre thème que Material.\\\\
 NgBootstrap est un simple wrapper pour Bootstrap css et propose tous les composants de bootstrap.
 Vu que mon objectif final serait de créer une PWA qui sera installable sur Android,
 utiliser un thème similaire à ceux des applications Google intégrera mieux l'application.
-\newpage
 
 \subsubsection{Back-end}\label{subsubsec:back-end}
 Le serveur back-end doit être capable de mettre à disposition les données nécessaires au fonctionnement de l'application.
 Cependant, le back-end sera aussi responsable des calculs d'équilibrage des dépenses, des matching de covoiturage et des trajets.\\\\
 
-Connaissant déjà Express.js et Spring ( Kotlin ) je me suis naturellement tourné vers ces derniers, néanmoins je désirais utiliser du TypeScript pour ce projet.
+Connaissant déjà Express.js et Spring (Kotlin) je me suis naturellement tourné vers ces derniers, néanmoins je désirais utiliser du TypeScript pour ce projet.
 Express.js est compatible avec TypeScript mais Spring ne l'est pas.
 Express.js est leger, minimaliste et propose une bonne documentation,
 Spring est généraliste propose des outils de génération de code et utilise un système d'injection de dépendance.
@@ -94,7 +93,7 @@ propose un CLI permettant de générer du code boiler-plate, reste simple et leg
 J'ai donc décidé d'utiliser Nest.Js pour ce projet.
 
 \paragraph{ORM}
-Nest.Js ( que je vais appeler Nest à partir de maintenant ) n'est pas un framework batteries included comme le sont Spring ou Laravel,
+Nest.Js (que je vais appeler Nest à partir de maintenant) n'est pas un framework batteries included comme le sont Spring ou Laravel,
 Il m'a alors fallu choisir aussi un ORM pour interfacer avec ma base de données.
 Dans la Documentation de Nest, il y a des exemples de configuration avec les ORM les plus utilisés avec Nest et TypeScrip.
 Ces derniers sont Sequelize, TypeOrm ainsi que Prisma.
@@ -111,7 +110,7 @@ Ce qui me permet d'utiliser une seule classe pour définir mon entité d'ORM et 
 documenté gràce au support d'une communauté plus large.
 
 \paragraph{L'API back end}
-Il existe plusieurs types d'API très utilisées pour le Back-end mais les plus populaires sont le REST et le SOAP\@.
+Il existe plusieurs types d'API très utilisées pour le Back-end, mais les plus populaires sont le REST et le SOAP\@.
 SOAP est de moins en moins utilisé dû à la complexité intrinsèque du xml et à sa lourdeur.\\\\
 Il nous reste alors REST qui est une bonne solution, mais nécessite pour presque chaque requête de récupérer des données qui ne seront pas toujours consommées par le client.
 Avec Rest lorsque l'on récupère une entité complete tous les champs sont renvoyés.
