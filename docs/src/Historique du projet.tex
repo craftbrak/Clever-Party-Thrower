@@ -18,3 +18,42 @@ Au fil du projet, certaines modifications ont été nécessaires.
 Ces ajustements étaient principalement dus à RxJS. Initialement, j'avais prévu de concevoir le projet de manière à ce que l'application soit réactive sur l'ensemble du stack.
 Cependant, après une discussion éclairante avec mon rapporteur, M. Noel,
 nous avons décidé de construire le projet de manière classique tout en envisageant l'ajout de la réactivité dans une phase future.
+
+\subsection{Defits lors du developement}\label{subsec:defits-lors-du-developement}
+Lors du develepement du projets plusieurs defit on du etre surmonter
+
+\subsubsection{L'algorithme des dettes}
+Le développement d'un algorithme capable de répartir les différents coûts d'un événement entre les utilisateurs s'est avéré être un défi.
+Non seulement il fallait que les différentes dépenses existantes à un instant T soient réparties entre les différents participants, mais il fallait aussi permettre aux participants de continuer à ajouter des dépenses, même une fois qu'un utilisateur a remboursé ses dettes.
+
+Au départ, l'algorithme était plutôt simple : récupérer toutes les dépenses pour un événement donné dans la base de données, calculer le total des dépenses pour l'événement et créer une dette par participant, dont la valeur est le total divisé par le nombre de participants.
+
+Cependant, cet algorithme n'était pas satisfaisant pour plusieurs raisons, principalement le manque de possibilité de spécifier à qui les dettes doivent être remboursées.
+J'ai donc décidé de changer d'approche.
+Au lieu de calculer le total des dépenses pour un événement, nous allons calculer la balance totale de chaque participant.
+
+Pour cela, lors du calcul des dettes, on crée une carte associant un participant à une balance.
+Une fois que la balance de chaque participant est créée sur la base de toutes les dépenses, on parcourt cette carte afin de créer des paires de participants.
+L'objectif est de trouver le participant avec la balance la plus positive et celui avec la balance la plus négative.
+Une fois que l'on a cette paire, on peut créer une dette entre ces deux utilisateurs de sorte à ce que l'un ou les deux voient leur balance revenir à zéro.
+Après avoir créé cette dette, on met à jour la balance des deux utilisateurs.
+On continue ainsi jusqu'à ce que toutes les balances des utilisateurs valent zéro
+
+À première vue, cette stratégie fonctionne.
+Cependant, comme je l'ai découvert plus tard dans le développement, elle présente plusieurs problèmes majeurs.
+Premièrement, cet algorithme ne permet pas aux utilisateurs de marquer une dette comme remboursée et que cela persiste au travers des différents calculs.
+Deuxièmement, les participants ne peuvent pas créer de dépenses entre eux et donc un participant qui aurait par exemple participé à un covoiturage ne paierait pas plus qu'un participant qui se serait déplacé par ses propres moyens.
+Troisièmement, une dépense est obligatoirement répartie entre tous les participants.
+
+Pour remédier à ces problèmes, il a fallu modifier les dépenses afin de permettre de sélectionner un acheteur et un bénéficiaire.
+Désormais, chaque achat dans la liste des courses, par exemple, crée une dépense entre l'acheteur et chacun des bénéficiaires.
+Un champ permettant de conserver la balance d'un utilisateur a été ajouté à l'entité EventToUser afin d'optimiser les calculs (plus besoin de parcourir toutes les dépenses pour pouvoir générer les dettes).
+Pour gérer le remboursement des dettes, nous profitons de l'ajout d'un acheteur à une dépense.
+Lorsqu'un participant marque une dette comme remboursée, une dépense de valeur opposée est créée entre le créancier et le débiteur afin de contrebalancer la dette.
+Cette dernière est alors supprimée.
+
+Cette solution permet de gérer le remboursement des dettes, de répartir les dépenses entre ceux qui les ont consommées, tout en optimisant les calculs.
+
+\subsubsection{le cluster kubernetees}
+
+\subsubsection{le client graphql}
