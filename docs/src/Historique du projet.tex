@@ -53,7 +53,58 @@ Lorsqu'un participant marque une dette comme remboursée, une dépense de valeur
 Cette dernière est alors supprimée.
 
 Cette solution permet de gérer le remboursement des dettes, de répartir les dépenses entre ceux qui les ont consommées, tout en optimisant les calculs.
+De plus grace a cette modification les participants peuvent maintenant diviser une depense inequitablement ou de ne pas la repartir entre tous les participants,
+ce qui apporte encore plus d'interet à cet algorythme.
 
 \subsubsection{le cluster kubernetees}
+LA conception et surtout la mise en place d'un cluster kubernetes a probablement été le défit majeur de ce projet, entre les differents outils a apprendre,
+la concption du cluster et la mise en place de celui-ci.
+au debut du projet je n'étais pas familier dutout avec kubernetes et ansible n'etait pour moi qu'un nom.
+J'ai donc du apprendre le fonctionnemenet de kubernetes et les differents outil qui peuvent etre utiliser avec ce dernier.
+Pendant mes recherche j'ai decouvert une imence comunauté de passioner qui pour le plaisr ou a des fin professionel avais appris a utiliser puis créais de la documentation sur kebernetes.
+L'un d'entre eux Techno Tim a crée une serie de viedo ou il partage les differentes configuration mise en place dans son micro datacenter qu'il gere chez lui.
+c'est en decouvrants ces video que j'ai commencer a apprendre comment configurer kubernetes et utiliser ansible.
+
+Sur base de mes nouvelles connaissance j'ai donc decider de mettre en place sur un de mes serveur un cluster qui grace a la virtualisation serai hautement disponible.
+(en realiter seul le cluster kubernetes inclu de la redondance il n'y en a pas au niveau materiel car je ne pouvais pas me le permetre)
+J'ai donc commencer par creer des machine virtuel dans mon hyperviseur (proxmox), au depart tout allais bien puis suite a une fause manipulation j'ai decide de recomencer du debut.
+je me suis alors rendu compte que cree les machine virtuel a la main ne serai vraiment pas l'ideal,
+cependant je ne voulais pas mettre en place un systeme de MaaS (Metal as a Service) car il aurais demander bien trop a mon pauvre petit serveur
+J'ai donc decider de couper la poire en 2 je ne vais pqs completement automatiser la configuration et le provisionement de machine virtuele mais je peux certainement me simplifier enormement la tache.
+C'est alors que j'ai decouvert 2 outils formidable que sont les template de VM qemu et cloudInit.
+Grace a ces é outils je pouvais facilement créer des machine virtuel avec mes parramettre et si necesaire les modifier via cloud init avant meme de lancer la machine virtuelle.
+
+Fort de ma nouvelle decouverte je mis en place 7 VM qui seront dédier au cluster Kubernetes, 3 serviront de plans de controle et 4 de node d'execution.
+
+Le projet necesitant une infrastructure d'hebergement et etant conteneuriser tout concordais.
+
+Apres "jours d'experimentation manuel avec kubernetes via kubectl ,lens et portainer , j'ai decider que je ne voulais plus d'un cluster unique et frqgile tel un flocon de neige.
+Je me suis alors tourner vers Ansible, un outils du quel je n'avais entendu que du bien, afin de definir mon infrastructure en temps que code.
+
+J'ai donc chercher comment configurer un cluster kubernetes via ansible et j'ai decouvert l'existance d'une comunauté de passioner
+qui ont cree et publier en opensource des playbook ansible complet permetant de mettre en place un cluster.
+
+Dans cette communauté j'y ai retrouver Techno Tim qui a lui aussi contribuer en addaptant un playbook existant affin de deployer un cluster hautement disponible.
+J'ai donc decider de demarer de son projet pour construire mon infrastructure.
+J'ai au script original cert-manager traefik, rancher ,longhorn et argoCD
+
+L'ajout de cert-manager et traefik etait plutot simple mais rancher c'est averer plus complexe et ce pour plusieurs raison.
+Tout d'abort mon serveur etait tres limiter en ressources pour ce genre de tache encore plus a cause de la virtualisation et du niveau de redondance necesaire a la haute disponibilité
+Deuxiemement la vesion de rancher que j'essayais d'instaler a ce moment la n'était tout simplement pas compatible avec K3S (l'implementation de kubernetes que j'avais decider de deployer)
+et enfin apres avoir changer de version de rancher et avoir selectioner une version compatible avec k3S je me suis rendu compte que la version que j'avais selectioner n'etait pas compatible avec la version specifique de K3S que j'avais choisit.
+J'ai donc du changer une fois de plus de version de rancher.
+J'ai donc pu finialiser la mise en place de mon cluster.
+
+2 mois plus tard j'ai voulu apporter une modification au cluster plustot simple je voulais ajouter un certificat tls.
+au lieux de simplement modifier le cluster existant j'ai decider de profiter de mon IaC pour pereniser ce changement j'ai donc changer les details dans le playbook et l'ai lancer
+et la , le cluster ne repondais plus ...
+En Fait suite a un manque chronique de ressources certain processus essentiel a kubernetes n'avais pas pu etre executer a temps et donc kubernetes avais juste cesser de fonctioner.
+j'ai donc decider de recréer le cluster de 0 sauf que mon playbook qui 2 mois plus tot fonctionais parfaitement ne fonctionais plus dutout.
+apres de longue heure de debuging je n'arrivais pas a trouver la cause du probleme meme apres etre
+revenu a la derniere version du playbook qui avais servi a deplopyer le cluster pas moyen de redeployer le cluster.
+Rien n'avais changer dans le reste de l'infrastructure pourtant.
+Le playbook me donnais toujour la meme erreur : "helm: jetstack repository not found" , le probleme est que lq commqnde d'ajout de ce repository est bien executer et ce sqns erreur et que quand je teste mqnuelement le repository est bien qjouter a helm et disponible
+
+
 
 \subsubsection{le client graphql}
