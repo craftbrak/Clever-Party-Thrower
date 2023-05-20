@@ -163,4 +163,17 @@ Malgré les difficultés rencontrées, je suis fier du travail accompli et je re
 
 \subsubsection{le client graphql}
 
+Comme, je l'ai mentionné dans les sections précédentes, le développement du front-end a été réalisé à l'aide d'Angular.
+Ce dernier doit interagir avec le back-end par le biais d'une API GraphQL. C'est pour cela que j'ai choisi d'utiliser Apollo Angular.
 
+Pour configurer Apollo Angular, il est nécessaire de créer un fichier graphql.module.ts contenant les configurations minimales recommandées par la documentation.
+Afin de permettre l'authentification auprès du back-end via JWT, un header doit être configuré avec le token.
+
+Cependant, j'ai rencontré un problème : le token est géré par l'un de mes services et la configuration d'Apollo se fait hors du champ d'action de l'injection de dépendance d'Angular.
+De plus, en cas d'erreur de requête, je souhaitais pouvoir capturer cette erreur et agir différemment en fonction du message reçu.
+Par exemple, une erreur 400 devrait simplement être consignée dans la console, tandis qu'une erreur 401 devrait rediriger l'utilisateur vers la page de login.
+
+Malheureusement, je me trouvais dans l'impossibilité de récupérer mes tokens et de rediriger mes utilisateurs vers la page appropriée grâce au routeur Angular.
+
+Finalement, j'ai contourné ces problèmes en utilisant directement les éléments JavaScript (window) et le local storage.
+Cela m'a permis de récupérer le token et de gérer les redirections adéquates lors des erreurs.
