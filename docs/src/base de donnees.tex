@@ -16,7 +16,7 @@ en particulier pour la fonction de covoiturage qui nécessite le calcul de la di
 En outre, le caractère open source de PostgreSQL, sa réputation solide et ses performances de haut niveau en font un choix idéal pour mon projet.
 Sa compatibilité avec de nombreux langages de programmation et ORMs, dont TypeOrm que j'ai utilisé pour le développement de l'application, a consolidé ce choix.
 
-\subsubsection{Justification du choix d'une base de données relationnelle}\label{subsec:justification-choix-relational-db}
+\subsubsection{Justification du choix d'une base de données relationnelle}\label{subsubsec:justification-choix-relational-db}
 Le choix d'une base de données relationnelle pour le projet Clever Party Thrower repose sur plusieurs raisons.
 Tout d'abord, les données de l'application sont structurées et présentent de nombreuses relations entre elles.
 Une base de données relationnelle, comme PostgreSQL, est idéale pour gérer ce type de données.
@@ -43,32 +43,32 @@ Elle comporte plusieurs tables, dont chaque instance contient des informations p
 Voici une brève description ce chaque table de la basse de donnees
 \begin{itemize}
     \item address : Contient des informations sur les adresses.
-    Chaque instance d'adresse est liée à une instance de \("\) country \("\) (via \("\) countryId \("\)) et à une instance de \("\) user\_entity\("\) (via \("\)ownerId\("\)).
+    Chaque instance d'adresse est liée à une instance de " country " (via " countryId ") et à une instance de " user\_entity" (via "ownerId").
     \item car : Contient des informations sur les voitures.
-    Chaque instance de voiture est liée à une instance de \("\)user\_entity\("\) (via \("\)ownerId\("\)).
+    Chaque instance de voiture est liée à une instance de "user\_entity" (via "ownerId").
     \item carpool : Contient des informations sur le covoiturage.
-    \item Chaque instance de covoiturage est liée à une instance de \("\)address\("\) (via \("\)startPointId\("\) et \("\)endPointId\("\)), une instance de \("\)car\("\) (via \("\)carId\("\)),
-    une instance de \("\)event\("\) (via \("\)eventId\("\)), et une instance de \("\)user\_entity\("\) (via \("\)driverId\("\)).
+    \item Chaque instance de covoiturage est liée à une instance de "address" (via "startPointId" et "endPointId"), une instance de "car" (via "carId"),
+    une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "driverId").
     \item country : Contient des informations sur les pays.
-    Il est lié à \("\) address\("\) (via \("\)id\("\)).
-    \item  dates\_t\_user : Contient des informations sur les dates liées aux utilisateurs.
-    Chaque instance est liée à une instance de \("\)event\_date\("\) (via \("\) eventDateId\("\)) et à une instance de \("\)event\_to\_user\("\) (via \("\) eventToUserId\("\)).
+    Il est lié à " address" (via "id").
+    \item  dates\_to\_user : Contient des informations sur les dates liées aux utilisateurs.
+    Chaque instance est liée à une instance de "event\_date" (via " eventDateId") et à une instance de "event\_to\_user" (via " eventToUserId").
     \item dept : Contient des informations sur les dettes.
-    Chaque instance est liée à une instance de \("\)event\("\) (via \("\) eventId\("\)), et à deux instances de \("\) user\_entity \("\) (via \("\) creditorId\("\) et \("\)debtorId\("\)).
+    Chaque instance est liée à une instance de "event" (via " eventId"), et à deux instances de " user\_entity " (via " creditorId" et "debtorId").
     \item event : Contient des informations sur les événements.
-    Chaque instance est liée à une instance de \("\)address\("\) (via \("\)addressId\("\)) .
-    \item event_date : Contient des informations sur les dates d'événement.
-    Chaque instance est liée à une instance de \("\)event\("\) (via \("\)eventId\("\)).
-    \item event_to_user : Contient des informations sur la relation entre les événements et les utilisateurs.
-    Chaque instance est liée à une instance de \("\)address\("\) (via \("\)addressString\("\)), une instance de \("\)event\("\) (via \("\)eventId\("\)), et une instance de \("\)user\_entity\("\) (via \("\)userId\("\)).
-    \item route_entity : Contient des informations sur les itinéraires.
-    Chaque instance est liée à deux instances de \("\)address\("\) (via \("\)startingId\("\) et \("\)destinationId\("\)), une instance de \("\)carpool\("\) (via \("\)carpoolId\("\)), et une instance de \("\)user\_entity\("\) (via \("\)pickupId\("\)) .
-    \item shopping_list_item : Contient des informations sur les articles de la liste de courses.
-    Chaque instance est liée à une instance de \("\)event\("\) (via \("\) eventId\("\)) et à une instance de \("\)user\_entity\("\) (via \("\)assignedId\("\)).
+    Chaque instance est liée à une instance de "address" (via "addressId") .
+    \item event\_date : Contient des informations sur les dates d'événement.
+    Chaque instance est liée à une instance de "event" (via "eventId").
+    \item event\_to\_user : Contient des informations sur la relation entre les événements et les utilisateurs.
+    Chaque instance est liée à une instance de "address" (via "addressString"), une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "userId").
+    \item route\_entity : Contient des informations sur les itinéraires.
+    Chaque instance est liée à deux instances de "address" (via "startingId" et "destinationId"), une instance de "carpool" (via "carpoolId"), et une instance de "user\_entity" (via "pickupId") .
+    \item shopping\_list\_item : Contient des informations sur les articles de la liste de courses.
+    Chaque instance est liée à une instance de "event" (via " eventId") et à une instance de "user\_entity" (via "assignedId").
     \item spending : Contient des informations sur les dépenses.
-    Chaque instance est liée à une instance de \("\)event\("\) (via \("\)eventId\("\)), une instance de \("\)shopping\_list\_item\("\) (via \("\)shoppingListItemId\("\)), et une instance de \("\)user\_entity\("\) (via \("\)buyerId\("\)).
-    \item user_entity : Contient des informations sur les utilisateurs.
-    Chaque instance est liée à une instance de \("\)address\("\) (via \("\)addressId\("\)).
+    Chaque instance est liée à une instance de "event" (via "eventId"), une instance de "shopping\_list\_item" (via "shoppingListItemId"), et une instance de "user\_entity" (via "buyerId").
+    \item user\_entity : Contient des informations sur les utilisateurs.
+    Chaque instance est liée à une instance de "address" (via "addressId").
 \end{itemize}
 
 Le schema est disponible ici\ref{fig:dbSchema}% todo: fix image pracement and ref
