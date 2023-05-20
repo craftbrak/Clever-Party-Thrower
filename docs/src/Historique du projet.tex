@@ -52,59 +52,115 @@ Pour gérer le remboursement des dettes, nous profitons de l'ajout d'un acheteur
 Lorsqu'un participant marque une dette comme remboursée, une dépense de valeur opposée est créée entre le créancier et le débiteur afin de contrebalancer la dette.
 Cette dernière est alors supprimée.
 
-Cette solution permet de gérer le remboursement des dettes, de répartir les dépenses entre ceux qui les ont consommées, tout en optimisant les calculs.
-De plus grace a cette modification les participants peuvent maintenant diviser une depense inequitablement ou de ne pas la repartir entre tous les participants,
-ce qui apporte encore plus d'interet à cet algorythme.
+La solution mise en place permet de gérer efficacement le remboursement des dettes et de répartir les dépenses parmi les consommateurs,
+optimisant ainsi les calculs de remboursement.
+Grâce à une modification récente, les participants peuvent désormais diviser une dépense de manière inégale ou choisir de ne pas la répartir entre tous les participants,
+ajoutant une couche supplémentaire de flexibilité à cet algorithme.
 
 \subsubsection{le cluster kubernetees}
-LA conception et surtout la mise en place d'un cluster kubernetes a probablement été le défit majeur de ce projet, entre les differents outils a apprendre,
-la concption du cluster et la mise en place de celui-ci.
-au debut du projet je n'étais pas familier dutout avec kubernetes et ansible n'etait pour moi qu'un nom.
-J'ai donc du apprendre le fonctionnemenet de kubernetes et les differents outil qui peuvent etre utiliser avec ce dernier.
-Pendant mes recherche j'ai decouvert une imence comunauté de passioner qui pour le plaisr ou a des fin professionel avais appris a utiliser puis créais de la documentation sur kebernetes.
-L'un d'entre eux Techno Tim a crée une serie de viedo ou il partage les differentes configuration mise en place dans son micro datacenter qu'il gere chez lui.
-c'est en decouvrants ces video que j'ai commencer a apprendre comment configurer kubernetes et utiliser ansible.
+La conception et la mise en place d'un cluster Kubernetes ont probablement été les défis majeurs de ce projet.
+L'apprentissage des différents outils, la conception du cluster et son déploiement ont été des étapes cruciales.
+Au début du projet, j'étais totalement novice avec Kubernetes et Ansible n'était pour moi qu'un nom.
 
-Sur base de mes nouvelles connaissance j'ai donc decider de mettre en place sur un de mes serveur un cluster qui grace a la virtualisation serai hautement disponible.
-(en realiter seul le cluster kubernetes inclu de la redondance il n'y en a pas au niveau materiel car je ne pouvais pas me le permetre)
-J'ai donc commencer par creer des machine virtuel dans mon hyperviseur (proxmox), au depart tout allais bien puis suite a une fause manipulation j'ai decide de recomencer du debut.
-je me suis alors rendu compte que cree les machine virtuel a la main ne serai vraiment pas l'ideal,
-cependant je ne voulais pas mettre en place un systeme de MaaS (Metal as a Service) car il aurais demander bien trop a mon pauvre petit serveur
-J'ai donc decider de couper la poire en 2 je ne vais pqs completement automatiser la configuration et le provisionement de machine virtuele mais je peux certainement me simplifier enormement la tache.
-C'est alors que j'ai decouvert 2 outils formidable que sont les template de VM qemu et cloudInit.
-Grace a ces é outils je pouvais facilement créer des machine virtuel avec mes parramettre et si necesaire les modifier via cloud init avant meme de lancer la machine virtuelle.
+J'ai donc dû m'initier au fonctionnement de Kubernetes et aux différents outils pouvant être utilisés en parallèle.
+Mes recherches m'ont conduit à découvrir une immense communauté de passionnés qui ont appris à utiliser Kubernetes
+et ont créé de la documentation à ce sujet pour le plaisir ou pour des fins professionnelles.
+Techno Tim, l'un d'entre eux, a créé une série de vidéos où il partage les différentes configurations mises en place
+dans son micro datacenter qu'il gère chez lui.
+C'est en découvrant ces vidéos que j'ai commencé à apprendre comment configurer Kubernetes et utiliser Ansible.
 
-Fort de ma nouvelle decouverte je mis en place 7 VM qui seront dédier au cluster Kubernetes, 3 serviront de plans de controle et 4 de node d'execution.
+Grâce à ces nouvelles connaissances, j'ai décidé de mettre en place sur l'un de mes serveurs un cluster qui,
+grâce à la virtualisation, serait hautement disponible.
+En réalité, seule la redondance du cluster Kubernetes est intégrée ;
+il n'y a pas de redondance au niveau matériel car je n'avais pas les moyens de l'implémenter.
 
-Le projet necesitant une infrastructure d'hebergement et etant conteneuriser tout concordais.
+J'ai donc commencé par créer des machines virtuelles (VM) sur mon hyperviseur (Proxmox).
+Après une mauvaise manipulation, j'ai décidé de recommencer depuis le début.
+Je me suis alors rendu compte que créer les VM manuellement n'était pas l'idéal,
+mais je ne voulais pas mettre en place un système de MaaS (Metal as a Service) qui aurait trop sollicité mon serveur.
+J'ai donc choisi une solution intermédiaire : je n'ai pas complètement automatisé la configuration et le provisionnement
+de machines virtuelles, mais j'ai cherché à simplifier considérablement le processus.
 
-Apres "jours d'experimentation manuel avec kubernetes via kubectl ,lens et portainer , j'ai decider que je ne voulais plus d'un cluster unique et frqgile tel un flocon de neige.
-Je me suis alors tourner vers Ansible, un outils du quel je n'avais entendu que du bien, afin de definir mon infrastructure en temps que code.
+C'est alors que j'ai découvert deux outils formidables : les templates de VM qemu et CloudInit.
+Grâce à ces outils, je pouvais facilement créer des machines virtuelles avec mes paramètres,
+et modifier ceux-ci via CloudInit avant même de démarrer la machine virtuelle.
 
-J'ai donc chercher comment configurer un cluster kubernetes via ansible et j'ai decouvert l'existance d'une comunauté de passioner
-qui ont cree et publier en opensource des playbook ansible complet permetant de mettre en place un cluster.
+Fort de cette nouvelle découverte, j'ai mis en place sept VM dédiées au cluster Kubernetes :
+trois serviront de plans de contrôle et quatre de nœuds d'exécution.
 
-Dans cette communauté j'y ai retrouver Techno Tim qui a lui aussi contribuer en addaptant un playbook existant affin de deployer un cluster hautement disponible.
-J'ai donc decider de demarer de son projet pour construire mon infrastructure.
-J'ai au script original cert-manager traefik, rancher ,longhorn et argoCD
+Le projet nécessitant une infrastructure d'hébergement et étant conteneurisé, tout s'alignait parfaitement.
 
-L'ajout de cert-manager et traefik etait plutot simple mais rancher c'est averer plus complexe et ce pour plusieurs raison.
-Tout d'abort mon serveur etait tres limiter en ressources pour ce genre de tache encore plus a cause de la virtualisation et du niveau de redondance necesaire a la haute disponibilité
-Deuxiemement la vesion de rancher que j'essayais d'instaler a ce moment la n'était tout simplement pas compatible avec K3S (l'implementation de kubernetes que j'avais decider de deployer)
-et enfin apres avoir changer de version de rancher et avoir selectioner une version compatible avec k3S je me suis rendu compte que la version que j'avais selectioner n'etait pas compatible avec la version specifique de K3S que j'avais choisit.
-J'ai donc du changer une fois de plus de version de rancher.
-J'ai donc pu finialiser la mise en place de mon cluster.
+Après des jours d'expérimentation manuelle avec Kubernetes via kubectl, Lens et Portainer, j'ai décidé de ne plus vouloir
+d'un cluster unique et fragile comme un flocon de neige.
+Je me suis tourné vers Ansible, un outil dont j'avais entendu beaucoup de bien, afin de définir mon infrastructure en tant que code.
 
-2 mois plus tard j'ai voulu apporter une modification au cluster plustot simple je voulais ajouter un certificat tls.
-au lieux de simplement modifier le cluster existant j'ai decider de profiter de mon IaC pour pereniser ce changement j'ai donc changer les details dans le playbook et l'ai lancer
-et la , le cluster ne repondais plus ...
-En Fait suite a un manque chronique de ressources certain processus essentiel a kubernetes n'avais pas pu etre executer a temps et donc kubernetes avais juste cesser de fonctioner.
-j'ai donc decider de recréer le cluster de 0 sauf que mon playbook qui 2 mois plus tot fonctionais parfaitement ne fonctionais plus dutout.
-apres de longue heure de debuging je n'arrivais pas a trouver la cause du probleme meme apres etre
-revenu a la derniere version du playbook qui avais servi a deplopyer le cluster pas moyen de redeployer le cluster.
-Rien n'avais changer dans le reste de l'infrastructure pourtant.
-Le playbook me donnais toujour la meme erreur : "helm: jetstack repository not found" , le probleme est que lq commqnde d'ajout de ce repository est bien executer et ce sqns erreur et que quand je teste mqnuelement le repository est bien qjouter a helm et disponible
+J'ai cherché comment configurer un cluster Kubernetes via Ansible et j'ai découvert l'existence d'une communauté de passionnés
+qui ont créé et publié en open-source des playbooks Ansible complets permettant de mettre en place un cluster.
 
+Dans cette communauté, j'ai retrouvé Techno Tim qui a, lui aussi, contribué en adaptant un playbook existant
+afin de déployer un cluster hautement disponible.
+J'ai donc décidé de partir de son projet pour construire mon infrastructure.
+J'ai ajouté au script original cert-manager, Traefik, Rancher, Longhorn et ArgoCD\@.
 
+L'ajout de cert-manager et Traefik a été plutôt simple, mais l'intégration de Rancher s'est avérée plus complexe pour plusieurs raisons.
+
+Premièrement, mon serveur était très limité en ressources pour ce type de tâche, encore plus à cause de la virtualisation
+et du niveau de redondance nécessaire à la haute disponibilité.
+Deuxièmement, la version de Rancher que j'essayais d'installer à ce moment-là n'était tout simplement pas compatible avec K3S
+(l'implémentation de Kubernetes que j'avais décidé de déployer).
+Enfin, après avoir changé de version de Rancher et sélectionné une version compatible avec K3S,
+je me suis rendu compte que cette version n'était pas compatible avec la version spécifique de K3S que j'avais choisie.
+J'ai donc dû changer une fois de plus de version de Rancher.
+J'ai finalement pu finaliser la mise en place de mon cluster.
+
+Deux mois plus tard, j'ai voulu apporter une modification au cluster, plutôt simple : j'ai voulu ajouter un certificat TLS.
+Au lieu de simplement modifier le cluster existant, j'ai décidé de tirer profit de mon IaC pour pérenniser ce changement.
+J'ai donc modifié les détails dans le playbook et je l'ai lancé.
+Malheureusement, le cluster ne répondait plus\ldots
+
+En fait, en raison d'un manque chronique de ressources, certains processus essentiels
+à Kubernetes n'avaient pas pu être exécutés à temps, ce qui a entraîné l'arrêt de son fonctionnement.
+J'ai donc décidé de recréer le cluster à partir de zéro.
+Cependant, mon playbook, qui deux mois plus tôt fonctionnait parfaitement, ne fonctionnait plus du tout.
+
+Après de longues heures de débogage, je n'arrivais pas à trouver la cause du problème,
+même après être revenu à la dernière version du playbook qui avait servi à déployer le cluster.
+Impossible de redéployer le cluster.
+Rien n'avait changé dans le reste de l'infrastructure pourtant.
+
+Le playbook affichait toujours la même erreur : "helm: jetstack repository not found". %todo: change error message for the real one
+Le problème est que la commande d'ajout de ce référentiel est bien exécutée et sans erreurs et que lorsque je teste manuellement,
+le référentiel est bien ajouté à Helm et disponible.
+
+J'ai consacré de nombreuses heures à essayer de résoudre ce problème, mais sans succès.
+C'était frustrant et déroutant, car je n'avais apporté aucun changement majeur au playbook depuis son dernier déploiement réussi.
+
+Face à ce blocage, j'ai été contraint de reconsidérer l'approche technique pour le déploiement de mon projet.
+J'ai donc décidé de mettre Kubernetes de côté et de me concentrer sur Docker-compose.
+Bien que ce ne soit pas la solution initiale envisagée,
+Docker-compose m'a permis de poursuivre le développement du projet tout en conservant l'aspect conteneurisé de l'application.
+
+\paragraph{Le choix de Docker-compose}
+
+Docker-compose est une solution plus simple et moins gourmande en ressources que Kubernetes.
+Il me permet de définir et de gérer plusieurs conteneurs comme un ensemble de services qui fonctionnent ensemble,
+ce qui est idéal pour mon projet.
+Il est aussi plus facile à utiliser et à comprendre pour quelqu'un comme moi qui n'a pas une grande expérience de l'orchestration de conteneurs.
+
+J'ai donc commencé à migrer mon projet vers Docker-compose.
+Le processus a été assez simple, car j'avais déjà une bonne compréhension de Docker et que mon application était déjà conteneurisée.
+Après quelques ajustements dans le fichier docker-compose.yml, mon application était opérationnelle.
+
+Ce changement d'approche m'a permis de me concentrer sur les autres aspects du projet,
+tels que le développement de fonctionnalités supplémentaires et l'amélioration de l'expérience utilisateur.
+Bien que je sois déçu de ne pas avoir pu mettre en place Kubernetes comme prévu initialement,
+je suis satisfait du résultat final.
+Docker-compose a répondu à mes besoins et m'a permis de mener à bien mon projet.
+
+En conclusion, bien que l'implémentation de Kubernetes ait été un défi majeur qui n'a pas abouti comme prévu,
+ce projet a été une grande occasion d'apprentissage.
+J'ai acquis une compréhension approfondie des outils de déploiement et d'orchestration de conteneurs,
+et j'ai développé des compétences de débogage et de résolution de problèmes.
+Malgré les difficultés, je suis fier du travail accompli et j'espère pouvoir explorer davantage Kubernetes dans de futurs projets.
 
 \subsubsection{le client graphql}
