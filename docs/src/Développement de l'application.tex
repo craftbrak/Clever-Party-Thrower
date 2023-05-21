@@ -1,0 +1,53 @@
+\subsection{Introduction}\label{subsec:introduction}
+Cette section introduit l'architecture, la documentation du code, les bonnes pratiques de programmation, les tests unitaires et la sécurité de l'application web Clever Party Thrower.
+
+\subsection{Architecture}\label{subsec:architecture}
+Clever Party Thrower est une application web full-stack.
+Le front-end est construit avec Angular tandis que le back-end est un monolithe élaboré avec NestJS et TypeORM. À chaque accès au site par un utilisateur,
+la Single Page Application (SPA) Angular est chargée, initiant les services nécessaires pour interagir avec le back-end.
+Ces services récupèrent les données requises via l'API GraphQL, en utilisant Apollo.\\
+
+Durant toute la session de l'utilisateur, ces services persistent et continuent de récupérer les données du back-end au fur et à mesure de la navigation.
+Chaque service est responsable d'un type de données spécifique.
+Par exemple, AuthService s'occupe des données liées à l'authentification et à l'utilisateur, tandis qu'EventService gère tout ce qui est directement lié à un événement.\\
+
+De la même manière, le back-end est divisé en plusieurs services, chacun gérant une ressource unique.
+Ces services sont rassemblés en modules, associés aux contrôleurs REST et aux résolveurs GraphQL. Cette modularité facilite le test du code en assurant un découplage
+entre les différents services.\\
+
+\subsection{Documentation du code}\label{subsec:documentation-du-code}
+Le code de Clever Party Thrower est organisé et documenté pour faciliter sa compréhension et sa maintenance.\\
+Grâce à TypeScript, la majorité de la documentation est implicite.
+Les noms des fonctions et leurs arguments offrent une compréhension rapide de leur utilité.
+Pour les fonctions plus complexes, des commentaires expliquent la logique algorithmique.\\
+Ainsi, même un développeur novice dans le projet peut facilement naviguer dans le code.
+
+\subsection{Bonnes pratiques de programmation}\label{subsec:bonnes-pratiques-de-programmation}
+Clever Party Thrower suit les conventions de codage d'Angular et de NestJS, ce qui comprend l'utilisation appropriée des indentations,
+des commentaires, de la casse des lettres (camelCase, PascalCase), et des conventions de nommage des variables, des fonctions et des classes.
+Cette pratique améliore la lisibilité du code et facilite le travail en équipe.\\
+
+De plus, le code est divisé en modules et services distincts, chacun étant responsable d'une fonctionnalité spécifique.
+Cela favorise la modularité, permet une meilleure gestion du code et facilite la maintenance et l'extension de l'application.\\
+
+Les principes DRY (Don't Repeat Yourself) et SOLID sont également respectés pour minimiser la duplication de code et assurer la prédictabilité du comportement du logiciel.
+Quelques concepts de programmation fonctionnelle sont utilisés dans le front-end, tels que l'immutabilité et l'utilisation maximale de fonctions pures.\\
+
+La gestion des erreurs en JavaScript et TypeScript est plus basique que dans d'autres langages de programmation.
+Contrairement à Java, où les erreurs doivent être déclarées dans la définition de la fonction, TypeScript ne possède pas cette fonctionnalité.
+Il est donc difficile de savoir quelle fonction peut lancer une erreur.
+La meilleure pratique est d'utiliser des blocs try-catch au niveau le plus élevé de l'application pour capturer les erreurs une fois qu'elles sont propagées.\\
+
+\subsection{Tests Unitaires}\label{subsec:tests-unitaires}
+Les tests unitaires sont une partie essentielle de Clever Party Thrower.
+Chaque module et service dispose de ses propres tests unitaires, garantissant ainsi que chaque partie de l'application fonctionne comme prévu.
+Les tests sont écrits avec Jest, un framework de test populaire pour JavaScript et TypeScript.\\
+
+Le découplage des services et des modules rend les tests plus simples et plus efficaces, car chaque test se concentre sur une seule unité de code.
+
+\subsection{Sécurité}\label{subsec:securite}
+La sécurité est une préoccupation majeure pour Clever Party Thrower.
+Parmi les mesures de sécurité mises en place, on compte l'utilisation de HTTPS pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
+l'authentification et l'autorisation basées sur des tokens JWT, la validation des entrées côté serveur pour prévenir les attaques par injection,
+et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données.
+Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via npm audit et npm audit fix.
