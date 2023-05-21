@@ -4,6 +4,7 @@
 \subsection{Aspects technologique}\label{subsec:aspects-technologique}
 Le projet ayant comme contrainte principale d'être disponible sur toutes les plateformes majeures, une base web me paraît évidente.
 Pourtant, le web implique aussi la limitation principale qu'est le besoin de connexion permanente au serveur.\\
+
 Pour remédier à ce problème, une PWA (Application Web Progressive) nous permettrait de bénéficier des avantages du web,
 tout en permettant aux utilisateurs de conserver une version locale de l'application.
 De plus, une PWA permet d'être installée comme une application native Android ou iOS pour les plateformes mobiles, ce qui facilite l'accès.\
@@ -86,10 +87,11 @@ Cependant, le back-end sera aussi responsable des calculs d'équilibrage des dé
 Connaissant déjà Express.js et Spring (Kotlin) je me suis naturellement tourné vers ces derniers, néanmoins je désirais utiliser du TypeScript pour ce projet.
 Express.js est compatible avec TypeScript mais Spring ne l'est pas.
 Express.js est leger, minimaliste et propose une bonne documentation,
-Spring est généraliste propose des outils de génération de code et utilise un système d'injection de dépendance.
+Spring est généraliste propose des outils de génération de code et utilise un système d'injection de dépendance.\\
+
 Ce qu'il me fallait était une hybride entre Spring et Express.js.
 Après quelque recherches, j'ai trouvé un framework appelé Nest.js, ce dernier supporte nativement TypeScript, propose une documentation excellente,
-propose un CLI permettant de générer du code boiler-plate, reste simple et leger, Utilise de l'injection de dépendance et est très utilisé et apprécié par d'autres développeurs.
+propose un CLI permettant de générer du code boiler-plate, reste simple et leger, utilise de l'injection de dépendance et est très utilisé et apprécié par d'autres développeurs.
 J'ai donc décidé d'utiliser Nest.Js pour ce projet.
 
 \paragraph{ORM}
@@ -97,7 +99,7 @@ Nest.Js (que je vais appeler Nest à partir de maintenant) n'est pas un framewor
 Il m'a alors fallu choisir aussi un ORM pour interfacer avec ma base de données.
 Dans la Documentation de Nest, il y a des exemples de configuration avec les ORM les plus utilisés avec Nest et TypeScrip.
 Ces derniers sont Sequelize, TypeOrm ainsi que Prisma.
-Ayant eu une experience avec Sequelize plutôt mauvaise lors de mon projet de dev3, j'ai décidé de regarder du côté de prisma.\\\\
+Ayant eu une experience avec Sequelize plutôt mauvaise lors de mon projet de dev3, j'ai décidé de regarder du côté de prisma.\\
 
 Prisma est une ORM un peu particulière dans le sens où il propose d'utiliser un schema prisma pour définir ses entités au lieu d'utiliser du code TypeScript.
 Cella me paraissait une très bonne chose vu que prisma générait alors lui-même les différents DTO nécessaires.
@@ -142,10 +144,11 @@ La meilleure solution, en l'occurrence, consiste à conteneuriser l'application.
 Pour mettre en conteneur l'application, diverses options sont disponibles.
 Nous pourrions, par exemple, créer une image Docker englobant l'ensemble de l'application.
 Cette image comprendrait à la fois la base de données, le service d'API et le serveur web hébergeant l'interface utilisateur.
-Bien que cette solution soit loin d'être idéale, elle offre un avantage considérable pour l'utilisateur, en permettant la mise en place de l'application en une seule commande.
+Bien que cette solution soit loin d'être idéale, elle offre un avantage considérable pour l'utilisateur, en permettant la mise en place de l'application en une seule commande.\\
 
 Cependant, cette approche ne facilite pas l'ajout de services supplémentaires, tels qu'un serveur de messagerie ou un autre type de base de données, par d'éventuels futurs développeurs.
-Afin de conserver les avantages de cette solution monolithique tout en séparant les différents services (serveur web, API, base de données, etc.) dans des conteneurs distincts, nous pourrions utiliser des outils tels que Docker Swarm, Docker Compose ou d'autres systèmes d'orchestration, tels que Kubernetes.
+Afin de conserver les avantages de cette solution monolithique tout en séparant les différents services (serveur web, API, base de données, etc.) dans des conteneurs distincts,
+nous pourrions utiliser des outils tels que Docker Swarm, Docker Compose ou d'autres systèmes d'orchestration, tels que Kubernetes. \\
 
 Un script Docker Compose simple semble être la meilleure option pour permettre aux utilisateurs souhaitant auto-héberger l'application de manière aisée.
 Néanmoins, il serait également intéressant d'offrir la possibilité aux utilisateurs plus avancés d'héberger l'application avec une haute disponibilité.
@@ -154,11 +157,11 @@ Néanmoins, il serait également intéressant d'offrir la possibilité aux utili
 Afin d'assurer une haute disponibilité, il est essentiel que l'application ne présente aucun point de défaillance unique.
 Par exemple, sans haute disponibilité, si le système d'exploitation du serveur subit un crash, l'ensemble de l'application serait impacté.
 Pour renforcer la résilience face à ce type de problème,
-nous introduirons de la redondance à tous les niveaux du système d'hébergement en utilisant un outil d'orchestration de conteneurs sur plusieurs machines.
+nous introduirons de la redondance à tous les niveaux du système d'hébergement en utilisant un outil d'orchestration de conteneurs sur plusieurs machines.\\
 
 Plusieurs outils d'orchestration de conteneurs pour un cluster de machines sont disponibles, mais Kubernetes se distingue par sa simplicité d'approche.
 Nous mettrons donc en place un cluster Kubernetes pour héberger l'application avec une haute disponibilité.
-De plus, ce cluster facilitera également la gestion des certificats TLS\@.
+De plus, ce cluster facilitera également la gestion des certificats TLS\@.\\
 
 Toutefois, la mise en place d'un cluster Kubernetes ne garantit pas la portabilité de notre cluster.
 Une fois établi, il demeure unique, à l'instar d'un flocon de neige.
@@ -167,11 +170,11 @@ Pour résoudre ce problème, nous ferons appel à l'infrastructure en tant que c
 \paragraph{Infrastructure as code}
 Comment rendre notre cluster et par extension notre application déployable en une seule commande ?
 J'ai opté pour l'utilisation d'Ansible afin de déployer mon cluster, indépendamment de l'état de la machine.
-Ansible offre effectivement une approche agnostique qui facilite le processus de déploiement.
+Ansible offre effectivement une approche agnostique qui facilite le processus de déploiement.\\
 
 Un simple script shell aurait pu être utilisé, mais il ne serait pas agnostique par rapport à l'état de l'OS\@.
 Par exemple, si une commande demande de créer le répertoire /home/foo mais qu'il existe déjà, le script shell échouerait.
-En revanche, Ansible poursuivra son exécution sans problème, car pour lui, si le répertoire existe déjà, cela signifie que l'objectif est atteint.
+En revanche, Ansible poursuivra son exécution sans problème, car pour lui, si le répertoire existe déjà, cela signifie que l'objectif est atteint.\\
 
 \subsection{Aspect non technologique}\label{subsec:aspect-non-technologique}
 
@@ -185,13 +188,16 @@ Ces tests permettent de vérifier le bon fonctionnement des fonctionnalités ind
 \paragraph{Sécurité}
 L'application n'utilise pas HTTPS vu que cela nécessiterait des certificates SSL, cependant il est vivement conseiller d'utiliser un reverse proxy pour réaliser la terminaison SSL.\\
 Néanmoins, les mots de passe sont chiffrés et salés avant d'être stockés en base de données grâce à Argon2.\\
-Angular et NestJs permettent d'empêcher les attaques de type SQL injection.
+
+Angular et NestJs permettent d'empêcher les attaques de type SQL injection. \\
+
 En ce qui concerne les attaques de type DoS ou DDoS, aucune protection n'est mise en place au niveau applicatif, car il est plus simple d'implémenter cette sécurité au niveau du réseau.\\\\
 
 \paragraph{GDPR}
-En ce qui concerne le GDPR, aucune donnée récoltée n'est revendue ni redistribuée.
+En ce qui concerne le GDPR, aucune donnée récoltée n'est revendue ni redistribuée.\\
+
 Seules les données fournies directement par les utilisateurs via les formulaires sont récoltées et utilisées uniquement dans l'application.
-Ces données peuvent être supprimées définitivement avec une simple requête à l'API.
+Ces données peuvent être supprimées définitivement avec une simple requête à l'API\@.
 
 \subsubsection{Accessibilité}
 
@@ -207,9 +213,9 @@ Ces optimisations permettent d'améliorer les performances et la rapidité de l'
 
 Le projet sera documenté via le fichier README et directement dans le code.
 Des noms de variables et de fonctions explicites, ainsi qu'un typage fort, assurent une solide base de documentation.
-Les fonctions plus complexes nécessitant une documentation plus approfondie seront documentées avec de la Javadoc.
+Les fonctions plus complexes nécessitant une documentation plus approfondie seront documentées avec de la Javadoc.\\
 
-Pour ce qui est de l'API, le schéma GraphQL sert de documentation.
+Pour ce qui est de l'API, le schéma GraphQL sert de documentation.\\
 
 De plus un linter est mis en place pour assurer le respect des bonnes pratiques.
 
@@ -217,7 +223,7 @@ De plus un linter est mis en place pour assurer le respect des bonnes pratiques.
 
 Focalboard a été choisi comme outil de gestion de projet.
 Il est très similaire à Trello, mais il est open-source et est auto-hébergé sur mon serveur.
-Cela permet de suivre l'évolution du projet et de gérer les tâches à accomplir efficacement.
+Cela permet de suivre l'évolution du projet et de gérer les tâches à accomplir efficacement.\\
 
 De plus le code sera gere au moyen de repository git
 

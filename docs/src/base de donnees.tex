@@ -6,12 +6,12 @@ Cette section fournit un aperçu détaillé de la conception, du choix, des opé
 \subsection{Choix de la base de données}\label{subsec:choix-de-la-base-de-donnee}
 Le choix du système de base de données est un aspect crucial de tout projet, car il influence directement les performances et la fonctionnalité de l'application.
 Comme je l'ai précisé dans la section d'analyse, j'ai choisi un système de base de données de type SQL, plus précisément PostgreSQL, pour ce projet.
-La haute disponibilité offerte par PostgreSQL, grâce à ses fonctionnalités avancées de réplication de données, a été l'une des principales motivations de ce choix.
+La haute disponibilité offerte par PostgreSQL, grâce à ses fonctionnalités avancées de réplication de données, a été l'une des principales motivations de ce choix.\\
 
 De plus, PostgreSQL offre une grande extensibilité.
 Son système d'extensions permet d'ajouter facilement des fonctionnalités à la base de données.
 Par exemple, l'extension PostGIS, qui facilite le stockage et la manipulation des données géographiques, a été particulièrement utile pour mon application,
-en particulier pour la fonction de covoiturage qui nécessite le calcul de la distance entre deux points géographiques.
+en particulier pour la fonction de covoiturage qui nécessite le calcul de la distance entre deux points géographiques.\\
 
 En outre, le caractère open source de PostgreSQL, sa réputation solide et ses performances de haut niveau en font un choix idéal pour mon projet.
 Sa compatibilité avec de nombreux langages de programmation et ORMs, dont TypeOrm que j'ai utilisé pour le développement de l'application, a consolidé ce choix.
@@ -22,53 +22,54 @@ Tout d'abord, les données de l'application sont structurées et présentent de 
 Une base de données relationnelle, comme PostgreSQL, est idéale pour gérer ce type de données.
 De plus, les bases de données relationnelles fournissent des mécanismes de transactions puissants, ce qui est crucial pour maintenir
 l'intégrité des données lors de l'exécution des opérations CRUD. Enfin,
-PostgreSQL supporte l'ACIDité (Atomicité, Cohérence, Isolation, Durabilité), ce qui garantit que toutes les transactions sont traitées de manière fiable.
+PostgreSQL supporte l'ACIDité (Atomicité, Cohérence, Isolation, Durabilité), ce qui garantit que toutes les transactions sont traitées de manière fiable.\\
 
 \subsection{Opérations sur la base de données}\label{subsec:operation-sur-la-base-de-donnees}
 Les opérations sur la base de données sont principalement de nature CRUD (Create, Read, Update, Delete).
 Cependant, avec l'introduction du système de covoiturage, des opérations plus complexes sont devenues nécessaires.
-Par exemple, le calcul des distances entre différents points géographiques est une opération essentielle pour la coordination du covoiturage.
+Par exemple, le calcul des distances entre différents points géographiques est une opération essentielle pour la coordination du covoiturage.\\
 
 \subsection{Structure de données}\label{subsec:structure-de-donnees}
 
-\subsubsection{Normalisation de la base de données}\label{subsec:normalisation}
+\subsubsection{Normalisation de la base de données}\label{subsubsec:normalisation}
 La base de données du projet a été conçue en suivant les principes de la normalisation afin d'éliminer la redondance des données et d'assurer l'intégrité des données.
 Nous avons atteint la 3NF (Third Normal Form) qui assure que chaque colonne d'une table est non-transitivement dépendante de la clé primaire.
-Cela signifie que toutes les données non-clé sont complètement dépendantes de la clé primaire, ce qui aide à réduire la redondance et à améliorer l'intégrité des données.
+Cela signifie que toutes les données non-clé sont complètement dépendantes de la clé primaire, ce qui aide à réduire la redondance et à améliorer l'intégrité des données.\\
 
 \subsubsection{Structure de la base de données}
 La structure de la base de données est illustrée dans la figure dans la section analyse\ref{sec:analyse}.
 Cette structure a été conçue pour garantir une exécution efficace des opérations de la base de données, tout en assurant la cohérence et l'intégrité des données.
-Elle comporte plusieurs tables, dont chaque instance contient des informations pertinentes et est liée à d'autres tables pour créer des relations significatives entre les différentes données.
+Elle comporte plusieurs tables, dont chaque instance contient des informations pertinentes et est liée à d'autres tables pour créer des relations significatives entre les différentes données.\\
+
 Voici une brève description ce chaque table de la basse de donnees
 \begin{itemize}
     \item address : Contient des informations sur les adresses.
-    Chaque instance d'adresse est liée à une instance de " country " (via " countryId ") et à une instance de " user\_entity" (via "ownerId").
+    Chaque instance d'adresse est liée à une instance de " country " (via " countryId ") et à une instance de " user\_entity" (via "ownerId").\\
     \item car : Contient des informations sur les voitures.
-    Chaque instance de voiture est liée à une instance de "user\_entity" (via "ownerId").
+    Chaque instance de voiture est liée à une instance de "user\_entity" (via "ownerId").\\
     \item carpool : Contient des informations sur le covoiturage.
-    \item Chaque instance de covoiturage est liée à une instance de "address" (via "startPointId" et "endPointId"), une instance de "car" (via "carId"),
-    une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "driverId").
+    Chaque instance de covoiturage est liée à une instance de "address" (via "startPointId" et "endPointId"), une instance de "car" (via "carId"),
+    une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "driverId").\\
     \item country : Contient des informations sur les pays.
-    Il est lié à " address" (via "id").
+    Il est lié à " address" (via "id").\\
     \item  dates\_to\_user : Contient des informations sur les dates liées aux utilisateurs.
-    Chaque instance est liée à une instance de "event\_date" (via " eventDateId") et à une instance de "event\_to\_user" (via " eventToUserId").
+    Chaque instance est liée à une instance de "event\_date" (via " eventDateId") et à une instance de "event\_to\_user" (via " eventToUserId").\\
     \item dept : Contient des informations sur les dettes.
-    Chaque instance est liée à une instance de "event" (via " eventId"), et à deux instances de " user\_entity " (via " creditorId" et "debtorId").
+    Chaque instance est liée à une instance de "event" (via " eventId"), et à deux instances de " user\_entity " (via " creditorId" et "debtorId").\\
     \item event : Contient des informations sur les événements.
-    Chaque instance est liée à une instance de "address" (via "addressId") .
+    Chaque instance est liée à une instance de "address" (via "addressId") .\\
     \item event\_date : Contient des informations sur les dates d'événement.
-    Chaque instance est liée à une instance de "event" (via "eventId").
+    Chaque instance est liée à une instance de "event" (via "eventId").\\
     \item event\_to\_user : Contient des informations sur la relation entre les événements et les utilisateurs.
-    Chaque instance est liée à une instance de "address" (via "addressString"), une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "userId").
+    Chaque instance est liée à une instance de "address" (via "addressString"), une instance de "event" (via "eventId"), et une instance de "user\_entity" (via "userId").\\
     \item route\_entity : Contient des informations sur les itinéraires.
-    Chaque instance est liée à deux instances de "address" (via "startingId" et "destinationId"), une instance de "carpool" (via "carpoolId"), et une instance de "user\_entity" (via "pickupId") .
+    Chaque instance est liée à deux instances de "address" (via "startingId" et "destinationId"), une instance de "carpool" (via "carpoolId"), et une instance de "user\_entity" (via "pickupId") .\\
     \item shopping\_list\_item : Contient des informations sur les articles de la liste de courses.
-    Chaque instance est liée à une instance de "event" (via " eventId") et à une instance de "user\_entity" (via "assignedId").
+    Chaque instance est liée à une instance de "event" (via " eventId") et à une instance de "user\_entity" (via "assignedId").\\
     \item spending : Contient des informations sur les dépenses.
-    Chaque instance est liée à une instance de "event" (via "eventId"), une instance de "shopping\_list\_item" (via "shoppingListItemId"), et une instance de "user\_entity" (via "buyerId").
+    Chaque instance est liée à une instance de "event" (via "eventId"), une instance de "shopping\_list\_item" (via "shoppingListItemId"), et une instance de "user\_entity" (via "buyerId").\\
     \item user\_entity : Contient des informations sur les utilisateurs.
-    Chaque instance est liée à une instance de "address" (via "addressId").
+    Chaque instance est liée à une instance de "address" (via "addressId").\\
 \end{itemize}
 
 Le schema est disponible ici\ref{fig:dbSchema}% todo: fix image pracement and ref
@@ -76,54 +77,54 @@ Le schema est disponible ici\ref{fig:dbSchema}% todo: fix image pracement and re
 \subsection{Gestion des transactions et de la concurrence}\label{subsec:transaction-concurrency}
 Pour gérer la concurrence et assurer l'intégrité des transactions, PostgreSQL utilise un modèle MVCC (Multi-Version Concurrency Control).
 Cela signifie que chaque transaction opère sur une "instantané" de la base de données, ce qui permet d'éviter les conflits lors de l'accès simultané à la base de données par plusieurs transactions.
-De plus, PostgreSQL supporte les propriétés ACID, ce qui garantit que toutes les transactions sont complètement exécutées ou complètement annulées, même en cas de panne du système.
+De plus, PostgreSQL supporte les propriétés ACID, ce qui garantit que toutes les transactions sont complètement exécutées ou complètement annulées, même en cas de panne du système.\\
 
 \subsection{Sécurité de la base de données}\label{subsec:database-security}
 La sécurité de la base de données a été un aspect crucial de la conception du système.
 PostgreSQL offre une gamme de fonctionnalités pour la gestion des accès, ce qui nous a permis de définir des rôles et des permissions uniquement pour le back-end, ce dernier est le seul a avoir access a la base de donnée .
 De plus, toutes les données sensibles sont chiffrées à l'aide de protocoles de sécurité robustes via argon2 avant d'etre inserée dans la base de donnée.
-Enfin, des mesures on ete mise en place pour prévenir les injections SQL via typeORM qui utilise des requêtes paramétrées et évite l'interpolation de chaînes dans nos requêtes.
+Enfin, des mesures on ete mise en place pour prévenir les injections SQL via typeORM qui utilise des requêtes paramétrées et évite l'interpolation de chaînes dans nos requêtes.\\
 
 \subsection{Performance et optimisation}\label{subsec:performance-optimization}
 Afin d'optimiser les performances de la base de données, nous avons utilisé plusieurs techniques.
 Par exemple, l'indexation est mise en place pour accélérer les requêtes sur des tables avec de grands volumes de données grace a typeORM\@.
-De plus, PostgreSQL utilise un mécanisme de cache efficace qui améliore la vitesse d'exécution des requêtes fréquentes.
+De plus, PostgreSQL utilise un mécanisme de cache efficace qui améliore la vitesse d'exécution des requêtes fréquentes.\\
 
 \subsection{Stratégies de sauvegarde et de restauration}\label{subsec:backup-restore}
 Pour l'application Clever Party Thrower, aucune stratégie de sauvegarde intégrée n'a été mise en place, et ce, pour plusieurs raisons.
 L'une des raisons principales est la spécificité des besoins en sauvegarde qui peuvent varier grandement en fonction du client et de son infrastructure informatique.
-Il n'est pas toujours idéal d'imposer une stratégie de sauvegarde spécifique dans le cadre du projet lui-même, car cela pourrait ne pas s'adapter parfaitement à l'infrastructure du client.
+Il n'est pas toujours idéal d'imposer une stratégie de sauvegarde spécifique dans le cadre du projet lui-même, car cela pourrait ne pas s'adapter parfaitement à l'infrastructure du client.\\
 
 L'infrastructure utilisée pour héberger l'application est en effet un facteur déterminant dans le choix d'une stratégie de sauvegarde.
 Par exemple, le choix entre une sauvegarde sur site, hors site ou dans le cloud, ou une combinaison de celles-ci, dépend largement de l'infrastructure existante,
-des capacités de stockage disponibles et des exigences en matière de temps de récupération.
+des capacités de stockage disponibles et des exigences en matière de temps de récupération.\\
 
 Malgré l'absence d'un mécanisme de sauvegarde intégré dans le projet, une stratégie de sauvegarde est néanmoins mise en place dans mon infrastructure.
 Plus précisément, j'ai mis en place un mécanisme de sauvegarde des volumes des conteneurs, ce qui inclut par conséquent aussi les données de PostgreSQL.
-Les fichiers de sauvegarde, qui incluent les données de la base de données ainsi que d'autres données d'application, sont stockés de manière sécurisée dans un emplacement de sauvegarde dédié.
+Les fichiers de sauvegarde, qui incluent les données de la base de données ainsi que d'autres données d'application, sont stockés de manière sécurisée dans un emplacement de sauvegarde dédié.\\
 
 Pour une restauration en cas de besoin, ces fichiers de sauvegarde peuvent être utilisés pour rétablir l'état de l'application à un état précédent.
-La précision de cet état dépend de la fréquence de la sauvegarde : plus la sauvegarde est fréquente, plus l'état restauré est proche du moment de la défaillance.
+La précision de cet état dépend de la fréquence de la sauvegarde : plus la sauvegarde est fréquente, plus l'état restauré est proche du moment de la défaillance.\\
 
 Il convient de noter qu'il est possible de mettre en place des mécanismes de sauvegarde plus sophistiqués si le client le souhaite.
 Par exemple, des sauvegardes incrémentielles, qui sauvegardent uniquement les données qui ont changé depuis la dernière sauvegarde, peuvent économiser de l'espace de stockage et améliorer l'efficacité.
-Des sauvegardes en temps réel ou quasi réel peuvent également être mises en place pour les applications nécessitant une très haute disponibilité.
+Des sauvegardes en temps réel ou quasi réel peuvent également être mises en place pour les applications nécessitant une très haute disponibilité.\\
 
 \subsection{Défis rencontrés}\label{subsec:challenges}
 La conception et la mise en œuvre de la base de données, bien qu'en fin de compte réussies, n'ont pas été exemptes de défis.
 Au début du projet, j'ai choisi d'utiliser Prisma ORM pour gérer ma base de données, anticipant qu'il fournirait une interface pratique pour interagir avec les données.
 Cependant, j'ai rapidement découvert que Prisma ne répondait pas aussi bien que prévu aux besoins spécifiques de mon projet.
-Plus précisément, j'ai trouvé que l'itération sur la structure de données était plus complexe que prévu, ce qui a entraîné des inefficacités dans le processus de développement.
+Plus précisément, j'ai trouvé que l'itération sur la structure de données était plus complexe que prévu, ce qui a entraîné des inefficacités dans le processus de développement.\\
 
 Confronté à ces difficultés, j'ai pris la décision de passer à TypeORM. Ce changement a marqué un tournant positif dans le projet.
 Contrairement à Prisma, TypeORM s'est avéré être un outil beaucoup plus adapté à mes besoins.
-Il a grandement facilité les différentes interactions avec la base de données, me permettant de surmonter les défis initialement rencontrés avec Prisma.
+Il a grandement facilité les différentes interactions avec la base de données, me permettant de surmonter les défis initialement rencontrés avec Prisma.\\
 
 Un autre défi rencontré lors de la conception de la base de données a été la nécessité de migrer de PostgreSQL à PostGIS.
 Ce changement a été rendu nécessaire par le besoin d'exploiter les fonctionnalités avancées de PostGIS pour le traitement des données géographiques dans mon application.
 Cette migration, qui aurait pu être une tâche complexe et source d'erreurs, s'est avérée être une transition relativement lisse grâce à TypeORM. En fait,
-le changement de conteneur s'est déroulé sans problèmes majeurs, ce qui m'a permis de me concentrer sur d'autres aspects importants du développement de l'application.
+le changement de conteneur s'est déroulé sans problèmes majeurs, ce qui m'a permis de me concentrer sur d'autres aspects importants du développement de l'application.\\
 
 En résumé, bien que la conception et la mise en œuvre de la base de données aient présenté certains défis,
 ces difficultés ont été surmontées grâce à des choix judicieux d'outils et à la capacité d'adapter rapidement la stratégie
-de développement en fonction des exigences du projet.
+de développement en fonction des exigences du projet.\\
