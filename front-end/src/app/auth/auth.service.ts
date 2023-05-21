@@ -37,12 +37,13 @@ export class AuthService {
   `
   public user: JWTPayload | null = null;
   public tokenTTL: number = 1000
-  private _accessToken: string | null = null;
+  private _accessToken: string | null = '';
   private _refreshToken: string | null = null;
 
   constructor(private apollo: Apollo) {
     this.getToken()
     if (this._accessToken) {
+      console.log(this._accessToken)
       this.user = jwt_decode(this._accessToken)
 
       // @ts-ignore
@@ -51,24 +52,9 @@ export class AuthService {
     }
   }
 
-  public async getToken(): Promise<string> {
+  public async getToken() {
     this._accessToken = localStorage.getItem('accessToken');
     this._refreshToken = localStorage.getItem('refreshToken');
-    if (this._accessToken && this._refreshToken) {
-      // @ts-ignore
-      const {exp} = jwt_decode(this._accessToken)
-      if (Date.now() >= exp * 1000) {
-        // @ts-ignore
-        const {expr} = jwt_decode(this._refreshToken)
-        if (Date.now() >= expr * 1000) {
-          await this.refreshTokens()
-          return this._accessToken
-
-        }
-      }
-      return this._accessToken;
-    }
-    return "";
   }
 
   public login(email: string, password: string) {
@@ -107,7 +93,14 @@ export class AuthService {
   }
 
   public async logout() {
-    throw Error("Need implementation") //todo: implement logout
+    this.user = null;
+    // @ts-ignore
+    localStorage.setItem("accessToken", "");
+    // @ts-ignore
+    localStorage.setItem("refreshToken", "");
+    this._accessToken = null
+    this._refreshToken = null
+    window.location.href = '/login';
   };
 
   public register(
