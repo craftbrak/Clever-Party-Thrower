@@ -99,7 +99,8 @@ export class DashboardComponent implements OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
+      window.location.reload()
       // Update the user data with the form result here
     });
   }

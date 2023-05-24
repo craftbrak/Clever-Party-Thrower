@@ -1,8 +1,8 @@
-import {Component, Inject} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {Component, Inject, SecurityContext} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {AuthService} from "../../../auth/auth.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-user-settings',
@@ -43,16 +43,10 @@ export class UserSettingsComponent {
   constructor(
     public dialogRef: MatDialogRef<UserSettingsComponent>,
     public authService: AuthService,
+    private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     console.log(authService.user)
-  }
-
-  checkPasswords(group: FormGroup) {
-    let pass = group.get('password')!.value;
-    let confirmPass = group.get('confirmPassword')!.value;
-
-    return pass === confirmPass ? null : {notSame: true}
   }
 
   onCancel(): void {
@@ -88,7 +82,7 @@ export class UserSettingsComponent {
       case "avatar":
         this.authService.updateUser({
           id: this.authService.user?.id!,
-          avatar: this.avatarData.toString()
+          avatar: this.sanitizer.sanitize(SecurityContext.URL, this.avatarData)!
         }).subscribe(value => {
           this.onCloseClick()
           this.authService.refreshTokens()
