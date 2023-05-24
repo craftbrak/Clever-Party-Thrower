@@ -16,18 +16,6 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon>info</mat-icon>
-        <span> Details</span>
-      </ng-template>
-      <div *ngIf="eventInfo$|async as eventInfo" class="details">
-        <div class="desciption"> {{eventInfo.event.description}}</div>
-        <div>
-          <app-address-card [address]="eventInfo.event.address"></app-address-card>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
         <mat-icon>shopping_cart</mat-icon>
         <span> Shopping list</span>
       </ng-template>
@@ -48,5 +36,17 @@
     <!--      </ng-template>-->
     <!--      <app-carpool></app-carpool>-->
     <!--    </mat-tab>-->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>info</mat-icon>
+        <span> Details</span>
+      </ng-template>
+      <div *ngIf="eventInfo$|async as eventInfo" class="details">
+        <div class="desciption"> {{eventInfo.event.description}}</div>
+        <div>
+          <app-address-card [address]="eventInfo.event.address"></app-address-card>
+        </div>
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </div>

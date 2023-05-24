@@ -2,7 +2,7 @@
 
 .item-container {
   display: flex;
-  gap: 2vh;
+  gap: 1vh;
   flex-direction: column;
   max-height: 80vh;
   overflow: auto;
@@ -28,9 +28,12 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 2%;
+  padding: 1%;
   background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
   border-radius: 10px;
+  flex-direction: row;
+  min-height: 5vh;
+
 }
 
 .item-name,
