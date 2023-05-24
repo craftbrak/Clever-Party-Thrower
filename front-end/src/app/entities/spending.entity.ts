@@ -11,4 +11,5 @@ export interface Spending extends EntityBase {
   value: number;
 
   shoppingListItem: ShoppingListItem;
+  beneficiary: UserEntity;
 }

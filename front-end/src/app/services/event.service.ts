@@ -584,4 +584,8 @@ export class EventService {
       }
     }).valueChanges.pipe(map(value => value.data))
   }
+
+  getparticipants(eventId: string) {
+
+  }
 }

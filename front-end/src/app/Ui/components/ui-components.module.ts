@@ -55,6 +55,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-pool-form/create-car-pool-form.component';
 import {UserSettingsComponent} from './user-settings/user-settings.component';
 import {BrowserModule} from "@angular/platform-browser";
+import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form/add-expense-form.component';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import {BrowserModule} from "@angular/platform-browser";
     CreateCarFormComponent,
     CreateCarPoolFormComponent,
     UserSettingsComponent,
+    AddExpenseFormComponent,
   ],
   exports: [
     EventFormComponent,
