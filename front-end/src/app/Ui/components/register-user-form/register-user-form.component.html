@@ -7,24 +7,42 @@
         <ng-template matStepLabel>User Info</ng-template>
         <app-user-info-form (userInfo)="onUserInfoFormSubmit($event)" (userName)="onUserNameUpdate($event)"
                             (valid)="onUserInfoFormValidity($event)"></app-user-info-form>
+        <div class="submit-button">
+          <button [disabled]="!userInfoValid" color="primary" mat-raised-button matStepperNext
+                  type="submit">Next
+          </button>
+        </div>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>Address</ng-template>
         <app-address-form (address)="onAddressFormSubmit($event)"
                           (valid)="onAddressFormValidity($event)"></app-address-form>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="!addressValid" color="primary" mat-raised-button matStepperNext type="submit">Next
+          </button>
+        </div>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>Driving License</ng-template>
         <app-driving-licence-form (licence)="onDrivingLicenceFormSubmit($event)"
                                   (valid)="onDrivingLicenceFormValidity($event)"></app-driving-licence-form>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="!drivingLicenceValid" color="primary" mat-raised-button matStepperNext>Next</button>
+        </div>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>Avatar</ng-template>
         <app-avatar-form (avatar)="onAvatarFormSubmit($event)" (valid)="onAvatarFormValidity($event)"
                          [userName]="userName"></app-avatar-form>
+        <div class="submit-button">
+          <button mat-button matStepperPrevious>Back</button>
+          <button [disabled]="!avatarValid" color="primary" mat-raised-button matStepperNext>Next</button>
+        </div>
       </mat-step>
 
       <mat-step>

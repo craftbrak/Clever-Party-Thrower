@@ -10,21 +10,22 @@
     </div>
   </div>
   <div class="button-container">
-    <button *ngIf="!showAddAddressForm" class="back-btn"
-            color="warn" mat-raised-button matStepperPrevious>
-      back
-    </button>
+    <!--    <button *ngIf="!showAddAddressForm" class="back-btn"-->
+    <!--            color="warn" mat-raised-button matStepperPrevious>-->
+    <!--      back-->
+    <!--    </button>-->
     <button (click)="toggleAddAddressForm(); onAddNewAddressClick()"
-            [ngClass]="{ 'smaller': selectedAddressId && !showAddAddressForm }"
+
             class="add-address-btn" color="accent"
             mat-raised-button>
       {{ showAddAddressForm ? 'Select Existing Address' : 'Add New Address' }}
-    </button>
-    <button *ngIf="!showAddAddressForm" [disabled]="!addressSelectionForm.valid"
-            class="add-address-btn next-btn" color="primary"
-            mat-raised-button matStepperNext>
-      Next
-    </button>
+    </button> <!--    [ngClass]="{ 'smaller': selectedAddressId && !showAddAddressForm }"-->
+
+    <!--    <button *ngIf="!showAddAddressForm" [disabled]="!addressSelectionForm.valid"-->
+    <!--            class="add-address-btn next-btn" color="primary"-->
+    <!--            mat-raised-button matStepperNext>-->
+    <!--      Next-->
+    <!--    </button>-->
   </div>
   <div *ngIf="showAddAddressForm" @slideInOut class="address-add-form">
     <!-- Address add form content -->

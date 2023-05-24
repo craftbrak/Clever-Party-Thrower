@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {DrawerService} from "../../../services/drawer.service";
 import {WindowService} from "../../../services/window.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {UserSettingsComponent} from "../../components/user-settings/user-settings.component";
 
 export interface UserEvents {
   user: {
@@ -92,7 +93,15 @@ export class DashboardComponent implements OnDestroy {
   }
 
   userSettings() {
-    throw Error("Not Implemented")//todo: implement user update
+    const dialogRef = this.dialog.open(UserSettingsComponent, {
+      width: '80%',
+      data: this.authService.user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Update the user data with the form result here
+    });
   }
 
   toggleMenu() {

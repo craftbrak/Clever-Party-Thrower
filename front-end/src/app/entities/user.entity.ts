@@ -23,10 +23,6 @@ export interface UserEntity extends EntityBase {
 
   cars: Car[];
 
-  hashedRefreshToken?: string;
-
-  hashedEmailValidationToken?: string;
-
   is2faEnabled?: boolean;
 
   isVerified?: boolean;

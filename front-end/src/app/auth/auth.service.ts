@@ -44,7 +44,7 @@ export class AuthService {
     this.getToken()
     if (this._accessToken) {
       console.log(this._accessToken)
-      this.user = jwt_decode(this._accessToken)
+      this.setUser()
 
       // @ts-ignore
       this.tokenTTL = this.user.exp - this.user?.iat
@@ -55,6 +55,7 @@ export class AuthService {
   public async getToken() {
     this._accessToken = localStorage.getItem('accessToken');
     this._refreshToken = localStorage.getItem('refreshToken');
+    this.setUser()
   }
 
   public login(email: string, password: string) {
@@ -74,6 +75,7 @@ export class AuthService {
           const {accessToken, refreshToken, invalidCredentials} = data.authLogin;
           if (!invalidCredentials) {
             this.setTokens(accessToken, refreshToken)
+            this.setUser()
             return true
           }
         }
@@ -142,6 +144,7 @@ export class AuthService {
         if (data && data.authRefresh) {
           const {accessToken, refreshToken} = data.authRefresh;
           this.setTokens(accessToken, refreshToken)
+          this.setUser()
         }
       }),
       catchError((error) => {
@@ -149,12 +152,49 @@ export class AuthService {
         console.error('Login error:', error);
         return throwError(error);
       })
-    ).subscribe(); // Add this line
+    ).subscribe();
   }
 
 
-  private validateToken() {
+  updateUser(userData: {
+    id: string
+    name?: string,
+    email?: string,
+    password?: string,
+    addressId?: string,
+    avatar?: string,
+    dirivinglicence?: boolean,
+    manual?: boolean
+  }) {
+    const mut = gql`
+      mutation UpdateUser($updateUserInput: UpdateUserDto!) {
+        updateUser(updateUserInput: $updateUserInput) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut, variables: {
+        updateUserInput: {
+          addressId: userData.addressId,
+          id: userData.id,
+          avatar: userData.avatar,
+          drivingLicence: userData.dirivinglicence,
+          email: userData.email,
+          manual: userData.manual,
+          name: userData.name,
+          password: userData.password
+        }
+      }
+    })
+  }
 
+  private setUser() {
+    if (this._accessToken != null) {
+      console.log("user created")
+      this.user = jwt_decode(this._accessToken)
+      console.log(this.user)
+    }
   }
 
   private setTokens(accessToken: string, refreshToken: string) {
