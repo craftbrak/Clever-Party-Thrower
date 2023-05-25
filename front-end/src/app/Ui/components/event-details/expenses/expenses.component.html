@@ -47,7 +47,8 @@
     </h3>
     <button (click)="toggleExpenses()" aria-label="Example icon-button with a heart icon" color="primary"
             mat-icon-button matTooltip="Primary">
-      <mat-icon>expand_more</mat-icon>
+      <mat-icon *ngIf="!showExpenses ">expand_more</mat-icon>
+      <mat-icon *ngIf="showExpenses ">expand_less</mat-icon>
     </button>
   </div>
   <div *ngIf="showExpenses " class="item-container">
