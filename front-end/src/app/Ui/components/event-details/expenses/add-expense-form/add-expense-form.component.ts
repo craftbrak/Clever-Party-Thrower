@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MemberData} from "../../members/members.component";
@@ -10,7 +10,7 @@ import {UserRole} from "../../../../../entities/event-to-user.entity";
   templateUrl: './add-expense-form.component.html',
   styleUrls: ['./add-expense-form.component.scss']
 })
-export class AddExpenseFormComponent implements OnInit {
+export class AddExpenseFormComponent {
   expenseForm: FormGroup
   users: MemberData[] = []
 
@@ -30,9 +30,6 @@ export class AddExpenseFormComponent implements OnInit {
         this.users = value.filter(value1 => value1.role !== UserRole.INVITED && value1.role !== UserRole.NOT_ATTENDING)
       })
     })
-  }
-
-  ngOnInit(): void {
   }
 
   onNoClick(): void {
