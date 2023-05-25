@@ -56,6 +56,7 @@ import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-poo
 import {UserSettingsComponent} from './user-settings/user-settings.component';
 import {BrowserModule} from "@angular/platform-browser";
 import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form/add-expense-form.component';
+import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expense-tree.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form
     CreateCarPoolFormComponent,
     UserSettingsComponent,
     AddExpenseFormComponent,
+    ExpenseTreeComponent,
   ],
   exports: [
     EventFormComponent,

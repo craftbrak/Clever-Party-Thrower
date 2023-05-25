@@ -1,0 +1,35 @@
+<div *ngIf="groupedData">
+  <div class="level-1">
+    Total Spent: {{totalValue | number}}
+  </div>
+  <div *ngFor="let group of groupedData" class="level-2">
+    <div (click)="group.showDetails = !group.showDetails" class="l2-name"><!-- shows the group data      -->
+      <span>{{group.name}}
+      </span>
+      <span>
+        {{group.value}}
+        €
+      </span>
+      <span>
+        {{group.buyer.name}}
+      </span>
+
+      <img [src]="this.sanitizer.bypassSecurityTrustUrl(group.buyer.avatar)" alt="Buyer Avatar">
+    </div>
+    <div *ngIf="group.showDetails" class="level-3">
+      <div *ngFor="let item of group.items" class="expense">
+        <div class="userdescriptor">
+          Buyer: {{item.buyer.name}}
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(item.buyer.avatar)" alt="Buyer Avatar">
+        </div>
+        <div class="userdescriptor">
+          Beneficiary: {{item.beneficiary.name}}
+          <img [src]="this.sanitizer.bypassSecurityTrustUrl(item.beneficiary.avatar) " alt="Beneficiary Avatar">
+        </div>
+
+        Value: {{item.value}}
+        €
+      </div>
+    </div>
+  </div>
+</div>

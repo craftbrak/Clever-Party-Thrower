@@ -82,10 +82,12 @@ export class ExpensesComponent {
       beneficiaryId: string,
       amount: number
     }) => {
-      this.expensesService.addExpense(this.eventId!, resultKeyNameFromField.buyerId, resultKeyNameFromField.amount, resultKeyNameFromField.beneficiaryId, resultKeyNameFromField.name, undefined).subscribe(value => {
-        this.expensesService.updateExpenses(this.eventId!)
-        this.expensesService.updateDebts(this.eventId!)
-      })
+      if (resultKeyNameFromField) {
+        this.expensesService.addExpense(this.eventId!, resultKeyNameFromField.buyerId, resultKeyNameFromField.amount, resultKeyNameFromField.beneficiaryId, resultKeyNameFromField.name, undefined).subscribe(value => {
+          this.expensesService.updateExpenses(this.eventId!)
+          this.expensesService.updateDebts(this.eventId!)
+        })
+      }
     })
   }
 }
