@@ -12,13 +12,12 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./member.component.scss']
 })
 export class MemberComponent implements OnInit, OnChanges {
-  @Input() member: MemberData | undefined
   @Input() memberId: string | undefined
   memberData: MemberData | undefined
   userRoles = [UserRole.INVITED, UserRole.MEMBER, UserRole.NOT_ATTENDING];
   showRoleSelector = false
   showParticipationSelector = false
-  useravatar: string = ""
+  useravatar: string = ''
   eventId: string | undefined
 
   constructor(private sanitizer: DomSanitizer, private eventService: EventService, private authService: AuthService, private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
@@ -34,12 +33,17 @@ export class MemberComponent implements OnInit, OnChanges {
       this.eventService.getEventUserData(this.memberId!).subscribe(value => {
         this.memberData = value
         this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
+        if (this.memberData?.user.id === this.authService.user?.id && this.memberData?.role === UserRole.INVITED) {
+          // this.showRoleSelector = !this.showRoleSelector
+          console.log('should select')
+          this.showParticipationSelector = !this.showParticipationSelector
+        }
       })
     }
   }
 
   ngOnInit(): void {
-    if (this.member?.user.id === this.authService.user?.id && this.member?.role === UserRole.INVITED) {
+    if (this.memberData?.user.id === this.authService.user?.id && this.memberData?.role === UserRole.INVITED) {
       // this.showRoleSelector = !this.showRoleSelector
       this.showParticipationSelector = !this.showParticipationSelector
     }

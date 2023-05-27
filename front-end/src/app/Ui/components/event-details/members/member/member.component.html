@@ -1,7 +1,7 @@
 <div class="member-card">
   <div class="member-header">
     <div class="avatar-container">
-      <img [src]="useravatar" alt="Avatar" class="avatar">
+      <img *ngIf="memberData" [src]="useravatar" alt="Avatar" class="avatar">
     </div>
     <div class="member-info">
       <div class="member-name">{{ memberData?.user?.name }}</div>
