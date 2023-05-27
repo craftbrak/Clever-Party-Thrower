@@ -1,6 +1,6 @@
 <div *ngIf="memberData$ | async as memberData">
   <div *ngFor="let member of memberData" class="member-container">
-    <app-member [member]="member"></app-member>
+    <app-member [memberId]="member.id"></app-member>
   </div>
 </div>
 <div class="btncontainer">

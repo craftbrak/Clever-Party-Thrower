@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MemberData} from "../members.component";
 import {UserRole} from "../../../../../entities/event-to-user.entity";
 import {EventService} from "../../../../../services/event.service";
@@ -11,9 +11,11 @@ import {DomSanitizer} from "@angular/platform-browser";
   templateUrl: './member.component.html',
   styleUrls: ['./member.component.scss']
 })
-export class MemberComponent implements OnInit {
+export class MemberComponent implements OnInit, OnChanges {
   @Input() member: MemberData | undefined
-  userRoles = [UserRole.INVITED, UserRole.MEMBER];
+  @Input() memberId: string | undefined
+  memberData: MemberData | undefined
+  userRoles = [UserRole.INVITED, UserRole.MEMBER, UserRole.NOT_ATTENDING];
   showRoleSelector = false
   showParticipationSelector = false
   useravatar: string = ""
@@ -27,12 +29,21 @@ export class MemberComponent implements OnInit {
     this.eventService.selectedEventId$.subscribe(value => this.eventId = value!)
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['memberId']) {
+      this.eventService.getEventUserData(this.memberId!).subscribe(value => {
+        this.memberData = value
+        this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
+      })
+    }
+  }
+
   ngOnInit(): void {
     if (this.member?.user.id === this.authService.user?.id && this.member?.role === UserRole.INVITED) {
       // this.showRoleSelector = !this.showRoleSelector
       this.showParticipationSelector = !this.showParticipationSelector
     }
-    this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.member?.user.avatar)
+    this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
 
   }
 
@@ -43,7 +54,10 @@ export class MemberComponent implements OnInit {
     })
   }
 
-  willNotParticipate() {
-
+  willNotParticipate(userToEventId: string) {
+    this.eventService.updateUserRole(userToEventId, UserRole.NOT_ATTENDING).subscribe(value => {
+      this.eventService.updateEventId(this.eventId!)
+      console.log(this.member)
+    })
   }
 }

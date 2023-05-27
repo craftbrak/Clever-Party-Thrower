@@ -287,6 +287,30 @@ export class EventService {
       .valueChanges.pipe(map((result) => result.data.event.members));
   }
 
+  getEventUserData(id: string): Observable<MemberData> {
+    const GET_EVENT_BY_ID = gql`
+  query EventToUser($id: String!) {
+  eventToUser(id: $id) {
+    id
+    role
+    user {
+      id
+      name
+      avatar
+    }
+  }
+}
+    `;
+    return this.apollo
+      .watchQuery<{
+        eventToUser: MemberData
+      }>({
+        query: GET_EVENT_BY_ID,
+        variables: {id},
+      })
+      .valueChanges.pipe(map((result) => result.data.eventToUser));
+  }
+
   getEventDatesData(id: string): Observable<Event_requestData> {
     const getEventQuery = gql`
       query getEventDates($eventId: String!) {
