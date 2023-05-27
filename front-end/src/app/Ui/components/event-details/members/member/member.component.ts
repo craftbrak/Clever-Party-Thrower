@@ -42,4 +42,8 @@ export class MemberComponent implements OnInit {
       console.log(this.member)
     })
   }
+
+  willNotParticipate() {
+
+  }
 }
