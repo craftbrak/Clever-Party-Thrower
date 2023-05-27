@@ -41,7 +41,7 @@ export class DashboardComponent implements OnDestroy {
   private dataRefreshTrigger$: Subject<void>;
   private readonly eventIdSubscription: Subscription;
 
-  constructor(public windowService: WindowService, public drawerService: DrawerService, private dialog: MatDialog, private eventService: EventService, private authService: AuthService,
+  constructor(public windowService: WindowService, public drawerService: DrawerService, public dialog: MatDialog, private eventService: EventService, private authService: AuthService,
               private changeDetector: ChangeDetectorRef, private router: Router) {
     const email = this.authService.user?.email ?? "";
     this.eventIdSubscription = this.eventService.selectedEventId$.subscribe(value => this.eventId = value)

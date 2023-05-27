@@ -189,7 +189,7 @@ export class AuthService {
     })
   }
 
-  private setUser() {
+  setUser() {
     if (this._accessToken != null) {
       console.log("user created")
       this.user = jwt_decode(this._accessToken)
@@ -197,7 +197,7 @@ export class AuthService {
     }
   }
 
-  private setTokens(accessToken: string, refreshToken: string) {
+  setTokens(accessToken: string, refreshToken: string) {
     this._accessToken = accessToken;
     this._refreshToken = refreshToken;
     localStorage.setItem('accessToken', this._accessToken ?? '');

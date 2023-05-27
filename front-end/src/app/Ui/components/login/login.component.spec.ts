@@ -1,64 +1,100 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, of, throwError} from 'rxjs';
 import {AuthService} from '../../../auth/auth.service';
-import {FormBuilder, FormsModule} from '@angular/forms';
-import {Router} from '@angular/router';
-import {of, throwError} from 'rxjs';
+import {EventService} from '../../../services/event.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authService: AuthService;
-  let router: Router;
-
-  beforeEach(async () => {
-    authService = jasmine.createSpyObj('AuthService', ['login']);
-    router = jasmine.createSpyObj('Router', ['navigate']);
-
-    await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [FormsModule],
-      providers: [
-        {provide: AuthService, useValue: authService},
-        {provide: Router, useValue: router},
-        FormBuilder
-      ],
-    }).compileComponents();
-  });
+  let mockAuthService: {
+    login: { calls: { count: () => any; }; and: { returnValue: (arg0: Observable<boolean>) => void; }; };
+  }, mockRouter: { navigate: any; }, mockActivatedRoute, mockEventService;
 
   beforeEach(() => {
+    mockAuthService = jasmine.createSpyObj(['login', 'addEventToUser']);
+    mockRouter = jasmine.createSpyObj(['navigate']);
+    mockActivatedRoute = {
+      paramMap: of({
+        get: () => null
+      })
+    };
+    mockEventService = jasmine.createSpyObj(['addEventToUser']);
+
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [LoginComponent],
+      providers: [
+        FormBuilder,
+        {provide: AuthService, useValue: mockAuthService},
+        {provide: Router, useValue: mockRouter},
+        {provide: ActivatedRoute, useValue: mockActivatedRoute},
+        {provide: EventService, useValue: mockEventService}
+      ]
+    });
+
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    component.ngOnInit();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call AuthService.login() and navigate to protected route on successful login', () => {
-    const email = 'test@example.com';
-    const password = 'password';
-    component.email = email;
-    component.password = password;
-
-    (authService.login as jasmine.Spy).and.returnValue(of({}));
-    component.onSubmit();
-
-    expect(authService.login).toHaveBeenCalledWith(email, password);
-    expect(router.navigate).toHaveBeenCalledWith(['/protected-route']);
+  it('should initialize loginForm with empty email and password', () => {
+    expect(component.loginForm.value).toEqual({
+      email: '',
+      password: ''
+    });
   });
 
-  it('should handle errors on unsuccessful login', () => {
-    const email = 'test@example.com';
-    const password = 'password';
-    component.email = email;
-    component.password = password;
+  it('should not submit if form is invalid', () => {
+    component.loginForm.controls['email'].setValue('');
+    component.loginForm.controls['password'].setValue('');
 
-    (authService.login as jasmine.Spy).and.returnValue(throwError(new Error('Login failed')));
     component.onSubmit();
 
-    expect(authService.login).toHaveBeenCalledWith(email, password);
-    // Add any necessary error handling assertions, such as displaying an error message
+    expect(mockAuthService.login.calls.count()).toBe(0, 'authService.login should not be called');
+  });
+
+  it('should handle login failure', () => {
+    component.loginForm.controls['email'].setValue('test@example.com');
+    component.loginForm.controls['password'].setValue('password123');
+
+    mockAuthService.login.and.returnValue(of(false));
+    component.onSubmit();
+
+    expect(component.CredentialsInValid).toBeTrue();
+  });
+
+  it('should handle login success', () => {
+    component.loginForm.controls['email'].setValue('test@example.com');
+    component.loginForm.controls['password'].setValue('password123');
+
+    mockAuthService.login.and.returnValue(of(true));
+    component.onSubmit();
+
+    expect(component.CredentialsInValid).toBeFalse();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
+  });
+
+  it('should handle login error', () => {
+    component.loginForm.controls['email'].setValue('test@example.com');
+    component.loginForm.controls['password'].setValue('password123');
+
+    mockAuthService.login.and.returnValue(throwError('Login error'));
+    spyOn(console, 'error');
+    component.onSubmit();
+
+    expect(console.error).toHaveBeenCalledWith('Login error:', 'Login error');
+  });
+
+  it('should redirect to register', () => {
+    component.redirectToRegister();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/register', component.eventId]);
   });
 });
