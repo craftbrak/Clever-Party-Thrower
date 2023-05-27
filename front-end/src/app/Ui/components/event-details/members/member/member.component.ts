@@ -49,15 +49,19 @@ export class MemberComponent implements OnInit, OnChanges {
 
   confirmParticipation(userToEventId: string) {
     this.eventService.updateUserRole(userToEventId, UserRole.MEMBER).subscribe(value => {
-      this.eventService.updateEventId(this.eventId!)
-      console.log(this.member)
+      this.eventService.getEventUserData(this.memberId!).subscribe(value => {
+        this.memberData = value
+        this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
+      })
     })
   }
 
   willNotParticipate(userToEventId: string) {
     this.eventService.updateUserRole(userToEventId, UserRole.NOT_ATTENDING).subscribe(value => {
-      this.eventService.updateEventId(this.eventId!)
-      console.log(this.member)
+      this.eventService.getEventUserData(this.memberId!).subscribe(value => {
+        this.memberData = value
+        this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
+      })
     })
   }
 }
