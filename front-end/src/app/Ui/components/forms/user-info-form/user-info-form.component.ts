@@ -1,17 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PasswordMatchDirective} from "../../../../auth/password-match.directive";
 import {debounceTime} from "rxjs";
+import {JWTPayload} from "../../../../entities/JWTPayload.entity";
 
 @Component({
   selector: 'app-user-info-form',
   templateUrl: './user-info-form.component.html',
   styleUrls: ['./user-info-form.component.scss']
 })
-export class UserInfoFormComponent implements OnInit {
+export class UserInfoFormComponent implements OnInit, OnChanges {
   @Output() valid = new EventEmitter<boolean>();
   @Output() userInfo = new EventEmitter<any>();
   @Output() userName = new EventEmitter<string>();
+  @Input() userInfoInput: JWTPayload | undefined = undefined;
 
   userInfoForm: FormGroup;
   showDetails: boolean = false;
@@ -20,8 +22,8 @@ export class UserInfoFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.userInfoForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      name: [this.userInfoInput?.name, Validators.required],
+      email: [this.userInfoInput?.email, [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(this.minPassLenthg),]],//PasswordMatchDirective.passwordMatch('password', "confirmPassword")
       confirmPassword: ['', Validators.required, PasswordMatchDirective.passwordMatch('password', "confirmPassword")]
     });
@@ -41,6 +43,14 @@ export class UserInfoFormComponent implements OnInit {
 
   get name() {
     return this.userInfoForm.get('name')
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userInfoInput']) {
+      console.log(this.userInfoInput)
+      this.userInfoForm.get('name')?.setValue(this.userInfoInput?.name)
+      this.userInfoForm.get('email')?.setValue(this.userInfoInput?.email)
+    }
   }
 
   ngOnInit(): void {

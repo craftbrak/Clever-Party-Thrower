@@ -30,6 +30,9 @@ export class AddressFormComponent implements OnInit {
   ngOnInit(): void {
     this.addressForm.statusChanges.subscribe(status => {
       this.valid.emit(status === 'VALID');
+      if (status === 'VALID') {
+        this.address.emit(this.addressForm.value)
+      }
     });
     this.addressService.getCountries().subscribe(({data}) => {
       this.countries = [...data.countries].sort((country1, contry3) => {

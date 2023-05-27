@@ -18,6 +18,7 @@ export enum UserRole {
   MEMBER = "MEMBER",
   DJ = "DJ",
   INVITED = "INVITED",
+  NOT_ATTENDING = "NOT_ATTENDING",
 }
 
 registerEnumType(UserRole, {

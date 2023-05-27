@@ -8,7 +8,9 @@ export enum UserRole {
   MEMBER = "MEMBER",
   DJ = "DJ",
   INVITED = "INVITED",
+  NOT_ATTENDING = "NOT_ATTENDING"
 }
+
 export interface EventToUser extends EntityBase {
   userId: UserEntity["id"];
   eventId: Event["id"];

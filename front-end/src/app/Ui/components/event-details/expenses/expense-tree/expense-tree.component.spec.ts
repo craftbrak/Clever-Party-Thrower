@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {EventFormComponent} from './event-form.component';
+import {ExpenseTreeComponent} from './expense-tree.component';
 
-describe('EventFormComponent', () => {
-  let component: EventFormComponent;
-  let fixture: ComponentFixture<EventFormComponent>;
+describe('ExpenseTreeComponent', () => {
+  let component: ExpenseTreeComponent;
+  let fixture: ComponentFixture<ExpenseTreeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EventFormComponent]
+      declarations: [ExpenseTreeComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventFormComponent);
+    fixture = TestBed.createComponent(ExpenseTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

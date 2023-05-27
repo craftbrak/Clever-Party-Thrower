@@ -47,45 +47,51 @@
     </h3>
     <button (click)="toggleExpenses()" aria-label="Example icon-button with a heart icon" color="primary"
             mat-icon-button matTooltip="Primary">
-      <mat-icon>expand_more</mat-icon>
+      <mat-icon *ngIf="!showExpenses ">expand_more</mat-icon>
+      <mat-icon *ngIf="showExpenses ">expand_less</mat-icon>
     </button>
   </div>
   <div *ngIf="showExpenses " class="item-container">
-    <div *ngIf="expensesService.expenses$ | async as spending " class="item-container">
-
-      <div *ngFor="let expense of spending" class="expense">
-        <div class="debtor user">
-
-          {{expense.buyer.name}}
-          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.buyer.avatar)" alt="avatar">
-
-
-        </div>
-        <div>
-          <mat-icon>payments</mat-icon>
-        </div>
-        <div class="amount">
-          {{expense.value}}€
-        </div>
-        <div>
-          <mat-icon>arrow_forward</mat-icon>
-        </div>
-        <div class="debtor user">
-
-          {{expense.beneficiary.name}}
-          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.beneficiary.avatar)" alt="avatar">
-
-
-        </div>
-        <div class="debtorName">
-          {{expense.shoppingListItem?.name}}
-          {{expense.name}}
-        </div>
-      </div>
+    <div *ngIf="expensesService.expenses$| async as spendingData">
+      <app-expense-tree [data]="spendingData!" class="item-container"></app-expense-tree>
     </div>
-    <button color="primary" mat-raised-button>
+    <button (click)="openAddExpenseForm()" color="primary" mat-raised-button>
       <mat-icon>add</mat-icon>
     </button>
+
+    <!--    <div *ngIf="expensesService.expenses$ | async as spending " class="item-container">-->
+
+    <!--      <div *ngFor="let expense of spending" class="expense">-->
+    <!--        <div class="debtor user">-->
+
+    <!--          {{expense.buyer.name}}-->
+    <!--          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.buyer.avatar)" alt="avatar">-->
+
+
+    <!--        </div>-->
+    <!--        <div>-->
+    <!--          <mat-icon>payments</mat-icon>-->
+    <!--        </div>-->
+    <!--        <div class="amount">-->
+    <!--          {{expense.value}}€-->
+    <!--        </div>-->
+    <!--        <div>-->
+    <!--          <mat-icon>arrow_forward</mat-icon>-->
+    <!--        </div>-->
+    <!--        <div class="debtor user">-->
+
+    <!--          {{expense.beneficiary.name}}-->
+    <!--          <img [src]="this.sanitizer.bypassSecurityTrustUrl(expense.beneficiary.avatar)" alt="avatar">-->
+
+
+    <!--        </div>-->
+    <!--        <div class="expenseName">-->
+    <!--          {{expense.shoppingListItem?.name}}-->
+    <!--          {{expense.name}}-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
   </div>
 
 

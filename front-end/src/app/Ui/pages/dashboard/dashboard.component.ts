@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {DrawerService} from "../../../services/drawer.service";
 import {WindowService} from "../../../services/window.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {UserSettingsComponent} from "../../components/user-settings/user-settings.component";
 
 export interface UserEvents {
   user: {
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnDestroy {
   private dataRefreshTrigger$: Subject<void>;
   private readonly eventIdSubscription: Subscription;
 
-  constructor(public windowService: WindowService, public drawerService: DrawerService, private dialog: MatDialog, private eventService: EventService, private authService: AuthService,
+  constructor(public windowService: WindowService, public drawerService: DrawerService, public dialog: MatDialog, private eventService: EventService, private authService: AuthService,
               private changeDetector: ChangeDetectorRef, private router: Router) {
     const email = this.authService.user?.email ?? "";
     this.eventIdSubscription = this.eventService.selectedEventId$.subscribe(value => this.eventId = value)
@@ -92,7 +93,16 @@ export class DashboardComponent implements OnDestroy {
   }
 
   userSettings() {
-    throw Error("Not Implemented")//todo: implement user update
+    const dialogRef = this.dialog.open(UserSettingsComponent, {
+      width: '80%',
+      data: this.authService.user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      window.location.reload()
+      // Update the user data with the form result here
+    });
   }
 
   toggleMenu() {

@@ -71,6 +71,7 @@ enum UserRole {
   MEMBER
   DJ
   INVITED
+  NOT_ATTENDING
 }
 
 type Car {

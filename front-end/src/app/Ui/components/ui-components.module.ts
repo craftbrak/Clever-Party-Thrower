@@ -53,6 +53,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {CreateCarFormComponent} from "./event-details/carpool/create-car-form/create-car-form.component";
 import {MatSliderModule} from "@angular/material/slider";
 import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-pool-form/create-car-pool-form.component';
+import {UserSettingsComponent} from './user-settings/user-settings.component';
+import {BrowserModule} from "@angular/platform-browser";
+import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form/add-expense-form.component';
+import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expense-tree.component';
 
 
 @NgModule({
@@ -84,6 +88,9 @@ import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-poo
     ToastComponent,
     CreateCarFormComponent,
     CreateCarPoolFormComponent,
+    UserSettingsComponent,
+    AddExpenseFormComponent,
+    ExpenseTreeComponent,
   ],
   exports: [
     EventFormComponent,
@@ -101,6 +108,7 @@ import {CreateCarPoolFormComponent} from './event-details/carpool/create-car-poo
     MatInputModule,
     MatIconModule,
     BrowserAnimationsModule,
+    BrowserModule,
     MatSelectModule,
     MatSlideToggleModule,
     MatRadioModule,

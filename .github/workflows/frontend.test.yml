@@ -127,10 +127,10 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
-  #      - name: Test Angular app
-  #        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - name: Test Angular app
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
   build_docker_image:
     if: github.ref == 'refs/heads/main'
     needs: [ lint, test ]

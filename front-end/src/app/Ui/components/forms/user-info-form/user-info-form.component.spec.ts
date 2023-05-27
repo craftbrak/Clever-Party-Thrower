@@ -1,7 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserInfoFormComponent} from './user-info-form.component';
-import {FormBuilder} from "@angular/forms";
+import {JWTPayload} from '../../../../entities/JWTPayload.entity';
 
 describe('UserInfoFormComponent', () => {
   let component: UserInfoFormComponent;
@@ -9,8 +12,8 @@ describe('UserInfoFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserInfoFormComponent],
-      providers: [FormBuilder]
+      imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule],
+      declarations: [UserInfoFormComponent]
     })
       .compileComponents();
   });
@@ -23,5 +26,21 @@ describe('UserInfoFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should update form with input changes', () => {
+    // @ts-ignore
+    const testPayload: JWTPayload = {email: 'test@example.com', name: 'Test User'};
+    component.userInfoInput = testPayload;
+    component.ngOnChanges({
+      userInfoInput: {
+        currentValue: testPayload,
+        previousValue: undefined,
+        firstChange: true,
+        isFirstChange: () => true
+      }
+    });
+    expect(component.userInfoForm.get('email')?.value).toEqual(testPayload.email);
+    expect(component.userInfoForm.get('name')?.value).toEqual(testPayload.name);
   });
 });

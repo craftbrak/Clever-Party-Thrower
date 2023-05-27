@@ -29,6 +29,7 @@ export class UserService {
   async create(createUserInput: CreateUserDto): Promise<UserEntity> {
     createUserInput.password = await argon2.hash(createUserInput.password);
     const usr = await this.userRepo.create(createUserInput);
+    await usr.save();
     if (createUserInput.addressId) {
       usr.address = await this.addressService.findOne(
         createUserInput.addressId,

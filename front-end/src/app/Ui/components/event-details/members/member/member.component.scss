@@ -2,11 +2,14 @@
 
 .member-card {
   display: flex;
-  flex-direction: row;
-  padding: 4%;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1%;
   background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
- 
   border-radius: 10px;
+  flex-direction: row;
+  min-height: 5vh;
   width: 100%;
 }
 
@@ -61,8 +64,23 @@
   cursor: pointer;
 }
 
+.non-participation-button {
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .participation-button:hover {
   background-color: mat.get-color-from-palette(mat.$green-palette, A400);
+}
+
+.non-participation-button:hover {
+  background-color: mat.get-color-from-palette(mat.$red-palette, A400);
 }
 
 .participation-icon {
@@ -73,4 +91,9 @@
 $my-palette: mat.define-palette(mat.$blue-grey-palette);
 .bg {
   background-color: mat.get-color-from-palette(mat.$blue-grey-palette, 700);
+}
+
+.participation-selector {
+  display: flex;
+  gap: 1vw;
 }

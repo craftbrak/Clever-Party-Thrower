@@ -4,6 +4,8 @@ import {EventService} from "../../../../services/event.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {EventDebts} from "../../../../../entities/gql-retun-types";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatDialog} from "@angular/material/dialog";
+import {AddExpenseFormComponent} from "./add-expense-form/add-expense-form.component";
 
 @Component({
   selector: 'app-expenses',
@@ -28,7 +30,7 @@ export class ExpensesComponent {
   showExpenses = false
   animationState: 'hidden' | 'visible' = 'hidden';
 
-  constructor(public sanitizer: DomSanitizer, public expensesService: ExpensesService, private eventService: EventService) {
+  constructor(private dialog: MatDialog, public sanitizer: DomSanitizer, public expensesService: ExpensesService, private eventService: EventService) {
     // this.debtRefreshTrigger = new Subject<void>();
     // this.expenseRefreshTrigger = new Subject<void>();
     this.eventService.selectedEventId$.subscribe(value => {
@@ -70,5 +72,22 @@ export class ExpensesComponent {
 
   toggleAnimation() {
     this.animationState = this.animationState === 'hidden' ? 'visible' : 'hidden';
+  }
+
+  openAddExpenseForm() {
+    const dialogRef = this.dialog.open(AddExpenseFormComponent, {})
+    dialogRef.afterClosed().subscribe((resultKeyNameFromField: {
+      name: string,
+      buyerId: string,
+      beneficiaryId: string,
+      amount: number
+    }) => {
+      if (resultKeyNameFromField) {
+        this.expensesService.addExpense(this.eventId!, resultKeyNameFromField.buyerId, resultKeyNameFromField.amount, resultKeyNameFromField.beneficiaryId, resultKeyNameFromField.name, undefined).subscribe(value => {
+          this.expensesService.updateExpenses(this.eventId!)
+          this.expensesService.updateDebts(this.eventId!)
+        })
+      }
+    })
   }
 }

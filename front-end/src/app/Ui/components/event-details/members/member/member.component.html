@@ -1,24 +1,28 @@
 <div class="member-card">
   <div class="member-header">
     <div class="avatar-container">
-      <img [src]="useravatar" alt="Avatar" class="avatar">
+      <img *ngIf="memberData" [src]="useravatar" alt="Avatar" class="avatar">
     </div>
     <div class="member-info">
-      <div class="member-name">{{ member?.user?.name }}</div>
-      <div class="member-role">{{ member?.role }}</div>
+      <div class="member-name">{{ memberData?.user?.name }}</div>
+      <div class="member-role">{{ memberData?.role }}</div>
     </div>
   </div>
   <div class="member-content">
     <div *ngIf="showRoleSelector" class="role-selector">
       <label for="role">Role</label>
-      <select [(ngModel)]="member!.role" id="role">
+      <select [(ngModel)]="memberData!.role" id="role">
         <option *ngFor="let role of userRoles" [value]="role">{{ role }}</option>
       </select>
     </div>
     <div *ngIf="showParticipationSelector" class="participation-selector">
-      <button (click)="confirmParticipation(member!.id)" class="participation-button" mat-raised-button>
+      <button (click)="confirmParticipation(memberData!.id)" class="participation-button" mat-raised-button>
         I will be there
         <mat-icon>✔</mat-icon>
+      </button>
+      <button (click)="willNotParticipate(memberData!.id)" class="non-participation-button" mat-raised-button>
+        I will not be there
+        <mat-icon>cancel</mat-icon>
       </button>
     </div>
   </div>

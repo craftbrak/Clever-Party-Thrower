@@ -7,7 +7,10 @@ import { Repository } from "typeorm";
 import { UserEntity } from "../user/entities/user.entity";
 import { Event } from "../event/entities/event.entity";
 import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
-import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
+import {
+  EventToUser,
+  UserRole,
+} from "../event-to-user/entities/event-to-user.entity";
 
 @Injectable()
 export class SpendingService {
@@ -138,14 +141,19 @@ export class SpendingService {
     });
     const amountPerUser = item.price / users.length;
     users.forEach((etu) => {
-      this.create({
-        eventId: item.event.id,
-        name: item.name,
-        value: amountPerUser,
-        shoppingListItemId: item.id,
-        beneficiaryId: etu.userId,
-        buyerId: item.assigned.id,
-      });
+      if (
+        etu.role !== UserRole.INVITED &&
+        etu.role !== UserRole.NOT_ATTENDING
+      ) {
+        this.create({
+          eventId: item.event.id,
+          name: item.name,
+          value: amountPerUser,
+          shoppingListItemId: item.id,
+          beneficiaryId: etu.userId,
+          buyerId: item.assigned.id,
+        });
+      }
     });
     console.log("created Spendings");
     //todo: test this function

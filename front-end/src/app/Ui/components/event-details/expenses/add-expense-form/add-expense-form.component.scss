@@ -1,0 +1,21 @@
+.amount-field {
+  position: relative;
+}
+
+.amount-field input {
+  padding-right: 20px; /* adjust as needed */
+  text-align: center;
+}
+
+.euro-symbol {
+  position: absolute;
+  right: 1rem; /* adjust as needed */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* adjust this for desired space between fields */
+}

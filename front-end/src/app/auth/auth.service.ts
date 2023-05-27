@@ -37,13 +37,14 @@ export class AuthService {
   `
   public user: JWTPayload | null = null;
   public tokenTTL: number = 1000
-  private _accessToken: string | null = null;
+  private _accessToken: string | null = '';
   private _refreshToken: string | null = null;
 
   constructor(private apollo: Apollo) {
     this.getToken()
     if (this._accessToken) {
-      this.user = jwt_decode(this._accessToken)
+      console.log(this._accessToken)
+      this.setUser()
 
       // @ts-ignore
       this.tokenTTL = this.user.exp - this.user?.iat
@@ -51,24 +52,10 @@ export class AuthService {
     }
   }
 
-  public async getToken(): Promise<string> {
+  public async getToken() {
     this._accessToken = localStorage.getItem('accessToken');
     this._refreshToken = localStorage.getItem('refreshToken');
-    if (this._accessToken && this._refreshToken) {
-      // @ts-ignore
-      const {exp} = jwt_decode(this._accessToken)
-      if (Date.now() >= exp * 1000) {
-        // @ts-ignore
-        const {expr} = jwt_decode(this._refreshToken)
-        if (Date.now() >= expr * 1000) {
-          await this.refreshTokens()
-          return this._accessToken
-
-        }
-      }
-      return this._accessToken;
-    }
-    return "";
+    this.setUser()
   }
 
   public login(email: string, password: string) {
@@ -88,6 +75,7 @@ export class AuthService {
           const {accessToken, refreshToken, invalidCredentials} = data.authLogin;
           if (!invalidCredentials) {
             this.setTokens(accessToken, refreshToken)
+            this.setUser()
             return true
           }
         }
@@ -107,7 +95,14 @@ export class AuthService {
   }
 
   public async logout() {
-    throw Error("Need implementation") //todo: implement logout
+    this.user = null;
+    // @ts-ignore
+    localStorage.setItem("accessToken", "");
+    // @ts-ignore
+    localStorage.setItem("refreshToken", "");
+    this._accessToken = null
+    this._refreshToken = null
+    window.location.href = '/login';
   };
 
   public register(
@@ -149,6 +144,7 @@ export class AuthService {
         if (data && data.authRefresh) {
           const {accessToken, refreshToken} = data.authRefresh;
           this.setTokens(accessToken, refreshToken)
+          this.setUser()
         }
       }),
       catchError((error) => {
@@ -156,15 +152,52 @@ export class AuthService {
         console.error('Login error:', error);
         return throwError(error);
       })
-    ).subscribe(); // Add this line
+    ).subscribe();
   }
 
 
-  private validateToken() {
-
+  updateUser(userData: {
+    id: string
+    name?: string,
+    email?: string,
+    password?: string,
+    addressId?: string,
+    avatar?: string,
+    dirivinglicence?: boolean,
+    manual?: boolean
+  }) {
+    const mut = gql`
+      mutation UpdateUser($updateUserInput: UpdateUserDto!) {
+        updateUser(updateUserInput: $updateUserInput) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut, variables: {
+        updateUserInput: {
+          addressId: userData.addressId,
+          id: userData.id,
+          avatar: userData.avatar,
+          drivingLicence: userData.dirivinglicence,
+          email: userData.email,
+          manual: userData.manual,
+          name: userData.name,
+          password: userData.password
+        }
+      }
+    })
   }
 
-  private setTokens(accessToken: string, refreshToken: string) {
+  setUser() {
+    if (this._accessToken != null) {
+      console.log("user created")
+      this.user = jwt_decode(this._accessToken)
+      console.log(this.user)
+    }
+  }
+
+  setTokens(accessToken: string, refreshToken: string) {
     this._accessToken = accessToken;
     this._refreshToken = refreshToken;
     localStorage.setItem('accessToken', this._accessToken ?? '');

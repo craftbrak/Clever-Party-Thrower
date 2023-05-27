@@ -1,0 +1,51 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title>Update User Information</h2>
+  <div *ngIf="activeForm === 'avatar'" [@openClose]="isOpened ? 'open' : 'closed'">
+    <app-avatar-form (avatar)="onAvatarFormSubmit($event)" (valid)="onAvatarFormValidity($event)"
+                     [userName]="this.authService.user?.name!"></app-avatar-form>
+    <button (click)="onConfirmClick()" mat-button>change Avatar</button>
+    <button (click)="onCloseClick()" mat-button>Close</button>
+  </div>
+  <button (click)="openForm('avatar')" *ngIf="activeForm === null" mat-button>Change Avatar</button>
+
+  <div *ngIf="activeForm === 'user'" [@openClose]="isOpened ? 'open' : 'closed'">
+    <app-user-info-form (userInfo)="onUserInfoFormSubmit($event)"
+                        (valid)="onUserInfoFormValidity($event)"
+                        [userInfoInput]="this.authService.user!"></app-user-info-form>
+    <button (click)="onConfirmClick()" mat-button>Update</button>
+    <button (click)="onCloseClick()" mat-button>Close</button>
+  </div>
+  <button (click)="openForm('user')" *ngIf="activeForm === null" mat-button>Change Account Details</button>
+
+
+  <div *ngIf="activeForm === 'address'" [@openClose]="isOpened ? 'open' : 'closed'">
+    <app-address-selection-form (selectedAddress)="onAddressFormSubmit($event)"
+                                (valid)="onAddressFormValidity($event)"
+                                style="width: 85%;"></app-address-selection-form>
+    <button (click)="onConfirmClick()" mat-button>Update</button>
+    <button (click)="onCloseClick()" mat-button>Close</button>
+  </div>
+  <button (click)="openForm('address')" *ngIf="activeForm === null" mat-button>Change address</button>
+
+
+  <div *ngIf="activeForm === 'licence'" [@openClose]="isOpened ? 'open' : 'closed'">
+    <app-driving-licence-form (licence)="onDrivingLicenceFormSubmit($event)"
+                              (valid)="onDrivingLicenceFormValidity($event)">
+    </app-driving-licence-form>
+    <button (click)="onConfirmClick()" mat-button>Confirm</button>
+    <button (click)="onCloseClick()" mat-button>Close</button>
+  </div>
+  <button (click)="openForm('licence')" *ngIf="activeForm === null" mat-button>Change Driving License details
+  </button>
+
+
+  <div *ngIf="activeForm === null" class="buttons">
+    <button (click)="onDeleteClick()" color="warn" mat-raised-button style="width: fit-content">Delete Account</button>
+    <button (click)="onDownloadClick()" color="accent" mat-raised-button style="width: fit-content">Download My Data
+    </button>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="onCancel()" mat-button>Close</button>
+</mat-dialog-actions>

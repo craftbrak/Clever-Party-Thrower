@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   loginForm: FormGroup;
   CredentialsInValid = false
-  private eventId: string | null | undefined;
+  eventId: string | null | undefined;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,

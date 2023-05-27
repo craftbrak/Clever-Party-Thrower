@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Add Expense</h2>
+<mat-dialog-content [formGroup]="expenseForm" class="form-container">
+  <mat-form-field>
+    <mat-label>Expense Name</mat-label>
+    <input formControlName="name" matInput>
+  </mat-form-field>
+  <mat-form-field class="amount-field">
+    <mat-label>Amount</mat-label>
+    <input formControlName="amount" matInput type="number">
+    <span class="euro-symbol">€</span>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Buyer</mat-label>
+    <mat-select formControlName="buyerId">
+      <mat-option *ngFor="let user of users" [value]="user.user.id">{{user.user.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Beneficiary</mat-label>
+    <mat-select formControlName="beneficiaryId">
+      <mat-option *ngFor="let user of users" [value]="user.user.id">{{user.user.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="onCancel()" mat-button>Cancel</button>
+  <button (click)="onAdd()" mat-button>Add Expense</button>
+</mat-dialog-actions>

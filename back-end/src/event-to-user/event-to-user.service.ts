@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Event } from "../event/entities/event.entity";
 import { DeleteResult, Repository } from "typeorm";
@@ -15,6 +15,8 @@ import { AddressService } from "../address/address.service";
 
 @Injectable()
 export class EventToUserService {
+  private readonly logger = new Logger(EventToUserService.name);
+
   constructor(
     @InjectRepository(EventToUser)
     private readonly eventToUserRepository: Repository<EventToUser>,
@@ -22,12 +24,26 @@ export class EventToUserService {
   ) {}
 
   async create(input: CreateEventToUserDto): Promise<EventToUser> {
+    //first we should verfiy if the user is already in the event if yes the return the EventToUser
+    const etu = await this.eventToUserRepository.findOne({
+      where: {
+        userId: input.userId,
+        eventId: input.eventId,
+      },
+    });
+    if (etu) {
+      this.logger.verbose("UserToEvent Already existed");
+      return etu;
+    }
     const etoU = new EventToUser();
     etoU.userId = input.userId;
     etoU.eventId = input.eventId;
     etoU.address = await this.addressService.findOne(input.addressId);
     etoU.role = input.role;
     etoU.balance = input.balance;
+    this.logger.verbose(
+      `Event To User Added for Event: ${input.eventId} and User : ${input.userId}`,
+    );
     return await this.eventToUserRepository.save(
       await this.eventToUserRepository.create(etoU),
     );
