@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {debounceTime} from "rxjs";
 import {createAvatar} from '@dicebear/core';
@@ -10,12 +10,11 @@ import {DomSanitizer} from "@angular/platform-browser";
   templateUrl: './avatar-form.component.html',
   styleUrls: ['./avatar-form.component.scss']
 })
-export class AvatarFormComponent implements OnInit {
+export class AvatarFormComponent implements OnInit, OnChanges {
   avatarForm: FormGroup;
   @Output() valid = new EventEmitter<boolean>()
   @Output() avatar = new EventEmitter<string>();
   @Input() userName = ''
-
   avatarUrls: string[] = [];
   avatarTypesUrls: string[] = ["https://api.dicebear.com/6.x/adventurer/svg?seed=", "https://api.dicebear.com/6.x/big-smile/svg?accessoriesProbability=75&mouth=braces,gapSmile,kawaii,openedSmile,teethSmile", "https://api.dicebear.com/6.x/bottts/svg?seed=", "https://api.dicebear.com/6.x/pixel-art/svg?seed=", "https://api.dicebear.com/6.x/personas/svg?seed=",];
 
@@ -24,15 +23,23 @@ export class AvatarFormComponent implements OnInit {
       avatar: ['', [Validators.required]],
       seed: this.userName
     });
+    this.avatarForm.get('seed')?.setValue(this.userName)
   }
 
   get seed() {
     return this.avatarForm.get('seed')
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userName']) {
+      this.querryAvatars(this.userName)
+      console.log('userName:', this.userName)
+    }
+  }
+
   ngOnInit(): void {
     this.avatarForm.statusChanges.subscribe(status => this.valid.emit(status === 'VALID'))
-    this.querryAvatars(this.userName)
+    console.log('seed:', this.seed?.value)
     this.seed?.valueChanges.pipe(debounceTime(450)).subscribe(seed => {
       this.querryAvatars(seed)
     })
@@ -46,7 +53,8 @@ export class AvatarFormComponent implements OnInit {
   }
 
   querryAvatars(name: string = "") {
-    this.avatarUrls = []
+    let avatars: string[] = []
+    console.log("avatarUpdating:", avatars)
     for (let i = 0; i < 5; i++) {
       let avatarUrl
       if (i > 0) avatarUrl = createAvatar(bigSmile, {
@@ -60,7 +68,7 @@ export class AvatarFormComponent implements OnInit {
         ]
       }).toDataUriSync()
       else avatarUrl = createAvatar(bigSmile, {
-        seed: this.seed?.value,
+        seed: name,
         mouth: [
           "braces",
           "gapSmile",
@@ -70,7 +78,8 @@ export class AvatarFormComponent implements OnInit {
         ]
       }).toDataUriSync()
       const sanitizeUrl = <string>this.sanitizer.bypassSecurityTrustUrl(avatarUrl)
-      this.avatarUrls.push(sanitizeUrl)
+      avatars.push(sanitizeUrl)
+      this.avatarUrls = avatars
     }
   }
 }
