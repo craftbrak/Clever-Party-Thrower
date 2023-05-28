@@ -51,3 +51,30 @@ Parmi les mesures de sécurité mises en place, on compte l'utilisation de HTTPS
 l'authentification et l'autorisation basées sur des tokens JWT, la validation des entrées côté serveur pour prévenir les attaques par injection,
 et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données.
 Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via npm audit et npm audit fix.
+
+\subsection{GraphQL}\label{subsec:graphql}
+L'utilisation de GraphQL pour l'API du projet a été une décision qui a parfois compliqué le développement de l'application.
+Plusieurs difficultés ont été rencontrées, en particulier lors de la mise en place de la base de données avec Prisma.\\
+
+Prisma et GraphQL fonctionnent tous deux sur la base d'un schéma, ce qui semble idéal en théorie.
+Cependant, ces deux schémas sont construits via des outils différents, ce qui implique une maintenance manuelle de deux schémas séparés, susceptible d'introduire des erreurs.
+Alternativement, il est possible d'utiliser des outils pour générer le schéma GraphQL ou Prisma à partir de l'autre, mais cette approche a aussi ses inconvénients.\\
+
+Dans ma première approche, j'ai décidé de créer un schéma Prisma et de générer sur cette base le schéma GraphQL. Cette méthode, impliquant beaucoup de génération de code, s'est avérée plutôt restrictive et ralentissait considérablement les itérations.
+J'ai donc décidé de migrer de Prisma vers TypeORM, ce qui m'a permis de générer mon schéma GraphQL à partir de mon code TypeScript uniquement.\\
+
+Ce changement a rendu la définition du schéma plus flexible, m'a permis de me concentrer sur le code plutôt que sur la documentation, et a amélioré la vitesse de développement.
+La documentation est maintenant générée à partir du code, ce qui reflète l'idée que le code, bien écrit, est la meilleure forme de documentation.\\
+
+Une autre difficulté rencontrée avec GraphQL concerne le typage fort lors du développement de l'interface.
+En raison de la nature de GraphQL qui permet de demander uniquement les ressources nécessaires basées sur des champs spécifiques, assurer un typage fort est devenu complexe.\\
+
+Ma solution a été de créer une interface basée sur la requête qui définit les données.
+Lorsque ces données correspondent directement et intégralement à l'une de mes classes, je remplace l'interface par la classe.
+Cette approche a permis de conserver un typage fort à travers le projet sans avoir à se soucier de champs nuls là où ils ne devraient pas l'être.\\
+
+Enfin, la mise en place des relations entre les différentes entités a également présenté des défis.
+Pour obtenir des détails sur un utilisateur et la liste des événements auxquels il participe, la requête est divisée en deux :
+les détails de l'utilisateur sont gérés par le resolver et le service utilisateur, tandis que la liste des événements liés à l'utilisateur est gérée séparément.
+Des résolveurs de champs spécifiques ont dû être mis en place pour relier ces deux parties de la requête.
+Cette tâche a pris plus de temps que prévu et a contribué au retard accumulé du projet.
