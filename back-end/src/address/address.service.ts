@@ -9,6 +9,7 @@ import { CreateCountryDto } from "./dto/create-country.dto";
 import { HttpService } from "@nestjs/axios";
 import { UserEntity } from "../user/entities/user.entity";
 import { JWTPayload } from "../auth/jwtPayload.interface";
+import { catchError } from "rxjs";
 
 @Injectable()
 export class AddressService implements OnApplicationBootstrap {
@@ -27,21 +28,32 @@ export class AddressService implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     this.logger.log("Inserting Countries in DB");
     let tot = 0;
-    const countries = await this.httpService
-      .get("https://restcountries.com/v3.1/all")
-      .toPromise();
-    countries.data.forEach((ct) => {
-      const country = new Country();
-      country.name = ct.name.common;
-      country.code = ct.cca3;
-      this.countryRepo.findOneBy({ name: country.name }).then((cont) => {
-        if (!cont) {
-          this.logger.log(`country ${country.name} added`);
-          tot++;
-          this.countryRepo.create(country).save();
-        }
+    await this.httpService
+      .get("https://restcountries.eu/v3.1/all")
+      .pipe(
+        catchError((error) => {
+          // Handle error here
+          this.logger.error(
+            "An error occurred while fetching countries:",
+            error,
+          );
+          return [];
+        }),
+      )
+      .subscribe((value) => {
+        value.data.forEach((ct) => {
+          const country = new Country();
+          country.name = ct.name.common;
+          country.code = ct.cca3;
+          this.countryRepo.findOneBy({ name: country.name }).then((cont) => {
+            if (!cont) {
+              this.logger.log(`country ${country.name} added`);
+              tot++;
+              this.countryRepo.create(country).save();
+            }
+          });
+        });
       });
-    });
     this.logger.log("Countries Inserted " + tot);
   }
 
