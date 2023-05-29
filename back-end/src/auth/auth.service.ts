@@ -9,6 +9,8 @@ import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { authenticator } from "otplib";
 import { VerifyEmailDto } from "./dto/verify_email_dto";
+import { EmailService } from "../email/email.service";
+import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class AuthService {
@@ -16,6 +18,7 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   async validateUser(
@@ -114,6 +117,20 @@ export class AuthService {
 
   async verifyEmail(dto: VerifyEmailDto): Promise<boolean> {
     return this.userService.verifyUser(dto.verificationToken);
+  }
+
+  async resetPassword(email: string) {
+    const resetPasswordToken = uuidv4();
+    const user = await this.userService.findOne(email);
+    if (user) {
+      user.hashedEmailValidationToken = await argon2.hash(resetPasswordToken);
+      await this.emailService.sendPasswordRecoveryEmail(
+        email,
+        resetPasswordToken,
+      );
+      return true;
+    }
+    return false;
   }
 
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {

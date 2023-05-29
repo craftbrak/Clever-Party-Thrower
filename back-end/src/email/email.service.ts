@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as nodemailer from "nodemailer";
@@ -7,15 +7,26 @@ import { ConfigService } from "@nestjs/config";
 @Injectable()
 export class EmailService {
   private transporter;
-  private email;
+  private readonly email;
+  private password;
+  private smtpServer;
+  private smtpPort;
+  private readonly logger = new Logger(EmailService.name);
 
   constructor(private configService: ConfigService) {
     this.email = configService.get<string>("EMAIL_ADDRESS");
+    this.password = configService.get<string>("EMAIL_PASSWORD");
+    this.smtpServer = configService.get<string>("SMTP_SERVER");
+    this.smtpPort = configService.get<string>("SMTP_PORT");
+    this.logger.verbose(this.email, this.password);
     this.transporter = nodemailer.createTransport({
-      service: "gmail",
+      // service: "gmail",
+      host: this.smtpServer,
+      port: this.smtpPort,
+      secure: true, // upgrade later with STARTTLS
       auth: {
         user: this.email,
-        pass: configService.get<string>("EMAIL_PASSWORD"),
+        pass: this.password,
       },
     });
   }

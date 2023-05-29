@@ -69,6 +69,8 @@ import { LoggingMiddleware } from "./logs/logger.middleware";
           .email()
           .default("cleverpartythrowe@gmail.com"),
         EMAIL_PASSWORD: Joi.string().required(),
+        SMTP_SERVER: Joi.string().required(),
+        SMTP_PORT: Joi.number().required(),
         EMAIL_VERIFICATION_URL: Joi.string().required(),
       }),
     }),

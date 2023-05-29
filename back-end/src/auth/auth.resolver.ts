@@ -21,7 +21,7 @@ export class AuthResolver {
     @Context("req") req,
     @Args("authInputDto") authInput: AuthInputDto,
   ) {
-    // this.logger.debug(authInput.password, authInput.email);
+    this.logger.debug("tout va bien", authInput.password, authInput.email);
     return await this.authService.login(
       (await this.authService.validateUser(
         authInput.email.toLowerCase(),
@@ -69,7 +69,14 @@ export class AuthResolver {
   }
 
   @Public()
+  @Mutation(() => Boolean)
   async verifyEmail(@Args("VerifyEmailDTO") dto: VerifyEmailDto) {
     return await this.authService.verifyEmail(dto);
+  }
+
+  @Public()
+  @Mutation(() => Boolean)
+  async resetPassword(@Args("email") email: string): Promise<boolean> {
+    return await this.authService.resetPassword(email);
   }
 }
