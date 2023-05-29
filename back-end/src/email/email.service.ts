@@ -44,7 +44,8 @@ export class EmailService {
       )}/reset_password/${token}"">Reset Password</a>
     `,
     };
-    return this.transporter.sendMail(mailOptions);
+    if (process.env.NODE_ENV !== "test")
+      return this.transporter.sendMail(mailOptions);
   }
 
   async send2FAEmail(to: string, code: string) {
@@ -57,7 +58,8 @@ export class EmailService {
       <p>Your 2FA code is: ${code}</p>
     `,
     };
-    return this.transporter.sendMail(mailOptions);
+    if (process.env.NODE_ENV !== "test")
+      return this.transporter.sendMail(mailOptions);
   }
 
   async sendEmailVerification(to: string, token: string) {
@@ -73,7 +75,8 @@ export class EmailService {
       )}/verify_email/${token}">Verify Email</a>
     `,
     };
-    return this.transporter.sendMail(mailOptions);
+    if (process.env.NODE_ENV !== "test")
+      return this.transporter.sendMail(mailOptions);
   }
 
   // Other methods will be added here

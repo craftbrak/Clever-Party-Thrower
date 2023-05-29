@@ -42,6 +42,7 @@ export class UserService {
     }
     usr.email = usr.email.toLowerCase();
     usr.avatar = createUserInput.avatar;
+
     await this.sendVerificationEmail(usr);
 
     return await usr.save();
