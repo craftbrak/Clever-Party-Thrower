@@ -19,16 +19,18 @@ export class EmailService {
     this.smtpServer = configService.get<string>("SMTP_SERVER");
     this.smtpPort = configService.get<string>("SMTP_PORT");
     this.logger.verbose(this.email, this.password);
-    this.transporter = nodemailer.createTransport({
-      // service: "gmail",
-      host: this.smtpServer,
-      port: this.smtpPort,
-      secure: true, // upgrade later with STARTTLS
-      auth: {
-        user: this.email,
-        pass: this.password,
-      },
-    });
+    if (process.env.NODE_ENV !== "test") {
+      this.transporter = nodemailer.createTransport({
+        // service: "gmail",
+        host: this.smtpServer,
+        port: this.smtpPort,
+        secure: true, // upgrade later with STARTTLS
+        auth: {
+          user: this.email,
+          pass: this.password,
+        },
+      });
+    } else this.transporter = null;
   }
 
   async sendPasswordRecoveryEmail(to: string, token: string) {
@@ -44,8 +46,7 @@ export class EmailService {
       )}/reset_password/${token}"">Reset Password</a>
     `,
     };
-    if (process.env.NODE_ENV !== "test")
-      return this.transporter.sendMail(mailOptions);
+    return this.transporter?.sendMail(mailOptions);
   }
 
   async send2FAEmail(to: string, code: string) {
@@ -58,8 +59,7 @@ export class EmailService {
       <p>Your 2FA code is: ${code}</p>
     `,
     };
-    if (process.env.NODE_ENV !== "test")
-      return this.transporter.sendMail(mailOptions);
+    return this.transporter?.sendMail(mailOptions);
   }
 
   async sendEmailVerification(to: string, token: string) {
@@ -75,8 +75,7 @@ export class EmailService {
       )}/verify_email/${token}">Verify Email</a>
     `,
     };
-    if (process.env.NODE_ENV !== "test")
-      return this.transporter.sendMail(mailOptions);
+    return this.transporter?.sendMail(mailOptions);
   }
 
   // Other methods will be added here
