@@ -70,7 +70,7 @@ export class EmailService {
       <p>To verify your email, please click the following link:</p>
       <a href="${this.configService.get(
         "EMAIL_VERIFICATION_URL",
-      )}/auth/${token}">Verify Email</a>
+      )}/verify_email/${token}">Verify Email</a>
     `,
     };
     return this.transporter.sendMail(mailOptions);

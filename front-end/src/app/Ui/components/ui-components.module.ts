@@ -57,6 +57,7 @@ import {UserSettingsComponent} from './user-settings/user-settings.component';
 import {BrowserModule} from "@angular/platform-browser";
 import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form/add-expense-form.component';
 import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expense-tree.component';
+import {VerifyEmailComponent} from './verify-email/verify-email.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expens
     UserSettingsComponent,
     AddExpenseFormComponent,
     ExpenseTreeComponent,
+    VerifyEmailComponent,
   ],
   exports: [
     EventFormComponent,

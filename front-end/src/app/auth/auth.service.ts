@@ -205,4 +205,13 @@ export class AuthService {
     if (accessToken.length > 0) this.user = jwt_decode(accessToken)
     localStorage.setItem('userid', this.user?.id!)
   }
+
+  sendVerifyEmail() {
+    const mut = gql`
+    mutation Mutation {
+      requestEmailVerification
+    }
+    `
+    this.apollo.mutate({mutation: mut})
+  }
 }

@@ -114,6 +114,10 @@ export class UserSettingsComponent {
     // Add download logic here
   }
 
+  onVerifyEmailClick() {
+    this.authService.sendVerifyEmail()
+  }
+
   openForm(form: string): void {
     this.activeForm = form;
     this.isOpened = true; // This will trigger the 'open' animation
