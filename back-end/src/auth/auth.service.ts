@@ -45,6 +45,7 @@ export class AuthService {
       name: user.name,
       isTwoFaAuthenticated: false,
       isTwoFactorEnable: user.is2faEnabled,
+      isVerified: user.isVerified,
     };
     return await this.getTokens(payload);
   }
@@ -59,6 +60,7 @@ export class AuthService {
       name: pl.name,
       isTwoFaAuthenticated: pl.isTwoFaAuthenticated,
       isTwoFactorEnable: pl.is2faEnabled,
+      isVerified: pl.isVerified,
     };
     return await this.getTokens(payload);
   }
@@ -107,7 +109,9 @@ export class AuthService {
       name: user.name,
       isTwoFaAuthenticated: verified,
       isTwoFactorEnable: user.is2faEnabled,
+      isVerified: user.isVerified,
     };
+    // console.table(payload);
     return this.getTokens(payload);
   }
 

@@ -43,12 +43,12 @@ export class AuthService {
   constructor(private apollo: Apollo) {
     this.getToken()
     if (this._accessToken) {
-      console.log(this._accessToken)
+      // console.log(this._accessToken)
       this.setUser()
 
       // @ts-ignore
       this.tokenTTL = this.user.exp - this.user?.iat
-      console.log(this.tokenTTL)
+      // console.log(this.tokenTTL)
     }
   }
 
@@ -191,9 +191,9 @@ export class AuthService {
 
   setUser() {
     if (this._accessToken != null) {
-      console.log("user created")
+      // console.log("user created")
       this.user = jwt_decode(this._accessToken)
-      console.log(this.user)
+      // console.log(this.user)
     }
   }
 
@@ -213,5 +213,21 @@ export class AuthService {
     }
     `
     this.apollo.mutate({mutation: mut})
+  }
+
+  verifyUser(token: string) {
+    const mut = gql`
+    mutation VerifyEmail($verifyEmailDto: VerifyEmailDto!) {
+      verifyEmail(VerifyEmailDTO: $verifyEmailDto)
+    }
+`
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut, variables: {
+        verifyEmailDto: {
+          verificationToken: token
+        }
+      }// @ts-ignore
+    }).pipe(map(value => value.data.verifyEmail))
   }
 }

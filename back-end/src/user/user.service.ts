@@ -136,11 +136,13 @@ export class UserService {
           where: { id: decodedToken.sub },
         });
         usr.isVerified = true;
-        this.logger.verbose(`Email Of ${usr.name} was verified`);
+        this.logger.verbose(`Email Of ${usr.name}, was verified`);
         await usr.save();
+        return true;
       }
     } catch (err) {
       this.logger.error(err);
+      return false;
       // Handle token expiration or any other error
     }
     return false;

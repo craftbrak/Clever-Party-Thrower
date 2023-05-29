@@ -58,6 +58,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form/add-expense-form.component';
 import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expense-tree.component';
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import {VerifyEmailComponent} from './verify-email/verify-email.component';
     AddExpenseFormComponent,
     ExpenseTreeComponent,
     VerifyEmailComponent,
+    ResetPasswordComponent,
   ],
   exports: [
     EventFormComponent,

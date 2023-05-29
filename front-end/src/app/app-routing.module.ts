@@ -6,6 +6,8 @@ import {RegisterComponent} from "./Ui/components/register/register.component";
 import {RegisterUserFormComponent} from "./Ui/components/register-user-form/register-user-form.component";
 import {DashboardComponent} from "./Ui/pages/dashboard/dashboard.component";
 import {DateSelectionComponent} from "./Ui/components/event-details/date-selection/date-selection.component";
+import {VerifyEmailComponent} from "./Ui/components/verify-email/verify-email.component";
+import {ResetPasswordComponent} from "./Ui/components/reset-password/reset-password.component";
 // import {EventCreateComponent} from "./Ui/components/event-create/event-create.component";
 
 const routes: Routes = [
@@ -27,6 +29,8 @@ const routes: Routes = [
   {path: 'register-old', component: RegisterComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterUserFormComponent},
   {path: 'register/:eventId', component: RegisterUserFormComponent},
+  {path: 'verify_email/:token', component: VerifyEmailComponent},
+  {path: 'reset_password/:token', component: ResetPasswordComponent},
   {path: 'eventDates', component: DateSelectionComponent, canActivate: [AuthGuard]},
 ];
 
