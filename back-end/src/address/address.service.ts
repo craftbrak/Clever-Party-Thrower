@@ -29,7 +29,7 @@ export class AddressService implements OnApplicationBootstrap {
     this.logger.log("Inserting Countries in DB");
     let tot = 0;
     await this.httpService
-      .get("https://restcountries.eu/v3.1/all")
+      .get("https://restcountries.com/v3.1/all")
       .pipe(
         catchError((error) => {
           // Handle error here
