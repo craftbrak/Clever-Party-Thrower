@@ -41,7 +41,7 @@ export class EmailService {
       <p>To reset your password, please click the following link:</p>
       <a href="${this.configService.get(
         "EMAIL_VERIFICATION_URL",
-      )}/auth/${token}"">Reset Password</a>
+      )}/reset_pasword/${token}"">Reset Password</a>
     `,
     };
     return this.transporter.sendMail(mailOptions);

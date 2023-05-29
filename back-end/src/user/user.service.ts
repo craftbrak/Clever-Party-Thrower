@@ -129,7 +129,7 @@ export class UserService {
         secret: this.configService.get("JWT_EMAIL_SECRET"),
       });
       this.logger.verbose(`Token decoded ${decodedToken}`);
-      console.table(decodedToken);
+      // console.table(decodedToken);
       if (decodedToken.key === "email-validation") {
         // The token is valid, return the user ID
         const usr = await this.userRepo.findOneOrFail({

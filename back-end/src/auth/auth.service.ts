@@ -123,6 +123,10 @@ export class AuthService {
 
   async SendResetPassword(email: string) {
     const user = await this.userService.findOne(email);
+    this.logger.verbose(`User: ${user.name} requested a password reset`);
+    this.logger.verbose(
+      `User: ${user.name} is currently verified: ${user.isVerified}`,
+    );
     if (user && user.isVerified) {
       const payload = {
         sub: user.id,
@@ -148,7 +152,11 @@ export class AuthService {
 
       if (decodedToken.key === "password-reset") {
         // The token is valid, return the user ID
-        const usr = await this.userService.findOneById(decodedToken.id);
+        const usr = await this.userService.findOneById(decodedToken.sub);
+        this.logger.verbose(
+          `User: ${usr.name} has change his password to ${password}`,
+        );
+        console.table(decodedToken);
         usr.password = await argon2.hash(password);
         await usr.save();
         return true;
