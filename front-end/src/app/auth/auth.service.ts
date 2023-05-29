@@ -230,4 +230,37 @@ export class AuthService {
       }// @ts-ignore
     }).pipe(map(value => value.data.verifyEmail))
   }
+
+  resetPw(token: string, password: string) {
+    const mut = gql`
+      mutation ResetPassword($passWordRestDto: PasswordResetDto!) {
+        resetPassword(PassWordRestDTO: $passWordRestDto)
+      }
+    `
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut,
+      variables: {
+        passWordRestDto: {
+          password: password,
+          token: token
+        }
+      }// @ts-ignore
+    }).pipe(map(value => value.data.resetPassword))
+  }
+
+  requestPasswordRest(email: string) {
+    const mut = gql`
+      mutation RequestResetPasswordEmail($requestResetPasswordEmailEmail: String!) {
+        RequestResetPasswordEmail(email: $requestResetPasswordEmailEmail)
+      }
+    `
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut,
+      variables: {
+        requestResetPasswordEmailEmail: email
+      }// @ts-ignore
+    }).pipe(map(value => value.data.RequestResetPasswordEmail))
+  }
 }
