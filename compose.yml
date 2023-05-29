@@ -29,14 +29,18 @@ services:
       DATABASE_PORT: 5432
       DATABASE_HOST: postgres
       PORT: 8689
-      EMAIL_ADDRESS: ${EMAIL_ADDRESS} # Change this variable
       TWO_FACTOR_AUTHENTICATION_APP_NAME: ${TWO_FACTOR_AUTHENTICATION_APP_NAME} # Change this variable if needed
       JWT_REFRESH_TTL: ${JWT_REFRESH_TTL} # Change this variable if needed
       JWT_AUTH_TTL: ${JWT_AUTH_TTL} # Change this variable if needed
       JWT_SECRET: ${JWT_SECRET} # Change this variable
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET} # Change this variable
-      EMAIL_PASSWORD: ${EMAIL_PASSWORD} # Change this variable
       EMAIL_VERIFICATION_URL: ${API_URL} # Change this variable
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS} # Change this variable
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD} # Change this variable
+      SMTP_SERVER: ${SMTP_SERVER} # Change this variable
+      SMTP_PORT: ${SMTP_PORT} # Change this variable
+      SMTP_SECURE: ${SMTP_SECURE} # Change this variable
+
     networks:
       - postgres
       - web
