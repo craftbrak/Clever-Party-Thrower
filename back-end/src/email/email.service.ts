@@ -8,9 +8,9 @@ import { ConfigService } from "@nestjs/config";
 export class EmailService {
   private transporter;
   private readonly email;
-  private password;
-  private smtpServer;
-  private smtpPort;
+  private readonly password;
+  private readonly smtpServer;
+  private readonly smtpPort;
   private readonly logger = new Logger(EmailService.name);
 
   constructor(private configService: ConfigService) {
@@ -39,7 +39,9 @@ export class EmailService {
       html: `
       <h3>Password Recovery</h3>
       <p>To reset your password, please click the following link:</p>
-      <a href="https://your-app-url.com/reset-password?token=${token}">Reset Password</a>
+      <a href="${this.configService.get(
+        "EMAIL_VERIFICATION_URL",
+      )}/auth/${token}"">Reset Password</a>
     `,
     };
     return this.transporter.sendMail(mailOptions);
@@ -66,7 +68,7 @@ export class EmailService {
       html: `
       <h3>Email Verification</h3>
       <p>To verify your email, please click the following link:</p>
-      <a href="https://${this.configService.get(
+      <a href="${this.configService.get(
         "EMAIL_VERIFICATION_URL",
       )}/auth/${token}">Verify Email</a>
     `,

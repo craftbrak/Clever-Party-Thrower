@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/entities/user.entity";
 import { AuthOutputDto } from "./dto/auth-output.dto";
@@ -8,12 +8,13 @@ import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { authenticator } from "otplib";
-import { VerifyEmailDto } from "./dto/verify_email_dto";
+import { VerifyEmailDto } from "./dto/verify_email.dto";
 import { EmailService } from "../email/email.service";
-import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(EmailService.name);
+
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
@@ -49,7 +50,9 @@ export class AuthService {
   }
 
   async refresh(token: AuthRefreshDto): Promise<AuthOutputDto> {
-    const pl = this.jwtService.verify(token.refreshToken);
+    const pl = this.jwtService.verify(token.refreshToken, {
+      secret: this.configService.get("JWT_REFRESH_SECRET"),
+    });
     const payload: JWTPayload = {
       id: pl.id,
       email: pl.email,
@@ -87,7 +90,6 @@ export class AuthService {
 
   async login(user: UserEntity | null, code: string): Promise<AuthOutputDto> {
     let verified = false;
-    //todo: fix null User bug on login througt the front end
     if (!user)
       return {
         invalidCredentials: true,
@@ -119,16 +121,41 @@ export class AuthService {
     return this.userService.verifyUser(dto.verificationToken);
   }
 
-  async resetPassword(email: string) {
-    const resetPasswordToken = uuidv4();
+  async SendResetPassword(email: string) {
     const user = await this.userService.findOne(email);
-    if (user) {
-      user.hashedEmailValidationToken = await argon2.hash(resetPasswordToken);
-      await this.emailService.sendPasswordRecoveryEmail(
-        email,
-        resetPasswordToken,
-      );
+    if (user && user.isVerified) {
+      const payload = {
+        sub: user.id,
+        key: "password-reset",
+      };
+      const options = {
+        expiresIn: "6h",
+        secret: this.configService.get("JWT_EMAIL_SECRET"),
+      };
+      const token = this.jwtService.sign(payload, options);
+      user.hashedEmailValidationToken = await argon2.hash(token);
+      await this.emailService.sendPasswordRecoveryEmail(email, token);
       return true;
+    }
+    return false;
+  }
+
+  async recoverPassword(token: string, password: string) {
+    try {
+      const decodedToken: any = this.jwtService.verify(token, {
+        secret: this.configService.get("JWT_EMAIL_SECRET"),
+      });
+
+      if (decodedToken.key === "password-reset") {
+        // The token is valid, return the user ID
+        const usr = await this.userService.findOneById(decodedToken.id);
+        usr.password = await argon2.hash(password);
+        await usr.save();
+        return true;
+      }
+    } catch (err) {
+      this.logger.error(err);
+      return false;
     }
     return false;
   }

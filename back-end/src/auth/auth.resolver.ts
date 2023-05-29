@@ -7,7 +7,8 @@ import { AuthInputDto } from "./dto/auth-input.dto";
 import { UserEntity } from "../user/entities/user.entity";
 import { CurrentUser } from "./current-user.decorator";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
-import { VerifyEmailDto } from "./dto/verify_email_dto";
+import { VerifyEmailDto } from "./dto/verify_email.dto";
+import { PasswordResetDto } from "./dto/passwordReset.dto";
 
 @Resolver()
 export class AuthResolver {
@@ -76,7 +77,18 @@ export class AuthResolver {
 
   @Public()
   @Mutation(() => Boolean)
-  async resetPassword(@Args("email") email: string): Promise<boolean> {
-    return await this.authService.resetPassword(email);
+  async RequestResetPasswordEmail(
+    @Args("email") email: string,
+  ): Promise<boolean> {
+    return await this.authService.SendResetPassword(email);
+  }
+
+  @Public()
+  @Mutation(() => Boolean)
+  async resetPassword(@Args("PassWordRestDTO") pswResetDTO: PasswordResetDto) {
+    return this.authService.recoverPassword(
+      pswResetDTO.token,
+      pswResetDTO.password,
+    );
   }
 }

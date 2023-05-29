@@ -318,9 +318,13 @@ type Mutation {
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
   enable2fa: String!
   enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
+  verifyEmail(VerifyEmailDTO: VerifyEmailDto!): Boolean!
+  RequestResetPasswordEmail(email: String!): Boolean!
+  resetPassword(PassWordRestDTO: PasswordResetDto!): Boolean!
   createUser(singUp: CreateUserDto!): UserEntity!
   updateUser(updateUserInput: UpdateUserDto!): UserEntity!
   removeUser(id: Int!): UserEntity!
+  requestEmailVerification: Boolean!
   createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
   updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
   removeEventToUser(id: String!): EventToUser!
@@ -412,6 +416,15 @@ input AuthInputDto {
 
 input AuthRefreshDto {
   refreshToken: String!
+}
+
+input VerifyEmailDto {
+  verificationToken: String!
+}
+
+input PasswordResetDto {
+  token: String!
+  password: String!
 }
 
 input CreateUserDto {

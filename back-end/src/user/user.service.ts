@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -11,9 +11,12 @@ import { Address } from "../address/entities/address.entity";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { EmailService } from "../email/email.service";
+import { JWTPayload } from "../auth/jwtPayload.interface";
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(EmailService.name);
+
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
@@ -39,7 +42,7 @@ export class UserService {
     }
     usr.email = usr.email.toLowerCase();
     usr.avatar = createUserInput.avatar;
-    // this.sendVerificationEmail(usr); Todo: fix credentials
+    await this.sendVerificationEmail(usr);
 
     return await usr.save();
   }
@@ -78,7 +81,7 @@ export class UserService {
     if (updateUserInput.email && usr.email != updateUserInput.email) {
       usr.email = updateUserInput.email;
       usr.isVerified = false;
-      this.sendVerificationEmail(usr);
+      await this.sendVerificationEmail(usr);
     }
     if (updateUserInput.name) usr.name = updateUserInput.name;
     if (updateUserInput.password)
@@ -105,7 +108,7 @@ export class UserService {
     await usr.save();
   }
 
-  sendVerificationEmail(user: UserEntity) {
+  async sendVerificationEmail(user: UserEntity | JWTPayload) {
     const payload = {
       sub: user.id,
       key: "email-validation",
@@ -115,22 +118,29 @@ export class UserService {
       secret: this.configService.get("JWT_EMAIL_SECRET"),
     };
     const token = this.jwtService.sign(payload, options);
-    this.emailService.sendEmailVerification(user.email, token);
+    await this.emailService.sendEmailVerification(user.email, token);
+    return true;
   }
 
   async verifyUser(token: string) {
+    this.logger.verbose(`Email is being verified`);
     try {
-      const decodedToken: any = this.jwtService.verify(token);
-
-      if (decodedToken.type === "email-validation") {
+      const decodedToken: any = this.jwtService.verify(token, {
+        secret: this.configService.get("JWT_EMAIL_SECRET"),
+      });
+      this.logger.verbose(`Token decoded ${decodedToken}`);
+      console.table(decodedToken);
+      if (decodedToken.key === "email-validation") {
         // The token is valid, return the user ID
         const usr = await this.userRepo.findOneOrFail({
           where: { id: decodedToken.sub },
         });
         usr.isVerified = true;
+        this.logger.verbose(`Email Of ${usr.name} was verified`);
         await usr.save();
       }
     } catch (err) {
+      this.logger.error(err);
       // Handle token expiration or any other error
     }
     return false;
