@@ -59,6 +59,7 @@ import {AddExpenseFormComponent} from './event-details/expenses/add-expense-form
 import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expense-tree.component';
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import {RequestPasswordResetComponent} from './request-password-reset/request-password-reset.component';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
     ExpenseTreeComponent,
     VerifyEmailComponent,
     ResetPasswordComponent,
+    RequestPasswordResetComponent,
   ],
   exports: [
     EventFormComponent,
