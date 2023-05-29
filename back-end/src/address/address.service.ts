@@ -26,23 +26,27 @@ export class AddressService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     this.logger.log("Inserting Countries in DB");
-    let tot = 0;
-    const countries = await this.httpService
-      .get("https://restcountries.com/v3.1/all")
-      .toPromise();
-    countries.data.forEach((ct) => {
-      const country = new Country();
-      country.name = ct.name.common;
-      country.code = ct.cca3;
-      this.countryRepo.findOneBy({ name: country.name }).then((cont) => {
-        if (!cont) {
-          this.logger.log(`country ${country.name} added`);
-          tot++;
-          this.countryRepo.create(country).save();
-        }
+    try {
+      let tot = 0;
+      const countries = await this.httpService
+        .get("https://restcountries.com/v3.1/all")
+        .toPromise();
+      countries.data.forEach((ct) => {
+        const country = new Country();
+        country.name = ct.name.common;
+        country.code = ct.cca3;
+        this.countryRepo.findOneBy({ name: country.name }).then((cont) => {
+          if (!cont) {
+            this.logger.log(`country ${country.name} added`);
+            tot++;
+            this.countryRepo.create(country).save();
+          }
+        });
       });
-    });
-    this.logger.log("Countries Inserted " + tot);
+      this.logger.log("Countries Inserted " + tot);
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   async create(

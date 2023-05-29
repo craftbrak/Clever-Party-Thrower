@@ -43,12 +43,12 @@ export class AuthService {
   constructor(private apollo: Apollo) {
     this.getToken()
     if (this._accessToken) {
-      console.log(this._accessToken)
+      // console.log(this._accessToken)
       this.setUser()
 
       // @ts-ignore
       this.tokenTTL = this.user.exp - this.user?.iat
-      console.log(this.tokenTTL)
+      // console.log(this.tokenTTL)
     }
   }
 
@@ -191,9 +191,9 @@ export class AuthService {
 
   setUser() {
     if (this._accessToken != null) {
-      console.log("user created")
+      // console.log("user created")
       this.user = jwt_decode(this._accessToken)
-      console.log(this.user)
+      // console.log(this.user)
     }
   }
 
@@ -204,5 +204,63 @@ export class AuthService {
     localStorage.setItem('refreshToken', this._refreshToken ?? '');
     if (accessToken.length > 0) this.user = jwt_decode(accessToken)
     localStorage.setItem('userid', this.user?.id!)
+  }
+
+  sendVerifyEmail() {
+    const mut = gql`
+    mutation Mutation {
+      requestEmailVerification
+    }
+    `
+    this.apollo.mutate({mutation: mut})
+  }
+
+  verifyUser(token: string) {
+    const mut = gql`
+    mutation VerifyEmail($verifyEmailDto: VerifyEmailDto!) {
+      verifyEmail(VerifyEmailDTO: $verifyEmailDto)
+    }
+`
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut, variables: {
+        verifyEmailDto: {
+          verificationToken: token
+        }
+      }// @ts-ignore
+    }).pipe(map(value => value.data.verifyEmail))
+  }
+
+  resetPw(token: string, password: string) {
+    const mut = gql`
+      mutation ResetPassword($passWordRestDto: PasswordResetDto!) {
+        resetPassword(PassWordRestDTO: $passWordRestDto)
+      }
+    `
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut,
+      variables: {
+        passWordRestDto: {
+          password: password,
+          token: token
+        }
+      }// @ts-ignore
+    }).pipe(map(value => value.data.resetPassword))
+  }
+
+  requestPasswordRest(email: string) {
+    const mut = gql`
+      mutation RequestResetPasswordEmail($requestResetPasswordEmailEmail: String!) {
+        RequestResetPasswordEmail(email: $requestResetPasswordEmailEmail)
+      }
+    `
+
+    return this.apollo.mutate<Observable<boolean>>({
+      mutation: mut,
+      variables: {
+        requestResetPasswordEmailEmail: email
+      }// @ts-ignore
+    }).pipe(map(value => value.data.RequestResetPasswordEmail))
   }
 }

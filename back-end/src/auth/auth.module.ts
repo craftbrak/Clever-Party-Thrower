@@ -10,6 +10,7 @@ import { JwtStrategy } from "./strategy/jwt.strategy";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 import { AuthController } from "./auth.controller";
+import { EmailModule } from "../email/email.module";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthController } from "./auth.controller";
       }),
     }),
     ConfigModule,
+    EmailModule,
   ],
   controllers: [AuthController],
   providers: [

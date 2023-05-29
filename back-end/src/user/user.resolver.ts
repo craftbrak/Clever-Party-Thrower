@@ -61,6 +61,11 @@ export class UserResolver {
     return await this.userService.remove(id);
   }
 
+  @Mutation(() => Boolean)
+  async requestEmailVerification(@CurrentUser() user: JWTPayload) {
+    return this.userService.sendVerificationEmail(user);
+  }
+
   @ResolveField("eventToUsers", () => [EventToUser])
   async events(@Parent() user: UserEntity) {
     return await this.eventToUserService.findAllOfUser(user);

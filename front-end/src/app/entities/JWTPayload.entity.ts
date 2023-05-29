@@ -6,6 +6,7 @@ export interface JWTPayload {
   name: UserEntity["name"];
   isTwoFactorEnable?: boolean;
   isTwoFaAuthenticated?: boolean;
+  isVerified?: boolean;
   iat: number
   exp: number
 }

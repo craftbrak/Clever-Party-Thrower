@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/entities/user.entity";
 import { AuthOutputDto } from "./dto/auth-output.dto";
@@ -8,14 +8,18 @@ import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { authenticator } from "otplib";
-import { VerifyEmailDto } from "./dto/verify_email_dto";
+import { VerifyEmailDto } from "./dto/verify_email.dto";
+import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(EmailService.name);
+
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   async validateUser(
@@ -41,18 +45,22 @@ export class AuthService {
       name: user.name,
       isTwoFaAuthenticated: false,
       isTwoFactorEnable: user.is2faEnabled,
+      isVerified: user.isVerified,
     };
     return await this.getTokens(payload);
   }
 
   async refresh(token: AuthRefreshDto): Promise<AuthOutputDto> {
-    const pl = this.jwtService.verify(token.refreshToken);
+    const pl = this.jwtService.verify(token.refreshToken, {
+      secret: this.configService.get("JWT_REFRESH_SECRET"),
+    });
     const payload: JWTPayload = {
       id: pl.id,
       email: pl.email,
       name: pl.name,
       isTwoFaAuthenticated: pl.isTwoFaAuthenticated,
       isTwoFactorEnable: pl.is2faEnabled,
+      isVerified: pl.isVerified,
     };
     return await this.getTokens(payload);
   }
@@ -84,7 +92,6 @@ export class AuthService {
 
   async login(user: UserEntity | null, code: string): Promise<AuthOutputDto> {
     let verified = false;
-    //todo: fix null User bug on login througt the front end
     if (!user)
       return {
         invalidCredentials: true,
@@ -102,7 +109,9 @@ export class AuthService {
       name: user.name,
       isTwoFaAuthenticated: verified,
       isTwoFactorEnable: user.is2faEnabled,
+      isVerified: user.isVerified,
     };
+    // console.table(payload);
     return this.getTokens(payload);
   }
 
@@ -114,6 +123,53 @@ export class AuthService {
 
   async verifyEmail(dto: VerifyEmailDto): Promise<boolean> {
     return this.userService.verifyUser(dto.verificationToken);
+  }
+
+  async SendResetPassword(email: string) {
+    const user = await this.userService.findOne(email);
+    this.logger.verbose(`User: ${user.name} requested a password reset`);
+    this.logger.verbose(
+      `User: ${user.name} is currently verified: ${user.isVerified}`,
+    );
+    if (user && user.isVerified) {
+      const payload = {
+        sub: user.id,
+        key: "password-reset",
+      };
+      const options = {
+        expiresIn: "6h",
+        secret: this.configService.get("JWT_EMAIL_SECRET"),
+      };
+      const token = this.jwtService.sign(payload, options);
+      user.hashedEmailValidationToken = await argon2.hash(token);
+      await this.emailService.sendPasswordRecoveryEmail(email, token);
+      return true;
+    }
+    return false;
+  }
+
+  async recoverPassword(token: string, password: string) {
+    try {
+      const decodedToken: any = this.jwtService.verify(token, {
+        secret: this.configService.get("JWT_EMAIL_SECRET"),
+      });
+
+      if (decodedToken.key === "password-reset") {
+        // The token is valid, return the user ID
+        const usr = await this.userService.findOneById(decodedToken.sub);
+        this.logger.verbose(
+          `User: ${usr.name} has change his password to ${password}`,
+        );
+        console.table(decodedToken);
+        usr.password = await argon2.hash(password);
+        await usr.save();
+        return true;
+      }
+    } catch (err) {
+      this.logger.error(err);
+      return false;
+    }
+    return false;
   }
 
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
