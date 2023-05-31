@@ -17,7 +17,7 @@ Avoir un dépôt distinct pour l'infrastructure a permis de maintenir une sépar
 
 \subsection{Intégration et déploiement continu (CI/CD)}\label{subsec:integration-et-deploiement-continu-(ci/cd)}
 
-L'intégration continue (CI) a été mise en œuvre grâce à des tests automatisés sur une grande partie des composants du back-end et du front-end.
+L'intégration continue (CI) a été mise en oeuvre grâce à des tests automatisés sur une grande partie des composants du back-end et du front-end.
 
 \begin{figure}[H]
     \begin{minipage}[b]{0.5\textwidth}
@@ -47,7 +47,7 @@ Watchtower compare régulièrement la version courante des conteneurs à celle h
 L'API est testée à travers plusieurs types de tests, principalement des tests unitaires qui se concentrent sur une fonction
 spécifique de manière isolée et des tests d'intégration qui testent l'API de bout en bout.\\
 
-Les tests d'intégration, bien qu'étant plus complexes à mettre en œuvre, ont été particulièrement intéressants.
+Les tests d'intégration, bien qu'étant plus complexes à mettre en oeuvre, ont été particulièrement intéressants.
 Pour faciliter leur mise en place, j'ai créé un gestionnaire de tests qui, en plus des fonctions de mock, me permet de préparer l'application dans un état connu.
 Par exemple, si le test consiste à vérifier que les événements sont accessibles via l'API, le gestionnaire de tests me permet de configurer des utilisateurs, des adresses, des pays et des événements.
 Grâce à ce gestionnaire de tests, je peux ajouter des tests dans différents états du serveur.

@@ -15,12 +15,12 @@ devrait être suffisamment flexible pour permettre l'ajout de nouvelles fonction
 
 \subsection{Évolution des choix techniques et stratégiques}\label{subsec:evolution-des-choix-techniques-et-strategiques}
 Au fil du projet, certaines modifications ont été nécessaires.
-Ces ajustements étaient principalement dus à RxJS. Initialement, j'avais prévu de concevoir le projet de manière à ce que l'application soit réactive sur l'ensemble du stack.
+Ces ajustements étaient principalement dus à RxJS. Initialement, j'avais prévu de concevoir le projet de sorte que l'application soit réactive sur l'ensemble du stack.
 Cependant, après une discussion éclairante avec mon rapporteur, M. Noel,
 nous avons décidé de construire le projet de manière classique tout en envisageant l'ajout de la réactivité dans une phase future.
 
-\subsection{Defits lors du developement}\label{subsec:defits-lors-du-developement}
-Lors du develepement du projets plusieurs defit on du etre surmonter
+\subsection{Défis lors du développement}\label{subsec:defits-lors-du-developement}
+Lors du développement du projet plusieurs défis ont dû être surmonter
 
 \subsubsection{L'algorithme des dettes}
 Le développement d'un algorithme capable de répartir les différents coûts d'un événement entre les utilisateurs s'est avéré être un défi.
@@ -38,7 +38,7 @@ Au lieu de calculer le total des dépenses pour un événement, nous allons calc
 Pour cela, lors du calcul des dettes, on crée une carte associant un participant à une balance.
 Une fois que la balance de chaque participant est créée sur la base de toutes les dépenses, on parcourt cette carte afin de créer des paires de participants.
 L'objectif est de trouver le participant avec la balance la plus positive et celui avec la balance la plus négative.
-Une fois que l'on a cette paire, on peut créer une dette entre ces deux utilisateurs de sorte à ce que l'un ou les deux voient leur balance revenir à zéro.
+Une fois que l'on a cette paire, on peut créer une dette entre ces deux utilisateurs de sorte que l'un ou les deux voient leur balance revenir à zéro.
 Après avoir créé cette dette, on met à jour la balance des deux utilisateurs.
 On continue ainsi jusqu'à ce que toutes les balances des utilisateurs valent zéro.\\
 
@@ -89,7 +89,7 @@ Grâce à ces outils, je pouvais facilement créer des machines virtuelles avec 
 et modifier ceux-ci via CloudInit avant même de démarrer la machine virtuelle.\\
 
 Fort de cette nouvelle découverte, j'ai mis en place sept VM dédiées au cluster Kubernetes :
-trois serviront de plans de contrôle et quatre de nœuds d'exécution.\\
+trois serviront de plans de contrôle et quatre de noeuds d'exécution.\\
 
 Le projet nécessitant une infrastructure d'hébergement et étant conteneurisé, tout s'alignait parfaitement.\\
 
