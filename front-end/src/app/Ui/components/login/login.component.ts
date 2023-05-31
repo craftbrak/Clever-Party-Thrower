@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToRegister() {
-    this.router.navigate(['/register', this.eventId])
+    this.router.navigate(['/register', this.eventId ?? ''])
   }
 
   redirectToPasswordReset() {
