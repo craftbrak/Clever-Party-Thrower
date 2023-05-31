@@ -45,8 +45,7 @@
     <!--    </button>-->
     <mat-icon *ngIf="authService.user?.isVerified">verified</mat-icon>
     <button (click)="onVerifyEmailClick()" *ngIf="!authService.user?.isVerified" color="accent" mat-raised-button
-            style="width: fit-content">Get New Email
-      verification Email
+            style="width: fit-content">Get New verification Email
     </button>
 
   </div>
