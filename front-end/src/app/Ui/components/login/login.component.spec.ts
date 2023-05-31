@@ -95,6 +95,6 @@ describe('LoginComponent', () => {
   it('should redirect to register', () => {
     component.redirectToRegister();
 
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/register', component.eventId]);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/register', component.eventId ?? '']);
   });
 });
