@@ -75,5 +75,4 @@ reference.
 
 ## Troubleshooting
 
-If you encounter any issues or need further assistance, consult the official documentation for each service or consult
-the project repository for additional support.
+If you encounter any issues or need further assistance, contact me 
