@@ -32,6 +32,15 @@
     pdftitle={Clever-Party-Thrower, une application web hébergée via Kubernetes et Ansible},
     pdfpagemode=FullScreen,
 }
+
+%\defglsentryfmt{\textit{\glsgenentryfmt}}
+%\makeglossaries
+%\glsenableentrycount
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+
 \fancyhf{}
 \fancyhead[LO,RE]{\sffamily\itshape \leftmark}
 \fancyfoot[C]{\thepage}
@@ -74,13 +83,12 @@
     \end{titlepage}
     \thispagestyle{empty}
     \newpage
-    \setcounter{page}{0}
+
     \begin{KeepFromToc}
         \tableofcontents
     \end{KeepFromToc}
-    \newpage
-    % \bibliography{main}
-    %\bibliographystyle{plain}
+    \clearpage
+    \setcounter{page}{0}
 
 
     \section{Introduction}\label{sec:introduction}
@@ -160,7 +168,7 @@
     et un mécanisme de partage d'images, sont également envisagées.
 
     En rétrospective, il y a des aspects du projet qui auraient pu être abordés différemment,
-    mais chaque défi et chaque erreur ont fourni une occasion d'apprendre et de grandir en tant que développeur.
+    mais chaque défi et chaque erreur a fourni une occasion d'apprendre et de grandir en tant que développeur.
     Ces leçons seront inestimables pour les futurs projets de développement.
 
     En somme, "Clever Party Thrower" est une application prometteuse avec un potentiel considérable.
@@ -187,4 +195,6 @@
     % longhorn & rancher
     % reseau (ce qui aurais du etre fait et ce qui est fait)
 %   docekr-compose
+    \newpage
+    \printbibliography
 \end{document}
