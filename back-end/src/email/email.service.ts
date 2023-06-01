@@ -37,7 +37,7 @@ export class EmailService {
         },
       });
     } else this.transporter = null;
-    console.table(this.transporter);
+    // console.table(this.transporter);
   }
 
   async sendPasswordRecoveryEmail(to: string, token: string) {
