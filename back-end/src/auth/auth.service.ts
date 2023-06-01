@@ -142,7 +142,9 @@ export class AuthService {
       };
       const token = this.jwtService.sign(payload, options);
       user.hashedEmailValidationToken = await argon2.hash(token);
-      await this.emailService.sendPasswordRecoveryEmail(email, token);
+      this.logger.verbose(
+        await this.emailService.sendPasswordRecoveryEmail(email, token),
+      );
       return true;
     }
     return false;

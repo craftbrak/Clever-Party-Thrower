@@ -2,11 +2,12 @@ import { Injectable, Logger } from "@nestjs/common";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as nodemailer from "nodemailer";
+import { Transporter } from "nodemailer";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class EmailService {
-  private transporter;
+  private transporter: Transporter | null;
   private readonly email;
   private readonly password;
   private readonly smtpServer;
@@ -52,6 +53,7 @@ export class EmailService {
       )}/reset_password/${token}"">Reset Password</a>
     `,
     };
+    this.logger.verbose("mail sent");
     return this.transporter?.sendMail(mailOptions);
   }
 
