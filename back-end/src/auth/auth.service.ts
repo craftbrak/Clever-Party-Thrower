@@ -131,7 +131,7 @@ export class AuthService {
     this.logger.verbose(
       `User: ${user.name} is currently verified: ${user.isVerified}`,
     );
-    if (user && user.isVerified) {
+    if (user) {
       const payload = {
         sub: user.id,
         key: "password-reset",
@@ -142,7 +142,9 @@ export class AuthService {
       };
       const token = this.jwtService.sign(payload, options);
       user.hashedEmailValidationToken = await argon2.hash(token);
-      await this.emailService.sendPasswordRecoveryEmail(email, token);
+      this.logger.verbose(
+        await this.emailService.sendPasswordRecoveryEmail(email, token),
+      );
       return true;
     }
     return false;

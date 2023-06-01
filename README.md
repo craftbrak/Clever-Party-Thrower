@@ -22,6 +22,7 @@ This guide will help you set up the CPT stack using Docker Compose. The stack in
 ```
 
 API_URL=https://api.yourdomain.com
+WEB_URL=https://yourdomain.com
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your_postgres_password
 TWO_FACTOR_AUTHENTICATION_APP_NAME=YourAppName
@@ -75,5 +76,4 @@ reference.
 
 ## Troubleshooting
 
-If you encounter any issues or need further assistance, consult the official documentation for each service or consult
-the project repository for additional support.
+If you encounter any issues or need further assistance, contact me 
