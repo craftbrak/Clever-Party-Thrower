@@ -19,11 +19,14 @@ export class EmailService {
     this.password = configService.get<string>("EMAIL_PASSWORD");
     this.smtpServer = configService.get<string>("SMTP_SERVER");
     this.smtpPort = configService.get<string>("SMTP_PORT");
-    this.logger.verbose(
-      this.email,
-      this.password,
-      this.smtpPort,
-      this.smtpServer,
+    // this.logger.verbose(
+    //   this.email,
+    //   this.password,
+    //   this.smtpPort,
+    //   this.smtpServer,
+    // );
+    this.logger.log(
+      `Setting Up EmailService With ${this.smtpServer} as SMTP server`,
     );
     if (process.env.NODE_ENV !== "test") {
       this.transporter = nodemailer.createTransport({
@@ -53,7 +56,7 @@ export class EmailService {
       )}/reset_password/${token}"">Reset Password</a>
     `,
     };
-    this.logger.verbose("mail sent");
+    this.logger.verbose("Password recovery email sent");
     return this.transporter?.sendMail(mailOptions);
   }
 

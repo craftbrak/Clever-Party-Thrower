@@ -20,7 +20,7 @@ export class VerifyEmailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.token = params.get('token');
     });
-    console.log(this.authService.user?.isVerified, this.token)
+    // console.log(this.authService.user?.isVerified, this.token)
     if (!this.authService.user?.isVerified && this.token) {
       this.authService.verifyUser(this.token).subscribe(value => value ? this.router.navigate(['/']) : null)
     }
