@@ -18,7 +18,12 @@ export class EmailService {
     this.password = configService.get<string>("EMAIL_PASSWORD");
     this.smtpServer = configService.get<string>("SMTP_SERVER");
     this.smtpPort = configService.get<string>("SMTP_PORT");
-    this.logger.verbose(this.email, this.password);
+    this.logger.verbose(
+      this.email,
+      this.password,
+      this.smtpPort,
+      this.smtpServer,
+    );
     if (process.env.NODE_ENV !== "test") {
       this.transporter = nodemailer.createTransport({
         // service: "gmail",
