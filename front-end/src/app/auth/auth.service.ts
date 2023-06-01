@@ -212,7 +212,7 @@ export class AuthService {
       requestEmailVerification
     }
     `
-    this.apollo.mutate({mutation: mut})
+    return this.apollo.mutate({mutation: mut})
   }
 
   verifyUser(token: string) {
