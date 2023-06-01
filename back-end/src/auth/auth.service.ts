@@ -131,7 +131,7 @@ export class AuthService {
     this.logger.verbose(
       `User: ${user.name} is currently verified: ${user.isVerified}`,
     );
-    if (user && user.isVerified) {
+    if (user) {
       const payload = {
         sub: user.id,
         key: "password-reset",
