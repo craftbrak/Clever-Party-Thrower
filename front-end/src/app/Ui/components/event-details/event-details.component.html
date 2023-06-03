@@ -42,11 +42,16 @@
         <span> Details</span>
       </ng-template>
       <div *ngIf="eventInfo$|async as eventInfo" class="details">
-        <div class="desciption"> {{eventInfo.event.description}}</div>
+        <div class="desciption"> {{eventInfo.event.description}}
+          <button (click)="editEvent" color="accent" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
         <div>
           <app-address-card [address]="eventInfo.event.address"></app-address-card>
         </div>
       </div>
+
     </mat-tab>
   </mat-tab-group>
 </div>

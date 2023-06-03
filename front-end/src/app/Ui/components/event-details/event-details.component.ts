@@ -28,6 +28,10 @@ export class EventDetailsComponent implements OnInit {
 
   }
 
+  editEvent() {
+    throw new Error("Not Implemented")
+  }
+
   ngOnInit(): void {
     this.eventService.eventToUserId$.subscribe(value => this.evenToUserId = value!)
   }
