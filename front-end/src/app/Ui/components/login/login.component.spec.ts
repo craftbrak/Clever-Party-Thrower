@@ -2,7 +2,7 @@ import {LoginComponent} from './login.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {of, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {AuthService, LoginResults} from '../../../auth/auth.service';
 import {EventService} from '../../../services/event.service';
 
@@ -10,7 +10,10 @@ import {EventService} from '../../../services/event.service';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let mockAuthService: any, mockRouter: any, mockActivatedRoute, mockEventService;
+  let mockAuthService: {
+    login: { calls: { count: () => any; }; and: { returnValue: (arg0: Observable<LoginResults>) => void; }; };
+  }, mockRouter: { navigate: any; }, mockActivatedRoute, mockEventService;
+
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj(['login', 'addEventToUser']);
