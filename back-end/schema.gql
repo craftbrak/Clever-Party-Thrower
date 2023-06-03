@@ -342,7 +342,7 @@ type Mutation {
   removeSpending(id: String!): Spending!
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): Boolean!
-  removeShoppingListItem(id: String!): ShoppingListItem!
+  removeShoppingListItem(id: String!): Boolean!
   calculateDebts(eventId: String!): [Dept!]!
   updateDept(updateDeptInput: UpdateDeptInput!): Dept!
   removeDept(id: ID!): Dept!

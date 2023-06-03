@@ -54,7 +54,7 @@ export class AddShoppingItemComponent implements OnInit {
   delete() {
     if (this.shoppingListItem) {
       this.eventService.deleteShoppingListItem(this.shoppingListItem?.id).subscribe(() => {
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       });
     }
   }

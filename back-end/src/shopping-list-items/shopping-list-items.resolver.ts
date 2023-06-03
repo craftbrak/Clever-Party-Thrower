@@ -49,9 +49,10 @@ export class ShoppingListItemsResolver {
     return !!out;
   }
 
-  @Mutation(() => ShoppingListItem)
-  removeShoppingListItem(@Args("id", { type: () => String }) id: string) {
-    return this.shopingListItemsService.remove(id);
+  @Mutation(() => Boolean)
+  async removeShoppingListItem(@Args("id", { type: () => String }) id: string) {
+    await this.shopingListItemsService.remove(id);
+    return true;
   }
 
   @ResolveField("assigned", () => UserEntity, { nullable: true })

@@ -568,6 +568,7 @@ export class EventService {
       }`
     return this.apollo.mutate({
       mutation: mut,
+      fetchPolicy: "network-only",
       variables: {
         updateShoppingListItemInput: {
           id: itemId,
@@ -584,13 +585,12 @@ export class EventService {
   deleteShoppingListItem(id: string) {
     const mut = gql`
       mutation RemoveShoppingListItem($removeShoppingListItemId: String!) {
-        removeShoppingListItem(id: $removeShoppingListItemId) {
-          id
-        }
+        removeShoppingListItem(id: $removeShoppingListItemId)
       }
     `
     return this.apollo.mutate({
       mutation: mut,
+      fetchPolicy: "network-only",
       variables: {
         removeShoppingListItemId: id
       }

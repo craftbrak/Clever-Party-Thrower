@@ -25,7 +25,7 @@ export class Spending extends Node {
   name?: string;
 
   @Field(() => ShoppingListItem, { nullable: true })
-  @ManyToOne(() => ShoppingListItem, { nullable: true })
+  @ManyToOne(() => ShoppingListItem, { nullable: true, onDelete: "CASCADE" })
   shoppingListItem: ShoppingListItem;
 
   @Field(() => UserEntity)
