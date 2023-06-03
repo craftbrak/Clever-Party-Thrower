@@ -49,8 +49,17 @@ Le découplage des services et des modules rend les tests plus simples et plus e
 La sécurité est une préoccupation majeure pour Clever Party Thrower.
 Parmi les mesures de sécurité mises en place, on compte l'utilisation de HTTPS pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
 l'authentification et l'autorisation basées sur des tokens JWT, la validation des entrées côté serveur pour prévenir les attaques par injection,
-et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données.
+et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données avec argon2.
 Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via npm audit et npm audit fix.
+
+\subsubsection{RGPD}
+Un aspect important de la sécurité de l'application est la protection des données.
+L'application ne collecte pas de données autres que celles introduites via les différents formulaires.
+La suppression des données est un sujet qui m'a demandé pas mal de réflexion.
+Je ne pouvais pas simplement supprimer toutes les données liées à un utilisateur, car cela affecterait les autres utilisateurs qui partagent des événements ou des dépenses avec l'utilisateur à supprimer.
+Plusieurs solutions s'offraient donc à moi : tout supprimer, mais dégrader grandement l'expérience pour les autres utilisateurs, remplacer l'utilisateur par un utilisateur anonyme par défaut, ou anonymiser l'utilisateur en changeant les données personnelles.
+La solution de remplacer l'utilisateur complet risque tout de même de dégrader l'expérience des utilisateurs notamment au niveau du système de dettes.
+J'ai alors opté pour la troisième solution et j'ai décidé de changer uniquement les données personnelles de l'utilisateur afin de l'anonymiser sans pour autant impacter les autres utilisateurs.
 
 \subsection{GraphQL}\label{subsec:graphql}
 L'utilisation de GraphQL pour l'API du projet a été une décision qui a parfois compliqué le développement de l'application.
