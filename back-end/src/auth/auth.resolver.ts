@@ -9,6 +9,7 @@ import { CurrentUser } from "./current-user.decorator";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
 import { VerifyEmailDto } from "./dto/verify_email.dto";
 import { PasswordResetDto } from "./dto/passwordReset.dto";
+import { JWTPayload } from "./jwtPayload.interface";
 
 @Resolver()
 export class AuthResolver {
@@ -22,7 +23,7 @@ export class AuthResolver {
     @Context("req") req,
     @Args("authInputDto") authInput: AuthInputDto,
   ) {
-    this.logger.debug("tout va bien", authInput.password, authInput.email);
+    this.logger.verbose("tout va bien", authInput.password, authInput.email);
     return await this.authService.login(
       (await this.authService.validateUser(
         authInput.email.toLowerCase(),
@@ -49,18 +50,28 @@ export class AuthResolver {
 
   //todo guard
   @Mutation(() => String || Boolean)
-  async enable2fa(@CurrentUser() user: UserEntity) {
-    return this.authService.setup2FA(user);
+  async enable2faStep1(@CurrentUser() user: JWTPayload) {
+    return this.authService.setup2faStep1(user);
   }
 
+  // @Mutation(() => Boolean)
+  // async enable2faStep2(
+  //   @CurrentUser() user: JWTPayload,
+  //   @Args("2faCode") twofaCode: string,
+  // ) {
+  //   return this.authService.setup2faStep2(user, twofaCode);
+  // }
+
   //todo: guard
-  @Mutation(() => AuthOutputDto)
-  async enable2faValidate(
+  @Mutation(() => AuthOutputDto || Boolean)
+  async enable2faStep2(
     @CurrentUser() user: UserEntity,
-    @Args("AuthInputDto") payload: AuthInputDto,
-  ): Promise<AuthOutputDto> {
-    await this.authService.enable2FA(user, true, payload.code);
-    return await this.authService.login(user, payload.code);
+    @Args("twoFaCode") code: string,
+  ): Promise<AuthOutputDto | boolean> {
+    if (await this.authService.enable2FA(user, true, code)) {
+      return await this.authService.login(user, code);
+    }
+    return false;
   }
 
   @Query(() => Boolean)

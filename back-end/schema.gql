@@ -316,8 +316,8 @@ type Mutation {
   createCountry(CreateCountryInput: CreateCountryDto!): Country!
   authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
-  enable2fa: String!
-  enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
+  enable2faStep1: String!
+  enable2faStep2(twoFaCode: String!): AuthOutputDto!
   verifyEmail(VerifyEmailDTO: VerifyEmailDto!): Boolean!
   RequestResetPasswordEmail(email: String!): Boolean!
   resetPassword(PassWordRestDTO: PasswordResetDto!): Boolean!
