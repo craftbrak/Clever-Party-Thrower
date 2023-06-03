@@ -118,8 +118,14 @@ export class EventService {
 
   private eventToUserSource = new BehaviorSubject<string | null>(null)
   eventToUserId$ = this.eventToUserSource.asObservable()
+  private isOwnerSource = new BehaviorSubject<boolean>(false)
+  isOwner$ = this.isOwnerSource.asObservable()
+
 
   constructor(private apollo: Apollo) {
+    this.eventToUserId$.subscribe(value => {
+      this.updateIsOwner(value!)
+    })
   }
 
   updateEventId(id: string) {
@@ -128,6 +134,33 @@ export class EventService {
 
   updateEventToUserId(id: string) {
     this.eventToUserSource.next(id)
+  }
+
+  updateIsOwner(eventToUserId: string) {
+    const q = gql`
+      query EventToUser($eventToUserId: String!) {
+        eventToUser(id: $eventToUserId) {
+          role
+        }
+      }
+    `
+    if (eventToUserId) {
+      this.apollo.watchQuery<{
+        eventToUser: {
+          role: UserRole
+        }
+      }>({
+        query: q,
+        variables: {
+          eventToUserId: eventToUserId
+        }
+      }).valueChanges.subscribe(value => {
+        console.log(value)
+        if (value.data.eventToUser.role === UserRole.OWNER) this.isOwnerSource.next(true)
+        else this.isOwnerSource.next(false)
+      })
+    }
+
   }
 
   async getAllEventId() {
@@ -584,23 +617,23 @@ export class EventService {
   getEventDetail(eventId: string): Observable<EventData> {
     const mut = gql`
     query Event($eventId: String!) {
-  event(id: $eventId) {
-    id
-    name
-    description
-    address {
-      postalCode
-      unitNumber
-      line1
-      city
-      country {
-        name
+      event(id: $eventId) {
         id
+        name
+        description
+        address {
+          postalCode
+          unitNumber
+          line1
+          city
+          country {
+            name
+            id
+          }
+          id
+        }
       }
-      id
-    }
-  }
-}`
+  }`
     return this.apollo.watchQuery<EventData>({
       query: mut,
       variables: {

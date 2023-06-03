@@ -6,6 +6,7 @@
         <mat-radio-group formControlName="option">
           <div *ngFor="let eDate of eventDates.availableDates"
                [class]="eventDates.selectedDate?.id === eDate.id? 'bg-light date-container' : 'bg date-container'">
+
             <div>
               {{eDate.date | date}}
             </div>
@@ -19,6 +20,9 @@
                 <!--            <mat-icon>check</mat-icon>-->
                 +1
               </button>
+              <div *ngIf="eventDates.selectedDate?.id === eDate.id">
+                <mat-icon>check</mat-icon>
+              </div>
               <!--              <button (click)="removeVote(eDate.id)" *ngIf="!selectDate && !eventDates.fixedDate && hasVoted(eDate)"-->
               <!--                      color="warn" mat-raised-button>-->
               <!--                <mat-icon>close</mat-icon>-->
@@ -35,7 +39,7 @@
         <button (click)="addDate()" color="primary" mat-raised-button style="width: 45%">
           <mat-icon> add</mat-icon>
         </button>
-        <button (click)="toggleSelectionInterface()"
+        <button (click)="toggleSelectionInterface()" *ngIf="isOwner"
                 color="primary"
                 mat-raised-button
                 style="width: 45%">
