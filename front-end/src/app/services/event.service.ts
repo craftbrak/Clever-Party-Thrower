@@ -155,7 +155,7 @@ export class EventService {
           eventToUserId: eventToUserId
         }
       }).valueChanges.subscribe(value => {
-        console.log(value)
+        // console.log(value)
         if (value.data.eventToUser.role === UserRole.OWNER) this.isOwnerSource.next(true)
         else this.isOwnerSource.next(false)
       })
@@ -556,10 +556,11 @@ export class EventService {
 
   }
 
-  updateShoppingListItem(itemId: string, createShoppingListItem: {
+  updateShoppingListItem(itemId: string, eventId: string, createShoppingListItem: {
     bought?: boolean,
     name?: string,
-    price?: number
+    price?: number,
+    assignedId?: string,
   }) {
     const mut = gql`
       mutation UpdateShoppingListItem($updateShoppingListItemInput: UpdateShoppingListItemDto!) {
@@ -572,10 +573,28 @@ export class EventService {
           id: itemId,
           bought: createShoppingListItem.bought,
           name: createShoppingListItem.name,
-          price: createShoppingListItem.price
+          price: createShoppingListItem.price,
+          eventId: eventId,
+          assignedId: createShoppingListItem.assignedId
         }
       }//@ts-ignore
     }).pipe(map(value => value.data))
+  }
+
+  deleteShoppingListItem(id: string) {
+    const mut = gql`
+      mutation RemoveShoppingListItem($removeShoppingListItemId: String!) {
+        removeShoppingListItem(id: $removeShoppingListItemId) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        removeShoppingListItemId: id
+      }
+    })
   }
 
   addEventToUser(eventId: string, userId: string) {
