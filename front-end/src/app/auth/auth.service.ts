@@ -314,4 +314,20 @@ export class AuthService {
       variables: {twoFaCode: code}// @ts-ignore
     }).pipe(map(value => value.data))
   }
+
+  anonimiseUser() {
+    const mut = gql`
+      mutation RemoveUser($removeUserId: String!) {
+        removeUser(id: $removeUserId) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        removeUserId: this.user?.id
+      }
+    })
+  }
 }

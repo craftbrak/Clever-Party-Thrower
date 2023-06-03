@@ -12,6 +12,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { EmailService } from "../email/email.service";
 import { JWTPayload } from "../auth/jwtPayload.interface";
+import { randPassword } from "@ngneat/falso";
 
 @Injectable()
 export class UserService {
@@ -92,8 +93,22 @@ export class UserService {
     return usr;
   }
 
-  async remove(id: string) {
-    return await this.userRepo.delete({ id });
+  async anonymiseUser(id: string) {
+    const usr = await this.findOneById(id);
+    usr.email = "anonymous@deleted.deleted";
+    usr.name = "deleted";
+    usr.address = null;
+    usr.password = randPassword();
+    (
+      await this.addressRepo.find({
+        where: { owner: { id: usr.id } },
+      })
+    ).map((value) => {
+      value.ownerId = null;
+      value.owner = null;
+      value.save();
+    });
+    return await usr.save();
   }
 
   async updateRefreshToken(id: string, token: string): Promise<void> {

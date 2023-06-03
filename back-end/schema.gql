@@ -323,7 +323,7 @@ type Mutation {
   resetPassword(PassWordRestDTO: PasswordResetDto!): Boolean!
   createUser(singUp: CreateUserDto!): UserEntity!
   updateUser(updateUserInput: UpdateUserDto!): UserEntity!
-  removeUser(id: Int!): UserEntity!
+  removeUser(id: String!): UserEntity!
   requestEmailVerification: Boolean!
   createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
   updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!

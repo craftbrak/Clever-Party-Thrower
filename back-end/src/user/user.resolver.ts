@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -56,9 +55,8 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity)
-  @UseGuards(IsUserGuard)
-  async removeUser(@Args("id", { type: () => Int }) id: UserEntity["id"]) {
-    return await this.userService.remove(id);
+  async removeUser(@Args("id", { type: () => String }) id: UserEntity["id"]) {
+    return await this.userService.anonymiseUser(id);
   }
 
   @Mutation(() => Boolean)

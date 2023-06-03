@@ -109,7 +109,13 @@ export class UserSettingsComponent {
   }
 
   onDeleteClick(): void {
-    // Add confirmation dialog and deletion logic here
+    const confir = prompt('Your Data will now be annonymised and you wont be able to login enter "yes" to confirm')
+    if (confir === "yes") {
+      console.log("deleting User")
+      this.authService.anonimiseUser().subscribe(value => {
+        this.authService.logout()
+      })
+    }
   }
 
   onDownloadClick(): void {
