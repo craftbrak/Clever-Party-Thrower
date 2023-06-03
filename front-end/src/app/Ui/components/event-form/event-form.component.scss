@@ -27,7 +27,7 @@ $my-palette: mat.define-palette(mat.$blue-grey-palette);
 }
 
 .bg {
-  background-color: mat.get-color-from-palette($my-palette, 700);
+  //background-color: mat.get-color-from-palette($my-palette, 700);
 }
 
 .title {
