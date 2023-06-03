@@ -2,11 +2,12 @@ import { Injectable, Logger } from "@nestjs/common";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as nodemailer from "nodemailer";
+import { Transporter } from "nodemailer";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class EmailService {
-  private transporter;
+  private transporter: Transporter | null;
   private readonly email;
   private readonly password;
   private readonly smtpServer;
@@ -18,11 +19,14 @@ export class EmailService {
     this.password = configService.get<string>("EMAIL_PASSWORD");
     this.smtpServer = configService.get<string>("SMTP_SERVER");
     this.smtpPort = configService.get<string>("SMTP_PORT");
-    this.logger.verbose(
-      this.email,
-      this.password,
-      this.smtpPort,
-      this.smtpServer,
+    // this.logger.verbose(
+    //   this.email,
+    //   this.password,
+    //   this.smtpPort,
+    //   this.smtpServer,
+    // );
+    this.logger.log(
+      `Setting Up EmailService With ${this.smtpServer} as SMTP server`,
     );
     if (process.env.NODE_ENV !== "test") {
       this.transporter = nodemailer.createTransport({
@@ -36,6 +40,7 @@ export class EmailService {
         },
       });
     } else this.transporter = null;
+    // console.table(this.transporter);
   }
 
   async sendPasswordRecoveryEmail(to: string, token: string) {
@@ -51,6 +56,7 @@ export class EmailService {
       )}/reset_password/${token}"">Reset Password</a>
     `,
     };
+    this.logger.verbose("Password recovery email sent");
     return this.transporter?.sendMail(mailOptions);
   }
 

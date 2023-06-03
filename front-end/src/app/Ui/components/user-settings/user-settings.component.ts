@@ -117,7 +117,7 @@ export class UserSettingsComponent {
   }
 
   onVerifyEmailClick() {
-    this.authService.sendVerifyEmail()
+    this.authService.sendVerifyEmail().subscribe()
   }
 
   openForm(form: string): void {
