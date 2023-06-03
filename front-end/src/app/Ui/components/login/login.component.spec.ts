@@ -2,16 +2,15 @@ import {LoginComponent} from './login.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, of, throwError} from 'rxjs';
-import {AuthService} from '../../../auth/auth.service';
+import {of, throwError} from 'rxjs';
+import {AuthService, LoginResults} from '../../../auth/auth.service';
 import {EventService} from '../../../services/event.service';
+
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let mockAuthService: {
-    login: { calls: { count: () => any; }; and: { returnValue: (arg0: Observable<boolean>) => void; }; };
-  }, mockRouter: { navigate: any; }, mockActivatedRoute, mockEventService;
+  let mockAuthService: any, mockRouter: any, mockActivatedRoute, mockEventService;
 
   beforeEach(() => {
     mockAuthService = jasmine.createSpyObj(['login', 'addEventToUser']);
@@ -44,10 +43,11 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize loginForm with empty email and password', () => {
+  it('should initialize loginForm with empty email, password and totp', () => {
     expect(component.loginForm.value).toEqual({
       email: '',
-      password: ''
+      password: '',
+      totp: ''
     });
   });
 
@@ -60,24 +60,36 @@ describe('LoginComponent', () => {
     expect(mockAuthService.login.calls.count()).toBe(0, 'authService.login should not be called');
   });
 
-  it('should handle login failure', () => {
+  it('should handle login failure due to invalid credentials', () => {
     component.loginForm.controls['email'].setValue('test@example.com');
     component.loginForm.controls['password'].setValue('password123');
 
-    mockAuthService.login.and.returnValue(of(false));
+    mockAuthService.login.and.returnValue(of(LoginResults.invalidCredentials));
     component.onSubmit();
 
     expect(component.CredentialsInValid).toBeTrue();
+  });
+
+  it('should handle login failure due to invalid totp', () => {
+    component.loginForm.controls['email'].setValue('test@example.com');
+    component.loginForm.controls['password'].setValue('password123');
+    component.loginForm.controls['totp'].setValue('123456');
+
+    mockAuthService.login.and.returnValue(of(LoginResults.invalidTotp));
+    component.onSubmit();
+
+    expect(component.TotpInValid).toBeTrue();
   });
 
   it('should handle login success', () => {
     component.loginForm.controls['email'].setValue('test@example.com');
     component.loginForm.controls['password'].setValue('password123');
 
-    mockAuthService.login.and.returnValue(of(true));
+    mockAuthService.login.and.returnValue(of(LoginResults.ok));
     component.onSubmit();
 
     expect(component.CredentialsInValid).toBeFalse();
+    expect(component.TotpInValid).toBeFalse();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
