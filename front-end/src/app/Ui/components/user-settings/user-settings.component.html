@@ -47,6 +47,9 @@
     <button (click)="onVerifyEmailClick()" *ngIf="!authService.user?.isVerified" color="accent" mat-raised-button
             style="width: fit-content">Get New verification Email
     </button>
+    <button (click)="open2FaSetup()" *ngIf="!authService.user?.isTwoFactorEnable" color="accent" mat-raised-button
+            style="width: fit-content">Enable 2Fa
+    </button>
 
   </div>
 

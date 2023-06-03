@@ -60,6 +60,8 @@ import {ExpenseTreeComponent} from './event-details/expenses/expense-tree/expens
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {RequestPasswordResetComponent} from './request-password-reset/request-password-reset.component';
+import {Enable2faComponent} from './user-settings/enable2fa/enable2fa.component';
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
 
 @NgModule({
@@ -97,6 +99,7 @@ import {RequestPasswordResetComponent} from './request-password-reset/request-pa
     VerifyEmailComponent,
     ResetPasswordComponent,
     RequestPasswordResetComponent,
+    Enable2faComponent,
   ],
   exports: [
     EventFormComponent,
@@ -105,6 +108,7 @@ import {RequestPasswordResetComponent} from './request-password-reset/request-pa
     ToastComponent
   ],
   imports: [
+    NgxQRCodeModule,
     CommonModule,
     MatNativeDateModule,
     MatFormFieldModule,

@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {AuthService} from "../../../auth/auth.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-settings',
@@ -43,6 +44,7 @@ export class UserSettingsComponent {
   constructor(
     public dialogRef: MatDialogRef<UserSettingsComponent>,
     public authService: AuthService,
+    private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -165,4 +167,7 @@ export class UserSettingsComponent {
     console.log(`${this.avatarData} avatarData`)
   }
 
+  open2FaSetup() {
+    this.router.navigate(["/setup2fa"])
+  }
 }

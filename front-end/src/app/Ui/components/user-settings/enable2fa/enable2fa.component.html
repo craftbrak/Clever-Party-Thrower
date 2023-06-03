@@ -1,0 +1,13 @@
+<div *ngIf="!isScanned">
+  <ngx-qrcode [value]="secretUrl!"></ngx-qrcode>
+  <button (click)="onScan()" mat-button>Next</button>
+</div>
+
+<form (ngSubmit)="onSubmit()" *ngIf="isScanned && !isVerified" [formGroup]="verificationForm!">
+  <mat-form-field>
+    <input formControlName="verificationCode" matInput placeholder="Enter Verification Code">
+  </mat-form-field>
+  <button mat-button type="submit">Enable 2FA</button>
+</form>
+
+<button (click)="finish()" *ngIf="isVerified" mat-button>Donne</button>

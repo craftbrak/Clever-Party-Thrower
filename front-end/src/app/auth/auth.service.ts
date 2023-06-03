@@ -263,4 +263,33 @@ export class AuthService {
       }// @ts-ignore
     }).pipe(map(value => value.data.RequestResetPasswordEmail))
   }
+
+  enable2faStep1() {
+    const mut = gql`
+      mutation Mutation {
+        enable2faStep1
+      }
+    `
+
+    return this.apollo.mutate<Observable<string>>({
+      mutation: mut,// @ts-ignore
+    }).pipe(map(value => value.data.enable2faStep1))
+  }
+
+  enable2faStep2(code: string) {
+    const mut = gql`
+      mutation Enable2faStep2($twoFaCode: String!) {
+        enable2faStep2(twoFaCode: $twoFaCode) {
+          accessToken
+          invalidCredentials
+          refreshToken
+        }
+      }
+    `
+
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {twoFaCode: code}// @ts-ignore
+    }).pipe(map(value => value.data))
+  }
 }
