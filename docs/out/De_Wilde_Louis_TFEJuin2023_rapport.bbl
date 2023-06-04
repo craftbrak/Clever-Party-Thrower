@@ -1,0 +1,327 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{Angular86:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Angular}
+    \verb{url}
+    \verb https://angular.io/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{AngularM50:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Angular Material UI component library}
+    \verb{url}
+    \verb https://material.angular.io/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{ansibleDoc:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Ansible Documentation}
+    \verb{url}
+    \verb https://docs.ansible.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{API—Open50:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{API — OpenStreetMap Wiki}
+    \verb{url}
+    \verb https://wiki.openstreetmap.org/wiki/API
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{Home–Ang72:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Apollo Angular}
+    \verb{url}
+    \verb https://the-guild.dev/graphql/apollo-angular
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{Introduc33:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Apollo Server - Apollo GraphQL Docs}
+    \verb{url}
+    \verb https://www.apollographql.com/docs/apollo-server/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{CleverPa16:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{Clever Party Thrower}
+    \verb{url}
+    \verb https://cpt.louisdewilde.be/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{craftbra55:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{craftbrak}
+    \verb{url}
+    \verb https://github.com/craftbrak/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{craftbra13:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{craftbrak/Clever-Party-Thrower: A selfhostable web app
+  designed to help orginase event with your friends}
+    \verb{url}
+    \verb https://github.com/craftbrak/Clever-Party-Thrower
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{craftbra86:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{craftbrak/Clever-party-thrower-infrastructure:
+  Clever-Party-Thrower's infrastruture with ansible}
+    \verb{url}
+    \verb https://github.com/craftbrak/Clever-party-thrower-infrastructure
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{JSLibrar55:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{title}{DiceBear | JS-Library}
+    \verb{url}
+    \verb https://www.dicebear.com/how-to-use/js-library
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{dockerDoc:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{title}{Docker Docs: How to build, share, and run applications |
+  Docker Documentation}
+    \verb{url}
+    \verb https://docs.docker.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{HotQuest86:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{title}{Hot Questions - Stack Exchange}
+    \verb{url}
+    \verb https://stackexchange.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{JinjaThe11:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{title}{Jinja | The Pallets Projects}
+    \verb{url}
+    \verb https://palletsprojects.com/p/jinja/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{LaTeX—Wi69:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{title}{LaTeX — Wikipédia}
+    \verb{url}
+    \verb https://fr.wikipedia.org/wiki/LaTeX
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{Markdown57:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Markdown — Wikipédia}
+    \verb{url}
+    \verb https://fr.wikipedia.org/wiki/Markdown#:~:text=Markdown%20est%20un%20
+    \verb langage%20de,dans%20sa%20forme%20non%20format%C3%A9e.
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{NestJSAp67:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{N}
+    \field{sortinithash}{N}
+    \field{title}{NestJS - A progressive Node.js framework}
+    \verb{url}
+    \verb https://nestjs.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{passport9:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{passport - npm}
+    \verb{url}
+    \verb https://www.npmjs.com/package/passport
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{RESTCoun99:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{title}{REST Countries}
+    \verb{url}
+    \verb https://restcountries.com/#endpoints-similar-projects
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{SassSynt24:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{title}{Sass: Syntactically Awesome Style Sheets}
+    \verb{url}
+    \verb https://sass-lang.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{StackOve24:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{title}{Stack Overflow - Where Developers Learn, Share, \& Build
+  Careers}
+    \verb{url}
+    \verb https://stackoverflow.com/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{1TechnoT44:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{Techno Tim - YouTube}
+    \verb{url}
+    \verb https://www.youtube.com/@technotim
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{technoti52:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{techno-tim/k3s-ansible: The easiest way to bootstrap a
+  self-hosted High Availability Kubernetes cluster. A fully automated HA k3s
+  etcd install with kube-vip, MetalLB, and more}
+    \verb{url}
+    \verb https://github.com/techno-tim/k3s-ansible
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{TypeORMA41:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{TypeORM - Amazing ORM for TypeScript and JavaScript (ES7,
+  ES6, ES5). Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server,
+  Oracle, WebSQL databases. Works in NodeJS, Browser, Ionic, Cordova and
+  Electron platforms.}
+    \verb{url}
+    \verb https://typeorm.io/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{TypeScri50:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{TypeScript: JavaScript With Syntax For Types.}
+    \verb{url}
+    \verb https://www.typescriptlang.org/
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{Usingwor49:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{U}
+    \field{sortinithash}{U}
+    \field{title}{Using workflows - GitHub Docs}
+    \verb{url}
+    \verb https://docs.github.com/en/actions/using-workflows
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+
+  \entry{WebAPISp43:online}{online}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{W}
+    \field{sortinithash}{W}
+    \field{title}{Web API | Spotify for Developers}
+    \verb{url}
+    \verb https://developer.spotify.com/documentation/web-api
+    \endverb
+    \warn{\item Invalid format of field 'urldate'}
+  \endentry
+\enddatalist
+\endinput

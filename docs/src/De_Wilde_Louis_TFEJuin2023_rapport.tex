@@ -13,7 +13,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{lipsum}
-\usepackage[nomain, toc, xindy, acronym]{glossaries}
+\usepackage[zacronym]{glossaries}
 \usepackage{wrapfig}
 \usepackage{fancyhdr}
 \usepackage[T1]{fontenc}
@@ -22,6 +22,7 @@
 \usepackage[xindy]{imakeidx}
 \usepackage[backend=bibtex]{biblatex}
 \usepackage{pdfpages}
+\usepackage{subcaption}
 %\usepackage{plantuml}
 \usepackage{float}
 \hypersetup{
@@ -34,9 +35,10 @@
 }
 
 %\defglsentryfmt{\textit{\glsgenentryfmt}}
-%\makeglossaries
+\makeglossaries
 %\glsenableentrycount
 
+\input{glosary}
 \bibliographystyle{plain}
 \bibliography{bib}
 
@@ -54,6 +56,9 @@
 {\normalfont\normalsize\bfseries}}
 \setcounter{secnumdepth}{4}
 \makeatother
+%\makeglossary
+
+
 % Document
 \begin{document}
     \begin{titlepage}
@@ -82,73 +87,60 @@
         \end{center}
     \end{titlepage}
     \thispagestyle{empty}
-    \newpage
-
     \begin{KeepFromToc}
         \tableofcontents
     \end{KeepFromToc}
-    \clearpage
+    \printglossaries
+
     \setcounter{page}{0}
 
 
     \section{Introduction}\label{sec:introduction}
     \input{introduction}
-    \newpage
 
 
     \section{Choix du sujet}\label{sec:choix-du-sujet}
     \input{choix-du-sujet}
-    \newpage
 
 
     \section{Cahier des charges}\label{sec:cahier-des-charges}
     \input{CDC/cdc}
-    \newpage
 
 
     \section{Analyse}\label{sec:analyse}
     \input{Analyse/analyse}
-    \newpage
 
 
     \section{Hebergement et aspects reseaux}\label{sec:hebergement-et-aspects-reseaux}
-    \input{Hebergement et reseaux} %todo: parler du reseau derier l'infra ce qui devrai etre fait
-    \newpage
+    \input{Hebergement et reseaux}
 
 
     \section{Développement de l'application}\label{sec:developpement-de-l'application}
-    \input{Développement de l'application} %todo detailer plus les differents services
-    \newpage
+    \input{Développement de l'application}
 
 
     \section{Base de donnees}\label{sec:base-de-donnees}
     \input{base de donnees}
-    \newpage
 
 
     \section{Historique du projet}\label{sec:historique-du-projet}
     \input{Historique du projet}
-    \newpage
 
 
     \section{Gestion de version et Intégration et Déploiement Continu}\label{sec:gestion-de-version-et-integration/-deploiement-continu}
     \input{git-ci-cd}
-    \newpage
 
 
     \section{Produit Fini et Démonstration}\label{sec:produit-fini-et-demonstration}
     \input{produit_fini}
-    \newpage
 
 
     \section{Bilan}\label{sec:bilan}
     \input{bilan}
-    \newpage
 
 
     \section{Ressources utilisee}\label{sec:ressources-utilisee}
     \input{ressourses utilise}
-    \newpage
 
 
     \section{Conclusion}\label{sec:conclusion}
@@ -174,27 +166,7 @@
     En somme, "Clever Party Thrower" est une application prometteuse avec un potentiel considérable.
     Alors que le projet continue d'évoluer et de s'améliorer, il est excitant de penser à toutes les possibilités futures qu'il offre.
 
-
-    %\backendx
-    % La db (shema+ ORM + GDPR)
-    % graphql
-    % NestJs
-
-    % Le front end
-    % agular
-    % apollo
-    % les service
-    % l'authentification par token
-
-
-%    \section{hebergement}
-    % proxmox
-    % ansible
-    % kubernetes
-    % traefik, certmanager & https
-    % longhorn & rancher
-    % reseau (ce qui aurais du etre fait et ce qui est fait)
-%   docekr-compose
     \newpage
     \printbibliography
+
 \end{document}

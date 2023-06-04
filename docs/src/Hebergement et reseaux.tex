@@ -116,3 +116,22 @@ Pour assurer la performance et la résilience à la charge de l'application Clev
 
 Ainsi, en utilisant les outils et les principes de conception appropriés, il est possible de créer une application qui peut gérer efficacement une charge élevée tout en conservant une performance satisfaisante.
 Dans le futur, des outils de surveillance et d'alerte pourraient être ajoutés pour assurer une détection proactive des problèmes de performance et permettre une intervention rapide en cas de problèmes.
+
+\subsection{Schemas Réseau}\label{subsec:schemas-reseau}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./images/shemaReseauDocker.drawio}
+        \caption{Schema reseau Logique avec Docker}
+        \label{fig:schemaDocker}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{./images/shemaReseauKube.drawio}
+        \caption{Schema reseau Logique avec Kubernetes}
+        \label{fig:schemaKube}
+    \end{subfigure}
+    \caption{Le sens des differents fleches represente le sens d'initialisation des connection}
+    \label{fig:schemaReseau}
+\end{figure}

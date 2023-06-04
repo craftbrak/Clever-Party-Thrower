@@ -48,7 +48,7 @@ Le découplage des services et des modules rend les tests plus simples et plus e
 \subsection{Sécurité}\label{subsec:securite}
 La sécurité est une préoccupation majeure pour Clever Party Thrower.
 Parmi les mesures de sécurité mises en place, on compte l'utilisation de HTTPS pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
-l'authentification et l'autorisation basées sur des tokens JWT, la validation des entrées côté serveur pour prévenir les attaques par injection,
+l'authentification a deux facteurs avec TOTP et l'autorisation basées sur des tokens JWT, la validation des entrées du côté serveur pour prévenir les attaques par injection,
 et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données avec argon2.
 Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via npm audit et npm audit fix.
 

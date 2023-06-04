@@ -22,7 +22,7 @@ Toute application web nécessite plusieurs composants:
     \item Une Couche de calculs applicatifs et de persistance de données
     \subitem Une Base de Donnée
     \subitem Un ORM
-    \subitem Une API définie
+    \subitem Une \Gls{api} définie
 %    \subitem Un système de matching pour le covoiturage
 %    \subitem Un système de création de trajet pour le covoiturage
     \subitem Un système de matching pour les dettes
@@ -54,7 +54,7 @@ Pour conserver les données hors ligne et facilité l'accès à des données à 
 Ce dernier est un framework de gestion de données qui simplifie l'accès et le caching de données
 
 \paragraph{Gestionnaire des requêtes}
-Lorsque l'on veut interagir avec une API graphql il est préférable d'utiliser un client.\\\\
+Lorsque l'on veut interagir avec une \Gls{api} graphql il est préférable d'utiliser un client.\\\\
 
 Il existe une multitude de clients GraphQl mais le plus populaire et le mieux documenté reste Apollo.
 De plus il existe un wrapper pour le client Apollo qui l'intègre dans Angular nommé Apollo Angular.
@@ -90,7 +90,7 @@ Express.js est leger, minimaliste et propose une bonne documentation,
 Spring est généraliste propose des outils de génération de code et utilise un système d'injection de dépendance.\\
 
 Ce qu'il me fallait était une hybride entre Spring et Express.js.
-Après quelque recherches, j'ai trouvé un framework appelé Nest.js, ce dernier supporte nativement TypeScript, propose une documentation excellente,
+Après quelque recherches, j'ai trouvé un framework appelé Nest.js, ce dernier supporte nativement TypeScript, propose une excellente documentation,
 propose un CLI permettant de générer du code boiler-plate, reste simple et leger, utilise de l'injection de dépendance et est très utilisé et apprécié par d'autres développeurs.
 J'ai donc décidé d'utiliser Nest.Js pour ce projet.
 
@@ -103,7 +103,7 @@ Ayant eu une experience avec Sequelize plutôt mauvaise lors de mon projet de de
 
 Prisma est une ORM un peu particulière dans le sens où il propose d'utiliser un schema prisma pour définir ses entités au lieu d'utiliser du code TypeScript.
 Cella me paraissait une très bonne chose vu que prisma générait alors lui-même les différents DTO nécessaires.
-Il s'est cependant avéré qu'à l'utilisation prisma n'est pas l'idéale surtout lorsque l'on désire le coupler à une API graphQl.\\
+Il s'est cependant avéré qu'à l'utilisation prisma n'est pas l'idéale surtout lorsque l'on désire le coupler à une \Gls{api} graphQl.\\
 
 À cause de son schema particulier, je devais définir le forma de mes entités à 2 endroits et tout de même créer manuellement mes DTO\@.
 Sans compter que les opérations de CRUD dans les entités étaient rendues très complexe dû aux liens entre elles et que Prisma ne permet pas d'utiliser des identifiants.\\\\
@@ -126,15 +126,13 @@ Postgres est une base de donnée très utilisée en production, très performant
 
 \paragraph{Structure de donnée}
 Pour stocker toutes les données nécessaires au fonctionnement de l'application, il nous faut une structure de donnée cohérente.
-Voici un schema\ref{fig:dbSchema} de la base de donnée et de sa structure:
+Un schema de la structure de la base de donnée est disponible avec la figure\ref{fig:dbSchema}
 
-%Todo: fix possitioning Shema DB and update
+
 \begin{figure}[htbp]
     \includegraphics[width=\linewidth]{./images/dbShema}\caption{Architecture de la base de donnée}\label{fig:dbSchema}
     \centering
 \end{figure}
-
-\newpage
 
 \subsubsection{Hébergement}\label{subsubsec:hebergement}
 Afin de permettre aux utilisateurs souhaitant auto-héberger l'application, il est essentiel de fournir un environnement préconfiguré ou indépendant de l'hôte.
@@ -165,7 +163,7 @@ De plus, ce cluster facilitera également la gestion des certificats TLS\@.\\
 
 Toutefois, la mise en place d'un cluster Kubernetes ne garantit pas la portabilité de notre cluster.
 Une fois établi, il demeure unique, à l'instar d'un flocon de neige.
-Pour résoudre ce problème, nous ferons appel à l'infrastructure en tant que code (Infrastructure as Code - IaC).
+Pour résoudre ce problème, nous ferons appel à l'infrastructure en tant que code (Infrastructure as Code - IaC) .
 
 \paragraph{Infrastructure as code}
 Comment rendre notre cluster et par extension notre application déployable en une seule commande ?
