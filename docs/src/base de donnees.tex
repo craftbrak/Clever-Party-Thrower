@@ -5,7 +5,7 @@ Cette section fournit un aperçu détaillé de la conception, du choix, des opé
 
 \subsection{Choix de la base de données}\label{subsec:choix-de-la-base-de-donnee}
 Le choix du système de base de données est un aspect crucial de tout projet, car il influence directement les performances et la fonctionnalité de l'application.
-Comme je l'ai précisé dans la section d'analyse, j'ai choisi un système de base de données de type SQL, plus précisément PostgreSQL, pour ce projet.
+Comme je l'ai précisé dans la section d'analyse, j'ai choisi un système de base de données de type \Gls{sql}, plus précisément PostgreSQL, pour ce projet.
 La haute disponibilité offerte par PostgreSQL, grâce à ses fonctionnalités avancées de réplication de données, a été l'une des principales motivations de ce choix.\\
 
 De plus, PostgreSQL offre une grande extensibilité.
@@ -21,11 +21,11 @@ Le choix d'une base de données relationnelle pour le projet Clever Party Throwe
 Tout d'abord, les données de l'application sont structurées et présentent de nombreuses relations entre elles.
 Une base de données relationnelle, comme PostgreSQL, est idéale pour gérer ce type de données.
 De plus, les bases de données relationnelles fournissent des mécanismes de transactions puissants, ce qui est crucial pour maintenir
-l'intégrité des données lors de l'exécution des opérations CRUD. Enfin,
+l'intégrité des données lors de l'exécution des opérations \Gls{crud}. Enfin,
 PostgreSQL supporte l'ACIDité (Atomicité, Cohérence, Isolation, Durabilité), ce qui garantit que toutes les transactions sont traitées de manière fiable.\\
 
 \subsection{Opérations sur la base de données}\label{subsec:operation-sur-la-base-de-donnees}
-Les opérations sur la base de données sont principalement de nature CRUD (Create, Read, Update, Delete).
+Les opérations sur la base de données sont principalement de nature \Gls{crud} (Create, Read, Update, Delete).
 Cependant, avec l'introduction du système de covoiturage, des opérations plus complexes sont devenues nécessaires.
 Par exemple, le calcul des distances entre différents points géographiques est une opération essentielle pour la coordination du covoiturage.\\
 
@@ -77,13 +77,13 @@ Le schema est disponible ici\ref{fig:dbSchema}% todo: fix image pracement and re
 \subsection{Gestion des transactions et de la concurrence}\label{subsec:transaction-concurrency}
 Pour gérer la concurrence et assurer l'intégrité des transactions, PostgreSQL utilise un modèle MVCC (Multi-Version Concurrency Control).
 Cela signifie que chaque transaction opère sur une "instantané" de la base de données, ce qui permet d'éviter les conflits lors de l'accès simultané à la base de données par plusieurs transactions.
-De plus, PostgreSQL supporte les propriétés ACID, ce qui garantit que toutes les transactions sont complètement exécutées ou complètement annulées, même en cas de panne du système.\\
+De plus, PostgreSQL supporte les propriétés \Gls{acid}, ce qui garantit que toutes les transactions sont complètement exécutées ou complètement annulées, même en cas de panne du système.\\
 
 \subsection{Sécurité de la base de données}\label{subsec:database-security}
 La sécurité de la base de données a été un aspect crucial de la conception du système.
 PostgreSQL offre une gamme de fonctionnalités pour la gestion des accès, ce qui nous a permis de définir des rôles et des permissions uniquement pour le back-end, ce dernier est le seul a avoir access a la base de donnée .
 De plus, toutes les données sensibles sont chiffrées à l'aide de protocoles de sécurité robustes via argon2 avant d'etre inserée dans la base de donnée.
-Enfin, des mesures on ete mise en place pour prévenir les injections SQL via typeORM qui utilise des requêtes paramétrées et évite l'interpolation de chaînes dans nos requêtes.\\
+Enfin, des mesures on ete mise en place pour prévenir les injections \Gls{sql} via typeORM qui utilise des requêtes paramétrées et évite l'interpolation de chaînes dans nos requêtes.\\
 
 \subsection{Performance et optimisation}\label{subsec:performance-optimization}
 Afin d'optimiser les performances de la base de données, nous avons utilisé plusieurs techniques.
@@ -112,7 +112,7 @@ Des sauvegardes en temps réel ou quasi réel peuvent également être mises en 
 
 \subsection{Défis rencontrés}\label{subsec:challenges}
 La conception et la mise en oeuvre de la base de données, bien qu'en fin de compte réussies, n'ont pas été exemptes de défis.
-Au début du projet, j'ai choisi d'utiliser Prisma ORM pour gérer ma base de données, anticipant qu'il fournirait une interface pratique pour interagir avec les données.
+Au début du projet, j'ai choisi d'utiliser Prisma \Gls{orm} pour gérer ma base de données, anticipant qu'il fournirait une interface pratique pour interagir avec les données.
 Cependant, j'ai rapidement découvert que Prisma ne répondait pas aussi bien que prévu aux besoins spécifiques de mon projet.
 Plus précisément, j'ai trouvé que l'itération sur la structure de données était plus complexe que prévu, ce qui a entraîné des inefficacités dans le processus de développement.\\
 

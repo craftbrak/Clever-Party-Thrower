@@ -4,15 +4,15 @@ Cette section introduit l'architecture, la documentation du code, les bonnes pra
 \subsection{Architecture}\label{subsec:architecture}
 Clever Party Thrower est une application web full-stack.
 Le front-end est construit avec Angular tandis que le back-end est un monolithe élaboré avec NestJS et TypeORM. À chaque accès au site par un utilisateur,
-la Single Page Application (SPA) Angular est chargée, initiant les services nécessaires pour interagir avec le back-end.
-Ces services récupèrent les données requises via l'API GraphQL, en utilisant Apollo.\\
+la Single Page Application (\Gls{spa}) Angular est chargée, initiant les services nécessaires pour interagir avec le back-end.
+Ces services récupèrent les données requises via l'\Gls{api} GraphQL, en utilisant Apollo.\\
 
 Durant toute la session de l'utilisateur, ces services persistent et continuent de récupérer les données du back-end au fur et à mesure de la navigation.
 Chaque service est responsable d'un type de données spécifique.
 Par exemple, AuthService s'occupe des données liées à l'authentification et à l'utilisateur, tandis qu'EventService gère tout ce qui est directement lié à un événement.\\
 
 De la même manière, le back-end est divisé en plusieurs services, chacun gérant une ressource unique.
-Ces services sont rassemblés en modules, associés aux contrôleurs REST et aux résolveurs GraphQL. Cette modularité facilite le test du code en assurant un découplage
+Ces services sont rassemblés en modules, associés aux contrôleurs \Gls{rest} et aux résolveurs GraphQL. Cette modularité facilite le test du code en assurant un découplage
 entre les différents services.\\
 
 \subsection{Documentation du code}\label{subsec:documentation-du-code}
@@ -47,10 +47,10 @@ Le découplage des services et des modules rend les tests plus simples et plus e
 
 \subsection{Sécurité}\label{subsec:securite}
 La sécurité est une préoccupation majeure pour Clever Party Thrower.
-Parmi les mesures de sécurité mises en place, on compte l'utilisation de HTTPS pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
-l'authentification a deux facteurs avec TOTP et l'autorisation basées sur des tokens JWT, la validation des entrées du côté serveur pour prévenir les attaques par injection,
+Parmi les mesures de sécurité mises en place, on compte l'utilisation de \Gls{https} pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
+l'authentification a deux facteurs avec TOTP et l'autorisation basées sur des tokens \Gls{jwt}, la validation des entrées du côté serveur pour prévenir les attaques par injection,
 et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données avec argon2.
-Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via npm audit et npm audit fix.
+Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via \Gls{npm} audit et \Gls{npm} audit fix.
 
 \subsubsection{RGPD}
 Un aspect important de la sécurité de l'application est la protection des données.
@@ -62,7 +62,7 @@ La solution de remplacer l'utilisateur complet risque tout de même de dégrader
 J'ai alors opté pour la troisième solution et j'ai décidé de changer uniquement les données personnelles de l'utilisateur afin de l'anonymiser sans pour autant impacter les autres utilisateurs.
 
 \subsection{GraphQL}\label{subsec:graphql}
-L'utilisation de GraphQL pour l'API du projet a été une décision qui a parfois compliqué le développement de l'application.
+L'utilisation de GraphQL pour l'\Gls{api} du projet a été une décision qui a parfois compliqué le développement de l'application.
 Plusieurs difficultés ont été rencontrées, en particulier lors de la mise en place de la base de données avec Prisma.\\
 
 Prisma et GraphQL fonctionnent tous deux sur la base d'un schéma, ce qui semble idéal en théorie.

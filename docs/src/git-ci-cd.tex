@@ -6,7 +6,7 @@ Dans le cadre de ce projet, nous avons utilisé Git comme système de gestion de
 Au début du projet, j'ai opté pour l'utilisation d'une seule branche durant la majeure partie de la première phase.
 Cette stratégie était adéquate pour répondre aux besoins initiaux du projet, en maintenant une simplicité de gestion.
 
-Toutefois, avec la publication du projet sur DockerHub et l'instauration de l'intégration et du déploiement continus (CI/CD), il est devenu clair que l'utilisation d'une seule branche n'était plus la meilleure option.
+Toutefois, avec la publication du projet sur DockerHub et l'instauration de l'intégration et du déploiement continus (\Gls{cicd}), il est devenu clair que l'utilisation d'une seule branche n'était plus la meilleure option.
 J'ai alors introduit une branche de développement distincte, permettant d'expérimenter et d'innover sans perturber la version en production.
 
 Pour la rédaction de ce rapport, j'ai également créé une branche spécifique, ce qui a permis de travailler sur la documentation sans interférer avec le code de l'application.
@@ -15,7 +15,7 @@ La gestion de l'infrastructure du projet a été organisée dans un second dép�
 Cette décision a été motivée par le fait que l'infrastructure du projet s'inspirait d'un autre projet existant que j'ai forké.
 Avoir un dépôt distinct pour l'infrastructure a permis de maintenir une séparation claire entre le code de l'application et la gestion de l'infrastructure.
 
-\subsection{Intégration et déploiement continu (CI/CD)}\label{subsec:integration-et-deploiement-continu-(ci/cd)}
+\subsection{Intégration et déploiement continu (\Gls{cicd})}\label{subsec:integration-et-deploiement-continu-(ci/cd)}
 
 L'intégration continue (CI) a été mise en oeuvre grâce à des tests automatisés sur une grande partie des composants du back-end et du front-end.
 
@@ -43,13 +43,13 @@ En ce qui concerne le déploiement continu (CD), j'utilise un conteneur Watchtow
 Watchtower vérifie également la signature du conteneur en plus de son tag, ce qui lui permet de mettre à jour un conteneur avec le tag "latest" lorsque l'image change.
 Watchtower compare régulièrement la version courante des conteneurs à celle hébergée sur DockerHub et si elles ne correspondent pas, alors le conteneur est mis à jour.
 
-\subsubsection{Tests de l'API}
-L'API est testée à travers plusieurs types de tests, principalement des tests unitaires qui se concentrent sur une fonction
-spécifique de manière isolée et des tests d'intégration qui testent l'API de bout en bout.\\
+\subsubsection{Tests de l'\Gls{api}}
+L'\Gls{api} est testée à travers plusieurs types de tests, principalement des tests unitaires qui se concentrent sur une fonction
+spécifique de manière isolée et des tests d'intégration qui testent l'\Gls{api} de bout en bout.\\
 
 Les tests d'intégration, bien qu'étant plus complexes à mettre en oeuvre, ont été particulièrement intéressants.
 Pour faciliter leur mise en place, j'ai créé un gestionnaire de tests qui, en plus des fonctions de mock, me permet de préparer l'application dans un état connu.
-Par exemple, si le test consiste à vérifier que les événements sont accessibles via l'API, le gestionnaire de tests me permet de configurer des utilisateurs, des adresses, des pays et des événements.
+Par exemple, si le test consiste à vérifier que les événements sont accessibles via l'\Gls{api}, le gestionnaire de tests me permet de configurer des utilisateurs, des adresses, des pays et des événements.
 Grâce à ce gestionnaire de tests, je peux ajouter des tests dans différents états du serveur.
 
 \subsubsection{Tests de l'interface web}
@@ -61,4 +61,4 @@ Grâce à ces outils, je peux tester l'interface utilisateur de manière directe
 
 La gestion de version a été un aspect crucial de ce projet.
 L'adoption d'une approche adaptative, passant d'une seule branche à plusieurs branches en fonction des besoins du projet, a prouvé son efficacité.
-De même, l'implémentation des pratiques de CI/CD a grandement amélioré le flux de travail et la qualité de l'application, rendant le processus de développement plus fluide et fiable.
+De même, l'implémentation des pratiques de \Gls{cicd} a grandement amélioré le flux de travail et la qualité de l'application, rendant le processus de développement plus fluide et fiable.

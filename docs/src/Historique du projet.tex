@@ -165,13 +165,13 @@ ce projet reste une riche expérience d'apprentissage.
 J'ai pu approfondir ma compréhension des outils de déploiement et d'orchestration de conteneurs et développer des compétences précieuses en matière de débogage et de résolution de problèmes.
 Malgré les difficultés rencontrées, je suis fier du travail accompli et je reste déterminé à explorer davantage Kubernetes dans le cadre de futurs projets.\\
 
-\subsubsection{le client graphql}
+\subsubsection{le client \Gls{graphql}}
 
 Comme, je l'ai mentionné dans les sections précédentes, le développement du front-end a été réalisé à l'aide d'Angular.
-Ce dernier doit interagir avec le back-end par le biais d'une API GraphQL. C'est pour cela que j'ai choisi d'utiliser Apollo Angular.\\
+Ce dernier doit interagir avec le back-end par le biais d'une \Gls{api} GraphQL. C'est pour cela que j'ai choisi d'utiliser Apollo Angular.\\
 
-Pour configurer Apollo Angular, il est nécessaire de créer un fichier graphql.module.ts contenant les configurations minimales recommandées par la documentation.
-Afin de permettre l'authentification auprès du back-end via JWT, un header doit être configuré avec le token.\\
+Pour configurer Apollo Angular, il est nécessaire de créer un fichier \Gls{graphql}.module.ts contenant les configurations minimales recommandées par la documentation.
+Afin de permettre l'authentification auprès du back-end via \Gls{jwt}, un header doit être configuré avec le token.\\
 
 Cependant, j'ai rencontré un problème : le token est géré par l'un de mes services et la configuration d'Apollo se fait hors du champ d'action de l'injection de dépendance d'Angular.
 De plus, en cas d'erreur de requête, je souhaitais pouvoir capturer cette erreur et agir différemment en fonction du message reçu.
