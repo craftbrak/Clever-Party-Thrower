@@ -87,7 +87,7 @@ je n'ai pas à configurer mon pare-feu sur mon router ni à exposer mon adresse 
 tout en garantissant la sécurité de l'application.\\
 
 De plus, lorsque l'application sera hébergée sur un cluster Kubernetes, la gestion des certificats et de la terminaison
-SSL sera effectuée par le cluster et non par un tier de confiance comme cloudflare.\\
+SSL sera effectuée par le cluster et non par un tiers de confiance comme cloudflare.\\
 
 La configuration actuelle obtenue via le playbook Ansible met déjà en place un certificat privé pour l'application, géré par Certmanager,
 ce qui le rend hautement disponible.
@@ -132,6 +132,6 @@ Dans le futur, des outils de surveillance et d'alerte pourraient être ajoutés 
         \caption{Schema reseau Logique avec Kubernetes}
         \label{fig:schemaKube}
     \end{subfigure}
-    \caption{Le sens des differents fleches represente le sens d'initialisation des connection}
+    \caption{Le sens des differentes flèches représente le sens d'initialisation des connections}
     \label{fig:schemaReseau}
 \end{figure}

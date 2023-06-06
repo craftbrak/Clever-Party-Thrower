@@ -16,10 +16,10 @@ en particulier pour la fonction de covoiturage qui nécessite le calcul de la di
 En outre, le caractère open source de PostgreSQL, sa réputation solide et ses performances de haut niveau en font un choix idéal pour mon projet.
 Sa compatibilité avec de nombreux langages de programmation et ORMs, dont TypeOrm que j'ai utilisé pour le développement de l'application, a consolidé ce choix.
 
-\subsubsection{Justification du choix d'une base de données relationnelle}\label{subsubsec:justification-choix-relational-db}
-Le choix d'une base de données relationnelle pour le projet Clever Party Thrower repose sur plusieurs raisons.
+\subsubsection{Justification du choix d'une base de données relationnelles}\label{subsubsec:justification-choix-relational-db}
+Le choix d'une base de données relationnelles pour le projet Clever Party Thrower repose sur plusieurs raisons.
 Tout d'abord, les données de l'application sont structurées et présentent de nombreuses relations entre elles.
-Une base de données relationnelle, comme PostgreSQL, est idéale pour gérer ce type de données.
+Une base de données relationnelles, comme PostgreSQL, est idéale pour gérer ce type de données.
 De plus, les bases de données relationnelles fournissent des mécanismes de transactions puissants, ce qui est crucial pour maintenir
 l'intégrité des données lors de l'exécution des opérations \Gls{crud}. Enfin,
 PostgreSQL supporte l'ACIDité (Atomicité, Cohérence, Isolation, Durabilité), ce qui garantit que toutes les transactions sont traitées de manière fiable.\\
@@ -41,7 +41,7 @@ La structure de la base de données est illustrée dans la figure dans la sectio
 Cette structure a été conçue pour garantir une exécution efficace des opérations de la base de données, tout en assurant la cohérence et l'intégrité des données.
 Elle comporte plusieurs tables, dont chaque instance contient des informations pertinentes et est liée à d'autres tables pour créer des relations significatives entre les différentes données.\\
 
-Voici une brève description ce chaque table de la basse de donnees
+Voici une brève description de chaque table de la base de données
 \begin{itemize}
     \item address : Contient des informations sur les adresses.
     Chaque instance d'adresse est liée à une instance de " country " (via " countryId ") et à une instance de " user\_entity" (via "ownerId").\\
@@ -72,7 +72,7 @@ Voici une brève description ce chaque table de la basse de donnees
     Chaque instance est liée à une instance de "address" (via "addressId").\\
 \end{itemize}
 
-Le schema est disponible ici\ref{fig:dbSchema}% todo: fix image pracement and ref
+Le schéma est disponible avec la figure\ref{fig:dbSchema}% todo: fix image pracement and ref
 
 \subsection{Gestion des transactions et de la concurrence}\label{subsec:transaction-concurrency}
 Pour gérer la concurrence et assurer l'intégrité des transactions, PostgreSQL utilise un modèle MVCC (Multi-Version Concurrency Control).
@@ -81,13 +81,13 @@ De plus, PostgreSQL supporte les propriétés \Gls{acid}, ce qui garantit que to
 
 \subsection{Sécurité de la base de données}\label{subsec:database-security}
 La sécurité de la base de données a été un aspect crucial de la conception du système.
-PostgreSQL offre une gamme de fonctionnalités pour la gestion des accès, ce qui nous a permis de définir des rôles et des permissions uniquement pour le back-end, ce dernier est le seul a avoir access a la base de donnée .
-De plus, toutes les données sensibles sont chiffrées à l'aide de protocoles de sécurité robustes via argon2 avant d'etre inserée dans la base de donnée.
-Enfin, des mesures on ete mise en place pour prévenir les injections \Gls{sql} via typeORM qui utilise des requêtes paramétrées et évite l'interpolation de chaînes dans nos requêtes.\\
+PostgreSQL offre une gamme de fonctionnalités pour la gestion des accès, ce qui nous a permis de définir des rôles et des permissions uniquement pour le back-end, ce dernier est le seul à avoir accès à la base de données .
+De plus, toutes les données sensibles sont chiffrées à l'aide de protocoles de sécurité robustes via argon2 avant d'être insérée dans la base de données.
+Enfin, des mesures ont été mise en place pour prévenir les injections \Gls{sql} via typeORM qui utilisent des requêtes paramétrées et évitent l'interpolation de chaînes dans nos requêtes.\\
 
 \subsection{Performance et optimisation}\label{subsec:performance-optimization}
 Afin d'optimiser les performances de la base de données, nous avons utilisé plusieurs techniques.
-Par exemple, l'indexation est mise en place pour accélérer les requêtes sur des tables avec de grands volumes de données grace a typeORM\@.
+Par exemple, l'indexation est mise en place pour accélérer les requêtes sur des tables avec de grands volumes de données grâce à typeORM\@.
 De plus, PostgreSQL utilise un mécanisme de cache efficace qui améliore la vitesse d'exécution des requêtes fréquentes.\\
 
 \subsection{Stratégies de sauvegarde et de restauration}\label{subsec:backup-restore}
@@ -100,7 +100,7 @@ Par exemple, le choix entre une sauvegarde sur site, hors site ou dans le cloud,
 des capacités de stockage disponibles et des exigences en matière de temps de récupération.\\
 
 Malgré l'absence d'un mécanisme de sauvegarde intégré dans le projet, une stratégie de sauvegarde est néanmoins mise en place dans mon infrastructure.
-Plus précisément, j'ai mis en place un mécanisme de sauvegarde des volumes des conteneurs, ce qui inclut par conséquent aussi les données de PostgreSQL.
+Plus précisément, j'ai mis en place un mécanisme de sauvegarde des volumes des conteneurs, ce qui par conséquent inclut aussi les données de PostgreSQL.
 Les fichiers de sauvegarde, qui incluent les données de la base de données ainsi que d'autres données d'application, sont stockés de manière sécurisée dans un emplacement de sauvegarde dédié.\\
 
 Pour une restauration en cas de besoin, ces fichiers de sauvegarde peuvent être utilisés pour rétablir l'état de l'application à un état précédent.

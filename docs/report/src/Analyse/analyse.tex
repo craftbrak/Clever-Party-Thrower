@@ -1,7 +1,7 @@
 %! Author = louis
 %! Date = 28-10-22
 
-\subsection{Aspects technologique}\label{subsec:aspects-technologique}
+\subsection{Aspects technologiques}\label{subsec:aspects-technologiques}
 Le projet ayant comme contrainte principale d'être disponible sur toutes les plateformes majeures, une base web me paraît évidente.
 Pourtant, le web implique aussi la limitation principale qu'est le besoin de connexion permanente au serveur.\\
 
@@ -18,9 +18,9 @@ Toute application web nécessite plusieurs composants:
     \item Une interface utilisateur
     \subitem un gestionnaire de données
     \subitem un gestionnaire de requêtes
-    \subitem une libraire de composant graphique
+    \subitem une libraire de composants graphiques
     \item Une Couche de calculs applicatifs et de persistance de données
-    \subitem Une Base de Donnée
+    \subitem Une Base de données
     \subitem Un \Gls{orm}
     \subitem Une \Gls{api} définie
 %    \subitem Un système de matching pour le covoiturage
@@ -47,10 +47,10 @@ Pour toutes ces raisons, TypeScript est le langage idéal pour le développement
 
 \subsubsection{Front-end}\label{subsec:front-end}
 Pour ce qui est de l'interface utilisateur ( le front-end ) j'ai décidé d'utiliser Angular car ce framework utilise TypeScript nativement tout en supportant aussi les PWA\@.
-Angular étant un framework orienté, il m'oblige aussi à suivre une architecture propre qui permet de rendre independents les différents composants du projet .
+Angular étant un framework orienté, il m'oblige aussi à suivre une architecture propre qui permet de rendre independants les différents composants du projet .
 
 \paragraph{Gestion des données}
-Pour conserver les données hors ligne et facilité l'accès à des données à jour lors d'une connexion j'ai décidé d'utiliser NgRx.
+Pour conserver les données hors ligne et faciliter l'accès à des données à jour lors d'une connexion j'ai décidé d'utiliser NgRx.
 Ce dernier est un framework de gestion de données qui simplifie l'accès et le caching de données
 
 \paragraph{Gestionnaire des requêtes}
@@ -58,10 +58,10 @@ Lorsque l'on veut interagir avec une \Gls{api} \Gls{graphql} il est préférable
 
 Il existe une multitude de clients GraphQl mais le plus populaire et le mieux documenté reste Apollo.
 De plus il existe un wrapper pour le client Apollo qui l'intègre dans Angular nommé Apollo Angular.
-Je vais donc utiliser cette librairie pour récupérer mes données au pres de mon serveur .
+Je vais donc utiliser cette librairie pour récupérer mes données auprès de mon serveur .
 
 \paragraph{librairie \Gls{css}}
-Utiliser une librairie de composants permet de simplifier la création de l'interface grâce à des blocks de construction appelé composants\@.
+Utiliser une librairie de composants permet de simplifier la création de l'interface grâce à des blocks de construction appelés composants\@.
 Angular permet d'utiliser des librairies de composants avec leur propre logique, structure, et \Gls{css}\@.
 Ces librairies fournissent aussi un ensemble de classe \Gls{css} pour rendre nos propres composants jolis.\\
 De plus, elles permettent de rendre notre application responsive sans devoir y penser pour chaque composant.
@@ -72,10 +72,10 @@ Il existe plusieurs librairies majeures, les principales sont:
     \item NgBootstrap
 \end{itemize}
 Angular Material est la librairie officielle, elle est d'origine Google,
-offre beaucoup de composants différents en plus de plusieurs composants de layout qui permettent de d'organiser d'autres composants sur la page.\\\\
+offre beaucoup de composants différents en plus de plusieurs composants de layout qui permettent d'organiser d'autres composants sur la page.\\\\
 
-PrimeNg offre aussi un grand nombre de composants, mais n'offre pas de layout par contre,
-PrimeNg permet d'utiliser un autre thème que Material.\\\\
+PrimeNg offre aussi un grand nombre de composants, mais n'offre pas de layout.
+Par contre, PrimeNg permet d'utiliser un autre thème que Material.\\\\
 NgBootstrap est un simple wrapper pour Bootstrap \Gls{css} et propose tous les composants de bootstrap.
 Vu que mon objectif final serait de créer une PWA qui sera installable sur Android,
 utiliser un thème similaire à ceux des applications Google intégrera mieux l'application.
@@ -86,51 +86,51 @@ Cependant, le back-end sera aussi responsable des calculs d'équilibrage des dé
 
 Connaissant déjà Express.js et Spring (Kotlin) je me suis naturellement tourné vers ces derniers, néanmoins je désirais utiliser du TypeScript pour ce projet.
 Express.js est compatible avec TypeScript mais Spring ne l'est pas.
-Express.js est leger, minimaliste et propose une bonne documentation,
+Express.js est léger, minimaliste et propose une bonne documentation,
 Spring est généraliste propose des outils de génération de code et utilise un système d'injection de dépendance.\\
 
 Ce qu'il me fallait était une hybride entre Spring et Express.js.
-Après quelque recherches, j'ai trouvé un framework appelé Nest.js, ce dernier supporte nativement TypeScript, propose une excellente documentation,
-propose un CLI permettant de générer du code boiler-plate, reste simple et leger, utilise de l'injection de dépendance et est très utilisé et apprécié par d'autres développeurs.
+Après quelques recherches, j'ai trouvé un framework appelé Nest.js, ce dernier supporte nativement TypeScript, propose une excellente documentation,
+un CLI permettant de générer du code boiler-plate, reste simple et léger, utilise de l'injection de dépendance et est très utilisé et apprécié par d'autres développeurs.
 J'ai donc décidé d'utiliser Nest.Js pour ce projet.
 
 \paragraph{\Gls{orm}}
 Nest.Js (que je vais appeler Nest à partir de maintenant) n'est pas un framework batteries included comme le sont Spring ou Laravel,
-Il m'a alors fallu choisir aussi un \Gls{orm} pour interfacer avec ma base de données.
+J'ai dû choisir un \Gls{orm} pour interfacer avec ma base de données.
 Dans la Documentation de Nest, il y a des exemples de configuration avec les \Gls{orm} les plus utilisés avec Nest et TypeScrip.
 Ces derniers sont Sequelize, TypeOrm ainsi que Prisma.
-Ayant eu une experience avec Sequelize plutôt mauvaise lors de mon projet de dev3, j'ai décidé de regarder du côté de prisma.\\
+Ayant eu une expérience plutôt mauvaise avec Sequelize lors de mon projet de dev3, j'ai décidé de regarder du côté de prisma.\\
 
-Prisma est une \Gls{orm} un peu particulière dans le sens où il propose d'utiliser un schema prisma pour définir ses entités au lieu d'utiliser du code TypeScript.
-Cella me paraissait une très bonne chose vu que prisma générait alors lui-même les différents DTO nécessaires.
-Il s'est cependant avéré qu'à l'utilisation prisma n'est pas l'idéale surtout lorsque l'on désire le coupler à une \Gls{api} graphQl.\\
+Prisma est une \Gls{orm} un peu particulière dans le sens où il propose d'utiliser un schéma prisma pour définir ses entités au lieu d'utiliser du code TypeScript.
+Cela me paraissait une très bonne chose vu que prisma génère alors lui-même les différents DTO nécessaires.
+Il s'est cependant avéré qu'à l'utilisation, prisma n'était pas l'idéal surtout lorsque l'on désire le coupler à une \Gls{api} graphQl.\\
 
-À cause de son schema particulier, je devais définir le forma de mes entités à 2 endroits et tout de même créer manuellement mes DTO\@.
-Sans compter que les opérations de \Gls{crud} dans les entités étaient rendues très complexe dû aux liens entre elles et que Prisma ne permet pas d'utiliser des identifiants.\\\\
-J'ai donc décidé de jeter un oeil à TypeOrm, celui-ci propose de définir les entités via des annotations TypeScript.
-Ce qui me permet d'utiliser une seule classe pour définir mon entité d'\Gls{orm} et de graphQl de plus TypeOrm est mieux
-documenté gràce au support d'une communauté plus large.
+Schéma particulier, m'obligeais à définir le format de mes entités à 2 endroits et à créer manuellement mes DTO\@.
+De plus les opérations de \Gls{crud} entres les entités étaient rendues très complexe dû aux liens entre elles, vu que Prisma ne permet pas d'utiliser des identifiants.\\\\
+Je me suis tourné vers TypeOrm.
+Celui-ci propose de définir les entités via des annotations TypeScript, ce qui me permet d'utiliser une seule classe pour définir mon entité d'\Gls{orm} et de graphQl.
+De plus, TypeOrm est mieux documenté grâce au support d'une communauté plus large.
 
 \paragraph{L'\Gls{api} back end}
-Il existe plusieurs types d'\Gls{api} très utilisées pour le Back-end, mais les plus populaires sont le \Gls{rest} et le SOAP\@.
-SOAP est de moins en moins utilisé dû à la complexité intrinsèque du xml et à sa lourdeur.\\\\
+Il existe plusieurs types d'\Gls{api} très utilisées pour le Back-end, mais les plus populaires sont le \Gls{rest} et le SOAP.\@.
+Ce dernier est de moins en moins utilisé dû à la complexité intrinsèque du xml et à sa lourdeur.\\\\
 Il nous reste alors \Gls{rest} qui est une bonne solution, mais nécessite pour presque chaque requête de récupérer des données qui ne seront pas toujours consommées par le client.
-Avec Rest lorsque l'on récupère une entité complete tous les champs sont renvoyés.
-C'est pour cela que graphQl a été crée, non seulement graphQL utilise un typage fort via un schema défini et exposé par le serveur,
+Avec Rest lorsque l'on récupère une entité complète tous les champs sont renvoyés.
+C'est pour cela que graphQl a été crée, non seulement graphQL utilise un typage fort via un schéma défini et exposé par le serveur,
 mais en plus \Gls{graphql} permet de ne récupérer que les champs nécessaires au client grace au \Gls{graphql} .
 
-\paragraph{La base de donnée}
-Ma base de donnée devait me permettre 2 choses, stocker des données géographiques et faire des operations sur ces données.
+\paragraph{La base de données}
+Ma base de données devait me permettre 2 choses, stocker des données géographiques et faire des opérations sur ces données.
 Le seul choix qui s'offrait à moi compatible avec TypeOrm était Postgres avec une extension nommée POSTGIS\@.
-Postgres est une base de donnée très utilisée en production, très performante et stable.
+Postgres est une base de données très utilisée en production, très performante et stable.
 
-\paragraph{Structure de donnée}
-Pour stocker toutes les données nécessaires au fonctionnement de l'application, il nous faut une structure de donnée cohérente.
-Un schema de la structure de la base de donnée est disponible avec la figure\ref{fig:dbSchema}
+\paragraph{Structure de données}
+Pour stocker toutes les données nécessaires au fonctionnement de l'application, il nous faut une structure de données cohérente.
+Un schéma de la structure de la base de données est disponible avec la figure\ref{fig:dbSchema}.
 
 
 \begin{figure}[htbp]
-    \includegraphics[width=\linewidth]{./images/dbShema}\caption{Architecture de la base de donnée}\label{fig:dbSchema}
+    \includegraphics[width=\linewidth]{./images/dbShema}\caption{Architecture de la base de données}\label{fig:dbSchema}
     \centering
 \end{figure}
 
@@ -174,7 +174,7 @@ Un simple script shell aurait pu être utilisé, mais il ne serait pas agnostiqu
 Par exemple, si une commande demande de créer le répertoire /home/foo mais qu'il existe déjà, le script shell échouerait.
 En revanche, Ansible poursuivra son exécution sans problème, car pour lui, si le répertoire existe déjà, cela signifie que l'objectif est atteint.\\
 
-\subsection{Aspect non technologique}\label{subsec:aspect-non-technologique}
+\subsection{Aspect non technologiques}\label{subsec:aspect-non-technologiques}
 
 \subsubsection{Tests unitaires et tests d'intégration}
 
@@ -184,7 +184,7 @@ Ces tests permettent de vérifier le bon fonctionnement des fonctionnalités ind
 \subsubsection{Sécurité et confidentialité}
 
 \paragraph{Sécurité}
-L'application n'utilise pas \Gls{https} vu que cela nécessiterait des certificates SSL, cependant il est vivement conseiller d'utiliser un reverse proxy pour réaliser la terminaison SSL.\\
+L'application n'utilise pas \Gls{https} vu que cela nécessiterait des certificats SSL, il est cependant vivement conseiller d'utiliser un reverse proxy pour réaliser la terminaison SSL.\\
 Néanmoins, les mots de passe sont chiffrés et salés avant d'être stockés en base de données grâce à Argon2.\\
 
 Angular et NestJs permettent d'empêcher les attaques de type \Gls{sql} injection. \\
@@ -192,7 +192,7 @@ Angular et NestJs permettent d'empêcher les attaques de type \Gls{sql} injectio
 En ce qui concerne les attaques de type DoS ou DDoS, aucune protection n'est mise en place au niveau applicatif, car il est plus simple d'implémenter cette sécurité au niveau du réseau.\\\\
 
 \paragraph{GDPR}
-En ce qui concerne le GDPR, aucune donnée récoltée n'est revendue ni redistribuée.\\
+En ce qui concerne le GDPR, aucune données récoltée n'est revendue ni redistribuée.\\
 
 Seules les données fournies directement par les utilisateurs via les formulaires sont récoltées et utilisées uniquement dans l'application.
 Ces données peuvent être supprimées définitivement avec une simple requête à l'\Gls{api}\@.
@@ -223,7 +223,7 @@ Focalboard a été choisi comme outil de gestion de projet.
 Il est très similaire à Trello, mais il est open-source et est auto-hébergé sur mon serveur.
 Cela permet de suivre l'évolution du projet et de gérer les tâches à accomplir efficacement.\\
 
-De plus le code sera gere au moyen de repository git
+Le code sera géré au moyen de repository git
 
 \subsubsection{Modularité et évolutivité}
 
