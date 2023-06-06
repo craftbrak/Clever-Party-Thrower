@@ -1,24 +1,167 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 
 \usepackage{graphicx}
+\usepackage{hyperref}
 
-\title{Your Presentation Title}
-\author{Your Name}
+\title{Clever Party Thrower}
+
+\author{Louis De Wilde}
 \date{\today}
 
 \begin{document}
 
     \frame{\titlepage}
+    \begin{frame}
+        \frametitle{Un peu de contexte}
+        \begin{itemize}
+            \item Quel est le problème ?
+            \item Qui a ce problème ?
+        \end{itemize}
+        Objectif de l'application
+        Simplifier la création d'événements
+        \begin{itemize}
+            \item Faciliter le choix d'une date
+            \item Répartir le coût d'un événement entre les participants
+            \item Toutes les informations sur un événement au même endroit
+            \item L'application peut être déployée on-premise
+        \end{itemize}
+    \end{frame}
 
     \begin{frame}
-        \frametitle{Technologies Used}
+        \frametitle{À qui s'adresse le projet ?}
+        \begin{itemize}
+            \item Des particuliers qui souhaitent organiser des événements
+            \item Des petits organisateurs d'événements par exemple un cercle étudiant
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Pourquoi utiliser Clever Party Thrower et pas d'autres applications ?}
+        \begin{itemize}
+            \item Tout au même endroit
+            \item Respectueux de la vie privée
+            \item Open Source
+            \item Simple d'accès
+            \item Gratuit
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Technologies utilisées \& Analyse}
         \begin{figure}[h]
             \centering
-            \includegraphics[width=0.2\textwidth]{logo1.png}
-            \includegraphics[width=0.2\textwidth]{logo2.png}
-            \includegraphics[width=0.2\textwidth]{logo3.png}
-            \includegraphics[width=0.2\textwidth]{logo4.png}
-        \end{figure}
+%            \includegraphics[width=0.15\textwidth]{imgs/Angular}
+%            \includegraphics[width=0.1\textwidth]{imgs/Ansible}
+%            \includegraphics[width=0.15\textwidth]{imgs/Docker}
+%            \includegraphics[width=0.15\textwidth]{imgs/Kube}
+%            \includegraphics[width=0.1\textwidth]{imgs/cermanager}
+%            \includegraphics[width=0.1\textwidth]{imgs/apollo}
+%            \includegraphics[width=0.1\textwidth]{imgs/argo}
+%            \includegraphics[width=0.1\textwidth]{imgs/Cloudflare}
+%            \includegraphics[width=0.1\textwidth]{imgs/watchtower}
+%            \includegraphics[width=0.1\textwidth]{imgs/Typescript}
+%            \includegraphics[width=0.1\textwidth]{imgs/TypeOrm}
+%            \includegraphics[width=0.1\textwidth]{imgs/Traefik}
+%            \includegraphics[width=0.1\textwidth]{imgs/totp}
+%            \includegraphics[width=0.1\textwidth]{imgs/SCSS}
+%            \includegraphics[width=0.1\textwidth]{imgs/rxjs}
+%            \includegraphics[width=0.1\textwidth]{imgs/rancher}
+%            \includegraphics[width=0.1\textwidth]{imgs/proxmox}
+%            \includegraphics[width=0.1\textwidth]{imgs/prisma}
+%            \includegraphics[width=0.1\textwidth]{imgs/Postgres.svg}
+%            \includegraphics[width=0.1\textwidth]{imgs/passport}
+%            \includegraphics[width=0.1\textwidth]{imgs/Openstreetmap}
+%            \includegraphics[width=0.1\textwidth]{imgs/nodejs}
+%            \includegraphics[width=0.1\textwidth]{imgs/nginx}
+%            \includegraphics[width=0.15\textwidth]{imgs/NestJS}
+%            \includegraphics[width=0.1\textwidth]{imgs/metalLb}
+%            \includegraphics[width=0.1\textwidth]{imgs/k3s}
+%            \includegraphics[width=0.1\textwidth]{imgs/longhorn}
+%            \includegraphics[width=0.1\textwidth]{imgs/letsencrypt}
+%            \includegraphics[width=0.1\textwidth]{imgs/kube-vip}
+%            \includegraphics[width=0.1\textwidth]{imgs/joi}
+%            \includegraphics[width=0.1\textwidth]{imgs/html}
+%            \includegraphics[width=0.1\textwidth]{imgs/helm}
+%            \includegraphics[width=0.1\textwidth]{imgs/gql}
+%            \includegraphics[width=0.1\textwidth]{imgs/github}
+%            \includegraphics[width=0.15\textwidth]{imgs/gitAction}
+%            \includegraphics[width=0.1\textwidth]{imgs/falso}
+%            \includegraphics[width=0.1\textwidth]{imgs/ESLint}
+%            \includegraphics[width=0.1\textwidth]{imgs/dicebear}
+%            \includegraphics[width=0.1\textwidth]{imgs/docker-compose}
+            \includegraphics[width=1\textwidth]{imgs/used tech}\label{fig:figure}
+        \end{figure} %sur base des criteres j'ai decide que une web app cosrespondais , j'ai decider d'utiliser un maximum de technologie affin de rendre le projet robuste et facile a ameliorer/modifier
+    \end{frame}
+
+
+
+    \begin{frame}
+        \frametitle{Développement de l'API}
+%        Le backend est la partie qui a demandé le plus de travail
+        \begin{itemize}
+            \item GraphQL
+            \item TypeORM
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}%        Les concept d'integration, de deploiement et de gitops on ete implementer tout au long du projet
+        \frametitle{Aspect DevOps}
+        \begin{itemize}
+            \item Intégration continue
+            \item Déploiement continu
+            \item GitOps
+            \item Infrastructure as Code
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Hébergement}
+        \begin{itemize}
+            \item Docker & Docker-compose
+            \item Kubernetes
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Interface utilisateur}
+        \begin{itemize}
+            \item Angular
+            \item RxJs
+            \item Apollo
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Sécurité, vie privée et législation}
+        \begin{itemize}
+            \item Chiffrement et authentification
+            \item Contremesures
+            \subitem Injection SQL,
+            \subitem SSL et HTTPS,
+            \item RGPD
+            \subitem Gestion des données
+            \subitem Minimum de données
+            \subitem Suppression des données
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Petite démo}
+        L'application est disponible a l'url https://cpt.louisdewilde.be
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Améliorations futures}
+        \begin{itemize}
+            \item Ajout de nouvelles fonctionnalités
+            \item Amelioration de l'interface web
+            \item Déploiement de l'application avec Kubernetes
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \centering
+        \frametitle{Place à vos questions}
     \end{frame}
 
 \end{document}
