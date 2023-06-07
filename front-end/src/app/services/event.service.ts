@@ -637,7 +637,7 @@ export class EventService {
     const mut = gql`
     query Event($eventId: String!) {
       event(id: $eventId) {
-        id
+         id
         name
         description
         address {
@@ -649,6 +649,10 @@ export class EventService {
             name
             id
           }
+          id
+        }
+        selectedDate {
+          date
           id
         }
       }

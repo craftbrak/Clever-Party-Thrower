@@ -14,6 +14,10 @@ export type EventData = {
       },
       id: string,
     },
+    selectedDate: {
+      date: Date
+      id: string
+    }
   },
 };
 
