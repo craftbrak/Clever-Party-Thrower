@@ -46,7 +46,10 @@ export class EventToUser extends Node {
   user!: UserEntity;
 
   @Field(() => Address, { nullable: true })
-  @ManyToOne(() => Address)
+  @ManyToOne(() => Address, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn([{ name: "addressString", referencedColumnName: "id" }])
   address: Address;
 
@@ -61,7 +64,10 @@ export class EventToUser extends Node {
   })
   role: UserRole;
   @Field(() => [DatesToUser], { nullable: true })
-  @OneToMany(() => DatesToUser, (dateToUser) => dateToUser.eventToUser)
+  @OneToMany(() => DatesToUser, (dateToUser) => dateToUser.eventToUser, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   availableDates: DatesToUser[];
 
   @Field(() => Float)

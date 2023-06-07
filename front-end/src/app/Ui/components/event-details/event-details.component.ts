@@ -53,6 +53,9 @@ export class EventDetailsComponent implements OnInit {
   deleteEvent() {
     this.eventService.deleteEvent(this.eventId!).subscribe(value => {
       console.log(value)
+      if (value) {
+        window.location.reload()
+      }
     })
   }
 
