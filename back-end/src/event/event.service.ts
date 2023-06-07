@@ -102,6 +102,12 @@ export class EventService {
       event.selectedDate = date;
       this.logger.log(`updating event with ${updateEventInput.selectedDateId}`);
     }
+    if (updateEventInput.addressId) {
+      event.addressId = updateEventInput.addressId;
+      event.address = await this.addressService.findOne(
+        updateEventInput.addressId,
+      );
+    }
     const out = await this.eventRepo.save(event);
     return out;
   }

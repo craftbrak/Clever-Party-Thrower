@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Address} from "../../../../entities/address.entity";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
@@ -31,21 +31,19 @@ import {Observable, startWith, Subject, switchMap, tap} from "rxjs";
     ])
   ]
 })
-export class AddressSelectionFormComponent implements OnInit, OnDestroy {
+export class AddressSelectionFormComponent implements OnInit, OnDestroy, OnChanges {
   // @Input() addresses: Address[] = [];
   address$: Observable<Address[]>
   addressRefreshTrigger$: Subject<void>
   @Output() valid = new EventEmitter<boolean>();
   @Output() selectedAddress = new EventEmitter<Address>();
   @Output() addNewAddress = new EventEmitter<void>();
-
+  @Input() addressId ?: string = ''
   addressSelectionForm: FormGroup;
   selectedAddressId: string = '';
   showAddAddressForm = false;
   addressCreateValid = false;
-
   cols: number | undefined;
-
   private resizeObserver: ResizeObserver | undefined;
   private addressess: Address[] | undefined;
 
@@ -73,6 +71,13 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["addressId"] && this.addressId) {
+      // this.addressSelectionForm.get("addressId")?.patchValue(this.addressId)
+      // this.selectedAddressId = this.addressId!
+    }
+  }
+
   ngOnInit() {
     this.updateCols(window.innerWidth);
     this.resizeObserver = new ResizeObserver(entries => {
@@ -81,6 +86,8 @@ export class AddressSelectionFormComponent implements OnInit, OnDestroy {
         this.updateCols(width);
       }
     });
+    this.addressSelectionForm.get("addressId")?.patchValue(this.addressId)
+    this.selectedAddressId = this.addressId!
     this.resizeObserver.observe(document.body);
     // if (this.addresses.length > 0) {
     //   this.selectedAddressId = this.addresses[0].id;

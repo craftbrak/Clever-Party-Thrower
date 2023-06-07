@@ -23,6 +23,7 @@ export class AddressService {
       createAddress(createAddressInput: $input) {
         id
         country {
+        id
           name
           code
         }
@@ -38,6 +39,7 @@ export class AddressService {
       addresses {
         id
         country {
+        id
           name
           code
         }

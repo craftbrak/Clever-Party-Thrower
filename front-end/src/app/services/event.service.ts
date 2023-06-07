@@ -89,6 +89,7 @@ const GET_USER_EVENT_DATA = gql`
           address {
             country{
               code
+              id
             }
             city
           }
@@ -661,11 +662,48 @@ export class EventService {
       query: mut,
       variables: {
         eventId: eventId
-      }
+      },
+      fetchPolicy: "network-only"
     }).valueChanges.pipe(map(value => value.data))
   }
 
-  getparticipants(eventId: string) {
+  getparticipants() {
 
+  }
+
+  deleteEvent(id: string) {
+    const mut = gql`
+      mutation RemoveEvent($id: String!) {
+        removeEvent(id: $id)
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        id: id
+      }
+    })
+
+  }
+
+  updateEvent(eventId: string, description?: string, addressId?: string, name?: string) {
+    const mut = gql`
+      mutation UpdateEvent($input: UpdateEventDto!) {
+        updateEvent(updateEventInput: $input) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        input: {
+          description: description,
+          name: name,
+          addressId: addressId,
+          id: eventId
+        }
+      }
+    })
   }
 }
