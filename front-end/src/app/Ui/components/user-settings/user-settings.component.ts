@@ -176,4 +176,8 @@ export class UserSettingsComponent {
   open2FaSetup() {
     this.router.navigate(["/setup2fa"])
   }
+
+  disable2FaSetup() {
+    this.authService.disable2fa().subscribe()
+  }
 }

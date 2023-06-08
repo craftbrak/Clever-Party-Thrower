@@ -50,6 +50,9 @@
     <button (click)="open2FaSetup()" *ngIf="!authService.user?.isTwoFactorEnable" color="accent" mat-raised-button
             style="width: fit-content">Enable 2Fa
     </button>
+    <button (click)="disable2FaSetup()" *ngIf="authService.user?.isTwoFactorEnable" color="warn" mat-raised-button
+            style="width: fit-content">Enable 2Fa
+    </button>
 
   </div>
 

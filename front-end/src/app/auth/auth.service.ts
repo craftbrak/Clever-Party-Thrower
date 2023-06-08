@@ -330,4 +330,13 @@ export class AuthService {
       }
     })
   }
+
+  disable2fa() {
+    const mut = gql`mutation Mutation {
+      disable2fa
+    }`
+    return this.apollo.mutate({
+      mutation: mut
+    })
+  }
 }

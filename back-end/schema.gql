@@ -285,7 +285,6 @@ type Query {
   countries: [Country!]!
   country(Code: String!): Country!
   logout: Boolean!
-  disable2fa: Boolean!
   user(email: String!): UserEntity!
   countEvents: Int!
   eventToUser(id: String!): EventToUser!
@@ -318,6 +317,7 @@ type Mutation {
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
   enable2faStep1: String!
   enable2faStep2(twoFaCode: String!): AuthOutputDto!
+  disable2fa: Boolean!
   verifyEmail(VerifyEmailDTO: VerifyEmailDto!): Boolean!
   RequestResetPasswordEmail(email: String!): Boolean!
   resetPassword(PassWordRestDTO: PasswordResetDto!): Boolean!

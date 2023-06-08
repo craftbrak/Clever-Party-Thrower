@@ -74,7 +74,7 @@ export class AuthResolver {
     return false;
   }
 
-  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   async disable2fa(@CurrentUser() user: UserEntity): Promise<boolean> {
     await this.authService.disable2fa(user);
     return true;
