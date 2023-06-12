@@ -27,6 +27,7 @@
     "@dicebear/collection": "^6.0.2",
     "@dicebear/core": "^6.0.2",
     "@ngneat/tailwind": "^7.0.3",
+    "@techiediaries/ngx-qrcode": "^9.1.0",
     "apollo-angular": "^3.0.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

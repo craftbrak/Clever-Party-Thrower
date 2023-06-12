@@ -12,7 +12,7 @@
         <mat-icon>event_available</mat-icon>
         <span> Date</span>
       </ng-template>
-      <app-date-selection [isOwner]="!false"></app-date-selection>
+      <app-date-selection></app-date-selection>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
@@ -42,11 +42,35 @@
         <span> Details</span>
       </ng-template>
       <div *ngIf="eventInfo$|async as eventInfo" class="details">
-        <div class="desciption"> {{eventInfo.event.description}}</div>
+        <div class="desciption">
+          <div *ngIf="!isEditing" class="description-text">
+            {{description}}
+          </div>
+          <mat-form-field *ngIf="isEditing" class="description-text">
+            <input [(ngModel)]="description" matInput>
+          </mat-form-field>
+          <div>
+            <button (click)="editEvent()" mat-icon-button>
+              <mat-icon>{{isEditing ? 'save' : 'edit'}}</mat-icon>
+            </button>
+            <button (click)="deleteEvent()" *ngIf="isEditing" mat-button>
+              Delete Event
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </div>
+
+
+        </div>
         <div>
-          <app-address-card [address]="eventInfo.event.address"></app-address-card>
+          <app-address-card *ngIf="!isEditing" [address]="eventInfo.event.address"></app-address-card>
+          <app-address-selection-form (selectedAddress)="updateAddressId($event)" *ngIf="isEditing"
+                                      [addressId]="addressId"></app-address-selection-form>
+        </div>
+        <div class="desciption">
+          {{eventInfo.event?.selectedDate?.date | date}}
         </div>
       </div>
+
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -7,9 +7,10 @@ import * as argon2 from "argon2";
 import { ConfigService } from "@nestjs/config";
 import { JWTPayload } from "./jwtPayload.interface";
 import { AuthRefreshDto } from "./dto/auth-refresh.dto";
-import { authenticator } from "otplib";
+// import { totp } from "otplib";
 import { VerifyEmailDto } from "./dto/verify_email.dto";
 import { EmailService } from "../email/email.service";
+import * as speakeasy from "speakeasy";
 
 @Injectable()
 export class AuthService {
@@ -30,9 +31,6 @@ export class AuthService {
     if (user && (await argon2.verify(user.password, pass))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
-      if (user.is2faEnabled) {
-        return null;
-      }
       return result;
     }
     return null;
@@ -71,43 +69,55 @@ export class AuthService {
 
   async enable2FA(user: UserEntity, status: boolean, code: string) {
     if (status === true) {
-      if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
+      if (this.verify2fa(user, code)) {
         await this.userService.enable2fa(user.id, status);
+        return true;
       }
+      return false;
     }
+    return false;
   }
 
-  async setup2FA(usr: UserEntity) {
+  verify2fa(user: UserEntity, code: string) {
+    if (user.is2faEnabled) {
+      return speakeasy.totp.verify({
+        secret: user!.twoFaKey,
+        encoding: "base32",
+        token: code,
+      });
+    } else return false;
+  }
+
+  /**
+   * This function generates a key and send it to the user so that he can setup 2fa but deos not require set the 2fa as enabled for that the user must query step 2
+   **/
+  async setup2faStep1(usrp: JWTPayload) {
+    const usr = await this.userService.findOneById(usrp.id);
     if (usr.is2faEnabled) {
       return false;
     }
-    const secret = authenticator.generateSecret();
     const appName = this.configService.get(
       "TWO_FACTOR_AUTHENTICATION_APP_NAME",
     );
-    const otpUrl = authenticator.keyuri(usr.name, appName, secret);
-    await this.userService.set2FAKey(usr.id, secret);
+    const secret = speakeasy.generateSecret({ name: appName });
+
+    const otpUrl = secret.otpauth_url;
+    await this.userService.set2FAKey(usr.id, secret.base32);
     return otpUrl;
   }
 
   async login(user: UserEntity | null, code: string): Promise<AuthOutputDto> {
-    let verified = false;
     if (!user)
       return {
         invalidCredentials: true,
         refreshToken: "",
         accessToken: "",
       };
-    if (user?.is2faEnabled) {
-      if (authenticator.verify({ secret: code, token: user!.twoFaKey })) {
-        verified = true;
-      }
-    }
     const payload: JWTPayload = {
       id: user.id,
       email: user.email,
       name: user.name,
-      isTwoFaAuthenticated: verified,
+      isTwoFaAuthenticated: this.verify2fa(user, code),
       isTwoFactorEnable: user.is2faEnabled,
       isVerified: user.isVerified,
     };
@@ -173,6 +183,18 @@ export class AuthService {
     }
     return false;
   }
+
+  // private generateSecret(length = 32) {
+  //   const randomBytes = crypto.randomBytes(length);
+  //   const base32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"; // RFC 4648 base32 alphabet
+  //
+  //   let secret = "";
+  //   for (let i = 0; i < randomBytes.length; i++) {
+  //     secret += base32[randomBytes[i] % base32.length];
+  //   }
+  //
+  //   return secret;
+  // }
 
   private async getTokens(payload: JWTPayload): Promise<AuthOutputDto> {
     const refreshToken = this.jwtService.sign(payload, {

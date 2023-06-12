@@ -1,0 +1,89 @@
+\subsection{Introduction}\label{subsec:introduction}
+Cette section introduit l'architecture, la documentation du code, les bonnes pratiques de programmation, les tests unitaires et la sécurité de l'application web Clever Party Thrower.
+
+\subsection{Architecture}\label{subsec:architecture}
+Clever Party Thrower est une application web full-stack.
+Le front-end est construit avec Angular tandis que le back-end est un monolithe élaboré avec NestJS et TypeORM. À chaque accès au site par un utilisateur,
+la Single Page Application (\Gls{spa}) Angular est chargée, initiant les services nécessaires pour interagir avec le back-end.
+Ces services récupèrent les données requises via l'\Gls{api} GraphQL, en utilisant Apollo.\\
+
+Durant toute la session de l'utilisateur, ces services persistent et continuent de récupérer les données du back-end au fur et à mesure de la navigation.
+Chaque service est responsable d'un type de données spécifique.
+Par exemple, AuthService s'occupe des données liées à l'authentification et à l'utilisateur, tandis qu'EventService gère tout ce qui est directement lié à un événement.\\
+
+De la même manière, le back-end est divisé en plusieurs services, chacun gérant une ressource unique.
+Ces services sont rassemblés en modules, associés aux contrôleurs \Gls{rest} et aux résolveurs GraphQL. Cette modularité facilite le test du code en assurant un découplage
+entre les différents services.\\
+
+\subsection{Documentation du code}\label{subsec:documentation-du-code}
+Le code de Clever Party Thrower est organisé et documenté pour faciliter sa compréhension et sa maintenance.\\
+Grâce à TypeScript, la majorité de la documentation est implicite.
+Les noms des fonctions et leurs arguments offrent une compréhension rapide de leur utilité.
+Pour les fonctions plus complexes, des commentaires expliquent la logique algorithmique.\\
+Ainsi, même un développeur novice dans le projet peut facilement naviguer dans le code.
+
+\subsection{Bonnes pratiques de programmation}\label{subsec:bonnes-pratiques-de-programmation}
+Clever Party Thrower suit les conventions de codage d'Angular et de NestJS, ce qui comprend l'utilisation appropriée des indentations,
+des commentaires, de la casse des lettres (camelCase, PascalCase), et des conventions de nommage des variables, des fonctions et des classes.
+Cette pratique améliore la lisibilité du code et facilite le travail en équipe.\\
+
+De plus, le code est divisé en modules et services distincts, chacun étant responsable d'une fonctionnalité spécifique.
+Cela favorise la modularité, permet une meilleure gestion du code et facilite la maintenance et l'extension de l'application.\\
+
+Les principes DRY (Don't Repeat Yourself) et SOLID sont également respectés pour minimiser la duplication de code et assurer la prédictabilité du comportement du logiciel.
+Quelques concepts de programmation fonctionnelle sont utilisés dans le front-end, tels que l'immutabilité et l'utilisation maximale de fonctions pures.\\
+
+La gestion des erreurs en JavaScript et TypeScript est plus basique que dans d'autres langages de programmation.
+Contrairement à Java, où les erreurs doivent être déclarées dans la définition de la fonction, TypeScript ne possède pas cette fonctionnalité.
+Il est donc difficile de savoir quelle fonction peut lancer une erreur.
+La meilleure pratique est d'utiliser des blocs try-catch au niveau le plus élevé de l'application pour capturer les erreurs une fois qu'elles sont propagées.\\
+
+\subsection{Tests Unitaires}\label{subsec:tests-unitaires}
+Les tests unitaires sont une partie essentielle de Clever Party Thrower.
+Chaque module et service dispose de ses propres tests unitaires, garantissant ainsi que chaque partie de l'application fonctionne comme prévu.
+Les tests sont écrits avec Jest, un framework de test populaire pour JavaScript et TypeScript.\\
+
+Le découplage des services et des modules rend les tests plus simples et plus efficaces, car chaque test se concentre sur une seule unité de code.
+
+\subsection{Sécurité}\label{subsec:securite}
+La sécurité est une préoccupation majeure pour Clever Party Thrower.
+Parmi les mesures de sécurité mises en place, on compte l'utilisation de \Gls{https} pour toutes les communications via un reverse proxy dans l'infrastructure d'hébergement,
+l'authentification à deux facteurs avec TOTP et l'autorisation basées sur des tokens \Gls{jwt}, la validation des entrées du côté serveur pour prévenir les attaques par injection,
+et le chiffrement des données sensibles comme les mots de passe avant leur enregistrement en base de données avec argon2.
+Les vulnérabilités potentielles sont régulièrement évaluées et des mises à jour de sécurité sont appliquées dès que nécessaire via \Gls{npm} audit et \Gls{npm} audit fix.
+
+\subsubsection{RGPD}
+Un aspect important de la sécurité de l'application est la protection des données.
+L'application ne collecte pas de données autres que celles introduites via les différents formulaires.
+La suppression des données est un sujet qui m'a demandé pas mal de réflexion.
+Je ne pouvais pas simplement supprimer toutes les données liées à un utilisateur, car cela affecterait les autres utilisateurs qui partagent des événements ou des dépenses avec l'utilisateur à supprimer.
+Plusieurs solutions s'offraient donc à moi : tout supprimer, mais dégrader grandement l'expérience pour les autres utilisateurs, remplacer l'utilisateur par un utilisateur anonyme par défaut, ou anonymiser l'utilisateur en changeant les données personnelles.
+La solution de remplacer l'utilisateur complet risque tout de même de dégrader l'expérience des utilisateurs notamment au niveau du système de dettes.
+J'ai alors opté pour la troisième solution et j'ai décidé de changer uniquement les données personnelles de l'utilisateur afin de l'anonymiser sans pour autant impacter les autres utilisateurs.
+
+\subsection{GraphQL}\label{subsec:graphql}
+L'utilisation de GraphQL pour l'\Gls{api} du projet a été une décision qui a parfois compliqué le développement de l'application.
+Plusieurs difficultés ont été rencontrées, en particulier lors de la mise en place de la base de données avec Prisma.\\
+
+Prisma et GraphQL fonctionnent tous deux sur la base d'un schéma, ce qui semble idéal en théorie.
+Cependant, ces deux schémas sont construits via des outils différents, ce qui implique une maintenance manuelle de deux schémas séparés, susceptible d'introduire des erreurs.
+Alternativement, il est possible d'utiliser des outils pour générer le schéma GraphQL ou Prisma à partir d'un des deux schémas déjà existant, mais cette approche a aussi ses inconvénients.\\
+
+Dans ma première approche, j'ai décidé de créer un schéma Prisma et de générer sur cette base le schéma GraphQL. Cette méthode, impliquant beaucoup de génération de code, s'est avérée plutôt restrictive et ralentissait considérablement les itérations.
+J'ai donc décidé de migrer de Prisma vers TypeORM, ce qui m'a permis de générer mon schéma GraphQL à partir de mon code TypeScript uniquement.\\
+
+Ce changement a rendu la définition du schéma plus flexible, m'a permis de me concentrer sur le code plutôt que sur la documentation, et a amélioré la vitesse de développement.
+La documentation est maintenant générée à partir du code, ce qui reflète l'idée que le code, bien écrit, est la meilleure forme de documentation.\\
+
+Une autre difficulté rencontrée avec GraphQL concerne le typage fort lors du développement de l'interface.
+En raison de la nature de GraphQL qui permet de demander uniquement les ressources nécessaires basées sur des champs spécifiques, assurer un typage fort est devenu complexe.\\
+
+Ma solution a été de créer une interface basée sur la requête qui définit les données.
+Lorsque ces données correspondent directement et intégralement à l'une de mes classes, je remplace l'interface par la classe.
+Cette approche a permis de conserver un typage fort à travers le projet sans avoir à se soucier de champs nuls là où ils ne devraient pas l'être.\\
+
+Enfin, la mise en place des relations entre les différentes entités a également présenté des défis.
+Pour obtenir des détails sur un utilisateur et la liste des événements auxquels il participe, la requête est divisée en deux :
+les détails de l'utilisateur sont gérés par le resolver et le service utilisateur, tandis que la liste des événements liés à l'utilisateur est gérée séparément.
+Des résolveurs de champs spécifiques ont dû être mis en place pour relier ces deux parties de la requête.
+Cette tâche a pris plus de temps que prévu et a contribué au retard accumulé du projet.

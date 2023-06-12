@@ -41,8 +41,9 @@ export class ShoppinglistComponent {
   }
 
 
-  openDialog() {
-    this.dialog.open(AddShoppingItemComponent).afterClosed().subscribe(value => {
+  openDialog(id?: string) {
+    const item = this.eventShoppingList?.shoppingList.find(SI => SI.id === id)
+    this.dialog.open(AddShoppingItemComponent, {data: {shoppingListItem: item}}).afterClosed().subscribe(value => {
       if (value) {
         this.dataRefreshTrigger$.next()
       }
@@ -51,7 +52,7 @@ export class ShoppinglistComponent {
 
   updateItemBougthStatus(id: string, value: boolean) {
     console.debug('item changed', value)
-    this.eventService.updateShoppingListItem(id, {bought: !value}).subscribe(() => {
+    this.eventService.updateShoppingListItem(id, this.eventId!, {bought: !value}).subscribe(() => {
       this.expenseService.updateExpenses(this.eventId!)
       this.expenseService.updateDebts(this.eventId!)
       this.dataRefreshTrigger$.next()

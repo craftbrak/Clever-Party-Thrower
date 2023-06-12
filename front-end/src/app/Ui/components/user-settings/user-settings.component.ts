@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {AuthService} from "../../../auth/auth.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-settings',
@@ -43,6 +44,7 @@ export class UserSettingsComponent {
   constructor(
     public dialogRef: MatDialogRef<UserSettingsComponent>,
     public authService: AuthService,
+    private router: Router,
     private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -107,7 +109,13 @@ export class UserSettingsComponent {
   }
 
   onDeleteClick(): void {
-    // Add confirmation dialog and deletion logic here
+    const confir = prompt('Your Data will now be annonymised and you wont be able to login enter "yes" to confirm')
+    if (confir === "yes") {
+      console.log("deleting User")
+      this.authService.anonimiseUser().subscribe(value => {
+        this.authService.logout()
+      })
+    }
   }
 
   onDownloadClick(): void {
@@ -165,4 +173,11 @@ export class UserSettingsComponent {
     console.log(`${this.avatarData} avatarData`)
   }
 
+  open2FaSetup() {
+    this.router.navigate(["/setup2fa"])
+  }
+
+  disable2FaSetup() {
+    this.authService.disable2fa().subscribe()
+  }
 }

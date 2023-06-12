@@ -6,6 +6,12 @@ import gql from "graphql-tag";
 import {JWTPayload} from "../entities/JWTPayload.entity";
 
 
+export enum LoginResults {
+  invalidCredentials,
+  ok,
+  invalidTotp
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -58,7 +64,7 @@ export class AuthService {
     this.setUser()
   }
 
-  public login(email: string, password: string) {
+  public login(email: string, password: string, code?: string): Observable<LoginResults> {
 
     return this.apollo.mutate({
       mutation: this.LOGIN_MUTATION,
@@ -66,6 +72,7 @@ export class AuthService {
         AuthinputDto: {
           email,
           password,
+          code
         },
       },
     }).pipe(
@@ -74,12 +81,26 @@ export class AuthService {
         if (data && data.authLogin) {
           const {accessToken, refreshToken, invalidCredentials} = data.authLogin;
           if (!invalidCredentials) {
+            try {
+              const token: JWTPayload = jwt_decode(accessToken)
+              if (token.isTwoFactorEnable) {
+                if (token.isTwoFaAuthenticated) {
+                  console.log(token)
+                  this.setTokens(accessToken, refreshToken)
+                  this.setUser()
+                  return LoginResults.ok
+                }
+                return LoginResults.invalidTotp
+              }
+            } catch (e) {
+              throw e
+            }
             this.setTokens(accessToken, refreshToken)
             this.setUser()
-            return true
+            return LoginResults.ok
           }
         }
-        return false
+        return LoginResults.invalidCredentials
       }),
       catchError((error) => {
         // Handle errors, e.g., show an error message
@@ -193,6 +214,7 @@ export class AuthService {
     if (this._accessToken != null) {
       // console.log("user created")
       this.user = jwt_decode(this._accessToken)
+      localStorage.setItem('userid', this.user?.id!)
       // console.log(this.user)
     }
   }
@@ -202,8 +224,8 @@ export class AuthService {
     this._refreshToken = refreshToken;
     localStorage.setItem('accessToken', this._accessToken ?? '');
     localStorage.setItem('refreshToken', this._refreshToken ?? '');
-    if (accessToken.length > 0) this.user = jwt_decode(accessToken)
-    localStorage.setItem('userid', this.user?.id!)
+    if (accessToken.length > 0) console.log(jwt_decode(accessToken))
+
   }
 
   sendVerifyEmail() {
@@ -262,5 +284,59 @@ export class AuthService {
         requestResetPasswordEmailEmail: email
       }// @ts-ignore
     }).pipe(map(value => value.data.RequestResetPasswordEmail))
+  }
+
+  enable2faStep1() {
+    const mut = gql`
+      mutation Mutation {
+        enable2faStep1
+      }
+    `
+
+    return this.apollo.mutate<Observable<string>>({
+      mutation: mut,// @ts-ignore
+    }).pipe(map(value => value.data.enable2faStep1))
+  }
+
+  enable2faStep2(code: string) {
+    const mut = gql`
+      mutation Enable2faStep2($twoFaCode: String!) {
+        enable2faStep2(twoFaCode: $twoFaCode) {
+          accessToken
+          invalidCredentials
+          refreshToken
+        }
+      }
+    `
+
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {twoFaCode: code}// @ts-ignore
+    }).pipe(map(value => value.data))
+  }
+
+  anonimiseUser() {
+    const mut = gql`
+      mutation RemoveUser($removeUserId: String!) {
+        removeUser(id: $removeUserId) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        removeUserId: this.user?.id
+      }
+    })
+  }
+
+  disable2fa() {
+    const mut = gql`mutation Mutation {
+      disable2fa
+    }`
+    return this.apollo.mutate({
+      mutation: mut
+    })
   }
 }

@@ -17,6 +17,11 @@
           <mat-checkbox (click)="updateItemBougthStatus(item.id, item.bought)"
                         [checked]="item.bought" color="accent"></mat-checkbox>
         </div>
+        <div class="item-edit">
+          <button (click)="openDialog(item.id)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

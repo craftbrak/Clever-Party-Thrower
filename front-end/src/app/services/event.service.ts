@@ -89,6 +89,7 @@ const GET_USER_EVENT_DATA = gql`
           address {
             country{
               code
+              id
             }
             city
           }
@@ -118,8 +119,14 @@ export class EventService {
 
   private eventToUserSource = new BehaviorSubject<string | null>(null)
   eventToUserId$ = this.eventToUserSource.asObservable()
+  private isOwnerSource = new BehaviorSubject<boolean>(false)
+  isOwner$ = this.isOwnerSource.asObservable()
+
 
   constructor(private apollo: Apollo) {
+    this.eventToUserId$.subscribe(value => {
+      this.updateIsOwner(value!)
+    })
   }
 
   updateEventId(id: string) {
@@ -128,6 +135,33 @@ export class EventService {
 
   updateEventToUserId(id: string) {
     this.eventToUserSource.next(id)
+  }
+
+  updateIsOwner(eventToUserId: string) {
+    const q = gql`
+      query EventToUser($eventToUserId: String!) {
+        eventToUser(id: $eventToUserId) {
+          role
+        }
+      }
+    `
+    if (eventToUserId) {
+      this.apollo.watchQuery<{
+        eventToUser: {
+          role: UserRole
+        }
+      }>({
+        query: q,
+        variables: {
+          eventToUserId: eventToUserId
+        }
+      }).valueChanges.subscribe(value => {
+        // console.log(value)
+        if (value.data.eventToUser.role === UserRole.OWNER) this.isOwnerSource.next(true)
+        else this.isOwnerSource.next(false)
+      })
+    }
+
   }
 
   async getAllEventId() {
@@ -523,10 +557,11 @@ export class EventService {
 
   }
 
-  updateShoppingListItem(itemId: string, createShoppingListItem: {
+  updateShoppingListItem(itemId: string, eventId: string, createShoppingListItem: {
     bought?: boolean,
     name?: string,
-    price?: number
+    price?: number,
+    assignedId?: string,
   }) {
     const mut = gql`
       mutation UpdateShoppingListItem($updateShoppingListItemInput: UpdateShoppingListItemDto!) {
@@ -534,15 +569,33 @@ export class EventService {
       }`
     return this.apollo.mutate({
       mutation: mut,
+      fetchPolicy: "network-only",
       variables: {
         updateShoppingListItemInput: {
           id: itemId,
           bought: createShoppingListItem.bought,
           name: createShoppingListItem.name,
-          price: createShoppingListItem.price
+          price: createShoppingListItem.price,
+          eventId: eventId,
+          assignedId: createShoppingListItem.assignedId
         }
       }//@ts-ignore
     }).pipe(map(value => value.data))
+  }
+
+  deleteShoppingListItem(id: string) {
+    const mut = gql`
+      mutation RemoveShoppingListItem($removeShoppingListItemId: String!) {
+        removeShoppingListItem(id: $removeShoppingListItemId)
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      fetchPolicy: "network-only",
+      variables: {
+        removeShoppingListItemId: id
+      }
+    })
   }
 
   addEventToUser(eventId: string, userId: string) {
@@ -584,32 +637,73 @@ export class EventService {
   getEventDetail(eventId: string): Observable<EventData> {
     const mut = gql`
     query Event($eventId: String!) {
-  event(id: $eventId) {
-    id
-    name
-    description
-    address {
-      postalCode
-      unitNumber
-      line1
-      city
-      country {
+      event(id: $eventId) {
+         id
         name
-        id
+        description
+        address {
+          postalCode
+          unitNumber
+          line1
+          city
+          country {
+            name
+            id
+          }
+          id
+        }
+        selectedDate {
+          date
+          id
+        }
       }
-      id
-    }
-  }
-}`
+  }`
     return this.apollo.watchQuery<EventData>({
       query: mut,
       variables: {
         eventId: eventId
-      }
+      },
+      fetchPolicy: "network-only"
     }).valueChanges.pipe(map(value => value.data))
   }
 
-  getparticipants(eventId: string) {
+  getparticipants() {
 
+  }
+
+  deleteEvent(id: string) {
+    const mut = gql`
+      mutation RemoveEvent($id: String!) {
+        removeEvent(id: $id)
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        id: id
+      }
+    })
+
+  }
+
+  updateEvent(eventId: string, description?: string, addressId?: string, name?: string) {
+    const mut = gql`
+      mutation UpdateEvent($input: UpdateEventDto!) {
+        updateEvent(updateEventInput: $input) {
+          id
+        }
+      }
+    `
+    return this.apollo.mutate({
+      mutation: mut,
+      variables: {
+        input: {
+          description: description,
+          name: name,
+          addressId: addressId,
+          id: eventId
+        }
+      }
+    })
   }
 }

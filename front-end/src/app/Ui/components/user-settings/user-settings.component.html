@@ -40,12 +40,18 @@
 
 
   <div *ngIf="activeForm === null" class="buttons">
-    <!--    <button (click)="onDeleteClick()" color="warn" mat-raised-button style="width: fit-content">Delete Account</button>-->
+    <button (click)="onDeleteClick()" color="warn" mat-raised-button style="width: fit-content">Delete Account</button>
     <!--    <button (click)="onDownloadClick()" color="accent" mat-raised-button style="width: fit-content">Download My Data-->
     <!--    </button>-->
     <mat-icon *ngIf="authService.user?.isVerified">verified</mat-icon>
     <button (click)="onVerifyEmailClick()" *ngIf="!authService.user?.isVerified" color="accent" mat-raised-button
             style="width: fit-content">Get New verification Email
+    </button>
+    <button (click)="open2FaSetup()" *ngIf="!authService.user?.isTwoFactorEnable" color="accent" mat-raised-button
+            style="width: fit-content">Enable 2Fa
+    </button>
+    <button (click)="disable2FaSetup()" *ngIf="authService.user?.isTwoFactorEnable" color="warn" mat-raised-button
+            style="width: fit-content">Enable 2Fa
     </button>
 
   </div>

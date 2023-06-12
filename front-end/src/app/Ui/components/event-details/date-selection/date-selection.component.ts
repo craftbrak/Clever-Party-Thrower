@@ -16,7 +16,7 @@ export class DateSelectionComponent {
   @Input() eventId: string | undefined | null
   @Input() eventToUserID: string | undefined
   eventDates$: Observable<Event_requestData>;
-  @Input() isOwner: boolean = false;
+  isOwner: boolean = false;
   selectDate: boolean = false
   showAvailableDates: boolean = true
   selectForm: FormGroup;
@@ -45,6 +45,9 @@ export class DateSelectionComponent {
     this.eventService.selectedEventId$.subscribe(value => this.eventId = value!)
     this.selectForm = this.formBuilder.group({
       option: ""
+    })
+    this.eventService.isOwner$.subscribe(value => {
+      this.isOwner = value
     })
   }
 

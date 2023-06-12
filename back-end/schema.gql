@@ -285,7 +285,6 @@ type Query {
   countries: [Country!]!
   country(Code: String!): Country!
   logout: Boolean!
-  disable2fa: Boolean!
   user(email: String!): UserEntity!
   countEvents: Int!
   eventToUser(id: String!): EventToUser!
@@ -316,14 +315,15 @@ type Mutation {
   createCountry(CreateCountryInput: CreateCountryDto!): Country!
   authLogin(authInputDto: AuthInputDto!): AuthOutputDto!
   authRefresh(AuthRefreshDto: AuthRefreshDto!): AuthOutputDto!
-  enable2fa: String!
-  enable2faValidate(AuthInputDto: AuthInputDto!): AuthOutputDto!
+  enable2faStep1: String!
+  enable2faStep2(twoFaCode: String!): AuthOutputDto!
+  disable2fa: Boolean!
   verifyEmail(VerifyEmailDTO: VerifyEmailDto!): Boolean!
   RequestResetPasswordEmail(email: String!): Boolean!
   resetPassword(PassWordRestDTO: PasswordResetDto!): Boolean!
   createUser(singUp: CreateUserDto!): UserEntity!
   updateUser(updateUserInput: UpdateUserDto!): UserEntity!
-  removeUser(id: Int!): UserEntity!
+  removeUser(id: String!): UserEntity!
   requestEmailVerification: Boolean!
   createEventToUser(createEventToUserInput: CreateEventToUserDto!): EventToUser!
   updateEventToUser(updateEventToUserInput: UpdateEventToUserDto!): EventToUser!
@@ -342,7 +342,7 @@ type Mutation {
   removeSpending(id: String!): Spending!
   createShoppingListItem(createShoppingListItemDto: CreateShoppingListItemDto!): ShoppingListItem!
   updateShoppingListItem(updateShoppingListItemInput: UpdateShoppingListItemDto!): Boolean!
-  removeShoppingListItem(id: String!): ShoppingListItem!
+  removeShoppingListItem(id: String!): Boolean!
   calculateDebts(eventId: String!): [Dept!]!
   updateDept(updateDeptInput: UpdateDeptInput!): Dept!
   removeDept(id: ID!): Dept!

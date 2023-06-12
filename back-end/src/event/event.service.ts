@@ -102,14 +102,45 @@ export class EventService {
       event.selectedDate = date;
       this.logger.log(`updating event with ${updateEventInput.selectedDateId}`);
     }
+    if (updateEventInput.addressId) {
+      event.addressId = updateEventInput.addressId;
+      event.address = await this.addressService.findOne(
+        updateEventInput.addressId,
+      );
+    }
     const out = await this.eventRepo.save(event);
     return out;
   }
 
   async remove(eventId: Event["id"]): Promise<string> {
-    await this.eventRepo.remove(
-      await this.eventRepo.findOneOrFail({ where: { id: eventId } }),
+    const e = await this.eventRepo.findOneOrFail({
+      where: { id: eventId },
+      relations: {
+        members: true,
+        availableDates: true,
+        shoppingList: true,
+        carpools: true,
+        spendings: true,
+      },
+    });
+    const etu = await this.eventToUserService.findAllOfEvent(
+      { skip: 0, take: 100000000 },
+      e,
     );
+
+    for (const value of etu.nodes) {
+      console.log(value.id);
+      this.logger.verbose(`Deleting EventToUser ${value.id}`);
+      await value.availableDates.forEach((value1) => value1.remove());
+      await value.remove();
+    }
+    e.availableDates?.forEach((value) => value.remove());
+    e.carpools.forEach((value) => value.remove());
+    e.shoppingList.forEach((value) => value.remove());
+    e.spendings.forEach((value) => value.remove());
+    e.availableDates.forEach((value) => value.remove());
+    this.logger.verbose(`Deleting Event ${e.id}`);
+    // await e.remove();
     return eventId;
   }
 

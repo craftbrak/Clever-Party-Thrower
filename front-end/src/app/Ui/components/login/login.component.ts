@@ -1,4 +1,4 @@
-import {AuthService} from '../../../auth/auth.service';
+import {AuthService, LoginResults} from '../../../auth/auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -12,7 +12,9 @@ import {EventService} from "../../../services/event.service";
 export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
+  totp: string = '';
   loginForm: FormGroup;
+  TotpInValid = false
   CredentialsInValid = false
   eventId: string | null | undefined;
 
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      totp: [''],
     });
   }
 
@@ -31,23 +34,29 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.TotpInValid = false
 
-    const {email, password} = this.loginForm.value;
+    const {email, password, totp} = this.loginForm.value;
 
-    this.authService.login(email, password).subscribe(
-      (value) => {
-        if (value) {
-          if (this.eventId) {
-            this.eventService.addEventToUser(this.eventId, this.authService.user?.id!).subscribe(value => {
+    this.authService.login(email, password, totp).subscribe(
+      (result) => {
+        switch (result) {
+          case LoginResults.ok:
+            if (this.eventId) {
+              this.eventService.addEventToUser(this.eventId, this.authService.user?.id!).subscribe(value => {
+                this.router.navigate(['/dashboard'])
+              })
+            } else {
               this.router.navigate(['/dashboard'])
-            })
-          } else {
-            this.router.navigate(['/dashboard'])
-          }
-        } else {
-          this.CredentialsInValid = true
+            }
+            break;
+          case LoginResults.invalidCredentials:
+            this.CredentialsInValid = true
+            break;
+          case LoginResults.invalidTotp:
+            this.TotpInValid = true
+            break;
         }
-        // Redirect to a protected route or the dashboard after successful login
       },
       (error) => {
         // Handle any errors from the API
@@ -56,9 +65,11 @@ export class LoginComponent implements OnInit {
     );
   }
 
+
   ngOnInit(): void {
     this.loginForm.valueChanges.subscribe(() => {
       this.CredentialsInValid = false
+
     })
     this.route.paramMap.subscribe(params => {
       this.eventId = params.get('eventId');
