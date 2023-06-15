@@ -2,7 +2,7 @@ FROM node:lts
 LABEL authors="Louis De Wilde"
 # update dependencies and install curl
 RUN apt-get update && \
-    apt-get install -y build-essential python && \
+    apt-get install -y build-essential python3 python2 && \
     rm -rf /var/lib/apt/lists/*
 # Create app directory
 WORKDIR /app
