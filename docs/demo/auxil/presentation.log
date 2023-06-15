@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  14 JUN 2023 22:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  15 JUN 2023 12:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2117,51 +2117,35 @@ thkerncmss.
 ) [2
 
 ]
-<imgs/selfhost.png, id=68, 301.125pt x 301.125pt>
-File: imgs/selfhost.png Graphic file (type png)
-<use imgs/selfhost.png>
-Package pdftex.def Info: imgs/selfhost.png  used on input line 54.
-(pdftex.def)             Requested size: 83.65378pt x 83.65277pt.
-<imgs/privacy.png, id=70, 385.44pt x 385.44pt>
-File: imgs/privacy.png Graphic file (type png)
-<use imgs/privacy.png>
-Package pdftex.def Info: imgs/privacy.png  used on input line 54.
-(pdftex.def)             Requested size: 63.73563pt x 63.73012pt.
-<imgs/Open_Source_Initiative_keyhole.svg.png, id=71, 1204.5pt x 1204.5pt>
-File: imgs/Open_Source_Initiative_keyhole.svg.png Graphic file (type png)
-<use imgs/Open_Source_Initiative_keyhole.svg.png>
-Package pdftex.def Info: imgs/Open_Source_Initiative_keyhole.svg.png  used on i
-nput line 54.
-(pdftex.def)             Requested size: 51.78595pt x 51.77411pt.
+<imgs/selfHost&opensource.png, id=68, 821.0675pt x 846.16125pt>
+File: imgs/selfHost&opensource.png Graphic file (type png)
+<use imgs/selfHost&opensource.png>
+Package pdftex.def Info: imgs/selfHost&opensource.png  used on input line 55.
+(pdftex.def)             Requested size: 119.50279pt x 123.14859pt.
+ [3
 
-Overfull \hbox (142.26381pt too wide) detected at line 54
-[][][] $[]$[][][][][][][][] $[]$[][][][][][] 
- []
-
-[3
-
- <./imgs/selfhost.png> <./imgs/privacy.png> <./imgs/Open_Source_Initiative_keyh
-ole.svg.png>]
-<imgs/used tech.png, id=103, 1821.80624pt x 964.8045pt>
+ <./imgs/selfHost&opensource.png>]
+<imgs/used tech.png, id=97, 1821.80624pt x 964.8045pt>
 File: imgs/used tech.png Graphic file (type png)
 <use imgs/used tech.png>
-Package pdftex.def Info: imgs/used tech.png  used on input line 101.
+Package pdftex.def Info: imgs/used tech.png  used on input line 102.
 (pdftex.def)             Requested size: 398.3386pt x 210.9474pt.
  [4
 
  <./imgs/used tech.png>]
-<imgs/module.png, id=131, 486.81876pt x 181.67876pt>
+<imgs/module.png, id=125, 483.8075pt x 538.01pt>
 File: imgs/module.png Graphic file (type png)
 <use imgs/module.png>
-Package pdftex.def Info: imgs/module.png  used on input line 123.
-(pdftex.def)             Requested size: 139.4179pt x 52.02847pt.
- [5
+Package pdftex.def Info: imgs/module.png  used on input line 124.
+(pdftex.def)             Requested size: 139.4179pt x 155.03377pt.
+
+[5
 
  <./imgs/module.png>]
-presentation.tex:147: Undefined control sequence.
+presentation.tex:148: Undefined control sequence.
 \beamer@doifinframe ...item Hébergement \subitem 
                                                   Docker-compose \subitem Ku...
-l.147     \end{frame}
+l.148     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2169,10 +2153,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:147: Undefined control sequence.
+presentation.tex:148: Undefined control sequence.
 \beamer@doifinframe ...em Docker-compose \subitem 
                                                   Kubernetes \end {itemize} ...
-l.147     \end{frame}
+l.148     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2180,31 +2164,36 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-<imgs/devops.png, id=159, 617.4267pt x 277.035pt>
+<imgs/devops.png, id=153, 617.4267pt x 277.035pt>
 File: imgs/devops.png Graphic file (type png)
 <use imgs/devops.png>
-Package pdftex.def Info: imgs/devops.png  used on input line 147.
+Package pdftex.def Info: imgs/devops.png  used on input line 148.
 (pdftex.def)             Requested size: 199.1693pt x 89.36317pt.
 
-Overfull \hbox (142.26381pt too wide) detected at line 147
+Overfull \hbox (142.26381pt too wide) detected at line 148
 [][][] $[]$[][][][][][][][] $[]$[][][][][][] 
  []
 
 [6
 
  <./imgs/devops.png>]
-<imgs/frontToBack.png, id=187, 653.44125pt x 532.99126pt>
+<imgs/frontToBack.png, id=181, 640.3925pt x 522.95375pt>
 File: imgs/frontToBack.png Graphic file (type png)
 <use imgs/frontToBack.png>
-Package pdftex.def Info: imgs/frontToBack.png  used on input line 167.
-(pdftex.def)             Requested size: 139.4179pt x 113.71254pt.
- [7
+Package pdftex.def Info: imgs/frontToBack.png  used on input line 171.
+(pdftex.def)             Requested size: 199.1693pt x 162.64064pt.
+
+Overfull \hbox (22.761pt too wide) detected at line 171
+[][][] $[]$[][][][][][][][] $[]$[][][][][][][][] $[]$[][][][][][] 
+ []
+
+[7
 
  <./imgs/frontToBack.png>]
-presentation.tex:187: Undefined control sequence.
+presentation.tex:190: Undefined control sequence.
 \beamer@doifinframe ...tem Contremesures \subitem 
                                                   Injection SQL, \subitem SS...
-l.187     \end{frame}
+l.190     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2212,10 +2201,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:187: Undefined control sequence.
+presentation.tex:190: Undefined control sequence.
 \beamer@doifinframe ...em Injection SQL, \subitem 
                                                   SSL et HTTPS, \item RGPD \...
-l.187     \end{frame}
+l.190     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2223,10 +2212,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:187: Undefined control sequence.
+presentation.tex:190: Undefined control sequence.
 \beamer@doifinframe ...HTTPS, \item RGPD \subitem 
                                                   Gestion des données \subi...
-l.187     \end{frame}
+l.190     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2234,10 +2223,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:187: Undefined control sequence.
+presentation.tex:190: Undefined control sequence.
 \beamer@doifinframe ...tion des données \subitem 
                                                   Minimum de données \subit...
-l.187     \end{frame}
+l.190     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2245,10 +2234,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:187: Undefined control sequence.
+presentation.tex:190: Undefined control sequence.
 \beamer@doifinframe ...nimum de données \subitem 
                                                   Suppression des données \...
-l.187     \end{frame}
+l.190     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2256,34 +2245,34 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-<imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png, id=216, 293.5968
+<imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png, id=210, 293.5968
 8pt x 194.22563pt>
 File: imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png Graphic file
  (type png)
 <use imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png>
 Package pdftex.def Info: imgs/young-hacker-cyber-securty-concept-260nw-14506972
-88.png  used on input line 187.
+88.png  used on input line 190.
 (pdftex.def)             Requested size: 159.333pt x 105.40483pt.
 [8
 
  <./imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png>]
-<imgs/QRcode_C2 (5).jpg, id=244, 859.71187pt x 871.75688pt>
+<imgs/QRcode_C2 (5).jpg, id=238, 859.71187pt x 871.75688pt>
 File: imgs/QRcode_C2 (5).jpg Graphic file (type jpg)
 <use imgs/QRcode_C2 (5).jpg>
-Package pdftex.def Info: imgs/QRcode_C2 (5).jpg  used on input line 196.
+Package pdftex.def Info: imgs/QRcode_C2 (5).jpg  used on input line 199.
 (pdftex.def)             Requested size: 159.333pt x 161.56514pt.
  [9
 
  <./imgs/QRcode_C2 (5).jpg>] [10
 
 ]
-<imgs/question-mark-speech-bubble-isolated-260.jpg, id=295, 293.59688pt x 185.9
+<imgs/question-mark-speech-bubble-isolated-260.jpg, id=289, 293.59688pt x 185.9
 4469pt>
 File: imgs/question-mark-speech-bubble-isolated-260.jpg Graphic file (type jpg)
 
 <use imgs/question-mark-speech-bubble-isolated-260.jpg>
 Package pdftex.def Info: imgs/question-mark-speech-bubble-isolated-260.jpg  use
-d on input line 216.
+d on input line 219.
 (pdftex.def)             Requested size: 159.333pt x 100.91081pt.
  [11
 
@@ -2302,10 +2291,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 21715 strings out of 478619
- 424428 string characters out of 2853060
- 673661 words of memory out of 3000000
- 39365 multiletter control sequences out of 15000+600000
+ 21687 strings out of 478619
+ 423734 string characters out of 2853060
+ 673615 words of memory out of 3000000
+ 39343 multiletter control sequences out of 15000+600000
  476314 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,122p,418b,556s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -2313,9 +2302,9 @@ Here is how much of TeX's memory you used:
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 Output written on D:/3T\Clever-Party-Thrower\docs\demo\out\presentation.pdf (11
- pages, 1860937 bytes).
+ pages, 1838921 bytes).
 PDF statistics:
- 343 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 93 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 337 PDF objects out of 1000 (max. 8388607)
+ 31 named destinations out of 1000 (max. 500000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
