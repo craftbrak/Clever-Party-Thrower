@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  15 JUN 2023 12:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  16 JUN 2023 16:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1919,24 +1919,24 @@ File: l3backend-pdftex.def 2022-04-20 L3 backend support: PDF output (pdfTeX)
 (D:/3T\Clever-Party-Thrower\docs\demo\auxil\presentation.aux)
 \openout1 = `presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1993,7 +1993,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 12.
+Package hyperref Info: Link coloring OFF on input line 13.
 
 (C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -2007,66 +2007,66 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count350
 )
-LaTeX Info: Redefining \ref on input line 12.
-LaTeX Info: Redefining \pageref on input line 12.
-LaTeX Info: Redefining \nameref on input line 12.
+LaTeX Info: Redefining \ref on input line 13.
+LaTeX Info: Redefining \pageref on input line 13.
+LaTeX Info: Redefining \nameref on input line 13.
  (D:/3T\Clever-Party-Thrower\docs\demo\auxil\presentation.out)
 (D:/3T\Clever-Party-Thrower\docs\demo\auxil\presentation.out)
 \@outlinefile=\write5
 \openout5 = `presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 12.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 13.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 12.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 12.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 12.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 12.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 12.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 13.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 12.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 12.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 12.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 12.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 12.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 12.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 12.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 13.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 13.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
 (Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 1
-2.
+3.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 1
-2.
+3.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 12.
+ut line 13.
 
 (C:\Users\louis\AppData\Roaming\MiKTeX\tex/latex/translator\translator-basic-di
 ctionary-English.dict
@@ -2092,23 +2092,30 @@ Dictionary: translator-numbers-dictionary, Language: English
 dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-(D:/3T\Clever-Party-Thrower\docs\demo\auxil\presentation.nav) [1
+(D:/3T\Clever-Party-Thrower\docs\demo\auxil\presentation.nav)
+<imgs/cptIcon.png, id=12, 770.88pt x 770.88pt>
+File: imgs/cptIcon.png Graphic file (type png)
+<use imgs/cptIcon.png>
+Package pdftex.def Info: imgs/cptIcon.png  used on input line 15.
+(pdftex.def)             Requested size: 79.66649pt x 79.65677pt.
+ [1
 
-{C:/Users/louis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
+{C:/Users/louis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./imgs/cptIc
+on.png>]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
 
 
 (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 29.
+ut line 31.
 
 (C:\Users\louis\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss
 .fd
@@ -2117,35 +2124,35 @@ thkerncmss.
 ) [2
 
 ]
-<imgs/selfHost&opensource.png, id=68, 821.0675pt x 846.16125pt>
+<imgs/selfHost&opensource.png, id=71, 821.0675pt x 846.16125pt>
 File: imgs/selfHost&opensource.png Graphic file (type png)
 <use imgs/selfHost&opensource.png>
-Package pdftex.def Info: imgs/selfHost&opensource.png  used on input line 55.
+Package pdftex.def Info: imgs/selfHost&opensource.png  used on input line 57.
 (pdftex.def)             Requested size: 119.50279pt x 123.14859pt.
  [3
 
  <./imgs/selfHost&opensource.png>]
-<imgs/used tech.png, id=97, 1821.80624pt x 964.8045pt>
+<imgs/used tech.png, id=99, 1821.80624pt x 964.8045pt>
 File: imgs/used tech.png Graphic file (type png)
 <use imgs/used tech.png>
-Package pdftex.def Info: imgs/used tech.png  used on input line 102.
+Package pdftex.def Info: imgs/used tech.png  used on input line 104.
 (pdftex.def)             Requested size: 398.3386pt x 210.9474pt.
  [4
 
  <./imgs/used tech.png>]
-<imgs/module.png, id=125, 483.8075pt x 538.01pt>
+<imgs/module.png, id=127, 483.8075pt x 538.01pt>
 File: imgs/module.png Graphic file (type png)
 <use imgs/module.png>
-Package pdftex.def Info: imgs/module.png  used on input line 124.
+Package pdftex.def Info: imgs/module.png  used on input line 127.
 (pdftex.def)             Requested size: 139.4179pt x 155.03377pt.
 
 [5
 
  <./imgs/module.png>]
-presentation.tex:148: Undefined control sequence.
+presentation.tex:151: Undefined control sequence.
 \beamer@doifinframe ...item Hébergement \subitem 
                                                   Docker-compose \subitem Ku...
-l.148     \end{frame}
+l.151     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2153,10 +2160,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:148: Undefined control sequence.
+presentation.tex:151: Undefined control sequence.
 \beamer@doifinframe ...em Docker-compose \subitem 
                                                   Kubernetes \end {itemize} ...
-l.148     \end{frame}
+l.151     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2164,36 +2171,36 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-<imgs/devops.png, id=153, 617.4267pt x 277.035pt>
+<imgs/devops.png, id=155, 617.4267pt x 277.035pt>
 File: imgs/devops.png Graphic file (type png)
 <use imgs/devops.png>
-Package pdftex.def Info: imgs/devops.png  used on input line 148.
+Package pdftex.def Info: imgs/devops.png  used on input line 151.
 (pdftex.def)             Requested size: 199.1693pt x 89.36317pt.
 
-Overfull \hbox (142.26381pt too wide) detected at line 148
+Overfull \hbox (142.26381pt too wide) detected at line 151
 [][][] $[]$[][][][][][][][] $[]$[][][][][][] 
  []
 
 [6
 
  <./imgs/devops.png>]
-<imgs/frontToBack.png, id=181, 640.3925pt x 522.95375pt>
+<imgs/frontToBack.png, id=183, 640.3925pt x 522.95375pt>
 File: imgs/frontToBack.png Graphic file (type png)
 <use imgs/frontToBack.png>
-Package pdftex.def Info: imgs/frontToBack.png  used on input line 171.
+Package pdftex.def Info: imgs/frontToBack.png  used on input line 174.
 (pdftex.def)             Requested size: 199.1693pt x 162.64064pt.
 
-Overfull \hbox (22.761pt too wide) detected at line 171
+Overfull \hbox (22.761pt too wide) detected at line 174
 [][][] $[]$[][][][][][][][] $[]$[][][][][][][][] $[]$[][][][][][] 
  []
 
 [7
 
  <./imgs/frontToBack.png>]
-presentation.tex:190: Undefined control sequence.
+presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...tem Contremesures \subitem 
                                                   Injection SQL, \subitem SS...
-l.190     \end{frame}
+l.193     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2201,10 +2208,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:190: Undefined control sequence.
+presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...em Injection SQL, \subitem 
                                                   SSL et HTTPS, \item RGPD \...
-l.190     \end{frame}
+l.193     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2212,10 +2219,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:190: Undefined control sequence.
+presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...HTTPS, \item RGPD \subitem 
                                                   Gestion des données \subi...
-l.190     \end{frame}
+l.193     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2223,10 +2230,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:190: Undefined control sequence.
+presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...tion des données \subitem 
                                                   Minimum de données \subit...
-l.190     \end{frame}
+l.193     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2234,10 +2241,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-presentation.tex:190: Undefined control sequence.
+presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...nimum de données \subitem 
                                                   Suppression des données \...
-l.190     \end{frame}
+l.193     \end{frame}
                      
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2245,34 +2252,34 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-<imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png, id=210, 293.5968
+<imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png, id=212, 293.5968
 8pt x 194.22563pt>
 File: imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png Graphic file
  (type png)
 <use imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png>
 Package pdftex.def Info: imgs/young-hacker-cyber-securty-concept-260nw-14506972
-88.png  used on input line 190.
+88.png  used on input line 193.
 (pdftex.def)             Requested size: 159.333pt x 105.40483pt.
 [8
 
  <./imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png>]
-<imgs/QRcode_C2 (5).jpg, id=238, 859.71187pt x 871.75688pt>
+<imgs/QRcode_C2 (5).jpg, id=240, 859.71187pt x 871.75688pt>
 File: imgs/QRcode_C2 (5).jpg Graphic file (type jpg)
 <use imgs/QRcode_C2 (5).jpg>
-Package pdftex.def Info: imgs/QRcode_C2 (5).jpg  used on input line 199.
+Package pdftex.def Info: imgs/QRcode_C2 (5).jpg  used on input line 202.
 (pdftex.def)             Requested size: 159.333pt x 161.56514pt.
  [9
 
  <./imgs/QRcode_C2 (5).jpg>] [10
 
 ]
-<imgs/question-mark-speech-bubble-isolated-260.jpg, id=289, 293.59688pt x 185.9
+<imgs/question-mark-speech-bubble-isolated-260.jpg, id=291, 293.59688pt x 185.9
 4469pt>
 File: imgs/question-mark-speech-bubble-isolated-260.jpg Graphic file (type jpg)
 
 <use imgs/question-mark-speech-bubble-isolated-260.jpg>
 Package pdftex.def Info: imgs/question-mark-speech-bubble-isolated-260.jpg  use
-d on input line 219.
+d on input line 221.
 (pdftex.def)             Requested size: 159.333pt x 100.91081pt.
  [11
 
@@ -2291,10 +2298,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 21687 strings out of 478619
- 423734 string characters out of 2853060
- 673615 words of memory out of 3000000
- 39343 multiletter control sequences out of 15000+600000
+ 21696 strings out of 478619
+ 423925 string characters out of 2853060
+ 673666 words of memory out of 3000000
+ 39351 multiletter control sequences out of 15000+600000
  476314 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,14n,122p,418b,556s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -2302,9 +2309,9 @@ Here is how much of TeX's memory you used:
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 Output written on D:/3T\Clever-Party-Thrower\docs\demo\out\presentation.pdf (11
- pages, 1838921 bytes).
+ pages, 3134610 bytes).
 PDF statistics:
- 337 PDF objects out of 1000 (max. 8388607)
+ 339 PDF objects out of 1000 (max. 8388607)
  31 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 88 words of extra memory for PDF output out of 10000 (max. 10000000)
 
