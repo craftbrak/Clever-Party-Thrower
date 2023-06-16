@@ -55,6 +55,7 @@ export class MemberComponent implements OnInit, OnChanges {
     this.eventService.updateUserRole(userToEventId, UserRole.MEMBER).subscribe(value => {
       this.eventService.getEventUserData(this.memberId!).subscribe(value => {
         this.memberData = value
+        console.log('ca rerender')
         this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
       })
     })
