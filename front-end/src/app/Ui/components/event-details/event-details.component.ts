@@ -17,7 +17,7 @@ export class EventDetailsComponent implements OnInit {
   addressId: string = ""
   private dataRefreshTrigger$: Subject<void>;
 
-  constructor(private eventService: EventService) {
+  constructor(public eventService: EventService) {
     this.dataRefreshTrigger$ = new Subject<void>();
     this.eventService.selectedEventId$.subscribe(value => {
       this.eventId = value

@@ -50,7 +50,7 @@
             <input [(ngModel)]="description" matInput>
           </mat-form-field>
           <div>
-            <button (click)="editEvent()" mat-icon-button>
+            <button (click)="editEvent()" *ngIf="eventService.isOwner$ |async" mat-icon-button>
               <mat-icon>{{isEditing ? 'save' : 'edit'}}</mat-icon>
             </button>
             <button (click)="deleteEvent()" *ngIf="isEditing" mat-button>

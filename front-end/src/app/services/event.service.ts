@@ -341,6 +341,7 @@ export class EventService {
       }>({
         query: GET_EVENT_BY_ID,
         variables: {id},
+        fetchPolicy: "network-only",
       })
       .valueChanges.pipe(map((result) => result.data.eventToUser));
   }

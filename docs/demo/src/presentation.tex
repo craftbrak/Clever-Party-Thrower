@@ -2,48 +2,58 @@
 
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{amstex}
 
 \title{Clever Party Thrower}
 
 \author{Louis De Wilde}
-\date{\today}
+\titlegraphic{\includegraphics[width=0.2\textwidth]{imgs/cptIcon}}
+\date{June 19, 2023}
 
 \begin{document}
 
     \frame{\titlepage}
     \begin{frame}
         \frametitle{Un peu de contexte}
+        Quel est le problème ?
         \begin{itemize}
-            \item Quel est le problème ?
-            \item Qui a ce problème ?
-        \end{itemize}
-        Objectif de l'application
-        Simplifier la création d'événements
-        \begin{itemize}
-            \item Faciliter le choix d'une date
+            \item Facilité le choix d'une date
             \item Répartir le coût d'un événement entre les participants
             \item Toutes les informations sur un événement au même endroit
-            \item L'application peut être déployée on-premise
+            \item L'application doit être facile access
+            \item L'application peut être déployée facilement sans être relier au cloud
         \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{À qui s'adresse le projet ?}
+        Qui a ce problème ?
         \begin{itemize}
             \item Des particuliers qui souhaitent organiser des événements
             \item Des petits organisateurs d'événements par exemple un cercle étudiant
         \end{itemize}
     \end{frame}
 
+
     \begin{frame}
         \frametitle{Pourquoi utiliser Clever Party Thrower et pas d'autres applications ?}
-        \begin{itemize}
-            \item Tout au même endroit
-            \item Respectueux de la vie privée
-            \item Open Source
-            \item Simple d'accès
-            \item Gratuit
-        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item Tout au même endroit
+                    \item Respectueux de la vie privée
+                    \item Open Source
+                    \item Simple d'accès
+                    \item Gratuit
+                \end{itemize}
+            \end{column}
+
+            \begin{column}{0.3\textwidth}
+                \begin{flushleft}
+                    \includegraphics[width=1\textwidth]{imgs/selfHost&opensource}\label{fig:figure8}
+                \end{flushleft}
+            \end{column}
+            \begin{column}{0.2\textwidth}
+
+            \end{column}
+        \end{columns}
+
     \end{frame}
 
     \begin{frame}
@@ -98,33 +108,69 @@
     \begin{frame}
         \frametitle{Développement de l'API}
 %        Le backend est la partie qui a demandé le plus de travail
-        \begin{itemize}
-            \item GraphQL
-            \item TypeORM
-        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item Robuste Testing, Typage
+                    \item Modulaire
+                    \item Algorithm de resolution de dettes
+                \end{itemize}
+            \end{column}
+
+            \begin{column}{0.5\textwidth}
+                \begin{flushleft}
+                    \includegraphics[width=0.7\textwidth]{imgs/module}\label{fig:figure4}
+                \end{flushleft}
+            \end{column}
+        \end{columns}
+
     \end{frame}
 
     \begin{frame}%        Les concept d'integration, de deploiement et de gitops on ete implementer tout au long du projet
         \frametitle{Aspect DevOps}
-        \begin{itemize}
-            \item Intégration continue
-            \item Déploiement continu
-            \item GitOps
-            \item Conteneurisation
-            \item Infrastructure as Code
-            \item Hébergement
-            \subitem Docker-compose
-            \subitem Kubernetes
-        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item Intégration continue
+                    \item Déploiement continu
+                    \item GitOps
+                    \item Conteneurisation
+                    \item Infrastructure as Code
+                    \item Hébergement
+                    \subitem Docker-compose
+                    \subitem Kubernetes
+                \end{itemize}
+
+            \end{column}
+            \begin{column}{1\textwidth}
+                \begin{flushleft}
+                    \includegraphics[width=0.50\textwidth]{imgs/devops}\label{fig:devops2}
+                \end{flushleft}
+            \end{column}
+        \end{columns}
     \end{frame}
 
     \begin{frame}
         \frametitle{Interface utilisateur}
-        \begin{itemize}
-            \item Angular
-            \item RxJs
-            \item Apollo
-        \end{itemize}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item Angular
+                    \item RxJs
+                    \item Apollo
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{flushleft}
+                    \includegraphics[width=1\textwidth]{imgs/frontToBack}\label{fig:diagram}
+                \end{flushleft}
+            \end{column}
+            \begin{column}{0.2\textwidth}
+
+            \end{column}
+        \end{columns}
+
+
     \end{frame}
 
     \begin{frame}
@@ -139,25 +185,39 @@
             \subitem Minimum de données
             \subitem Suppression des données
         \end{itemize}
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.4\textwidth]{imgs/young-hacker-cyber-securty-concept-260nw-1450697288}\label{fig:figure5}
+        \end{figure}
+
     \end{frame}
 
     \begin{frame}
         \frametitle{Petite démo}
-        L'application est disponible a l'url https://cpt.louisdewilde.be
+        L'application est disponible en ligne via le qrcode
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.4\textwidth]{imgs/QRcode_C3 (1)}\caption{https://cpt.louisdewilde.be}\label{fig:figure2}
+        \end{figure}
     \end{frame}
 
     \begin{frame}
         \frametitle{Améliorations futures}
         \begin{itemize}
             \item Ajout de nouvelles fonctionnalités
-            \item Amelioration de l'interface web
+            \item Amélioration de l'interface web
             \item Déploiement de l'application avec Kubernetes
+            \item Création d'une page d'accueil qui explique le concept de l'application
         \end{itemize}
     \end{frame}
 
     \begin{frame}
         \centering
         \frametitle{Place à vos questions}
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.4\textwidth]{imgs/question-mark-speech-bubble-isolated-260}\label{fig:figure3}
+        \end{figure}
     \end{frame}
 
 \end{document}
