@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  16 JUN 2023 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  16 JUN 2023 18:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2263,14 +2263,14 @@ Package pdftex.def Info: imgs/young-hacker-cyber-securty-concept-260nw-14506972
 [8
 
  <./imgs/young-hacker-cyber-securty-concept-260nw-1450697288.png>]
-<imgs/QRcode_C2 (5).jpg, id=240, 859.71187pt x 871.75688pt>
-File: imgs/QRcode_C2 (5).jpg Graphic file (type jpg)
-<use imgs/QRcode_C2 (5).jpg>
-Package pdftex.def Info: imgs/QRcode_C2 (5).jpg  used on input line 202.
-(pdftex.def)             Requested size: 159.333pt x 161.56514pt.
+<imgs/QRcode_C3 (1).jpg, id=240, 1505.625pt x 1505.625pt>
+File: imgs/QRcode_C3 (1).jpg Graphic file (type jpg)
+<use imgs/QRcode_C3 (1).jpg>
+Package pdftex.def Info: imgs/QRcode_C3 (1).jpg  used on input line 202.
+(pdftex.def)             Requested size: 159.333pt x 159.32439pt.
  [9
 
- <./imgs/QRcode_C2 (5).jpg>] [10
+ <./imgs/QRcode_C3 (1).jpg>] [10
 
 ]
 <imgs/question-mark-speech-bubble-isolated-260.jpg, id=291, 293.59688pt x 185.9
@@ -2309,7 +2309,7 @@ Here is how much of TeX's memory you used:
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 Output written on D:/3T\Clever-Party-Thrower\docs\demo\out\presentation.pdf (11
- pages, 3134610 bytes).
+ pages, 3151815 bytes).
 PDF statistics:
  339 PDF objects out of 1000 (max. 8388607)
  31 named destinations out of 1000 (max. 500000)
