@@ -59,8 +59,11 @@ export class EventResolver {
   }
 
   @Mutation(() => String)
-  async removeEvent(@Args("id", { type: () => String }) id: Event["id"]) {
-    return this.eventService.remove(id);
+  async removeEvent(
+    @Args("id", { type: () => String }) id: Event["id"],
+    @CurrentUser() user: JWTPayload,
+  ) {
+    return this.eventService.remove(id, user);
   }
 
   @ResolveField("members", () => [EventToUser])

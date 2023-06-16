@@ -1,4 +1,4 @@
-﻿import { Injectable, Logger } from "@nestjs/common";
+﻿import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { CreateEventDto } from "./dto/create-event.dto";
 import { UpdateEventDto } from "./dto/update-event.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -14,6 +14,10 @@ import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { MemberPaginationArgs } from "./dto/eventToUser.pagination.dto";
 import { AddressService } from "../address/address.service";
 import { JWTPayload } from "../auth/jwtPayload.interface";
+import {
+  EventToUser,
+  UserRole,
+} from "../event-to-user/entities/event-to-user.entity";
 
 @Injectable()
 export class EventService {
@@ -21,6 +25,8 @@ export class EventService {
 
   constructor(
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
+    @InjectRepository(EventToUser)
+    private readonly eventToUserRepository: Repository<EventToUser>,
     private eventToUserService: EventToUserService,
     private addressService: AddressService,
   ) {}
@@ -112,7 +118,7 @@ export class EventService {
     return out;
   }
 
-  async remove(eventId: Event["id"]): Promise<string> {
+  async remove(eventId: Event["id"], user: JWTPayload): Promise<string> {
     const e = await this.eventRepo.findOneOrFail({
       where: { id: eventId },
       relations: {
@@ -123,25 +129,28 @@ export class EventService {
         spendings: true,
       },
     });
-    const etu = await this.eventToUserService.findAllOfEvent(
-      { skip: 0, take: 100000000 },
-      e,
-    );
-
-    for (const value of etu.nodes) {
-      console.log(value.id);
-      this.logger.verbose(`Deleting EventToUser ${value.id}`);
-      await value.availableDates.forEach((value1) => value1.remove());
-      await value.remove();
-    }
-    e.availableDates?.forEach((value) => value.remove());
-    e.carpools.forEach((value) => value.remove());
-    e.shoppingList.forEach((value) => value.remove());
-    e.spendings.forEach((value) => value.remove());
-    e.availableDates.forEach((value) => value.remove());
-    this.logger.verbose(`Deleting Event ${e.id}`);
-    // await e.remove();
-    return eventId;
+    const usr = await this.eventToUserRepository.findOne({
+      where: { userId: user.id, eventId: eventId },
+    });
+    if (usr?.role === UserRole.OWNER) {
+      const etu = await this.eventToUserRepository.find({
+        where: { eventId: eventId },
+        relations: { availableDates: true },
+      });
+      for (const value of etu) {
+        this.logger.verbose(`Deleting EventToUser ${value.id}`);
+        await value.availableDates.forEach((value1) => value1.remove());
+        await value.remove();
+      }
+      e.availableDates?.forEach((value) => value.remove());
+      e.carpools.forEach((value) => value.remove());
+      e.shoppingList.forEach((value) => value.remove());
+      e.spendings.forEach((value) => value.remove());
+      e.availableDates.forEach((value) => value.remove());
+      this.logger.verbose(`Deleting Event ${e.id}`);
+      await e.remove();
+      return eventId;
+    } else throw UnauthorizedException;
   }
 
   async getMembers(
