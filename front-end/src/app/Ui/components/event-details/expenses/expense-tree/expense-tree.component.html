@@ -5,7 +5,7 @@
   <div *ngFor="let group of groupedData" class="level-2">
     <div (click)="group.showDetails = !group.showDetails" class="l2-name"><!-- shows the group data      -->
       <button aria-label="Example icon-button with a heart icon" color="primary"
-              mat-icon-button matTooltip="Primary">
+              mat-icon-button matTooltip="Expand">
         <mat-icon *ngIf="!group.showDetails ">expand_more</mat-icon>
         <mat-icon *ngIf="group.showDetails ">expand_less</mat-icon>
       </button>
