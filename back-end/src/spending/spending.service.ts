@@ -132,9 +132,6 @@ export class SpendingService {
   }
 
   async setShoppingListItemSpendings(item: ShoppingListItem) {
-    const spendings = await this.spendingRepository.find({
-      where: { shoppingListItem: { id: item.id } },
-    });
     await this.deleteShoppingListItemSpendings(item);
     if (item.bought) {
       await this.createShoppingListItemSpendings(item);

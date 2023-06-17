@@ -98,8 +98,8 @@ export class ShoppingListItemsService {
       where: { event: { id: eventId } },
       relations: { event: true, assigned: true },
     });
-    await items.forEach((item) => {
-      this.spendingService.setShoppingListItemSpendings(item);
-    });
+    for (const item of items) {
+      await this.spendingService.setShoppingListItemSpendings(item);
+    }
   }
 }
