@@ -6,7 +6,7 @@ Bonjour, je m'appelle Louis De Wilde et je suis ici pour vous présenter mon pro
 
 Ce projet vise à résoudre un problème spécifique : la complexité de la création d'événements. Cela implique d'inviter
 tous les participants, de trouver une date et un lieu qui conviennent à un maximum d'invités, de répartir les coûts
-entre les utilisateurs si nécessaire, et de savoir qui participe parmi les invités.
+entre les participants si nécessaire, et de savoir qui participe parmi les invités.
 
 Cette application s'adresse à deux types d'utilisateurs. Le premier est une personne lambda qui souhaite organiser un
 événement. Le second est une personne plus technique qui souhaite héberger l'application pour garantir la protection de
