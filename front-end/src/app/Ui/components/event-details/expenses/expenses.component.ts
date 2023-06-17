@@ -29,6 +29,7 @@ export class ExpensesComponent {
   // private expenseRefreshTrigger: Subject<void>;
   showExpenses = false
   animationState: 'hidden' | 'visible' = 'hidden';
+  public readonly Math = Math;
 
   constructor(private dialog: MatDialog, public sanitizer: DomSanitizer, public expensesService: ExpensesService, private eventService: EventService, private cdRef: ChangeDetectorRef) {
     // this.debtRefreshTrigger = new Subject<void>();
@@ -51,7 +52,7 @@ export class ExpensesComponent {
       this.eventId = value!
     })
     this.expensesService.expenses$.subscribe(value => {
-      this.cdRef.detectChanges()
+      // this.cdRef.detectChanges()
       this.showExpenses = false
     })
   }
