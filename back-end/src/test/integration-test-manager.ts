@@ -33,7 +33,10 @@ import { Spending } from "../spending/entities/spending.entity";
 import { ShoppingListItem } from "../shopping-list-items/entities/shopping-list-item.entity";
 import { SpendingService } from "../spending/spending.service";
 import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-items.service";
-import { EventToUser } from "../event-to-user/entities/event-to-user.entity";
+import {
+  EventToUser,
+  UserRole,
+} from "../event-to-user/entities/event-to-user.entity";
 import { EventToUserService } from "../event-to-user/event-to-user.service";
 import { EventDatesService } from "../event-dates/event-dates.service";
 import { DatesToUserService } from "../dates-to-user/dates-to-user.service";
@@ -237,6 +240,7 @@ export class IntegrationTestManager {
     event: Event = null,
     user: UserEntity = null,
     address: Address = null,
+    role: UserRole = UserRole.MEMBER,
   ): Promise<EventToUser> {
     const eventToUserService =
       this._moduleRef.get<EventToUserService>(EventToUserService);
@@ -248,6 +252,7 @@ export class IntegrationTestManager {
       eventId: event.id,
       addressId: address.id,
       balance: 0,
+      role: role,
     });
   }
 

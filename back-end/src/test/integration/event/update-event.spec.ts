@@ -4,7 +4,7 @@ import request from "supertest-graphql";
 import { Event } from "../../../event/entities/event.entity";
 import { EventMock } from "../../mock/event.mock";
 
-describe("createEvent", () => {
+describe("updateEvent", () => {
   jest.setTimeout(20000);
   const integrationTestManager = new IntegrationTestManager();
   beforeAll(async () => {
@@ -52,8 +52,6 @@ describe("createEvent", () => {
         updatedEvent = response.data.updateEvent;
       });
       test("Then the response should be the updated Event", () => {
-        console.table(updatedEvent);
-        console.table(existingEvent);
         expect(updatedEvent.id).toMatch(existingEvent.id);
         expect(updatedEvent.address.id).toMatch(
           integrationTestManager.testAddress.id,
