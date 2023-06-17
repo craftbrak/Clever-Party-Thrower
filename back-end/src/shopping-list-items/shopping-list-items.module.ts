@@ -14,5 +14,6 @@ import { SpendingModule } from "../spending/spending.module";
     SpendingModule,
   ],
   providers: [ShoppingListItemsResolver, ShoppingListItemsService],
+  exports: [ShoppingListItemsService],
 })
 export class ShoppingListItemsModule {}

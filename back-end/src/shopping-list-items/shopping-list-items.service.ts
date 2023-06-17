@@ -36,7 +36,9 @@ export class ShoppingListItemsService {
     item.event = await this.eventRepo.findOneByOrFail({
       id: createShoppingListItemInput.eventId,
     });
-    return this.itemRepo.create(item).save();
+    const i = await this.itemRepo.create(item).save();
+    await this.updateShoppingListSpending(i.event.id);
+    return i;
   }
 
   // Todo: find by event
@@ -68,17 +70,19 @@ export class ShoppingListItemsService {
       });
     }
     if (updateShoppingListItemInput.bought) {
-      await this.spendingService.createShoppingListItemSpendings(item);
+      // await this.spendingService.createShoppingListItemSpendings(item);
       item.bought = updateShoppingListItemInput.bought;
     }
     if (updateShoppingListItemInput.bought === false) {
-      await this.spendingService.deleteShoppingListItemSpendings(item);
+      // await this.spendingService.deleteShoppingListItemSpendings(item);
       item.bought = updateShoppingListItemInput.bought;
     }
     if (updateShoppingListItemInput.name) {
       item.name = updateShoppingListItemInput.name;
     }
-    return item.save();
+    await item.save();
+    await this.updateShoppingListSpending(item.event.id);
+    return item;
   }
 
   async remove(id: string) {
@@ -87,5 +91,15 @@ export class ShoppingListItemsService {
 
   async getAssignee(id: string) {
     return (await this.findOne(id)).assigned;
+  }
+
+  async updateShoppingListSpending(eventId: string) {
+    const items = await this.itemRepo.find({
+      where: { event: { id: eventId } },
+      relations: { event: true, assigned: true },
+    });
+    await items.forEach((item) => {
+      this.spendingService.setShoppingListItemSpendings(item);
+    });
   }
 }
