@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  16 JUN 2023 18:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.13)  18 JUN 2023 11:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2210,7 +2210,7 @@ and I'll forget about whatever was undefined.
 
 presentation.tex:193: Undefined control sequence.
 \beamer@doifinframe ...em Injection SQL, \subitem 
-                                                  SSL et HTTPS, \item RGPD \...
+                                                  SSL et HTTPS \item RGPD \s...
 l.193     \end{frame}
                      
 The control sequence at the end of the top line
@@ -2220,8 +2220,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 presentation.tex:193: Undefined control sequence.
-\beamer@doifinframe ...HTTPS, \item RGPD \subitem 
-                                                  Gestion des données \subi...
+\beamer@doifinframe ... HTTPS \item RGPD \subitem 
+                                                  Gestion des données, \sub...
 l.193     \end{frame}
                      
 The control sequence at the end of the top line
@@ -2231,8 +2231,8 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 presentation.tex:193: Undefined control sequence.
-\beamer@doifinframe ...tion des données \subitem 
-                                                  Minimum de données \subit...
+\beamer@doifinframe ...ion des données, \subitem 
+                                                  Minimum de données, \subi...
 l.193     \end{frame}
                      
 The control sequence at the end of the top line
@@ -2242,7 +2242,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 presentation.tex:193: Undefined control sequence.
-\beamer@doifinframe ...nimum de données \subitem 
+\beamer@doifinframe ...imum de données, \subitem 
                                                   Suppression des données \...
 l.193     \end{frame}
                      
@@ -2300,7 +2300,7 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 Here is how much of TeX's memory you used:
  21696 strings out of 478619
  423925 string characters out of 2853060
- 673666 words of memory out of 3000000
+ 673664 words of memory out of 3000000
  39351 multiletter control sequences out of 15000+600000
  476314 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2309,7 +2309,7 @@ Here is how much of TeX's memory you used:
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
 Output written on D:/3T\Clever-Party-Thrower\docs\demo\out\presentation.pdf (11
- pages, 3151815 bytes).
+ pages, 3151834 bytes).
 PDF statistics:
  339 PDF objects out of 1000 (max. 8388607)
  31 named destinations out of 1000 (max. 500000)
