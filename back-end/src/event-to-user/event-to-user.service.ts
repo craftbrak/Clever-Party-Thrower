@@ -12,6 +12,7 @@ import { EventToUser } from "./entities/event-to-user.entity";
 import { CreateEventToUserDto } from "./dto/create-event-to-user.dto";
 import { UpdateEventToUserDto } from "./dto/update-event-to-user.dto";
 import { AddressService } from "../address/address.service";
+import { ShoppingListItemsService } from "../shopping-list-items/shopping-list-items.service";
 
 @Injectable()
 export class EventToUserService {
@@ -21,6 +22,7 @@ export class EventToUserService {
     @InjectRepository(EventToUser)
     private readonly eventToUserRepository: Repository<EventToUser>,
     private addressService: AddressService,
+    private shoppingListService: ShoppingListItemsService,
   ) {}
 
   async create(input: CreateEventToUserDto): Promise<EventToUser> {
@@ -136,7 +138,11 @@ export class EventToUserService {
     if (input.balance) {
       eventToUser.balance = input.balance;
     }
-    return await this.eventToUserRepository.save(eventToUser);
+    await eventToUser.save();
+    await this.shoppingListService.updateShoppingListSpending(
+      eventToUser.eventId,
+    );
+    return eventToUser;
   }
 
   async remove(eventId: EventToUser["id"]): Promise<DeleteResult> {

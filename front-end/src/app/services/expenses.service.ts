@@ -18,23 +18,23 @@ export class ExpensesService {
 
   updateDebts(eventId: string) {
     const mut = gql`
-    query Dept($eventId: ID!) {
-      getEventDebts(eventId: $eventId) {
-        id
-        amount
-        repayed
-        debtor {
-          avatar
+      query Dept($eventId: ID!) {
+        getEventDebts(eventId: $eventId) {
           id
-          name
+          amount
+          repayed
+          debtor {
+            avatar
+            id
+            name
+          }
+          creditor {
+            id
+            avatar
+            name
+          }
         }
-        creditor {
-          id
-          avatar
-          name
-        }
-      }
-    }`
+      }`
     return this.apollo.watchQuery<DeptData>({
       query: mut,
       variables: {eventId: eventId},
@@ -46,25 +46,25 @@ export class ExpensesService {
   updateExpenses(eventId: string) {
     const gql1 = gql`
       query Spendings($eventId: String) {
-  spendings(eventId: $eventId) {
-    id
-    value
-    buyer {
-      id
-      avatar
-      name
-    }
-    shoppingListItem {
-      id
-      name
-    }
-    beneficiary {
-      name
-      id
-      avatar
-    }
-  }
-}
+        spendings(eventId: $eventId) {
+          id
+          value
+          buyer {
+            id
+            avatar
+            name
+          }
+          shoppingListItem {
+            id
+            name
+          }
+          beneficiary {
+            name
+            id
+            avatar
+          }
+        }
+      }
     `
     return this.apollo.watchQuery<{ spendings: SpendingData[] }>({
       query: gql1,
@@ -75,10 +75,10 @@ export class ExpensesService {
 
   addExpense(eventId: string, buyerId: string, value: number, beneficiaryId: string, name: string, shoppingListItemId?: string) {
     const mut = gql`mutation CreateSpending($createSpendingInput: CreateSpendingDto!) {
-        createSpending(createSpendingInput: $createSpendingInput) {
-          id
-        }
-      }`
+      createSpending(createSpendingInput: $createSpendingInput) {
+        id
+      }
+    }`
     return this.apollo.mutate<{ id: string }>({
       mutation: mut, variables: {
         createSpendingInput: {

@@ -131,6 +131,14 @@ export class SpendingService {
     return out.shoppingListItem;
   }
 
+  async setShoppingListItemSpendings(item: ShoppingListItem) {
+    await this.deleteShoppingListItemSpendings(item);
+    if (item.bought) {
+      await this.createShoppingListItemSpendings(item);
+    }
+    await this.updateUserBalance(item.event.id);
+  }
+
   async createShoppingListItemSpendings(item: ShoppingListItem) {
     const users = await this.eventToUserRepository.find({
       where: { eventId: item.event.id },
@@ -139,24 +147,22 @@ export class SpendingService {
         user: true,
       },
     });
-    const amountPerUser = item.price / users.length;
-    users.forEach((etu) => {
-      if (
-        etu.role !== UserRole.INVITED &&
-        etu.role !== UserRole.NOT_ATTENDING
-      ) {
-        this.create({
-          eventId: item.event.id,
-          name: item.name,
-          value: amountPerUser,
-          shoppingListItemId: item.id,
-          beneficiaryId: etu.userId,
-          buyerId: item.assigned.id,
-        });
-      }
+    const excludedRoles = [UserRole.INVITED, UserRole.NOT_ATTENDING];
+    const filteredUsers = users.filter(
+      (user) => !excludedRoles.includes(user.role),
+    );
+    const amountPerUser = item.price / filteredUsers.length;
+    filteredUsers.forEach((etu) => {
+      this.create({
+        eventId: item.event.id,
+        name: item.name,
+        value: amountPerUser,
+        shoppingListItemId: item.id,
+        beneficiaryId: etu.user.id,
+        buyerId: item.assigned.id,
+      });
     });
     console.log("created Spendings");
-    //todo: test this function
   }
 
   async deleteShoppingListItemSpendings(item: ShoppingListItem) {

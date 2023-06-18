@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {ExpensesService} from "../../../../services/expenses.service";
 import {EventService} from "../../../../services/event.service";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -29,8 +29,9 @@ export class ExpensesComponent {
   // private expenseRefreshTrigger: Subject<void>;
   showExpenses = false
   animationState: 'hidden' | 'visible' = 'hidden';
+  public readonly Math = Math;
 
-  constructor(private dialog: MatDialog, public sanitizer: DomSanitizer, public expensesService: ExpensesService, private eventService: EventService) {
+  constructor(private dialog: MatDialog, public sanitizer: DomSanitizer, public expensesService: ExpensesService, private eventService: EventService, private cdRef: ChangeDetectorRef) {
     // this.debtRefreshTrigger = new Subject<void>();
     // this.expenseRefreshTrigger = new Subject<void>();
     this.eventService.selectedEventId$.subscribe(value => {
@@ -49,6 +50,10 @@ export class ExpensesComponent {
       //   })
       // )
       this.eventId = value!
+    })
+    this.expensesService.expenses$.subscribe(value => {
+      // this.cdRef.detectChanges()
+      this.showExpenses = false
     })
   }
 
