@@ -58,6 +58,7 @@ export class MemberComponent implements OnInit, OnChanges {
         this.memberData = value
         // console.log('ca rerender')
         this.expenceService.updateExpenses(this.eventId!)
+        this.expenceService.updateDebts(this.eventId!)
         this.useravatar = <string>this.sanitizer.bypassSecurityTrustUrl(<string>this.memberData?.user.avatar)
       })
     })
