@@ -29,3 +29,14 @@ mat-tab-group {
 .description-text {
   width: 95%;
 }
+
+@media (max-width: 500px) {
+  .tab-container {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+  }
+  mat-tab-group {
+    width: 70%;
+  }
+}
